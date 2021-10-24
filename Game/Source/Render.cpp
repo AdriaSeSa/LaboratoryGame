@@ -14,6 +14,8 @@ Render::Render() : Module()
 	background.g = 0;
 	background.b = 0;
 	background.a = 0;
+
+	layers.resize(4);
 }
 
 // Destructor
@@ -76,6 +78,54 @@ bool Render::Update(float dt)
 bool Render::PostUpdate()
 {
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
+
+	// Sorting layers
+	for (int i = 0; i < layers.size(); i++)
+	{
+		SortRenderObjects(layers[i]);
+	}
+
+	//Draw
+	for (int i = 0; i < 3; i++)
+	{
+		for each (auto renderObject in layers[i])
+		{
+			//SDL_SetTextureAlphaMod(renderObject.texture, 100);
+
+			if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
+			{
+				LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			}
+		}
+	}
+
+	// Draw Rects
+	for (int i = 0; i < rects.size(); i++)
+	{
+		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(renderer, rects[i].color.r, rects[i].color.g, rects[i].color.b, rects[i].color.a);
+
+		SDL_RenderFillRect(renderer, &rects[i].rect);
+	}
+
+	// Draw Special Layer
+	for each (auto renderObject in layers[3])
+	{
+		if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
+		{
+			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		}
+	}
+
+	SDL_RenderPresent(renderer);
+
+	for (int i = 0; i < 4; i++)
+	{
+		layers[i].clear();
+	}
+
+	rects.clear();
+
 	SDL_RenderPresent(renderer);
 	return true;
 }
@@ -84,7 +134,10 @@ bool Render::PostUpdate()
 bool Render::CleanUp()
 {
 	LOG("Destroying SDL render");
-	SDL_DestroyRenderer(renderer);
+	if (renderer != NULL)
+	{
+		SDL_DestroyRenderer(renderer);
+	}
 	return true;
 }
 
@@ -124,6 +177,98 @@ void Render::ResetViewPort()
 {
 	SDL_RenderSetViewport(renderer, &viewport);
 }
+
+void Render::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_Rect* section, float scale, int layer, float orderInlayer, float rotation, SDL_RendererFlip flip, float speed)
+{
+	RenderObject renderObject;
+	uint screenSize = app->win->GetScale();
+
+	speed = defaultSpeed;
+
+	renderObject.texture = texture;
+	renderObject.rotation = rotation;
+	renderObject.section = *section;
+	renderObject.orderInLayer = orderInlayer;
+
+	if (layer == 2 || layer == 3) speed = 0;	//If texture in UI layer, it moves alongside the camera. Therefor, speed = 0;
+
+	renderObject.renderRect.x = (int)(-camera.x * speed) + pos.x * screenSize;
+	renderObject.renderRect.y = (int)(-camera.y * speed) + pos.y * screenSize;
+
+	if (section != nullptr)
+	{
+		renderObject.renderRect.w = section->w;
+		renderObject.renderRect.h = section->h;
+	}
+	else
+	{
+		// Collect the texture size into rect.w and rect.h variables
+		SDL_QueryTexture(texture, nullptr, nullptr, &renderObject.renderRect.w, &renderObject.renderRect.h);
+	}
+
+	renderObject.renderRect.w *= scale;
+	renderObject.renderRect.h *= scale;
+
+	renderObject.flip = flip;
+
+	layers[layer].push_back(renderObject);
+}
+
+void Render::AddTextureRenderQueue(RenderObject object)
+{
+	object.speed = defaultSpeed;
+	uint screenSize = app->win->GetScale();
+
+	object.renderRect.x = (int)(-camera.x * object.speed) + object.renderRect.x * screenSize;
+	object.renderRect.y = (int)(-camera.y * object.speed) + object.renderRect.y * screenSize;
+
+	if (object.section.w != 0 && object.section.h != 0)
+	{
+		object.renderRect.w = object.section.w;
+		object.renderRect.h = object.section.h;
+	}
+	else
+	{
+		// Collect the texture size into rect.w and rect.h variables
+		SDL_QueryTexture(object.texture, nullptr, nullptr, &object.renderRect.w, &object.renderRect.h);
+	}
+
+	object.renderRect.w *= object.scale;
+	object.renderRect.h *= object.scale;
+
+	layers[object.layer].push_back(object);
+}
+
+void Render::AddRectRenderQueue(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera)
+{
+	RenderRect renderR;
+
+	renderR.rect = rect;
+	renderR.color = { r,g,b,a };
+
+	rects.push_back(renderR);
+}
+
+void Render::SortRenderObjects(vector<RenderObject>& obj)
+{
+	//sort(obj.begin(), obj.end(), CompareRenderObj);
+
+	int less = 0;
+	int objSize = obj.size();
+
+	for (int i = 0; i < objSize; ++i)
+	{
+		less = i;
+		for (int j = i; j < objSize; ++j)
+		{
+			if (obj[j].orderInLayer < obj[less].orderInLayer)
+			{
+				swap(obj[j], obj[less]);
+			}
+		}
+	}
+}
+
 
 // Blit to screen
 bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section, float speed, double angle, int pivotX, int pivotY) const

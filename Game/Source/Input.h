@@ -60,6 +60,16 @@ public:
 
 	// Check if a certain window event happened
 	bool GetWindowEvent(EventWindow ev);
+	
+	int GetMouseX() const
+	{
+		return mouseX;
+	}
+
+	int GetMouseY() const
+	{
+		return mouseY;
+	}
 
 	// Get mouse / axis position
 	void GetMousePosition(int &x, int &y);

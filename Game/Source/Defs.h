@@ -2,6 +2,7 @@
 #define __DEFS_H__
 
 #include <stdio.h>
+#include "Log.h"
 
 //  NULL just in case ----------------------
 
@@ -35,6 +36,9 @@
 #define MIN( a, b ) ( ((a) < (b)) ? (a) : (b) )
 #define MAX( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #define TO_BOOL( a )  ( (a != 0) ? true : false )
+
+#define DEGTORAD 0.0174532925199432957f
+#define RADTODEG 57.295779513082320876f
 
 typedef unsigned int uint;
 typedef unsigned char uchar;

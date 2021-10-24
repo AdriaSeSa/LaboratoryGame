@@ -1,48 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Window.cpp" />
-    <ClCompile Include="Source\Textures.cpp" />
-    <ClCompile Include="Source\Scene.cpp" />
-    <ClCompile Include="Source\Render.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Input.cpp" />
-    <ClCompile Include="Source\Audio.cpp" />
-    <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Log.cpp">
-      <Filter>Utils</Filter>
+      <Filter>HeaderFiles\Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\App.cpp">
+      <Filter>SourceFiles\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>SourceFiles\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Window.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Audio.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Map.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Render.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Textures.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Source\Window.h" />
-    <ClInclude Include="Source\Textures.h" />
-    <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\Render.h" />
-    <ClInclude Include="Source\Module.h" />
-    <ClInclude Include="Source\Input.h" />
-    <ClInclude Include="Source\Audio.h" />
-    <ClInclude Include="Source\App.h" />
-    <ClInclude Include="Source\Defs.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\DynArray.h">
-      <Filter>Utils</Filter>
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\List.h">
-      <Filter>Utils</Filter>
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Log.h">
-      <Filter>Utils</Filter>
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Point.h">
-      <Filter>Utils</Filter>
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\SString.h">
-      <Filter>Utils</Filter>
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
       <Filter>External\PugiXml</Filter>
@@ -50,17 +57,73 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
       <Filter>External\PugiXml</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\App.h">
+      <Filter>HeaderFiles\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MemLeaks.h">
+      <Filter>HeaderFiles\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Audio.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Map.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Module.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Render.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Textures.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Window.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Defs.h">
+      <Filter>HeaderFiles\Application</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
       <UniqueIdentifier>{83a966c7-b4bb-4eff-9c2c-3ff3c7b55a60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Utils">
-      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="External\PugiXml">
       <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles">
+      <UniqueIdentifier>{f46e06f1-7923-43e1-896f-119dfeacf8c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles">
+      <UniqueIdentifier>{dcda35fe-beb0-4a8f-8e00-34767babff64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Utils">
+      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Application">
+      <UniqueIdentifier>{ed14c448-6e78-4024-afa3-ef16324c8227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Modules">
+      <UniqueIdentifier>{b76f4945-c8ae-47af-a62e-da6ccced5797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Application">
+      <UniqueIdentifier>{427a67e0-18c6-45b7-b3e7-4f345524386d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Modules">
+      <UniqueIdentifier>{2a4d3045-14ef-4685-b11d-63978698bc3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\BaseClass">
+      <UniqueIdentifier>{68202c14-afb0-426e-98a3-a618b44c573e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\BaseClass">
+      <UniqueIdentifier>{d490c4ad-00a1-4591-91c9-4cf92eb22829}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

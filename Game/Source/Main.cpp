@@ -2,9 +2,12 @@
 
 #include "Defs.h"
 #include "Log.h"
+#include "MemLeaks.h"
 
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
+
+#include "Box2D/Box2D/Box2D.h"
 
 // NOTE: Library linkage is configured in Linker Options
 //#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
@@ -27,6 +30,8 @@ App* app = NULL;
 
 int main(int argc, char* args[])
 {
+	b2World* world = new b2World(b2Vec2(0,-10.0f));
+
 	LOG("Engine starting ...");
 
 	MainState state = CREATE;
@@ -107,6 +112,8 @@ int main(int argc, char* args[])
 	}
 
 	LOG("... Bye! :)\n");
+
+	ReportMemoryLeaks();
 
 	// Dump memory leaks
 	return result;

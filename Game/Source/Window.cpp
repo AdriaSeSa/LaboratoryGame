@@ -2,7 +2,6 @@
 #include "App.h"
 
 #include "Defs.h"
-#include "Log.h"
 
 #include "SDL/include/SDL.h"
 

@@ -1,8 +1,9 @@
 #include "App.h"
-
 #include "Defs.h"
 #include "Log.h"
 #include "MemLeaks.h"
+#include "Box2D/Box2D/Box2D.h"
+
 
 // NOTE: SDL redefines main function
 #include "SDL/include/SDL.h"
@@ -26,13 +27,19 @@ enum MainState
 	EXIT
 };
 
-App* app = NULL;
+App* app = NULL; 
+
+b2World* world;
+
+b2Vec2 grav = { 0,-10 };
 
 int main(int argc, char* args[])
 {
 	b2World* world = new b2World(b2Vec2(0,-10.0f));
 
 	LOG("Engine starting ...");
+
+	world = new b2World(grav);
 
 	MainState state = CREATE;
 	int result = EXIT_FAILURE;

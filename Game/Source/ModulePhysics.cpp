@@ -1,14 +1,10 @@
-#include "App.h"
+#include "Globals.h"
+#include "Application.h"
 #include "ModulePhysics.h"
 #include "math.h"
 #include "GameObject.h"
-#include "Input.h"
-#include "Render.h"
 
-
-#include "SDL/include/SDL.h"
-
-ModulePhysics::ModulePhysics() : Module()
+ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	world = NULL;	
 	debug = true;
@@ -32,22 +28,22 @@ bool ModulePhysics::Start()
 	return true;
 }
  
-bool ModulePhysics::PreUpdate()
+UpdateStatus ModulePhysics::PreUpdate()
 {
 	if(!pause)
 	world->Step(1.0f / 60, 6, 2);
 
-	return true;
+	return UPDATE_CONTINUE;
 }
 
-bool ModulePhysics::Update()
+UpdateStatus ModulePhysics::Update()
 {
-	if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
 		Pause();
 	}
 
-	return true;
+	return UPDATE_CONTINUE;
 }
 
 PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, GameObject* gameObject, bool isSensor)
@@ -104,11 +100,11 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangleSensor(int posX, int posY, int width, int height)
+PhysBody* ModulePhysics::CreateRectangleSensor(iPoint pos, int width, int height)
 {
 	b2BodyDef body;
 	body.type = b2_kinematicBody;
-	body.position.Set(PIXELS_TO_METER(posX), PIXELS_TO_METER(posY));
+	body.position.Set(PIXELS_TO_METER(pos.x), PIXELS_TO_METER(pos.y));
 
 	b2Body* b = world->CreateBody(&body);
 	b2PolygonShape box;
@@ -247,7 +243,7 @@ void ModulePhysics::ShapesRender()
 			{
 				b2CircleShape* shape = (b2CircleShape*)f->GetShape();
 				b2Vec2 pos = f->GetBody()->GetPosition();
-				app->render->DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), METERS_TO_PIXELS(shape->m_radius), 0, 0, 0);
+				App->renderer->DrawCircle(METERS_TO_PIXELS(pos.x), METERS_TO_PIXELS(pos.y), METERS_TO_PIXELS(shape->m_radius), 0, 0, 0);
 			}
 			break;
 
@@ -262,13 +258,13 @@ void ModulePhysics::ShapesRender()
 				{
 					v = b->GetWorldPoint(polygonShape->GetVertex(i));
 					if (i > 0)
-						app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
+						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
 
 					prev = v;
 				}
 
 				v = b->GetWorldPoint(polygonShape->GetVertex(0));
-				app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
+				App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
 			}
 			break;
 
@@ -282,14 +278,14 @@ void ModulePhysics::ShapesRender()
 				{
 					v = b->GetWorldPoint(shape->m_vertices[i]);
 					if (i > 0)
-						app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
+						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
 					prev = v;
 				}
 				PhysBody* bb = (PhysBody*)f->GetBody()->GetUserData();
 				if (bb->chainLoop)
 				{
 					v = b->GetWorldPoint(shape->m_vertices[0]);
-					app->render->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
+					App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
 				}
 			}
 			break;
@@ -302,7 +298,7 @@ void ModulePhysics::ShapesRender()
 
 				v1 = b->GetWorldPoint(shape->m_vertex0);
 				v1 = b->GetWorldPoint(shape->m_vertex1);
-				app->render->DrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), 100, 100, 255);
+				App->renderer->DrawLine(METERS_TO_PIXELS(v1.x), METERS_TO_PIXELS(v1.y), METERS_TO_PIXELS(v2.x), METERS_TO_PIXELS(v2.y), 100, 100, 255);
 			}
 			break;
 			}
@@ -310,10 +306,10 @@ void ModulePhysics::ShapesRender()
 	}
 }
 
-bool ModulePhysics::PostUpdate()
+UpdateStatus ModulePhysics::PostUpdate()
 {
-	//if (!app->isDebug)
-	//	return true;
+	if (!App->isDebug)
+		return UPDATE_CONTINUE;
 
 	// If mouse button 1 is pressed ...
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
@@ -322,17 +318,17 @@ bool ModulePhysics::PostUpdate()
 
 		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
 		{
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
 				PhysBody* pBody = (PhysBody*)b->GetUserData();
 
 				// test if the current body contains mouse position
-				if (pBody && pBody->Contains(app->input->GetMouseX(), app->input->GetMouseY()))
+				if (pBody && pBody->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
 				{
 					b2MouseJointDef def;
 					def.bodyA = mouseBody;
 					def.bodyB = pBody->body;
-					def.target = b2Vec2(PIXELS_TO_METER(app->input->GetMouseX()), PIXELS_TO_METER(app->input->GetMouseY()));
+					def.target = b2Vec2(PIXELS_TO_METER(App->input->GetMouseX()), PIXELS_TO_METER(App->input->GetMouseY()));
 					def.dampingRatio = 0.5f;
 					def.frequencyHz = 2.0f;
 					def.maxForce = 100.0f * pBody->body->GetMass();
@@ -354,9 +350,9 @@ bool ModulePhysics::PostUpdate()
 
 			if (!hasMouseJoint) break;
 
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT && b->GetJointList() != nullptr && mouseJoint != nullptr)
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && b->GetJointList() != nullptr && mouseJoint != nullptr)
 			{
-				b2Vec2 nextPos = { (float)app->input->GetMouseX(),(float)app->input->GetMouseY() };
+				b2Vec2 nextPos = { (float)App->input->GetMouseX(),(float)App->input->GetMouseY() };
 
 				nextPos.x = PIXELS_TO_METER(nextPos.x);
 				nextPos.y = PIXELS_TO_METER(nextPos.y);
@@ -368,7 +364,7 @@ bool ModulePhysics::PostUpdate()
 					255, 0, 0);*/
 			}
 
-			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP && b->GetJointList() != nullptr && mouseJoint != nullptr)
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && b->GetJointList() != nullptr && mouseJoint != nullptr)
 			{
 				world->DestroyJoint(mouseJoint);
 				mouseJoint = nullptr;
@@ -376,7 +372,7 @@ bool ModulePhysics::PostUpdate()
 		}
 	}
 
-	return true;
+	return UPDATE_CONTINUE;
 }
 // Called before quitting
 bool ModulePhysics::CleanUp()

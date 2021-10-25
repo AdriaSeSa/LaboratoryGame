@@ -1,127 +1,95 @@
-#include "App.h"
-#include "Defs.h"
-#include "Log.h"
-#include "MemLeaks.h"
-#include "Box2D/Box2D/Box2D.h"
-
-
-// NOTE: SDL redefines main function
-#include "SDL/include/SDL.h"
-
-#include "Box2D/Box2D/Box2D.h"
-
-// NOTE: Library linkage is configured in Linker Options
-//#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2.lib")
-//#pragma comment(lib, "../Game/Source/External/SDL/libx86/SDL2main.lib")
-
 #include <stdlib.h>
+#include "Application.h"
+#include "Globals.h"
+#include "MemLeaks.h"
 
-enum MainState
+#include "SDL/include/SDL.h"
+//#pragma comment( lib, "SDL/libx86/SDL2.lib" )
+//#pragma comment( lib, "SDL/libx86/SDL2main.lib" )
+
+enum main_states
 {
-	CREATE = 1,
-	AWAKE,
-	START,
-	LOOP,
-	CLEAN,
-	FAIL,
-	EXIT
+	MAIN_CREATION,
+	MAIN_START,
+	MAIN_UPDATE,
+	MAIN_FINISH,
+	MAIN_EXIT
 };
 
-App* app = NULL; 
-
-b2World* world;
-
-b2Vec2 grav = { 0,-10 };
-
-int main(int argc, char* args[])
+int main(int argc, char ** argv)
 {
-	b2World* world = new b2World(b2Vec2(0,-10.0f));
+	LOG("Starting game '%s'...", TITLE);
 
-	LOG("Engine starting ...");
+	int main_return = EXIT_FAILURE;
+	main_states state = MAIN_CREATION;
+	Application* App = NULL;
 
-	world = new b2World(grav);
+	srand(static_cast <unsigned> (time(NULL)));
 
-	MainState state = CREATE;
-	int result = EXIT_FAILURE;
-
-	while(state != EXIT)
+	while (state != MAIN_EXIT)
 	{
-		switch(state)
+		switch (state)
 		{
-			// Allocate the engine --------------------------------------------
-			case CREATE:
-			LOG("CREATION PHASE ===============================");
+		case MAIN_CREATION:
 
-			app = new App(argc, args);
-
-			if(app != NULL)
-				state = AWAKE;
-			else
-				state = FAIL;
-
+			LOG("-------------- Application Creation --------------");
+			App = new Application();
+			state = MAIN_START;
 			break;
 
-			// Awake all modules -----------------------------------------------
-			case AWAKE:
-			LOG("AWAKE PHASE ===============================");
-			if(app->Awake() == true)
-				state = START;
+		case MAIN_START:
+
+			LOG("-------------- Application Init --------------");
+			if (App->Init() == false)
+			{
+				LOG("Application Init exits with ERROR");
+				state = MAIN_EXIT;
+			}
 			else
 			{
-				LOG("ERROR: Awake failed");
-				state = FAIL;
+				state = MAIN_UPDATE;
+				LOG("-------------- Application Update --------------");
 			}
 
 			break;
 
-			// Call all modules before first frame  ----------------------------
-			case START:
-			LOG("START PHASE ===============================");
-			if(app->Start() == true)
+		case MAIN_UPDATE:
+		{
+			int update_return = App->Update();
+
+			if (update_return == UPDATE_ERROR)
 			{
-				state = LOOP;
-				LOG("UPDATE PHASE ===============================");
+				LOG("Application Update exits with ERROR");
+				state = MAIN_EXIT;
+			}
+
+			if (update_return == UPDATE_STOP)
+				state = MAIN_FINISH;
+		}
+			break;
+
+		case MAIN_FINISH:
+
+			LOG("-------------- Application CleanUp --------------");
+			if (App->CleanUp() == false)
+			{
+				LOG("Application CleanUp exits with ERROR");
 			}
 			else
-			{
-				state = FAIL;
-				LOG("ERROR: Start failed");
-			}
-			break;
+				main_return = EXIT_SUCCESS;
 
-			// Loop all modules until we are asked to leave ---------------------
-			case LOOP:
-			if(app->Update() == false)
-				state = CLEAN;
-			break;
-
-			// Cleanup allocated memory -----------------------------------------
-			case CLEAN:
-			LOG("CLEANUP PHASE ===============================");
-			if(app->CleanUp() == true)
-			{
-				RELEASE(app);
-				result = EXIT_SUCCESS;
-				state = EXIT;
-			}
-			else
-				state = FAIL;
+			state = MAIN_EXIT;
 
 			break;
 
-			// Exit with errors and shame ---------------------------------------
-			case FAIL:
-			LOG("Exiting with errors :(");
-			result = EXIT_FAILURE;
-			state = EXIT;
-			break;
 		}
 	}
 
-	LOG("... Bye! :)\n");
-
+	delete App;
+	
 	ReportMemoryLeaks();
 
-	// Dump memory leaks
-	return result;
+	LOG("\nBye :)\n");
+
+	return main_return;
 }

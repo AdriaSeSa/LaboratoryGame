@@ -3,12 +3,9 @@
 
 #include <string>
 #include "Point.h"
-#include "App.h"
-#include "Render.h"
-
+#include "Application.h"
 struct SDL_Texture;
 class PhysBody;
-
 
 #define MAX_GAMEOBJECT_TEXTURES 5
 
@@ -18,7 +15,7 @@ public:
 
 	GameObject();
 
-	GameObject(std::string name = "Default", std::string tag = "None", App* _app = nullptr);
+	GameObject(std::string name = "Default", std::string tag = "None", Application* _app = nullptr);
 
 	GameObject(GameObject& obj);
 
@@ -54,7 +51,7 @@ public:
 
 	PhysBody* pBody2 = nullptr;
 
-	App* _app = nullptr;
+	Application* _app = nullptr;
 
 	bool pendingToDelete = false;
 };

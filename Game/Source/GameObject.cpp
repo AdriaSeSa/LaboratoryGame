@@ -1,13 +1,12 @@
 #include "GameObject.h"
 #include "ModulePhysics.h"
 
-
 GameObject::GameObject()
 {
 }
 
 //TODO: Poner Applicationi* en constructor
-GameObject::GameObject(std::string name, std::string tag, App* _app)
+GameObject::GameObject(std::string name, std::string tag , Application* _app)
 {
 	this->name = name;
 	this->_app = _app;
@@ -23,6 +22,15 @@ GameObject::GameObject(GameObject& obj)
 
 GameObject::~GameObject()
 {
+	for (int i = 0; i < MAX_GAMEOBJECT_TEXTURES; i++)
+	{
+		if (renderObjects[i].section != nullptr)
+		{
+			delete renderObjects[i].section;
+			renderObjects[i].section = nullptr;
+		}
+	}
+
 	if(pBody!=nullptr)
 	{
 		delete pBody;
@@ -65,7 +73,7 @@ void GameObject::PostUpdate()
 				}
 			}
 
-			_app->render->AddTextureRenderQueue(renderObjects[i]);
+			_app->renderer->AddTextureRenderQueue(renderObjects[i]);
 		}
 	}
 }
@@ -88,8 +96,7 @@ iPoint GameObject::GetDrawPos()
 {
 	if (this->pBody == nullptr)
 	{
-		printf("GameObject has no PhysBody!"); 
-	
+		LOG("GameObject has no PhysBody!"); 
 		return iPoint(0, 0);
 	}
 

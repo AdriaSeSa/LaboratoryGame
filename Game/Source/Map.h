@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "SString.h"
 
 #include "PugiXml\src\pugixml.hpp"
 
@@ -114,7 +115,7 @@ class Map : public Module
 {
 public:
 
-    Map();
+    Map(Application* app, bool start_enabled = true);
 
     // Destructor
     virtual ~Map();

@@ -1,7 +1,7 @@
 #ifndef __SSTRING_H__
 #define __SSTRING_H__
 
-#include "Defs.h"
+#include "Globals.h"
 
 #include <stdlib.h>
 #include <stdarg.h>

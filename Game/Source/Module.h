@@ -1,77 +1,88 @@
-#ifndef __MODULE_H__
-#define __MODULE_H__
+#ifndef _MODULE_H_
+#define _MODULE_H_
+
 
 #include "SString.h"
 
-#include "PugiXml/src/pugixml.hpp"
 
-class App;
+class Application;
+class PhysBody;
+
 
 class Module
 {
+private :
+	bool enabled;
+
 public:
 
-	Module() : active(false)
+	Application* App;
+
+	SString name;
+
+	Module(Application* parent, bool start_enabled = true) : App(parent), enabled(start_enabled)
 	{}
 
-	void Init()
+	virtual ~Module()
+	{}
+
+	bool IsEnabled() const
 	{
-		active = true;
+		return enabled;
 	}
 
-	// Called before render is available
-	// L01: DONE 5: Sending config file to all modules
-	virtual bool Awake(pugi::xml_node&)
+	void Enable()
 	{
-		return true;
+		if(enabled == false)
+		{
+			enabled = true;
+			Start();
+		}
 	}
 
-	// Called before the first frame
+	void Disable()
+	{
+		if(enabled == true)
+		{
+			enabled = false;
+			CleanUp();
+		}
+	}
+
+	virtual bool Init() 
+	{
+		return true; 
+	}
+
 	virtual bool Start()
 	{
 		return true;
 	}
 
-	// Called each loop iteration
-	virtual bool PreUpdate()
+	virtual UpdateStatus PreUpdate()
 	{
-		return true;
+		return UPDATE_CONTINUE;
 	}
 
-	// Called each loop iteration
-	virtual bool Update(float dt)
+	virtual UpdateStatus Update()
 	{
-		return true;
+		return UPDATE_CONTINUE;
 	}
 
-	// Called each loop iteration
-	virtual bool PostUpdate()
+	virtual UpdateStatus PostUpdate()
 	{
-		return true;
+		return UPDATE_CONTINUE;
 	}
 
-	// Called before quitting
-	virtual bool CleanUp()
-	{
-		return true;
+	virtual bool CleanUp() 
+	{ 
+		return true; 
 	}
 
-    // L02: DONE 2: Create new virtual methods to Load / Save state
-	virtual bool LoadState(pugi::xml_node&)
+	virtual void OnCollision(PhysBody* body1, PhysBody* body2)
 	{
-		return true;
+	
 	}
-
-	virtual bool SaveState(pugi::xml_node&) const
-	{
-		return true;
-	}
-
-public:
-
-	SString name;
-	bool active;
-
 };
 
-#endif // __MODULE_H__
+#endif

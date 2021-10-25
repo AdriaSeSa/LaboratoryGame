@@ -1,39 +1,51 @@
-#ifndef __SCENE_H__
-#define __SCENE_H__
+#ifndef _SCENE_H_
+#define _SCENE_H_
 
-#include "Module.h"
+#include "Application.h"
 
-struct SDL_Texture;
+#include "GameObject.h"
 
-class Scene : public Module
+#include "List.h"
+
+class Scene
 {
-public:
+protected:
 
-	Scene();
+	int ID;
+
+	Application* _app;
+
+	List<GameObject*> gameObjects;
+
+	List<SDL_Texture*> sceneTextures;
+
+public:
+	// Constructor
+	Scene(Application* app);
 
 	// Destructor
-	virtual ~Scene();
+	~Scene();
 
-	// Called before render is available
-	bool Awake();
+	virtual bool Start();
 
-	// Called before the first frame
-	bool Start();
+	virtual bool PreUpdate();
 
-	// Called before all Updates
-	bool PreUpdate();
+	virtual bool Update();
 
-	// Called each loop iteration
-	bool Update(float dt);
+	virtual bool PostUpdate();
 
-	// Called before all Updates
-	bool PostUpdate();
+	virtual bool CleanUp();
 
-	// Called before quitting
-	bool CleanUp();
+	void DestroyGameObject(GameObject* gameObject);
 
-private:
-	SDL_Texture* img;
+	int getID()
+	{
+		return ID;
+	}
+
+	int lastID = 0;
 };
 
-#endif // __SCENE_H__
+
+#endif //_SCENE_H_
+

@@ -1,9 +1,8 @@
 #pragma once
 #include "Module.h"
-#include "Defs.h"
+#include "Globals.h"
 #include "Box2D/Box2D/Box2D.h"
 #include <math.h>
-
 
 class GameObject;
 
@@ -58,18 +57,18 @@ public:
 	b2World* world = nullptr;
 	
 
-	ModulePhysics();
+	ModulePhysics(Application* app, bool start_enabled = true);
 	~ModulePhysics();
 
 	bool Start();
-	bool PreUpdate();
-	bool Update();
-	bool PostUpdate();
+	UpdateStatus PreUpdate();
+	UpdateStatus Update();
+	UpdateStatus PostUpdate();
 	bool CleanUp();
 
 	PhysBody* CreateCircle(int x, int y, int radius, GameObject* gameObject = nullptr, bool isSensor = false);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
-	PhysBody* CreateRectangleSensor(int posX, int posY, int width, int height);
+	PhysBody* CreateRectangleSensor(iPoint pos, int width, int height);
 	PhysBody* CreateChainObj(int x, int y, int* points, int size, bool loop);
 	b2Vec2 Perp(b2Vec2 vec1);
 	/*b2Vec2 Normalise(b2Vec2 vecToNormalise);*/

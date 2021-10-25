@@ -1,8 +1,6 @@
 #ifndef __LIST_H__
 #define __LIST_H__
 
-#include "Defs.h"
-
 // Contains items from double linked list
 template<class tdata>
 struct ListItem
@@ -112,6 +110,7 @@ public:
 			}
 		}
 
+		RELEASE(item->data);
 		RELEASE(item);
 		--size;
 		return(true);
@@ -127,6 +126,25 @@ public:
 		while(p_data != NULL)
 		{
 			p_next = p_data->next;
+			RELEASE(p_data);
+			p_data = p_next;
+		}
+
+		start = end = NULL;
+		size = 0;
+	}
+
+	// Destroy and free all mem and node.data ptr
+	void clearPtr()
+	{
+		ListItem<tdata>* p_data;
+		ListItem<tdata>* p_next;
+		p_data = start;
+
+		while (p_data != NULL)
+		{
+			p_next = p_data->next;
+			RELEASE(p_data->data);
 			RELEASE(p_data);
 			p_data = p_next;
 		}

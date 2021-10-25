@@ -4,20 +4,48 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Application.cpp" />
-    <ClCompile Include="Source\GameObject.cpp" />
-    <ClCompile Include="Source\Main.cpp" />
-    <ClCompile Include="Source\Map.cpp" />
-    <ClCompile Include="Source\ModuleAudio.cpp" />
-    <ClCompile Include="Source\ModuleInput.cpp" />
-    <ClCompile Include="Source\ModulePhysics.cpp" />
-    <ClCompile Include="Source\ModuleRender.cpp" />
-    <ClCompile Include="Source\ModuleScene.cpp" />
-    <ClCompile Include="Source\ModuleTextures.cpp" />
-    <ClCompile Include="Source\ModuleUI.cpp" />
-    <ClCompile Include="Source\ModuleWindow.cpp" />
-    <ClCompile Include="Source\Scene.cpp" />
-    <ClCompile Include="Source\Log.cpp" />
+    <ClCompile Include="Source\ModuleWindow.cpp">
+      <Filter>SourceFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application.cpp">
+      <Filter>SourceFiles\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>SourceFiles\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene.cpp">
+      <Filter>SourceFiles\BaseClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject.cpp">
+      <Filter>SourceFiles\BaseClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Log.cpp">
+      <Filter>SourceFiles\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleMap.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleAudio.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleInput.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModulePhysics.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleRender.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleScene.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleTextures.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleUI.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -26,29 +54,75 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp">
       <Filter>External\PugiXml</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Animation.h" />
-    <ClInclude Include="Source\Application.h" />
-    <ClInclude Include="Source\GameObject.h" />
-    <ClInclude Include="Source\Globals.h" />
-    <ClInclude Include="Source\List.h" />
-    <ClInclude Include="Source\Map.h" />
-    <ClInclude Include="Source\MemLeaks.h" />
-    <ClInclude Include="Source\Module.h" />
-    <ClInclude Include="Source\ModuleAudio.h" />
-    <ClInclude Include="Source\ModuleInput.h" />
-    <ClInclude Include="Source\ModulePhysics.h" />
-    <ClInclude Include="Source\ModuleRender.h" />
-    <ClInclude Include="Source\ModuleScene.h" />
-    <ClInclude Include="Source\ModuleTextures.h" />
-    <ClInclude Include="Source\ModuleUI.h" />
-    <ClInclude Include="Source\ModuleWindow.h" />
-    <ClInclude Include="Source\p2DynArray.h" />
-    <ClInclude Include="Source\p2List.h" />
-    <ClInclude Include="Source\p2Point.h" />
-    <ClInclude Include="Source\Point.h" />
-    <ClInclude Include="Source\Scene.h" />
-    <ClInclude Include="Source\SString.h" />
-    <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Application.h">
+      <Filter>HeaderFiles\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Globals.h">
+      <Filter>HeaderFiles\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleAudio.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleInput.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModulePhysics.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleRender.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleScene.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleTextures.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleUI.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleWindow.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Animation.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\MemLeaks.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\p2DynArray.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\p2List.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\p2Point.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Point.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SString.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Timer.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Module.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleMap.h">
+      <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\List.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -80,6 +154,9 @@
     </Filter>
     <Filter Include="SourceFiles\BaseClass">
       <UniqueIdentifier>{d490c4ad-00a1-4591-91c9-4cf92eb22829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Modules">
+      <UniqueIdentifier>{86ee676a-7b89-4de9-a6b3-b56b9a097b85}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

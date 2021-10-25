@@ -111,14 +111,14 @@ struct MapData
 	List<MapLayer*> layers;
 };
 
-class Map : public Module
+class ModuleMap : public Module
 {
 public:
 
-    Map(Application* app, bool start_enabled = true);
+    ModuleMap(Application* app, bool start_enabled = true);
 
     // Destructor
-    virtual ~Map();
+    virtual ~ModuleMap();
 
     // Called before render is available
     bool Awake(pugi::xml_node& conf);

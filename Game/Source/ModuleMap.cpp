@@ -2,20 +2,20 @@
 #include "Application.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
-#include "Map.h"
+#include "ModuleMap.h"
 
 #include "Globals.h"
 //#include "Log.h"
 
 #include <math.h>
 
-Map::Map(Application* app, bool start_enabled) : Module(app, start_enabled), mapLoaded(false)
+ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_enabled), mapLoaded(false)
 {
     name.Create("map");
 }
 
 // Destructor
-Map::~Map()
+ModuleMap::~ModuleMap()
 {}
 
 // L06: TODO 7: Ask for the value of a custom property
@@ -36,7 +36,7 @@ int Properties::GetProperty(const char* value, int defaultValue) const
 }
 
 // Called before render is available
-bool Map::Awake(pugi::xml_node& config)
+bool ModuleMap::Awake(pugi::xml_node& config)
 {
     //LOG("Loading Map Parser");
     bool ret = true;
@@ -47,7 +47,7 @@ bool Map::Awake(pugi::xml_node& config)
 }
 
 // Draw the map (all requried layers)
-void Map::Draw()
+void ModuleMap::Draw()
 {
 	if (mapLoaded == false) return;
 
@@ -92,7 +92,7 @@ void Map::Draw()
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
-iPoint Map::MapToWorld(int x, int y) const
+iPoint ModuleMap::MapToWorld(int x, int y) const
 {
 	iPoint ret;
 
@@ -117,7 +117,7 @@ iPoint Map::MapToWorld(int x, int y) const
 }
 
 // L05: DON 2: Add orthographic world to map coordinates
-iPoint Map::WorldToMap(int x, int y) const
+iPoint ModuleMap::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
 
@@ -145,7 +145,7 @@ iPoint Map::WorldToMap(int x, int y) const
 }
 
 // L06: TODO 3: Pick the right Tileset based on a tile id
-TileSet* Map::GetTilesetFromTileId(int id) const
+TileSet* ModuleMap::GetTilesetFromTileId(int id) const
 {
 	ListItem<TileSet*>* item = mapData.tilesets.start;
 	TileSet* set = item->data;
@@ -180,7 +180,7 @@ SDL_Rect TileSet::GetTileRect(int id) const
 }
 
 // Called before quitting
-bool Map::CleanUp()
+bool ModuleMap::CleanUp()
 {
     //LOG("Unloading map");
 
@@ -212,7 +212,7 @@ bool Map::CleanUp()
 }
 
 // Load new map
-bool Map::Load(const char* filename)
+bool ModuleMap::Load(const char* filename)
 {
     bool ret = true;
     SString tmp("%s%s", folder.GetString(), filename);
@@ -260,7 +260,7 @@ bool Map::Load(const char* filename)
 }
 
 // L03: TODO: Load map general properties
-bool Map::LoadMap(pugi::xml_node mapFile)
+bool ModuleMap::LoadMap(pugi::xml_node mapFile)
 {
 	bool ret = true;
 	pugi::xml_node map = mapFile.child("map");
@@ -294,7 +294,7 @@ bool Map::LoadMap(pugi::xml_node mapFile)
 }
 
 // L03: DONE 4: Implement the LoadTileSet function to load the tileset properties
-bool Map::LoadTileSets(pugi::xml_node mapFile) {
+bool ModuleMap::LoadTileSets(pugi::xml_node mapFile) {
 
 	bool ret = true;
 
@@ -311,7 +311,7 @@ bool Map::LoadTileSets(pugi::xml_node mapFile) {
 }
 
 // L03: DONE 4: Load Tileset attributes
-bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
+bool ModuleMap::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 
@@ -329,7 +329,7 @@ bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 }
 
 // L03: DONE 4: Load Tileset image
-bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
+bool ModuleMap::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 	pugi::xml_node image = tileset_node.child("image");
@@ -350,7 +350,7 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 }
 
 // L04: DONE 3: Implement a function that loads a single layer layer
-bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
+bool ModuleMap::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
 
@@ -379,7 +379,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 }
 
 // L04: DONE 4: Iterate all layers and load each of them
-bool Map::LoadAllLayers(pugi::xml_node mapNode) {
+bool ModuleMap::LoadAllLayers(pugi::xml_node mapNode) {
 	bool ret = true;
 	for (pugi::xml_node layerNode = mapNode.child("layer"); layerNode && ret; layerNode = layerNode.next_sibling("layer"))
 	{
@@ -395,7 +395,7 @@ bool Map::LoadAllLayers(pugi::xml_node mapNode) {
 }
 
 // L06: TODO 6: Load a group of properties from a node and fill a list with it
-bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)
+bool ModuleMap::LoadProperties(pugi::xml_node& node, Properties& properties)
 {
 	bool ret = false;
 

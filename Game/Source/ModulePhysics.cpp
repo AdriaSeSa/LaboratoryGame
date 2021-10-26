@@ -1,11 +1,8 @@
-#include "Globals.h"
-#include "Application.h"
-#include "ModulePhysics.h"
-#include "math.h"
 #include "GameObject.h"
 
 ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "physics";
 	world = NULL;	
 	debug = true;
 }
@@ -13,6 +10,11 @@ ModulePhysics::ModulePhysics(Application* app, bool start_enabled) : Module(app,
 // Destructor
 ModulePhysics::~ModulePhysics()
 {
+}
+
+bool ModulePhysics::Init(pugi::xml_node& config)
+{
+	return true;
 }
 
 bool ModulePhysics::Start()

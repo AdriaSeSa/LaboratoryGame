@@ -1,6 +1,5 @@
 #pragma once
 #include "Module.h"
-#include "Globals.h"
 #include "Point.h"
 #include <vector>
 
@@ -34,8 +33,8 @@ public:
 	ModuleRender(Application* app, bool start_enabled = true);
 	~ModuleRender();
 
-	bool Init();
-	UpdateStatus PreUpdate();
+	bool Init(pugi::xml_node&);
+	UpdateStatus PreUpdate() override;
 	UpdateStatus Update();
 	UpdateStatus PostUpdate();
 	bool CleanUp();

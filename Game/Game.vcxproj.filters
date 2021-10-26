@@ -4,9 +4,6 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp">
       <Filter>External\PugiXml</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleWindow.cpp">
-      <Filter>SourceFiles</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Application.cpp">
       <Filter>SourceFiles\Application</Filter>
     </ClCompile>
@@ -46,6 +43,9 @@
     <ClCompile Include="Source\ModuleUI.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleWindow.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -59,9 +59,6 @@
     </ClInclude>
     <ClInclude Include="Source\Globals.h">
       <Filter>HeaderFiles\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\ModuleAudio.h">
-      <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleInput.h">
       <Filter>HeaderFiles\Modules</Filter>
@@ -122,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="Source\List.h">
       <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleAudio.h">
+      <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

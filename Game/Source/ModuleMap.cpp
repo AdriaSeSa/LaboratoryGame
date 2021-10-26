@@ -1,17 +1,9 @@
 
 #include "Application.h"
-#include "ModuleRender.h"
-#include "ModuleTextures.h"
-#include "ModuleMap.h"
-
-#include "Globals.h"
-//#include "Log.h"
-
-#include <math.h>
 
 ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_enabled), mapLoaded(false)
 {
-    name.Create("map");
+    name = "map";
 }
 
 // Destructor
@@ -36,12 +28,12 @@ int Properties::GetProperty(const char* value, int defaultValue) const
 }
 
 // Called before render is available
-bool ModuleMap::Awake(pugi::xml_node& config)
+bool ModuleMap::Init(pugi::xml_node& config)
 {
     //LOG("Loading Map Parser");
     bool ret = true;
 
-    folder.Create(config.child("folder").child_value());
+    folder = (config.child("folder").child_value());
 
     return ret;
 }
@@ -215,10 +207,10 @@ bool ModuleMap::CleanUp()
 bool ModuleMap::Load(const char* filename)
 {
     bool ret = true;
-    SString tmp("%s%s", folder.GetString(), filename);
+    std::string tmp = folder + filename;
 
 	pugi::xml_document mapFile; 
-    pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());
+    pugi::xml_parse_result result = mapFile.load_file(tmp.c_str());
 
     if(result == NULL)
     {
@@ -316,7 +308,7 @@ bool ModuleMap::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	bool ret = true;
 
 	// L03: DONE 4: Load Tileset attributes
-	set->name.Create(tileset_node.attribute("name").as_string());
+	set->name = tileset_node.attribute("name").as_string();
 	set->firstgid = tileset_node.attribute("firstgid").as_int();
 	set->tileWidth = tileset_node.attribute("tilewidth").as_int();
 	set->tileHeight = tileset_node.attribute("tileheight").as_int();
@@ -342,8 +334,10 @@ bool ModuleMap::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	else
 	{
 		// L03: DONE 4: Load Tileset image
-		SString tmp("%s%s", folder.GetString(), image.attribute("source").as_string());
-		set->texture = App->textures->Load(tmp.GetString());
+		std::string imageS = image.attribute("source").as_string();
+	
+		std::string tmp = folder+ imageS;
+		set->texture = App->textures->Load(tmp);
 	}
 
 	return ret;

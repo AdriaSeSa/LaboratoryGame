@@ -4,15 +4,12 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
-#include "SString.h"
-
-#include "PugiXml\src\pugixml.hpp"
 
 // L03: DONE 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 struct TileSet
 {
-	SString	name;
+	std::string	name;
 	int	firstgid;
 	int margin;
 	int	spacing;
@@ -45,7 +42,7 @@ struct Properties
 	struct Property
 	{
 		//...
-		SString name;
+		std::string name;
 		int value;
 	};
 	
@@ -73,7 +70,7 @@ struct Properties
 // L04: DONE 1: Create a struct for the map layer
 struct MapLayer
 {
-	SString	name;
+	std::string	name;
 	int width;
 	int height;
 	uint* data;
@@ -121,7 +118,7 @@ public:
     virtual ~ModuleMap();
 
     // Called before render is available
-    bool Awake(pugi::xml_node& conf);
+    bool Init(pugi::xml_node& conf);
 
     // Called each loop iteration
     void Draw();
@@ -163,7 +160,7 @@ public:
 
 private:
 
-    SString folder;
+    std::string folder;
     bool mapLoaded;
 };
 

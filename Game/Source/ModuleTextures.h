@@ -3,8 +3,6 @@
 #include "SDL\include\SDL.h"
 #include "List.h"
 #include <map>
-#include <string>
-
 
 class ModuleTextures : public Module
 {
@@ -12,7 +10,7 @@ public:
 	ModuleTextures(Application* app, bool start_enabled = true);
 	~ModuleTextures();
 
-	bool Init();
+	bool Init(pugi::xml_node&);
 	bool CleanUp();
 	bool CleanUpTextures();
 

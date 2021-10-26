@@ -1,9 +1,7 @@
 #ifndef _MODULE_H_
 #define _MODULE_H_
 
-
-#include "SString.h"
-
+#include "External/PugiXml/src/pugixml.hpp"
 
 class Application;
 class PhysBody;
@@ -18,7 +16,7 @@ public:
 
 	Application* App;
 
-	SString name;
+	std::string name;
 
 	Module(Application* parent, bool start_enabled = true) : App(parent), enabled(start_enabled)
 	{}
@@ -49,7 +47,7 @@ public:
 		}
 	}
 
-	virtual bool Init() 
+	virtual bool Init(pugi::xml_node&)
 	{
 		return true; 
 	}
@@ -61,17 +59,17 @@ public:
 
 	virtual UpdateStatus PreUpdate()
 	{
-		return UPDATE_CONTINUE;
+		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
 	virtual UpdateStatus Update()
 	{
-		return UPDATE_CONTINUE;
+		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
 	virtual UpdateStatus PostUpdate()
 	{
-		return UPDATE_CONTINUE;
+		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
 	virtual bool CleanUp() 

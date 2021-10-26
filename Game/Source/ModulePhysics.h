@@ -60,8 +60,9 @@ public:
 	ModulePhysics(Application* app, bool start_enabled = true);
 	~ModulePhysics();
 
+	bool Init(pugi::xml_node&);
 	bool Start();
-	UpdateStatus PreUpdate();
+	UpdateStatus PreUpdate() override;
 	UpdateStatus Update();
 	UpdateStatus PostUpdate();
 	bool CleanUp();

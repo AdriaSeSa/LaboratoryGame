@@ -23,11 +23,13 @@ public:
 	// Destructor
 	~ModuleScene();
 
+	bool Init(pugi::xml_node&);
+
 	// Called when the module is activated
 	// Loads the necessary textures for the map background
 	bool Start();
 
-	UpdateStatus PreUpdate();
+	UpdateStatus PreUpdate() override;
 
 	// Called at the middle of the application loop
 	// Updates the scene's background animations

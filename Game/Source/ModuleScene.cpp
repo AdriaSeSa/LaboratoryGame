@@ -1,18 +1,20 @@
-#include "ModuleScene.h"
-
-#include "Application.h"
 #include "Scene.h"
 
-#include "External/SDL/include/SDL.h"
 #include <time.h>
 
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "scene";
 }
 
 ModuleScene::~ModuleScene()
 {
+}
+
+bool ModuleScene::Init(pugi::xml_node& config)
+{
+	return true;
 }
 
 bool ModuleScene::Start()

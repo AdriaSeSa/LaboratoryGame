@@ -21,8 +21,8 @@ public:
 	ModuleInput(Application* app, bool start_enabled = true);
 	~ModuleInput();
 
-	bool Init();
-	UpdateStatus PreUpdate();
+	bool Init(pugi::xml_node&);
+	UpdateStatus PreUpdate() override;
 	bool CleanUp();
 
 	KEY_STATE GetKey(uint id) const

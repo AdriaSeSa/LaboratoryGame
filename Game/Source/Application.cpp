@@ -10,6 +10,7 @@ Application::Application()
 	physics = new ModulePhysics(this);
 	scene = new ModuleScene(this);
 	ui = new ModuleUI(this);
+	map = new ModuleMap(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -26,6 +27,7 @@ Application::Application()
 	AddModule(input);
 	AddModule(audio);
 	AddModule(ui);
+	AddModule(map);
 	
 	//Render
 	AddModule(renderer);
@@ -44,14 +46,32 @@ Application::~Application()
 
 bool Application::Init()
 {
+	pugi::xml_document configFile;
+	pugi::xml_node config;
+	pugi::xml_node configApp;
+
 	bool ret = true;
+
+	// L01: DONE 3: Load config from XML
+	config = LoadConfig(configFile);
+
+	if (config.empty() == false)
+	{
+		ret = true;
+		configApp = config.child("app");
+
+		// L01: DONE 4: Read the title from the config file
+		title = configApp.child("title").child_value();
+		organization = configApp.child("organization").child_value();
+	}
 
 	// Call Init() in all modules
 	p2List_item<Module*>* item = list_modules.getFirst();
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->Init();
+		ret = item->data->Init(config.child(item->data->name.c_str()));
+	
 		item = item->next;
 	}
 
@@ -65,7 +85,7 @@ bool Application::Init()
 			ret = item->data->Start();
 		item = item->next;
 	}
-	
+
 	return ret;
 }
 
@@ -103,6 +123,10 @@ UpdateStatus Application::Update()
 			item = item->next;
 		}
 
+		//// L02: DONE 1: This is a good place to call Load / Save methods
+		//if (loadGameRequested == true) LoadGame();
+		//if (saveGameRequested == true) SaveGame();
+
 		globalTime.Reset();
 	}
 
@@ -119,10 +143,62 @@ bool Application::CleanUp()
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
+
+	return ret;
+}
+
+pugi::xml_node Application::LoadConfig(pugi::xml_document& configFile) const
+{
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = configFile.load_file(CONFIG_FILENAME);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", CONFIG_FILENAME, result.description())
+	else ret = configFile.child("config");
+
 	return ret;
 }
 
 void Application::AddModule(Module* mod)
 {
 	list_modules.add(mod);
+}
+
+void Application::LoadGameRequest()
+{
+	// NOTE: We should check if SAVE_STATE_FILENAME actually exist
+	loadGameRequested = true;
+}
+
+// ---------------------------------------
+void Application::SaveGameRequest() const
+{
+	// NOTE: We should check if SAVE_STATE_FILENAME actually exist and... should we overwriten
+	saveGameRequested = true;
+}
+
+// ---------------------------------------
+// L02: TODO 5: Create a method to actually load an xml file
+// then call all the modules to load themselves
+bool Application::LoadGame()
+{
+	bool ret = false;
+
+	//...
+
+	loadGameRequested = false;
+
+	return ret;
+}
+
+// L02: TODO 7: Implement the xml save method for current state
+bool Application::SaveGame() const
+{
+	bool ret = true;
+
+	//...
+
+	saveGameRequested = false;
+
+	return ret;
 }

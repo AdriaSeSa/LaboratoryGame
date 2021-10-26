@@ -4,7 +4,6 @@
 #include "Module.h"
 #include "Globals.h"
 
-
 #include "SDL/include/SDL.h"
 
 #include <iostream>
@@ -31,6 +30,8 @@ class ModuleUI : public Module
 public:
 
 	ModuleUI(Application* app, bool start_enabled = true);
+
+	bool Init(pugi::xml_node&);
 
 	bool Start(); //	Initialize UI system
 

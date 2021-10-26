@@ -1,9 +1,9 @@
-#include "Globals.h"
 #include "Application.h"
-#include "ModuleRender.h"
+
 
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "renderer";
 	renderer = NULL;
 	camera.x = camera.y = 0;
 	camera.w = SCREEN_WIDTH;
@@ -17,7 +17,7 @@ ModuleRender::~ModuleRender()
 {}
 
 // Called before render is available
-bool ModuleRender::Init()
+bool ModuleRender::Init(pugi::xml_node& config)
 {
 	LOG("Creating Renderer context");
 	bool ret = true;

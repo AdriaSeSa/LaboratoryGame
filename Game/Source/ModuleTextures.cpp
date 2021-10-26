@@ -1,6 +1,4 @@
-#include "Globals.h"
 #include "Application.h"
-#include "ModuleTextures.h"
 
 #include "SDL_image/include/SDL_image.h"
 
@@ -8,6 +6,7 @@
 
 ModuleTextures::ModuleTextures(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
+	name = "textures";
 }
 
 // Destructor
@@ -15,7 +14,7 @@ ModuleTextures::~ModuleTextures()
 {}
 
 // Called before render is available
-bool ModuleTextures::Init()
+bool ModuleTextures::Init(pugi::xml_node& config)
 {
 	LOG("Init Image library");
 	bool ret = true;

@@ -178,7 +178,18 @@ void Application::SaveGameRequest() const
 }
 
 // ---------------------------------------
-// L02: TODO 5: Create a method to actually load an xml file
+const char* Application::GetTitle() const
+{
+	return title.c_str();
+}
+
+// ---------------------------------------
+const char* Application::GetOrganization() const
+{
+	return organization.c_str();
+}
+
+// ---------------------------------------
 // then call all the modules to load themselves
 bool Application::LoadGame()
 {

@@ -57,6 +57,8 @@ public:
 	void LoadGameRequest();
 	void SaveGameRequest() const;
 
+	const char* GetTitle() const;
+	const char* GetOrganization() const;
 
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 

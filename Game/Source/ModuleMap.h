@@ -118,13 +118,13 @@ public:
     virtual ~ModuleMap();
 
     // Called before render is available
-    bool Init(pugi::xml_node& conf);
+    bool Init(pugi::xml_node& conf) override;
 
     // Called each loop iteration
-    void Draw();
+    UpdateStatus PostUpdate() override;
 
     // Called before quitting
-    bool CleanUp();
+    bool CleanUp() override;
 
     // Load new map
     bool Load(const char* path);

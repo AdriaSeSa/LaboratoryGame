@@ -52,18 +52,18 @@ UpdateStatus ModuleRender::Update()
 {	
 	int speed = 3;
 
-	//if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	//	App->renderer->camera.y += speed;
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+		App->renderer->camera.y -= speed;
 
-	//if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	//	App->renderer->camera.y -= speed;
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		App->renderer->camera.y += speed;
 
-	//if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	//	App->renderer->camera.x += speed;
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		App->renderer->camera.x -= speed;
 
-	//if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	//	App->renderer->camera.x -= speed;
-	//
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+		App->renderer->camera.x += speed;
+	
 	return UPDATE_CONTINUE;
 }
 
@@ -83,7 +83,7 @@ UpdateStatus ModuleRender::PostUpdate()
 		{
 			//SDL_SetTextureAlphaMod(renderObject.texture, 100);
 
-			if (SDL_RenderCopyEx(renderer, renderObject.texture, renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
+			if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
 			{
 				LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 			}
@@ -102,7 +102,7 @@ UpdateStatus ModuleRender::PostUpdate()
 	// Draw Special Layer
 	for each (auto renderObject in layers[3])
 	{
-		if (SDL_RenderCopyEx(renderer, renderObject.texture, renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
+		if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
 		{
 			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		}
@@ -147,15 +147,15 @@ void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_R
 
 	renderObject.texture = texture;
 	renderObject.rotation = rotation;
-	renderObject.section = section;
+	renderObject.section = *section;
 	renderObject.orderInLayer = orderInlayer;
 
 	if (layer == 2 || layer == 3) speed = 0;	//If texture in UI layer, it moves alongside the camera. Therefor, speed = 0;
 
-	renderObject.renderRect.x = (int)(-camera.x * speed) + pos.x * SCREEN_SIZE;
-	renderObject.renderRect.y = (int)(-camera.y * speed) + pos.y * SCREEN_SIZE;
+	renderObject.renderRect.x = (int)(-camera.x * speed) + pos.x * App->window->scale;
+	renderObject.renderRect.y = (int)(-camera.y * speed) + pos.y * App->window->scale;
 
-	if (section != nullptr)
+	if (section->w != 0 && section->h != 0)
 	{
 		renderObject.renderRect.w = section->w;
 		renderObject.renderRect.h = section->h;
@@ -166,8 +166,8 @@ void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_R
 		SDL_QueryTexture(texture, nullptr, nullptr, &renderObject.renderRect.w, &renderObject.renderRect.h);
 	}
 
-	renderObject.renderRect.w *= scale;
-	renderObject.renderRect.h *= scale;
+	renderObject.renderRect.w *= scale * App->window->scale;
+	renderObject.renderRect.h *= scale * App->window->scale;
 
 	renderObject.flip = flip;
 
@@ -178,13 +178,13 @@ void ModuleRender::AddTextureRenderQueue(RenderObject object)
 {
 	object.speed = defaultSpeed;
 
-	object.renderRect.x = (int)(-camera.x * object.speed) + object.renderRect.x * SCREEN_SIZE;
-	object.renderRect.y = (int)(-camera.y * object.speed) + object.renderRect.y * SCREEN_SIZE;
+	object.renderRect.x = (int)(-camera.x * object.speed) + object.renderRect.x * App->window->scale;
+	object.renderRect.y = (int)(-camera.y * object.speed) + object.renderRect.y * App->window->scale;
 
-	if (object.section != nullptr)
+	if (object.section.w != 0 && object.section.h != 0)
 	{
-		object.renderRect.w = object.section->w;
-		object.renderRect.h = object.section->h;
+		object.renderRect.w = object.section.w;
+		object.renderRect.h = object.section.h;
 	}
 	else
 	{
@@ -192,8 +192,8 @@ void ModuleRender::AddTextureRenderQueue(RenderObject object)
 		SDL_QueryTexture(object.texture, nullptr, nullptr, &object.renderRect.w, &object.renderRect.h);
 	}
 
-	object.renderRect.w *= object.scale;
-	object.renderRect.h *= object.scale;
+	object.renderRect.w *= object.scale * App->window->scale;
+	object.renderRect.h *= object.scale * App->window->scale;
 
 	layers[object.layer].push_back(object);
 }

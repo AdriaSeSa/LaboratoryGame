@@ -46,6 +46,9 @@
     <ClCompile Include="Source\ModuleWindow.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneGame.cpp">
+      <Filter>SourceFiles\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -123,6 +126,9 @@
     <ClInclude Include="Source\ModuleAudio.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Source\SceneGame.h">
+      <Filter>HeaderFiles\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -157,6 +163,12 @@
     </Filter>
     <Filter Include="SourceFiles\Modules">
       <UniqueIdentifier>{86ee676a-7b89-4de9-a6b3-b56b9a097b85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Scenes">
+      <UniqueIdentifier>{d7955c90-9696-4f9c-8eaf-0a93662eeb0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Scenes">
+      <UniqueIdentifier>{cccfa3ea-b94c-4f09-8cff-14f5f125f070}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

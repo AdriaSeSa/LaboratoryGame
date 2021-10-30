@@ -180,19 +180,6 @@ b2Vec2 ModulePhysics::Perp(b2Vec2 vec1)
 	return perpend;
 };
 
-//b2Vec2 ModulePhysics::Normalise(b2Vec2 vecToNormalise) 
-//{
-//	float modulo;
-//	b2Vec2 vecNormalized;
-//
-//	modulo = sqrt(pow(vecToNormalise.x, 2) + pow(vecToNormalise.y, 2));
-//
-//	vecNormalized.x = vecToNormalise.x / modulo;
-//	vecNormalized.y = vecToNormalise.y / modulo;
-//
-//	return vecNormalized;
-//}
-
 void ModulePhysics::DotProductAngle(b2Vec2 v1, b2Vec2 v2, float& angle) 
 {
 	int dot;

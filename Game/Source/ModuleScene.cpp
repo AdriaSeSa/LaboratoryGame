@@ -1,11 +1,12 @@
-#include "Scene.h"
-
+#include "SceneGame.h"
 #include <time.h>
 
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	name = "scene";
+
+	scenes[0] = new SceneGame(app);
 }
 
 ModuleScene::~ModuleScene()
@@ -19,8 +20,7 @@ bool ModuleScene::Init(pugi::xml_node& config)
 
 bool ModuleScene::Start()
 {
-
-	currentScene = nullptr;
+	currentScene = scenes[0];
 
 	bool ret = true;
 
@@ -69,7 +69,6 @@ UpdateStatus ModuleScene::Update()
 		ChangeCurrentScene(4, 0);
 	}
 
-
 	if (currentScene == nullptr)
 	{
 		return UpdateStatus::UPDATE_CONTINUE;
@@ -102,8 +101,6 @@ bool ModuleScene::ChangeCurrentScene(uint index, int frames)
 
 	return true;
 }
-
-
 
 bool ModuleScene::CleanUp()
 {

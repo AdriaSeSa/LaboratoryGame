@@ -13,8 +13,6 @@ ModuleMap::~ModuleMap()
 // L06: TODO 7: Ask for the value of a custom property
 int Properties::GetProperty(const char* value, int defaultValue) const
 {
-	//...
-
 	ListItem<Property*>* item = list.start;
 
 	while (item)
@@ -39,9 +37,9 @@ bool ModuleMap::Init(pugi::xml_node& config)
 }
 
 // Draw the map (all requried layers)
-void ModuleMap::Draw()
+UpdateStatus ModuleMap::PostUpdate()
 {
-	if (mapLoaded == false) return;
+	if (mapLoaded == false) return UpdateStatus::UPDATE_CONTINUE;
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	ListItem<MapLayer*>* mapLayerItem;
@@ -71,8 +69,8 @@ void ModuleMap::Draw()
 
 						App->renderer->AddTextureRenderQueue(tileset->texture,
 							iPoint(pos.x,
-							pos.y),
-							&r);
+								pos.y),
+							&r, 1, 0, 0.5f);
 					}
 
 				}
@@ -81,6 +79,8 @@ void ModuleMap::Draw()
 
 		mapLayerItem = mapLayerItem->next;
 	}
+
+	return UpdateStatus::UPDATE_CONTINUE;
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions

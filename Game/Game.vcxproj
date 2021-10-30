@@ -102,6 +102,7 @@
     <ClCompile Include="Source\ModuleUI.cpp" />
     <ClCompile Include="Source\ModuleWindow.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
+    <ClCompile Include="Source\SceneGame.cpp" />
     <ClInclude Include="Source\Animation.h" />
     <ClInclude Include="Source\Application.h" />
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="Source\p2Point.h" />
     <ClInclude Include="Source\Point.h" />
     <ClInclude Include="Source\Scene.h" />
+    <ClInclude Include="Source\SceneGame.h" />
     <ClInclude Include="Source\SString.h" />
     <ClInclude Include="Source\Timer.h" />
   </ItemGroup>

@@ -48,22 +48,15 @@ void GameObject::Update()
 
 void GameObject::PostUpdate()
 {
-	// DIbujar texturas
+	// Dibujar texturas
 	for (int i = 0; i < MAX_GAMEOBJECT_TEXTURES; i++)
 	{
 		if (renderObjects[i].texture != nullptr)
 		{
-			if (pBody != nullptr && renderObjects[i].followPhysBody)
-			{
-				renderObjects[i].renderRect.x = GetDrawPos().x;
-				renderObjects[i].renderRect.y = GetDrawPos().y;
-
-				if (renderObjects[i].rotationEnabled)
-				{
-					renderObjects[i].rotation = GetDegreeAngle();
-				}
-			}
-
+			renderObjects[i].renderRect.x = GetDrawPos().x;
+			renderObjects[i].renderRect.y = GetDrawPos().y;
+			renderObjects[i].rotation = GetDegreeAngle();
+			
 			_app->renderer->AddTextureRenderQueue(renderObjects[i]);
 		}
 	}
@@ -88,7 +81,7 @@ iPoint GameObject::GetDrawPos()
 	if (this->pBody == nullptr)
 	{
 		LOG("GameObject has no PhysBody!"); 
-		return iPoint(0, 0);
+		return this->position;
 	}
 
 	b2Vec2 pos;
@@ -102,9 +95,52 @@ iPoint GameObject::GetDrawPos()
 
 float GameObject::GetDegreeAngle()
 {
-	float agle = 0;
+	if (pBody != nullptr)
+	{
+		float agle = 0;
 
-	agle = (pBody->body->GetAngle() * 180) / b2_pi;
+		agle = (pBody->body->GetAngle() * 180) / b2_pi;
 
-	return agle;
+		return agle;
+	}
+	
+	return this->rotation;
+}
+
+iPoint GameObject::GetPosition()
+{
+	if (pBody != nullptr)
+	{
+		b2Vec2 position;
+
+		position = pBody->body->GetPosition();
+
+		return { (int)position.x, (int)position.y };
+	}
+
+	return this->position;
+}
+
+void GameObject::SetPosition(iPoint pos)
+{
+	if (pBody != nullptr)
+	{
+		pBody->body->SetTransform(b2Vec2((PIXELS_TO_METER(pos.x)), (PIXELS_TO_METER(pos.y))), pBody->body->GetAngle());
+	}
+	else
+	{
+		this->position = pos;
+	}
+}
+
+void GameObject::SetRotation(float angle)
+{
+	if (pBody != nullptr)
+	{
+		pBody->body->SetTransform(pBody->body->GetPosition(), DEGTORAD * angle);
+	}
+	else
+	{
+		this->rotation = angle;
+	}
 }

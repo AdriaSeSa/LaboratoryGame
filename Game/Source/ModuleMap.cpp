@@ -336,7 +336,7 @@ bool ModuleMap::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		// L03: DONE 4: Load Tileset image
 		std::string imageS = image.attribute("source").as_string();
 	
-		std::string tmp = folder+ imageS;
+		std::string tmp = folder + imageS;
 		set->texture = App->textures->Load(tmp);
 	}
 

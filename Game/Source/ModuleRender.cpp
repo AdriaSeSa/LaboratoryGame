@@ -83,10 +83,20 @@ UpdateStatus ModuleRender::PostUpdate()
 		{
 			//SDL_SetTextureAlphaMod(renderObject.texture, 100);
 
-			if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
+			if (renderObject.section.w == 0 || renderObject.section.h == 0)
 			{
-				LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+				if (SDL_RenderCopyEx(renderer, renderObject.texture, nullptr, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
+				{
+					LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+				}
 			}
+			else
+			{
+				if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
+				{
+					LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+				}
+			}			
 		}
 	}
 

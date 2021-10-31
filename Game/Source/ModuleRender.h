@@ -16,9 +16,6 @@ struct RenderObject
 	float orderInLayer = 0.0f;
 	float speed = 1.0f;
 	float scale = 1.0f;
-
-	bool rotationEnabled = true;
-	bool followPhysBody = true;
 };
 
 struct RenderRect

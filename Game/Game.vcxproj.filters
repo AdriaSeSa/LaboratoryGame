@@ -49,6 +49,9 @@
     <ClCompile Include="Source\SceneGame.cpp">
       <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BackGround.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -129,6 +132,9 @@
     <ClInclude Include="Source\SceneGame.h">
       <Filter>HeaderFiles\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="Source\BackGround.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -169,6 +175,12 @@
     </Filter>
     <Filter Include="HeaderFiles\Scenes">
       <UniqueIdentifier>{cccfa3ea-b94c-4f09-8cff-14f5f125f070}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects">
+      <UniqueIdentifier>{d6b2865a-7ace-4695-aacf-a6ef728508d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameObjects">
+      <UniqueIdentifier>{7e8d42d7-1222-41af-8828-f8fda5db251b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

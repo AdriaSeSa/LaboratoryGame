@@ -37,7 +37,40 @@ public:
 
 	iPoint GetDrawPos();
 
+	/// <summary>
+	/// Si exixte pBody devuelve angluo de pBody, si no el de GameObject 
+	/// </summary>
+	/// <returns>angulo en degradado</returns>
 	float GetDegreeAngle();
+	
+	/// <summary>
+	/// Si exixte pBody devuelve position de pBody, si no el de GameObject
+	/// </summary>
+	/// <returns>position en pixel</returns>
+	iPoint GetPosition();
+
+	/// <summary>
+	/// Si exixte pBody, cambia la position de pBody, si no la de GameObject
+	/// </summary>
+	/// <param name="pos">= position in pixel</param>
+	void SetPosition(iPoint pos);
+
+	/// <summary>
+	/// Si exixte pBody, cambia el amgulo de pBody, si no el de GameObject
+	/// </summary>
+	/// <param name="angle">= angle in deg</param>
+	void SetRotation(float angle);
+
+private :
+	iPoint position = { 0,0 };
+
+	float rotation = 0;
+
+protected:
+
+	PhysBody* pBody = nullptr;
+
+	Application* _app = nullptr;
 
 public:
 
@@ -46,12 +79,6 @@ public:
 	std::string tag;
 
 	RenderObject renderObjects[MAX_GAMEOBJECT_TEXTURES];
-
-	PhysBody* pBody = nullptr;
-
-	PhysBody* pBody2 = nullptr;
-
-	Application* _app = nullptr;
 
 	bool pendingToDelete = false;
 };

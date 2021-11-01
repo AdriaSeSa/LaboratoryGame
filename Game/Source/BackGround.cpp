@@ -11,12 +11,12 @@ BackGround::BackGround(std::string name, std::string tag, Application* app) :Gam
 
 void BackGround::PostUpdate()
 {
-	for (int i = 0; i < WindowHeight; i += renderObjects[0].renderRect.h)
+	for (int i = 0; i < WindowHeight; i += renderObjects[0].destRect.h)
 	{
-		for (int j = 0; j < WindowWidth; j += renderObjects[0].renderRect.w)
+		for (int j = 0; j < WindowWidth; j += renderObjects[0].destRect.w)
 		{
-			renderObjects[0].renderRect.x = j;
-			renderObjects[0].renderRect.y = i;
+			renderObjects[0].destRect.x = j;
+			renderObjects[0].destRect.y = i;
 
 			_app->renderer->AddTextureRenderQueue(renderObjects[0]);
 		}

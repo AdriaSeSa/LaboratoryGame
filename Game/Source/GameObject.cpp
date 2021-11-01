@@ -53,8 +53,8 @@ void GameObject::PostUpdate()
 	{
 		if (renderObjects[i].texture != nullptr)
 		{
-			renderObjects[i].renderRect.x = GetDrawPosition().x;
-			renderObjects[i].renderRect.y = GetDrawPosition().y;
+			renderObjects[i].destRect.x = GetDrawPosition().x;
+			renderObjects[i].destRect.y = GetDrawPosition().y;
 			renderObjects[i].rotation = GetDegreeAngle();
 			
 			_app->renderer->AddTextureRenderQueue(renderObjects[i]);
@@ -149,7 +149,7 @@ void GameObject::SetRotation(float angle)
 void GameObject::InitRenderObjectWithXml()
 {
 	renderObjects[0].texture = _app->textures->Load(name, true);
-	renderObjects[0].renderRect.w = _app->textures->config.child(name.c_str()).attribute("width").as_int();
-	renderObjects[0].renderRect.h = _app->textures->config.child(name.c_str()).attribute("height").as_int();
+	renderObjects[0].destRect.w = _app->textures->config.child(name.c_str()).attribute("width").as_int();
+	renderObjects[0].destRect.h = _app->textures->config.child(name.c_str()).attribute("height").as_int();
 	renderObjects[0].layer = _app->textures->config.child(name.c_str()).attribute("layer").as_int(0);
 }

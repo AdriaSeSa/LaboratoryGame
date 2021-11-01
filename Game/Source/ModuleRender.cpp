@@ -9,7 +9,7 @@ ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, s
 	camera.w = SCREEN_WIDTH;
 	camera.h = SCREEN_HEIGHT;
 
-	layers.resize(4);
+	renderLayers.resize(4);
 }
 
 // Destructor
@@ -73,19 +73,21 @@ UpdateStatus ModuleRender::Update()
 UpdateStatus ModuleRender::PostUpdate()
 {
 	// Sorting layers
-	for (int i = 0; i < layers.size(); i++)
+	for (int i = 0; i < renderLayers.size(); i++)
 	{
-		SortRenderObjects(layers[i]);
+		SortRenderObjects(renderLayers[i]);
 	}
 
 	//Draw
 	for (int i = 0; i < 3; i++)
 	{
-		for each (auto renderObject in layers[i])
+		for each (auto renderObject in renderLayers[i])
 		{
 			//SDL_SetTextureAlphaMod(renderObject.texture, 100);
 
-			if (renderObject.section.w == 0 || renderObject.section.h == 0)
+			renderObject.Draw(renderer);
+
+			/*if (renderObject.section.w == 0 || renderObject.section.h == 0)
 			{
 				if (SDL_RenderCopyEx(renderer, renderObject.texture, nullptr, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
 				{
@@ -98,27 +100,27 @@ UpdateStatus ModuleRender::PostUpdate()
 				{
 					LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 				}
-			}			
+			}			*/
 		}
 	}
 
 	// Draw Rects
-	for (int i = 0; i < rects.size(); i++)
-	{
-		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-		SDL_SetRenderDrawColor(renderer, rects[i].color.r, rects[i].color.g, rects[i].color.b, rects[i].color.a);
+	//for (int i = 0; i < rects.size(); i++)
+	//{
+	//	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+	//	SDL_SetRenderDrawColor(renderer, rects[i].color.r, rects[i].color.g, rects[i].color.b, rects[i].color.a);
 
-		SDL_RenderFillRect(renderer, &rects[i].rect);
-	}
+	//	SDL_RenderFillRect(renderer, &rects[i].rect);
+	//}
 
 	// Draw Special Layer
-	for each (auto renderObject in layers[3])
-	{
-		if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
-		{
-			LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-		}
-	}
+	//for each (auto renderObject in layers[3])
+	//{
+	//	if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
+	//	{
+	//		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+	//	}
+	//}
 
 	if (App->isDebug)
 	{
@@ -129,10 +131,10 @@ UpdateStatus ModuleRender::PostUpdate()
 
 	for (int i = 0; i < 4; i++)
 	{
-		layers[i].clear();
+		renderLayers[i].clear();
 	}
 
-	rects.clear();
+	//rects.clear();
 
 	return UPDATE_CONTINUE;
 }
@@ -153,71 +155,63 @@ bool ModuleRender::CleanUp()
 
 void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_Rect* section, float scale, int layer, float orderInlayer, float rotation, SDL_RendererFlip flip, float speed)
 {
-	RenderObject renderObject;
+	SDL_Rect destRect = { 0,0 };
 
-	speed = defaultSpeed;
+	RenderTexture renderObject;
 
-	renderObject.texture = texture;
-	renderObject.rotation = rotation;
-	renderObject.section = *section;
-	renderObject.orderInLayer = orderInlayer;
+	renderObject.Init(texture, destRect, *section, layer, orderInlayer, flip, rotation, scale, speed);
 
-	if (layer == 2 || layer == 3) speed = 0;	//If texture in UI layer, it moves alongside the camera. Therefor, speed = 0;
+	if (layer == 2 || layer == 3) renderObject.speedRegardCamera = 0;	//If texture in UI layer, it moves alongside the camera. Therefor, speed = 0;
 
-	renderObject.renderRect.x = (int)(-camera.x * speed) + pos.x * App->window->scale;
-	renderObject.renderRect.y = (int)(-camera.y * speed) + pos.y * App->window->scale;
+	renderObject.destRect.x = (int)(-camera.x * speed) + pos.x * App->window->scale;
+	renderObject.destRect.y = (int)(-camera.y * speed) + pos.y * App->window->scale;
 
 	if (section->w != 0 && section->h != 0)
 	{
-		renderObject.renderRect.w = section->w;
-		renderObject.renderRect.h = section->h;
+		renderObject.destRect.w = section->w;
+		renderObject.destRect.h = section->h;
 	}
 	else
 	{
 		// Collect the texture size into rect.w and rect.h variables
-		SDL_QueryTexture(texture, nullptr, nullptr, &renderObject.renderRect.w, &renderObject.renderRect.h);
+		SDL_QueryTexture(texture, nullptr, nullptr, &renderObject.destRect.w, &renderObject.destRect.h);
 	}
 
-	renderObject.renderRect.w *= scale * App->window->scale;
-	renderObject.renderRect.h *= scale * App->window->scale;
+	renderObject.destRect.w *= scale * App->window->scale;
+	renderObject.destRect.h *= scale * App->window->scale;
 
-	renderObject.flip = flip;
-
-	layers[layer].push_back(renderObject);
+	renderLayers[layer].push_back(renderObject);
 }
 
-void ModuleRender::AddTextureRenderQueue(RenderObject object)
+void ModuleRender::AddTextureRenderQueue(RenderTexture object)
 {
-	object.speed = defaultSpeed;
-
-	object.renderRect.x = (int)(-camera.x * object.speed) + object.renderRect.x * App->window->scale;
-	object.renderRect.y = (int)(-camera.y * object.speed) + object.renderRect.y * App->window->scale;
+	object.destRect.x = (int)(-camera.x * object.speedRegardCamera) + object.destRect.x * App->window->scale;
+	object.destRect.y = (int)(-camera.y * object.speedRegardCamera) + object.destRect.y * App->window->scale;
 
 	if (object.section.w != 0 && object.section.h != 0)
 	{
-		object.renderRect.w = object.section.w;
-		object.renderRect.h = object.section.h;
+		object.destRect.w = object.section.w;
+		object.destRect.h = object.section.h;
 	}
 	else
 	{
 		// Collect the texture size into rect.w and rect.h variables
-		SDL_QueryTexture(object.texture, nullptr, nullptr, &object.renderRect.w, &object.renderRect.h);
+		SDL_QueryTexture(object.texture, nullptr, nullptr, &object.destRect.w, &object.destRect.h);
 	}
 
-	object.renderRect.w *= object.scale * App->window->scale;
-	object.renderRect.h *= object.scale * App->window->scale;
+	object.destRect.w *= object.scale * App->window->scale;
+	object.destRect.h *= object.scale * App->window->scale;
 
-	layers[object.layer].push_back(object);
+	renderLayers[object.layer].push_back(object);
 }
 
-void ModuleRender::AddRectRenderQueue(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera)
+void ModuleRender::AddRectRenderQueue(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a, int layer, float orderInlayer, bool filled, float speed)
 {
 	RenderRect renderR;
 
-	renderR.rect = rect;
-	renderR.color = { r,g,b,a };
-	
-	rects.push_back(renderR);
+	renderR.Init(rect, { r,g,b,a }, filled, layer, orderInlayer, speed);
+
+	renderLayers[layer].push_back(renderR);
 }
 
 void ModuleRender::SortRenderObjects(vector<RenderObject>& obj)

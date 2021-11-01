@@ -1,5 +1,5 @@
 #pragma once
-#include "Application.h"
+#include "SDL/include/SDL.h"
 
 enum RenderType
 {
@@ -12,15 +12,10 @@ enum RenderType
 class RenderObject
 {
 protected:
-	RenderObject(SDL_Rect destRect, RenderType type, int layer, float orderInLayer, float scale, float speedRegardCamera)
-	{
-		this->destRect = destRect;
-		this->type = type;
-		this->layer = layer;
-		this->orderInLayer = orderInLayer;
-		this->scale = scale;
-		this->speedRegardCamera = speedRegardCamera;
-	};
+	RenderObject() {};
+
+public:
+	virtual void Draw(SDL_Renderer* renderer) {};
 
 public:
 
@@ -36,14 +31,39 @@ class RenderTexture :public RenderObject
 {
 public:
 
-	RenderTexture(SDL_Texture* texture, SDL_Rect destRect, SDL_Rect section, int layer = 0, float orderInLayer = 0.0f,
+	RenderTexture() {};
+
+	void Init(SDL_Texture* texture, SDL_Rect destRect, SDL_Rect section, int layer = 0, float orderInLayer = 0.0f,
 		SDL_RendererFlip flip = SDL_FLIP_NONE, float rotation = 0.0f, float scale = 1.0f, float speedRegardCamera = 1.0f)
-		:RenderObject(destRect, RenderType::RENDER_TEXTURE, layer, orderInLayer, scale, speedRegardCamera)
 	{
 		this->texture = texture;
 		this->section = section;
 		this->flip = flip;
 		this->rotation = rotation;
+		this->destRect = destRect;
+		this->type = RENDER_TEXTURE;
+		this->layer = layer;
+		this->orderInLayer = orderInLayer;
+		this->scale = scale;
+		this->speedRegardCamera = speedRegardCamera;		
+	}
+
+	void Draw(SDL_Renderer* renderer) override
+	{
+		if (section.w == 0 || section.h == 0)
+		{
+			if (SDL_RenderCopyEx(renderer, texture, nullptr, &destRect, rotation, NULL, flip) != 0)
+			{
+				LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			}
+		}
+		else
+		{
+			if (SDL_RenderCopyEx(renderer, texture, &section, &destRect, rotation, NULL, flip) != 0)
+			{
+				LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+			}
+		}
 	}
 
 	SDL_Texture* texture = nullptr;
@@ -55,11 +75,36 @@ public:
 class RenderRect :public RenderObject
 {
 public:
-	RenderRect(SDL_Rect destRect, SDL_Color color = { 0,0,0,255 }, int layer = 0, float orderInLayer = 0.0f,
-		float scale = 1.0f, float speedRegardCamera = 1.0f) :RenderObject(destRect, RenderType::RENDER_RECT, layer, orderInLayer, scale, speedRegardCamera)
-	{
+	RenderRect() {};
+
+	void Init(SDL_Rect destRect, SDL_Color color = { 0,0,0,255 }, bool filled = false, int layer = 0, float orderInLayer = 0.0f,
+		float speedRegardCamera = 1.0f){
 		this->color = color;
+		this->filled = filled;
+		this->destRect = destRect;
+		this->type = RENDER_RECT;
+		this->layer = layer;
+		this->orderInLayer = orderInLayer;
+		this->scale = scale;
+		this->speedRegardCamera = speedRegardCamera;
+	}
+
+	void Draw(SDL_Renderer* renderer) override
+	{
+		SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+		SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+
+		if (filled)
+		{
+			SDL_RenderFillRect(renderer, &destRect);
+		}
+		else
+		{
+			SDL_RenderDrawRect(renderer, &destRect);
+		}
 	}
 
 	SDL_Color color;
+
+	bool filled = false;
 };

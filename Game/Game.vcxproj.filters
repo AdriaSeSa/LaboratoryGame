@@ -47,7 +47,10 @@
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneGame.cpp">
-      <Filter>SourceFiles\Scenes</Filter>
+      <Filter>SourceFiles\Game\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Spike.cpp">
+      <Filter>SourceFiles\Game\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Source\BackGround.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
@@ -133,7 +136,10 @@
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneGame.h">
-      <Filter>HeaderFiles\Scenes</Filter>
+      <Filter>HeaderFiles\Game\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Spike.h">
+      <Filter>HeaderFiles\Game\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Source\BackGround.h">
       <Filter>HeaderFiles\GameObjects</Filter>
@@ -155,9 +161,6 @@
     <Filter Include="SourceFiles">
       <UniqueIdentifier>{dcda35fe-beb0-4a8f-8e00-34767babff64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HeaderFiles\Utils">
-      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="SourceFiles\Application">
       <UniqueIdentifier>{ed14c448-6e78-4024-afa3-ef16324c8227}</UniqueIdentifier>
     </Filter>
@@ -176,17 +179,26 @@
     <Filter Include="SourceFiles\Modules">
       <UniqueIdentifier>{86ee676a-7b89-4de9-a6b3-b56b9a097b85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SourceFiles\Scenes">
-      <UniqueIdentifier>{d7955c90-9696-4f9c-8eaf-0a93662eeb0e}</UniqueIdentifier>
+    <Filter Include="HeaderFiles\Utils">
+      <UniqueIdentifier>{2cad778a-d356-48b0-9fee-587f1bbb187e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HeaderFiles\Scenes">
+    <Filter Include="HeaderFiles\Game">
+      <UniqueIdentifier>{cbe25b5e-219c-4ffb-a37f-445dcf8fa253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Game\Scenes">
       <UniqueIdentifier>{cccfa3ea-b94c-4f09-8cff-14f5f125f070}</UniqueIdentifier>
     </Filter>
-    <Filter Include="HeaderFiles\GameObjects">
-      <UniqueIdentifier>{d6b2865a-7ace-4695-aacf-a6ef728508d4}</UniqueIdentifier>
+    <Filter Include="SourceFiles\Game">
+      <UniqueIdentifier>{92e2117b-f6de-4402-aeff-36be04a4faf3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SourceFiles\GameObjects">
-      <UniqueIdentifier>{7e8d42d7-1222-41af-8828-f8fda5db251b}</UniqueIdentifier>
+    <Filter Include="SourceFiles\Game\Scenes">
+      <UniqueIdentifier>{d7955c90-9696-4f9c-8eaf-0a93662eeb0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\Game\GameObjects">
+      <UniqueIdentifier>{3c00c825-0ca7-42cb-adcf-10380d14575b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\Game\GameObjects">
+      <UniqueIdentifier>{6ec0b2c8-9daf-43b6-9088-d02413d4ec8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 
 class BackGround;
 class Saw;
+class Spike;
 
 class SceneGame :  public Scene
 {
@@ -20,5 +21,6 @@ public:
 public:
 	BackGround* backGround;
 	Saw* saw;
+	Spike* testSpike;
 };
 

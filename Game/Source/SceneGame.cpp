@@ -1,6 +1,7 @@
 #include "SceneGame.h"
 #include "BackGround.h"
 #include "Saw.h"
+#include "Spike.h"
 
 SceneGame::SceneGame(Application* app) :Scene(app)
 {
@@ -13,9 +14,11 @@ bool SceneGame::Start()
 
 	backGround = new BackGround("backGround1", "BackGround", _app);
 	saw = new Saw("saw", "Saw", _app);
+	testSpike = new Spike({ 100,200 }, 270, "spike", "Spike", _app);
 
 	gameObjects.add(backGround);
 	gameObjects.add(saw);
+	gameObjects.add(testSpike);
 
 	return true;
 }

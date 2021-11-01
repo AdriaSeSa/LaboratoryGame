@@ -53,10 +53,10 @@
       <Filter>SourceFiles\Game\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Source\BackGround.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
+      <Filter>SourceFiles\Game\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Saw.cpp">
-      <Filter>SourceFiles\GameObjects</Filter>
+      <Filter>SourceFiles\Game\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,10 +142,10 @@
       <Filter>HeaderFiles\Game\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Source\BackGround.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
+      <Filter>HeaderFiles\Game\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Source\Saw.h">
-      <Filter>HeaderFiles\GameObjects</Filter>
+      <Filter>HeaderFiles\Game\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

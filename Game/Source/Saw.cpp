@@ -1,7 +1,7 @@
 #include "Saw.h"
 
 Saw::Saw(std::string name, std::string tag, Application* app) :GameObject(name, tag, app)
-{
+{	
 	// Init renderObject
 	InitRenderObjectWithXml();
 

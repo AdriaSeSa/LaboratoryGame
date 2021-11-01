@@ -152,11 +152,13 @@ void ModuleMap::LoadLayerMeta()
 				for (int y = 0; y < mapLayerItem->data->height; y++)
 				{
 					// L04: DONE 9: Complete the draw function
-					int gid = mapLayerItem->data->Get(x, y);
+					uint gid = mapLayerItem->data->Get(x, y);
 
 					if (gid > 0) 
 					{
 						MapObject obj;
+
+						//printf_s("%d\n",gid);
 
 						if (gid > 3221225470)
 						{
@@ -422,7 +424,7 @@ bool ModuleMap::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	int i = 0;
 	for (tile = node.child("data").child("tile"); tile && ret; tile = tile.next_sibling("tile"))
 	{
-		layer->data[i] = tile.attribute("gid").as_int();
+		layer->data[i] = tile.attribute("gid").as_uint();
 		i++;
 	}
 

@@ -70,6 +70,7 @@ public:
 	PhysBody* CreateCircle(int x, int y, int radius, GameObject* gameObject = nullptr, bool isSensor = false);
 	PhysBody* CreateRectangle(int x, int y, int width, int height);
 	PhysBody* CreateRectangleSensor(iPoint pos, int width, int height);
+	PhysBody* CreateLine(b2Vec2 startPos, b2Vec2 dir);
 	PhysBody* CreateChainObj(int x, int y, int* points, int size, bool loop);
 	b2Vec2 Perp(b2Vec2 vec1);
 	/*b2Vec2 Normalise(b2Vec2 vecToNormalise);*/

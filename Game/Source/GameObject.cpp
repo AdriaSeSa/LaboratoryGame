@@ -151,4 +151,5 @@ void GameObject::InitRenderObjectWithXml()
 	renderObjects[0].texture = _app->textures->Load(name, true);
 	renderObjects[0].renderRect.w = _app->textures->config.child(name.c_str()).attribute("width").as_int();
 	renderObjects[0].renderRect.h = _app->textures->config.child(name.c_str()).attribute("height").as_int();
+	renderObjects[0].layer = _app->textures->config.child(name.c_str()).attribute("layer").as_int(0);
 }

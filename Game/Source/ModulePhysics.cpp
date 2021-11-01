@@ -130,6 +130,34 @@ PhysBody* ModulePhysics::CreateRectangleSensor(iPoint pos, int width, int height
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateLine(b2Vec2 startPos, b2Vec2 dir)
+{
+	b2Vec2* p = new b2Vec2[2];
+	p[0] = { 0,0 };
+	p[1] = { PIXELS_TO_METER(dir.x), PIXELS_TO_METER(dir.y) };
+
+	PhysBody* pbody = new PhysBody();
+	b2BodyDef body;
+	body.type = b2_staticBody;
+	body.position.Set(PIXELS_TO_METER(startPos.x), PIXELS_TO_METER(startPos.y));
+
+	pbody->body = world->CreateBody(&body);
+
+	b2ChainShape shape;
+	shape.CreateChain(p, 2);
+
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	pbody->body->CreateFixture(&fixture);
+
+	pbody->width = pbody->height = 0;
+	pbody->body->SetUserData(pbody);
+
+	RELEASE(p);
+
+	return pbody;
+}
+
 PhysBody* ModulePhysics::CreateChainObj(int x, int y, int* points, int size, bool loop)
 {
 	PhysBody* pbody = new PhysBody();

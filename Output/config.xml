@@ -19,9 +19,9 @@
   </window>
 
   <textures>
-    <backGround1 width = "64" height = "64" path="Assets/textures/Background/Blue.png"/>
-    <saw width = "38" height = "38" path = "Assets/textures/Traps/Saw/On(38x38).png"/>
-    <spike width = "16" height = "16" path = "Assets/textures/Traps/Spikes/Idle.png"/>
+    <backGround1 width = "64" height = "64" layer = "0" path="Assets/textures/Background/Blue.png"/>
+    <saw width = "38" height = "38" layer = "1" path = "Assets/textures/Traps/Saw/On(38x38).png"/>
+    <spike width = "16" height = "16" layer = "1" path = "Assets/textures/Traps/Spikes/Idle.png"/>
   </textures>
 
   <!-- L03: Added maps folder as config option -->

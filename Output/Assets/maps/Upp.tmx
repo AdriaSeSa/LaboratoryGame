@@ -171,6 +171,26 @@
  </tileset>
  <tileset firstgid="243" name="UppMeta" tilewidth="16" tileheight="16" tilecount="9" columns="3">
   <image source="UppMeta.png" width="48" height="48"/>
+  <tile id="0">
+   <properties>
+    <property name="name" value="wall"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="name" value="platform"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="name" value="saw"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="name" value="spike"/>
+   </properties>
+  </tile>
  </tileset>
  <layer id="1" name="Sprites" width="20" height="40">
   <properties>
@@ -986,6 +1006,7 @@
    <property name="IsMeta" type="int" value="1"/>
   </properties>
   <data>
+   <tile/>
    <tile gid="243"/>
    <tile gid="243"/>
    <tile gid="243"/>
@@ -1004,8 +1025,7 @@
    <tile gid="243"/>
    <tile gid="243"/>
    <tile gid="243"/>
-   <tile gid="243"/>
-   <tile gid="243"/>
+   <tile/>
    <tile gid="243"/>
    <tile/>
    <tile/>
@@ -1109,32 +1129,32 @@
    <tile gid="243"/>
    <tile/>
    <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="243"/>
+   <tile gid="243"/>
+   <tile gid="2684354806"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="1610612982"/>
+   <tile gid="243"/>
+   <tile gid="243"/>
+   <tile gid="244"/>
+   <tile gid="244"/>
+   <tile gid="244"/>
    <tile/>
    <tile/>
    <tile/>
    <tile gid="245"/>
    <tile/>
-   <tile/>
-   <tile gid="243"/>
-   <tile gid="243"/>
-   <tile gid="2684354806"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="1610612982"/>
-   <tile gid="243"/>
-   <tile gid="243"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile gid="243"/>
    <tile gid="243"/>
    <tile gid="2684354806"/>
@@ -1269,31 +1289,31 @@
    <tile gid="243"/>
    <tile/>
    <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="243"/>
+   <tile gid="243"/>
+   <tile gid="2684354806"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="1610612982"/>
+   <tile gid="243"/>
+   <tile gid="243"/>
+   <tile gid="244"/>
+   <tile gid="244"/>
+   <tile gid="244"/>
    <tile/>
    <tile/>
    <tile/>
    <tile gid="245"/>
-   <tile/>
-   <tile/>
-   <tile gid="243"/>
-   <tile gid="243"/>
-   <tile gid="2684354806"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="1610612982"/>
-   <tile gid="243"/>
-   <tile gid="243"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
    <tile/>
    <tile gid="243"/>
    <tile gid="243"/>
@@ -1706,7 +1726,7 @@
    <tile/>
    <tile/>
    <tile gid="243"/>
-   <tile gid="243"/>
+   <tile/>
    <tile gid="243"/>
    <tile gid="243"/>
    <tile gid="243"/>

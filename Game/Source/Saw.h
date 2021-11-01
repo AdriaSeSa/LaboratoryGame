@@ -5,7 +5,7 @@
 class Saw : public GameObject
 {
 public:
-	Saw(std::string name, std::string tag, Application* app);
+	Saw(iPoint pos, std::string name, std::string tag, Application* app);
 
 	void PostUpdate() override;
 

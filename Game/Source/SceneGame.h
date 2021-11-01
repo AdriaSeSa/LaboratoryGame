@@ -22,7 +22,5 @@ public:
 
 public:
 	BackGround* backGround;
-	Saw* saw;
-	Spike* testSpike;
 };
 

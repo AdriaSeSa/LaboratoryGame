@@ -15,12 +15,8 @@ bool SceneGame::Start()
 	InitScene();
 
 	backGround = new BackGround("backGround1", "BackGround", _app);
-	saw = new Saw("saw", "Saw", _app);
-	testSpike = new Spike({ 100,200 }, 270, "spike", "Spike", _app);
 
 	gameObjects.add(backGround);
-	gameObjects.add(saw);
-	gameObjects.add(testSpike);
 
 	return true;
 }
@@ -58,22 +54,29 @@ void SceneGame::InitScene()
 	{
 		if (_app->map->mapObjects[i].id == 0)
 		{
-			GameObject* g = new GameObject("wall" + i, "Wall", _app);
+			GameObject* g = new GameObject("wall", "Wall", _app);
 			g->pBody = _app->physics->CreateRectangle(_app->map->mapObjects[i].position.x + 8, _app->map->mapObjects[i].position.y + 8, 16, 16);
 			g->pBody->body->SetType(b2BodyType::b2_staticBody);
 			gameObjects.add(g);
 		}
-
-		switch (_app->map->mapObjects[i].id)
+		else if (_app->map->mapObjects[i].id == 1)
 		{
-		case 0:		
-			break;
-		case 1:
-			break;
-		case 2:
-			break;
-		case 3:
-			break;
+			GameObject* g = new GameObject("platform", "Platform", _app);
+			b2Vec2 startPos = { (float)_app->map->mapObjects[i].position.x  ,(float)_app->map->mapObjects[i].position.y };
+			b2Vec2 direcction = { 16, 0 };
+
+			g->pBody = _app->physics->CreateLine(startPos, direcction);
+			gameObjects.add(g);
+		}
+		else if (_app->map->mapObjects[i].id == 2)
+		{
+			Saw* saw = new Saw({ _app->map->mapObjects[i].position.x ,_app->map->mapObjects[i].position.y }, "saw", "Saw", _app);
+			gameObjects.add(saw);
+		}
+		else if (_app->map->mapObjects[i].id == 3)
+		{
+			Spike* spike = new Spike({ _app->map->mapObjects[i].position.x + 8 ,_app->map->mapObjects[i].position.y + 8 }, _app->map->mapObjects[i].rotation, "spike", "Spike", _app);
+			gameObjects.add(spike);
 		}
 	}
 }

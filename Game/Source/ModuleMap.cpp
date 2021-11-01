@@ -1,5 +1,4 @@
-
-#include "Application.h"
+﻿#include "Application.h"
 
 ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_enabled), mapLoaded(false)
 {
@@ -50,8 +49,8 @@ UpdateStatus ModuleMap::PostUpdate()
 	// L06: TODO 4: Make sure we draw all the layers and not just the first one
 	while (mapLayerItem != NULL) {
 
-		if (mapLayerItem->data->properties.GetProperty("Draw") == 1) {
-
+		if (mapLayerItem->data->properties.GetProperty("Draw") == 1)
+		{
 			for (int x = 0; x < mapLayerItem->data->width; x++)
 			{
 				for (int y = 0; y < mapLayerItem->data->height; y++)
@@ -136,6 +135,63 @@ iPoint ModuleMap::WorldToMap(int x, int y) const
 	}
 
 	return ret;
+}
+
+void ModuleMap::LoadLayerMeta()
+{
+	ListItem<MapLayer*>* mapLayerItem;
+	mapLayerItem = mapData.layers.start;
+
+	// L06: TODO 4: Make sure we draw all the layers and not just the first one
+	while (mapLayerItem != NULL) 
+	{
+		if (mapLayerItem->data->properties.GetProperty("IsMeta") == 1)
+		{
+			for (int x = 0; x < mapLayerItem->data->width; x++)
+			{
+				for (int y = 0; y < mapLayerItem->data->height; y++)
+				{
+					// L04: DONE 9: Complete the draw function
+					int gid = mapLayerItem->data->Get(x, y);
+
+					if (gid > 0) 
+					{
+						MapObject obj;
+
+						if (gid > 3221225470)
+						{
+							// if the tile was rotated 180º
+							gid -= 3221225472;
+							obj.rotation = 180;
+						}
+						else if (gid > 2684354560)
+						{
+							//if the tile was rotated 90º
+							gid -= 2684354560;
+							obj.rotation = 90;
+						}
+						else if (gid > 5000)
+						{ 
+							//if the tile was rotated 270º
+							gid -= 1610612736;
+							obj.rotation = 270;
+						}
+
+						TileSet* tileset = GetTilesetFromTileId(gid);
+
+						// ID
+						obj.id = gid - tileset->firstgid;
+	
+						obj.position = MapToWorld(x, y);		
+
+						mapObjects.add(obj);
+					}
+				}
+			}
+		}
+
+		mapLayerItem = mapLayerItem->next;
+	}
 }
 
 // L06: TODO 3: Pick the right Tileset based on a tile id
@@ -243,9 +299,8 @@ bool ModuleMap::Load(const char* filename)
     
     if(ret == true)
     {
-        // L03: TODO 5: LOG all the data loaded iterate all tilesets and LOG everything
-
-		// L04: TODO 4: LOG the info for each loaded layer
+		// Load mate data
+		LoadLayerMeta();
     }
 
     mapLoaded = ret;

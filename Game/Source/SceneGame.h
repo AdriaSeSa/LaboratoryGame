@@ -18,6 +18,8 @@ public:
 
 	bool PostUpdate() override;
 
+	void InitScene();
+
 public:
 	BackGround* backGround;
 	Saw* saw;

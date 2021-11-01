@@ -329,7 +329,7 @@ bool ModuleRender::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Ui
 	int result = -1;
 
 	if(use_camera)
-		result = SDL_RenderDrawLine(renderer, camera.x + x1 * App->window->scale, camera.y + y1 * App->window->scale, camera.x + x2 * App->window->scale, camera.y + y2 * App->window->scale);
+		result = SDL_RenderDrawLine(renderer, -camera.x + x1 * App->window->scale, -camera.y + y1 * App->window->scale, -camera.x + x2 * App->window->scale, -camera.y + y2 * App->window->scale);
 	else
 		result = SDL_RenderDrawLine(renderer, x1 * App->window->scale, y1 * App->window->scale, x2 * App->window->scale, y2 * App->window->scale);
 
@@ -356,8 +356,8 @@ bool ModuleRender::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 
 
 	for(uint i = 0; i < 360; ++i)
 	{
-		points[i].x = (int)(x * App->window->scale + radius * cos(i * factor) * App->window->scale);
-		points[i].y = (int)(y * App->window->scale + radius * sin(i * factor) * App->window->scale);
+		points[i].x = (int)(-camera.x + x * App->window->scale + radius * cos(i * factor) * App->window->scale);
+		points[i].y = (int)(-camera.y + y * App->window->scale + radius * sin(i * factor) * App->window->scale);
 	}
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);

@@ -9,6 +9,6 @@ public:
 
 private:
 	int WindowHeight = 640;
-	int WindowWidth = 640;
+	int WindowWidth = 320;
 };
 

@@ -71,15 +71,15 @@ private :
 	float rotation = 0;
 
 protected:
-
-	PhysBody* pBody = nullptr;
-
 	Application* _app = nullptr;
+
 public:
 
 	std::string name;
 
 	std::string tag;
+
+	PhysBody* pBody = nullptr;
 
 	RenderObject renderObjects[MAX_GAMEOBJECT_TEXTURES];
 

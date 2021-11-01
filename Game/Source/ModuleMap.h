@@ -5,6 +5,13 @@
 #include "List.h"
 #include "Point.h"
 
+struct MapObject
+{
+	int id = 0;
+	float rotation = 0;
+	iPoint position = { 0,0 };
+};
+
 // L03: DONE 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 struct TileSet
@@ -135,6 +142,8 @@ public:
 	// L05: DONE 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	void LoadLayerMeta();
+
 private:
 
 	// L03: Methods to load all required map data
@@ -157,6 +166,8 @@ public:
 
     // L03: DONE 1: Add your struct for map info
 	MapData mapData;
+
+	List<MapObject> mapObjects;
 
 private:
 

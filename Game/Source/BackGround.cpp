@@ -27,7 +27,8 @@ void BackGround::PostUpdate()
 			
 			//_app->renderer->AddTextureRenderQueue(renderObjects[0]);
 
-			_app->renderer->AddTextureRenderQueue(renderObjects[0].texture, { renderObjects[0].destRect.x, renderObjects[0].destRect.y});
+			_app->renderer->AddTextureRenderQueue(renderObjects[0].texture, { renderObjects[0].destRect.x, renderObjects[0].destRect.y }, { 0,0,0,0 },
+				1, 0, 0, 0, SDL_FLIP_NONE, 0.5f);
 		}
 	}
 }

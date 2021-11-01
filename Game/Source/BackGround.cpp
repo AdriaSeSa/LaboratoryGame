@@ -11,9 +11,9 @@ BackGround::BackGround(std::string name, std::string tag, Application* app) :Gam
 
 void BackGround::PostUpdate()
 {
-	for (int i = 0; i < WindowHeight; i += 64)
+	for (int i = 0; i < WindowHeight; i += renderObjects[0].renderRect.h)
 	{
-		for (int j = 0; j < WindowWidth; j += 64)
+		for (int j = 0; j < WindowWidth; j += renderObjects[0].renderRect.w)
 		{
 			renderObjects[0].renderRect.x = j;
 			renderObjects[0].renderRect.y = i;

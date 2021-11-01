@@ -26,7 +26,6 @@ bool SceneGame::PreUpdate()
 	{
 		gameObjects[i]->PreUpdate();
 	}
-
 	return true;
 }
 

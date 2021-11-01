@@ -12,8 +12,8 @@ class GameObject;
 #define PIXELS_PER_METER 50.0f
 #define METERS_PER_PIXELS 0.02f
 
-#define METERS_TO_PIXELS(m) ((int)floor(PIXELS_PER_METER * m) )
-#define PIXELS_TO_METER(p) ((float)METERS_PER_PIXELS * p)
+#define METERS_TO_PIXELS(m) ((int)floor(PIXELS_PER_METER * m) / 2)
+#define PIXELS_TO_METER(p) ((float)METERS_PER_PIXELS * p * 2)
 
 
 class PhysBody

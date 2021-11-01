@@ -35,6 +35,8 @@ public:
 
 	bool CompareTag(std::string tag);
 
+	iPoint GetDrawPosition();
+
 	/// <summary>
 	/// Si exixte pBody devuelve angluo de pBody, si no el de GameObject 
 	/// </summary>

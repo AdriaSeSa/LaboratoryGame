@@ -131,6 +131,7 @@
     <ClInclude Include="Source\p2List.h" />
     <ClInclude Include="Source\p2Point.h" />
     <ClInclude Include="Source\Point.h" />
+    <ClInclude Include="Source\RenderObject.h" />
     <ClInclude Include="Source\Saw.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneGame.h" />

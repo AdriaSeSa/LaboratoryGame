@@ -147,6 +147,9 @@
     <ClInclude Include="Source\Spike.h">
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Source\RenderObject.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

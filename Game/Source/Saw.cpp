@@ -14,7 +14,7 @@ Saw::Saw(std::string name, std::string tag, Application* app) :GameObject(name, 
 	anim.speed = 0.3f;
 
 	// Init PhysBody
-	pBody = _app->physics->CreateCircle(320, 100, renderObjects[0].renderRect.w / 2, this);
+	pBody = _app->physics->CreateCircle(140, 160, renderObjects[0].renderRect.w / 2, this);
 	pBody->body->SetType(b2BodyType::b2_kinematicBody);
 	pBody->body->GetFixtureList()->SetSensor(true);
 }

@@ -302,10 +302,10 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	SDL_Rect rec(rect);
 	if(use_camera)
 	{
-		rec.x = (int)(camera.x + rect.x * SCREEN_SIZE);
-		rec.y = (int)(camera.y + rect.y * SCREEN_SIZE);
-		rec.w *= SCREEN_SIZE;
-		rec.h *= SCREEN_SIZE;
+		rec.x = (int)(camera.x + rect.x * App->window->scale);
+		rec.y = (int)(camera.y + rect.y * App->window->scale);
+		rec.w *= App->window->scale;
+		rec.h *= App->window->scale;
 	}
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
@@ -329,9 +329,9 @@ bool ModuleRender::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Ui
 	int result = -1;
 
 	if(use_camera)
-		result = SDL_RenderDrawLine(renderer, camera.x + x1 * SCREEN_SIZE, camera.y + y1 * SCREEN_SIZE, camera.x + x2 * SCREEN_SIZE, camera.y + y2 * SCREEN_SIZE);
+		result = SDL_RenderDrawLine(renderer, camera.x + x1 * App->window->scale, camera.y + y1 * App->window->scale, camera.x + x2 * App->window->scale, camera.y + y2 * App->window->scale);
 	else
-		result = SDL_RenderDrawLine(renderer, x1 * SCREEN_SIZE, y1 * SCREEN_SIZE, x2 * SCREEN_SIZE, y2 * SCREEN_SIZE);
+		result = SDL_RenderDrawLine(renderer, x1 * App->window->scale, y1 * App->window->scale, x2 * App->window->scale, y2 * App->window->scale);
 
 	if(result != 0)
 	{
@@ -356,8 +356,8 @@ bool ModuleRender::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 
 
 	for(uint i = 0; i < 360; ++i)
 	{
-		points[i].x = (int) (x + radius * cos( i * factor));
-		points[i].y = (int) (y + radius * sin( i * factor));
+		points[i].x = (int)(x * App->window->scale + radius * cos(i * factor) * App->window->scale);
+		points[i].y = (int)(y * App->window->scale + radius * sin(i * factor) * App->window->scale);
 	}
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);

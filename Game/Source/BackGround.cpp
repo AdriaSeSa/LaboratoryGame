@@ -25,7 +25,9 @@ void BackGround::PostUpdate()
 
 			//printf_s("DrawBG %d,%d \n", renderObjects[0].destRect.x, renderObjects[0].destRect.y);
 			
-			_app->renderer->AddTextureRenderQueue(renderObjects[0]);
+			//_app->renderer->AddTextureRenderQueue(renderObjects[0]);
+
+			_app->renderer->AddTextureRenderQueue(renderObjects[0].texture, { renderObjects[0].destRect.x, renderObjects[0].destRect.y});
 		}
 	}
 }

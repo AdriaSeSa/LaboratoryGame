@@ -153,23 +153,23 @@ bool ModuleRender::CleanUp()
 	return true;
 }
 
-void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_Rect* section, float scale, int layer, float orderInlayer, float rotation, SDL_RendererFlip flip, float speed)
+void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_Rect section, float scale, int layer, float orderInlayer, float rotation, SDL_RendererFlip flip, float speed)
 {
 	SDL_Rect destRect = { 0,0 };
 
 	RenderObject renderObject;
 
-	renderObject.InitAsTexture(texture, destRect, *section, layer, orderInlayer, flip, rotation, scale, speed);
+	renderObject.InitAsTexture(texture, destRect, section, layer, orderInlayer, flip, rotation, scale, speed);
 
 	if (layer == 2 || layer == 3) renderObject.speedRegardCamera = 0;	//If texture in UI layer, it moves alongside the camera. Therefor, speed = 0;
 
 	renderObject.destRect.x = (int)(-camera.x * speed) + pos.x * App->window->scale;
 	renderObject.destRect.y = (int)(-camera.y * speed) + pos.y * App->window->scale;
 
-	if (section->w != 0 && section->h != 0)
+	if (section.h != 0 && section.w != 0)
 	{
-		renderObject.destRect.w = section->w;
-		renderObject.destRect.h = section->h;
+		renderObject.destRect.w = section.w;
+		renderObject.destRect.h = section.h;
 	}
 	else
 	{
@@ -183,8 +183,10 @@ void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_R
 	renderLayers[layer].push_back(renderObject);
 }
 
-void ModuleRender::AddTextureRenderQueue(RenderObject object)
+void ModuleRender::AddTextureRenderQueue(RenderObject obj)
 {
+	RenderObject object = obj;
+
 	object.destRect.x = (int)(-camera.x * object.speedRegardCamera) + object.destRect.x * App->window->scale;
 	object.destRect.y = (int)(-camera.y * object.speedRegardCamera) + object.destRect.y * App->window->scale;
 

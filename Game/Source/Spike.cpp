@@ -28,3 +28,8 @@ Spike::Spike(iPoint pos, int angle, std::string name, std::string tag, Applicati
 	SetRotation(angle);
 	pBody->body->SetType(b2BodyType::b2_staticBody);
 }
+
+void Spike::PostUpdate()
+{
+	GameObject::PostUpdate();
+}

@@ -81,7 +81,7 @@ public:
 
 	PhysBody* pBody = nullptr;
 
-	RenderTexture renderObjects[MAX_GAMEOBJECT_TEXTURES];
+	RenderObject renderObjects[MAX_GAMEOBJECT_TEXTURES];
 
 	bool pendingToDelete = false;
 };

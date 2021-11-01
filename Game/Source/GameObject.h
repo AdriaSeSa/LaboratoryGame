@@ -35,8 +35,6 @@ public:
 
 	bool CompareTag(std::string tag);
 
-	iPoint GetDrawPos();
-
 	/// <summary>
 	/// Si exixte pBody devuelve angluo de pBody, si no el de GameObject 
 	/// </summary>
@@ -61,6 +59,10 @@ public:
 	/// <param name="angle">= angle in deg</param>
 	void SetRotation(float angle);
 
+protected:
+
+	void InitRenderObjectWithXml();
+
 private :
 	iPoint position = { 0,0 };
 
@@ -71,7 +73,6 @@ protected:
 	PhysBody* pBody = nullptr;
 
 	Application* _app = nullptr;
-
 public:
 
 	std::string name;

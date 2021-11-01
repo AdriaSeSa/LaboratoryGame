@@ -23,6 +23,8 @@ bool ModuleRender::Init(pugi::xml_node& config)
 	bool ret = true;
 	Uint32 flags = 0;
 
+	this->config = config;
+
 	if(VSYNC == true)
 	{
 		flags |= SDL_RENDERER_PRESENTVSYNC;

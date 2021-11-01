@@ -1,7 +1,6 @@
 #include "SceneGame.h"
 #include <time.h>
 
-
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	name = "scene";
@@ -15,6 +14,8 @@ ModuleScene::~ModuleScene()
 
 bool ModuleScene::Init(pugi::xml_node& config)
 {
+	this->config = config;
+
 	return true;
 }
 

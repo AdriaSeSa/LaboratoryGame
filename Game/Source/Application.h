@@ -41,6 +41,9 @@ public:
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
 
+	pugi::xml_node config;
+	pugi::xml_node configApp;
+
 private:
 
 	p2List<Module*> list_modules;
@@ -61,7 +64,6 @@ public:
 	const char* GetOrganization() const;
 
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
-
 
 	bool FullScreenDesktop = true;
 

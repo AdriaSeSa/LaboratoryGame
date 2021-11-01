@@ -47,8 +47,6 @@ Application::~Application()
 bool Application::Init()
 {
 	pugi::xml_document configFile;
-	pugi::xml_node config;
-	pugi::xml_node configApp;
 
 	bool ret = true;
 

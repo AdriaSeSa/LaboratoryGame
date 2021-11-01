@@ -22,6 +22,8 @@ bool ModuleInput::Init(pugi::xml_node& config)
 	bool ret = true;
 	SDL_Init(0);
 
+	this->config = config;
+
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());

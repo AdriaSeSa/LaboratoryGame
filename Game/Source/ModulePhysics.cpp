@@ -14,6 +14,8 @@ ModulePhysics::~ModulePhysics()
 
 bool ModulePhysics::Init(pugi::xml_node& config)
 {
+	this->config = config;
+
 	return true;
 }
 

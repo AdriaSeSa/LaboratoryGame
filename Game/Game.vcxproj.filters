@@ -52,6 +52,9 @@
     <ClCompile Include="Source\BackGround.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Saw.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -133,6 +136,9 @@
       <Filter>HeaderFiles\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\BackGround.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Saw.h">
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

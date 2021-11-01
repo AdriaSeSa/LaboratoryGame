@@ -2,9 +2,10 @@
 
 BackGround::BackGround(std::string name, std::string tag, Application* app) :GameObject(name, tag, app)
 {
-	renderObjects[0].texture = app->textures->Load("Assets/textures/Background/Blue.png");
-	renderObjects[0].renderRect.w = renderObjects[0].renderRect.h = 64;
+	// Init renderObject
+	InitRenderObjectWithXml();
 
+	// Get windows w&h
 	SDL_GetWindowSize(app->window->window, &WindowWidth, &WindowHeight);
 }
 

@@ -53,8 +53,8 @@ void GameObject::PostUpdate()
 	{
 		if (renderObjects[i].texture != nullptr)
 		{
-			renderObjects[i].renderRect.x = GetDrawPos().x;
-			renderObjects[i].renderRect.y = GetDrawPos().y;
+			renderObjects[i].renderRect.x = GetPosition().x;
+			renderObjects[i].renderRect.y = GetPosition().y;
 			renderObjects[i].rotation = GetDegreeAngle();
 			
 			_app->renderer->AddTextureRenderQueue(renderObjects[i]);
@@ -74,23 +74,6 @@ bool GameObject::CompareTag(std::string tag)
 	}
 
 	return false;
-}
-
-iPoint GameObject::GetDrawPos()
-{
-	if (this->pBody == nullptr)
-	{
-		LOG("GameObject has no PhysBody!"); 
-		return this->position;
-	}
-
-	b2Vec2 pos;
-	pos = pBody->body->GetPosition();
-
-	pos.x = METERS_TO_PIXELS(pos.x - pBody->width);
-	pos.y = METERS_TO_PIXELS(pos.y - pBody->height);
-
-	return iPoint(pos.x,pos.y);
 }
 
 float GameObject::GetDegreeAngle()
@@ -114,6 +97,8 @@ iPoint GameObject::GetPosition()
 		b2Vec2 position;
 
 		position = pBody->body->GetPosition();
+		position.x = METERS_TO_PIXELS(position.x);
+		position.y = METERS_TO_PIXELS(position.y);
 
 		return { (int)position.x, (int)position.y };
 	}
@@ -143,4 +128,11 @@ void GameObject::SetRotation(float angle)
 	{
 		this->rotation = angle;
 	}
+}
+
+void GameObject::InitRenderObjectWithXml()
+{
+	renderObjects[0].texture = _app->textures->Load(name, true);
+	renderObjects[0].renderRect.w = _app->textures->config.child(name.c_str()).attribute("width").as_int();
+	renderObjects[0].renderRect.h = _app->textures->config.child(name.c_str()).attribute("height").as_int();
 }

@@ -18,6 +18,11 @@
     <fullscreen_window value="false"/>
   </window>
 
+  <textures>
+    <backGround1 width = "64" height = "64" path="Assets/textures/Background/Blue.png"/>
+    <saw width = "38" height = "38" path = "Assets/textures/Traps/Saw/On(38x38).png"/>
+  </textures>
+
   <!-- L03: Added maps folder as config option -->
   <map>
     <folder>Assets/maps/</folder>

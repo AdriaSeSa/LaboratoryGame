@@ -1,5 +1,6 @@
 #include "SceneGame.h"
 #include "BackGround.h"
+#include "Saw.h"
 
 SceneGame::SceneGame(Application* app) :Scene(app)
 {
@@ -10,9 +11,11 @@ bool SceneGame::Start()
 {
 	_app->map->Load("Upp.tmx");
 
-	backGround = new BackGround("BackGround1", "BackGround", _app);
+	backGround = new BackGround("backGround1", "BackGround", _app);
+	saw = new Saw("saw", "Saw", _app);
 
 	gameObjects.add(backGround);
+	gameObjects.add(saw);
 
 	return true;
 }

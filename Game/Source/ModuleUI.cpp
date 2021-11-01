@@ -7,6 +7,8 @@ ModuleUI::ModuleUI(Application* app, bool start_enabled) : Module(app, start_ena
 
 bool ModuleUI::Init(pugi::xml_node& config)
 {
+	this->config = config;
+
 	return true;
 }
 

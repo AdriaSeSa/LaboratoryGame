@@ -14,7 +14,10 @@ public:
 	bool CleanUp();
 	bool CleanUpTextures();
 
-	SDL_Texture* Load(std::string path);
+	//SDL_Texture* Load(std::string path);
+
+	SDL_Texture* Load(std::string path, bool isName = false);
+
 	void Unload(SDL_Texture* texture);
 
 public:

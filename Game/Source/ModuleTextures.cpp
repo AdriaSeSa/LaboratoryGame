@@ -19,6 +19,8 @@ bool ModuleTextures::Init(pugi::xml_node& config)
 	LOG("Init Image library");
 	bool ret = true;
 
+	this->config = config;
+
 	// load support for the PNG image format
 	int flags = IMG_INIT_PNG;
 	int init = IMG_Init(flags);
@@ -72,9 +74,14 @@ bool ModuleTextures::CleanUpTextures()
 	return true;
 }
 
-// Load new texture from file path
-SDL_Texture* ModuleTextures::Load(std::string path)
+ //Load new texture from file path
+SDL_Texture* ModuleTextures::Load(std::string path, bool isName)
 {
+	if(isName)
+	{
+		path = config.child(path.c_str()).attribute("path").as_string();
+	}
+
 	std::map<std::string, SDL_Texture*>::iterator it;
 	it = texturePath.find(path);
 

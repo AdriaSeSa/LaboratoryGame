@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 class BackGround;
+class Saw;
 
 class SceneGame :  public Scene
 {
@@ -16,6 +17,8 @@ public:
 
 	bool PostUpdate() override;
 
+public:
 	BackGround* backGround;
+	Saw* saw;
 };
 

@@ -28,6 +28,8 @@ int Properties::GetProperty(const char* value, int defaultValue) const
 // Called before render is available
 bool ModuleMap::Init(pugi::xml_node& config)
 {
+	this->config = config;
+
     //LOG("Loading Map Parser");
     bool ret = true;
 

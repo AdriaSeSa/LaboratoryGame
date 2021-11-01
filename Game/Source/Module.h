@@ -18,6 +18,8 @@ public:
 
 	std::string name;
 
+	pugi::xml_node config;
+
 	Module(Application* parent, bool start_enabled = true) : App(parent), enabled(start_enabled)
 	{}
 

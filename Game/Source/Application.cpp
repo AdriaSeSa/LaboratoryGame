@@ -18,13 +18,14 @@ Application::Application()
 
 	// Main Modules
 	AddModule(window);
+	AddModule(input);
 	AddModule(physics);
 
-	// Scenes
+	// Game Logic
 	AddModule(scene);
-	
+
 	AddModule(textures);
-	AddModule(input);
+	
 	AddModule(audio);
 	AddModule(ui);
 	AddModule(map);

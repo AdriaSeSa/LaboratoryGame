@@ -416,6 +416,16 @@ void PhysBody::GetPosition(int& x, int& y) const
 	y = METERS_TO_PIXELS(pos.y) - (height);
 }
 
+b2Vec2 PhysBody::GetPosition() 
+{
+	b2Vec2 pos = body->GetPosition();
+
+	pos.x = METERS_TO_PIXELS(pos.x);
+	pos.y = METERS_TO_PIXELS(pos.y);
+
+	return pos;
+}
+
 void PhysBody::GetCenterPosition(int& x, int& y) const
 {
 	b2Vec2 pos = body->GetPosition();

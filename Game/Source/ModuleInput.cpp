@@ -102,7 +102,7 @@ UpdateStatus ModuleInput::PreUpdate()
 		std::cout << mouse_x << " | " << mouse_y << std::endl;
 
 	//	Toggle Global Debug
-	if (GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	if (GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
 		App->isDebug = !App->isDebug;
 	}

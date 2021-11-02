@@ -102,6 +102,7 @@
     <ClCompile Include="Source\ModuleTextures.cpp" />
     <ClCompile Include="Source\ModuleUI.cpp" />
     <ClCompile Include="Source\ModuleWindow.cpp" />
+    <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\Saw.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="Source\p2DynArray.h" />
     <ClInclude Include="Source\p2List.h" />
     <ClInclude Include="Source\p2Point.h" />
+    <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Point.h" />
     <ClInclude Include="Source\RenderObject.h" />
     <ClInclude Include="Source\Saw.h" />

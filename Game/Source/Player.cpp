@@ -7,6 +7,8 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	pBody->body->SetFixedRotation(true);
 	pBody->body->SetBullet(true);
 
+	pBody->body->GetFixtureList()->SetFriction(0);
+
 	//pBody->body->SetGravityScale(4.0f);
 
 	appliedFallForce = false;
@@ -34,7 +36,7 @@ void Player::Update()
 		pos.y = PIXELS_TO_METER(pos.y);
 
 		pBody->body->SetTransform(pos, 0);*/
-		pBody->body->SetLinearVelocity({ 3,pBody->body->GetLinearVelocity().y + pBody->body->GetWorld()->GetGravity().y });
+		pBody->body->SetLinearVelocity({ 3,pBody->body->GetLinearVelocity().y });
 	}
 	else if(_app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
@@ -50,7 +52,7 @@ void Player::Update()
 		pos.y = PIXELS_TO_METER(pos.y);
 
 		pBody->body->SetTransform(pos, 0);*/
-		pBody->body->SetLinearVelocity({ -3,pBody->body->GetLinearVelocity().y + pBody->body->GetWorld()->GetGravity().y });
+		pBody->body->SetLinearVelocity({ -3,pBody->body->GetLinearVelocity().y });
 	}
 	else if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{

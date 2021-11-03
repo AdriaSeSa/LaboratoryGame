@@ -18,11 +18,6 @@ void BackGround::PostUpdate()
 			renderObjects[0].destRect.x = j;
 			renderObjects[0].destRect.y = i;
 
-			if (renderObjects[0].texture == nullptr)
-			{
-				printf_s("Null texture");
-			}
-
 			//printf_s("DrawBG %d,%d \n", renderObjects[0].destRect.x, renderObjects[0].destRect.y);
 			
 			//_app->renderer->AddTextureRenderQueue(renderObjects[0]);

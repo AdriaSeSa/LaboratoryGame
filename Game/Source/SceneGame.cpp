@@ -3,6 +3,7 @@
 #include "Saw.h"
 #include "Spike.h"
 #include "Player.h"
+#include "MobilePlatform.h"
 
 SceneGame::SceneGame(Application* app) :Scene(app)
 {
@@ -18,9 +19,12 @@ bool SceneGame::Start()
 	backGround = new BackGround("backGround1", "BackGround", _app);
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
+	
+	mobilePlatform1 = new MobilePlatform({ 87, 250 }, "mobilePlatform", "MobilePlatform", _app, 3, { 0,-150 }, 0.75f);
 
 	gameObjects.add(backGround);
 	gameObjects.add(player);
+	gameObjects.add(mobilePlatform1);
 
 	return true;
 }

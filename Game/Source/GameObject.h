@@ -44,7 +44,7 @@ public:
 	float GetDegreeAngle();
 	
 	/// <summary>
-	/// Si exixte pBody devuelve position de pBody, si no el de GameObject
+	/// Si exixte pBody devuelve position de pBody, si no el de GameObject (px)
 	/// </summary>
 	/// <returns>position en pixel</returns>
 	iPoint GetPosition();

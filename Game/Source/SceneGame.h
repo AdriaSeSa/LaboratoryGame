@@ -5,6 +5,7 @@ class BackGround;
 class Saw;
 class Spike;
 class Player;
+class MobilePlatform;
 
 class SceneGame :  public Scene
 {
@@ -24,5 +25,5 @@ public:
 public:
 	BackGround* backGround;
 	Player* player;
+	MobilePlatform* mobilePlatform1;
 };
-

@@ -14,8 +14,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	appliedFallForce = false;
 
 	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app);
-	
-
 }
 
 Player::~Player()

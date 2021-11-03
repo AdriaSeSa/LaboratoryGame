@@ -8,7 +8,7 @@ GroundSensor::GroundSensor(iPoint pos, std::string name, std::string tag, Applic
 
 void GroundSensor::OnCollision(PhysBody* col)
 {
-	if (col->gameObject->tag == "Wall" || col->gameObject->tag == "Platform")
+	if (col->gameObject->tag == "Wall" || col->gameObject->tag == "Platform" || col->gameObject->tag == "MobilePlatform")
 	{
 		isOnGround = true;
 	}

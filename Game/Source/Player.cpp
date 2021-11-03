@@ -3,40 +3,51 @@
 Player::Player(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
 	//Phys Body
-	pBody = _app->physics->CreateRectangle(pos.x, pos.y, 12, 14);
+	pBody = _app->physics->CreateRectangle(pos.x, pos.y, 12, 14, this);
 	pBody->body->SetFixedRotation(true);
 	pBody->body->SetBullet(true);
 
 	pBody->body->GetFixtureList()->SetFriction(0);
 
-	//pBody->body->SetGravityScale(4.0f);
+	pBody->body->SetGravityScale(2.0f);
 
 	appliedFallForce = false;
 
+	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app);
+	
+
+}
+
+Player::~Player()
+{
+	
 }
 
 void Player::Update()
 {	
-	if (pBody->body->GetLinearVelocity().y > 0 && !appliedFallForce)
-	{
-		//float fallVelocity = 4.0f;
-		//pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, fallVelocity });
+	groundSensor->SetPosition(GetPosition() + groundSensorOffset);
 
+	isFalling = pBody->body->GetLinearVelocity().y > 0;
+
+	if (groundSensor->isOnGround)
+	{
+		jumpCount = 2;
+	}
+
+	if (appliedFallForce && !isFalling)
+	{
+		appliedFallForce = false;
+	}
+
+	if (isFalling && !appliedFallForce)
+	{
 		pBody->body->ApplyLinearImpulse({ 0,1 }, { 0,0, }, true);
 		appliedFallForce = true;
 	}
 
 	if (_app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
-		/*b2Vec2 pos = pBody->GetPosition();
-
-		pos.x += 2;
-
-		pos.x = PIXELS_TO_METER(pos.x);
-		pos.y = PIXELS_TO_METER(pos.y);
-
-		pBody->body->SetTransform(pos, 0);*/
-		pBody->body->SetLinearVelocity({ 3,pBody->body->GetLinearVelocity().y });
+		pBody->body->SetLinearVelocity({ speed,pBody->body->GetLinearVelocity().y });
 	}
 	else if(_app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
 	{
@@ -44,24 +55,40 @@ void Player::Update()
 	}
 	if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
-		/*b2Vec2 pos = pBody->GetPosition();
-
-		pos.x -= 2;
-
-		pos.x = PIXELS_TO_METER(pos.x);
-		pos.y = PIXELS_TO_METER(pos.y);
-
-		pBody->body->SetTransform(pos, 0);*/
-		pBody->body->SetLinearVelocity({ -3,pBody->body->GetLinearVelocity().y });
+		pBody->body->SetLinearVelocity({ -speed,pBody->body->GetLinearVelocity().y });
 	}
 	else if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
 	{
 		pBody->body->SetLinearVelocity({ 0,pBody->body->GetLinearVelocity().y  });
 	}
+
+
 	if (_app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		pBody->body->ApplyLinearImpulse({ 0,-1.5f }, {0,0,}, true);
-		appliedFallForce = false;
+		if (jumpCount != 0)
+		{
+			groundSensor->SetOffGround();
+			pBody->body->ApplyLinearImpulse({ 0,-2.0f }, { 0,0, }, true);
+			jumpCount--;
+		}
+
 	}
 
 }
+
+void Player::OnCollision(PhysBody* col)
+{
+	printf_s("PlayerCol");
+}
+
+void Player::CleanUp()
+{
+	if (groundSensor != nullptr)
+	{
+		delete groundSensor;
+		groundSensor = nullptr;
+	}
+}
+
+
+

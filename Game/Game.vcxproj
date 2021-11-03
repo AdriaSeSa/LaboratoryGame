@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="Source\BackGround.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
+    <ClCompile Include="Source\GroundSensor.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\ModuleMap.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Globals.h" />
+    <ClInclude Include="Source\GroundSensor.h" />
     <ClInclude Include="Source\List.h" />
     <ClInclude Include="Source\ModuleMap.h" />
     <ClInclude Include="Source\MemLeaks.h" />

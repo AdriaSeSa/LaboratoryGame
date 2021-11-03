@@ -49,26 +49,6 @@ UpdateStatus ModuleScene::PreUpdate()
 
 UpdateStatus ModuleScene::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		ChangeCurrentScene(0, 0);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		ChangeCurrentScene(1, 0);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	{
-		ChangeCurrentScene(2, 0);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-	{
-		ChangeCurrentScene(3, 0);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-		ChangeCurrentScene(4, 0);
-	}
 
 	if (currentScene == nullptr)
 	{

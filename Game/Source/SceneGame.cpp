@@ -59,7 +59,7 @@ void SceneGame::InitScene()
 		if (_app->map->mapObjects[i].id == 0)
 		{
 			GameObject* g = new GameObject("wall", "Wall", _app);
-			g->pBody = _app->physics->CreateRectangle(_app->map->mapObjects[i].position.x + 8, _app->map->mapObjects[i].position.y + 8, 16, 16);
+			g->pBody = _app->physics->CreateRectangle(_app->map->mapObjects[i].position.x + 8, _app->map->mapObjects[i].position.y + 8, 16, 16, g);
 			g->pBody->body->SetType(b2BodyType::b2_staticBody);
 			gameObjects.add(g);
 		}
@@ -69,7 +69,7 @@ void SceneGame::InitScene()
 			b2Vec2 startPos = { (float)_app->map->mapObjects[i].position.x  ,(float)_app->map->mapObjects[i].position.y };
 			b2Vec2 direcction = { 16, 0 };
 
-			g->pBody = _app->physics->CreateLine(startPos, direcction);
+			g->pBody = _app->physics->CreateLine(startPos, direcction, g);
 			gameObjects.add(g);
 		}
 		else if (_app->map->mapObjects[i].id == 2)

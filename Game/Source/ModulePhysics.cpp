@@ -78,7 +78,7 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, GameObject* game
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
+PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, GameObject* gameObject)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
@@ -100,6 +100,8 @@ PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height)
 	pbody->height = height * 0.5f;
 
 	pbody->body->SetUserData(pbody);
+
+	pbody->gameObject = gameObject;
 
 	return pbody;
 }
@@ -130,7 +132,7 @@ PhysBody* ModulePhysics::CreateRectangleSensor(iPoint pos, int width, int height
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateLine(b2Vec2 startPos, b2Vec2 dir)
+PhysBody* ModulePhysics::CreateLine(b2Vec2 startPos, b2Vec2 dir, GameObject* gameObject)
 {
 	b2Vec2* p = new b2Vec2[2];
 	p[0] = { 0,0 };
@@ -152,6 +154,8 @@ PhysBody* ModulePhysics::CreateLine(b2Vec2 startPos, b2Vec2 dir)
 
 	pbody->width = pbody->height = 0;
 	pbody->body->SetUserData(pbody);
+
+	pbody->gameObject = gameObject;
 
 	RELEASE(p);
 

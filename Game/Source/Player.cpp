@@ -70,12 +70,14 @@ void Player::Update()
 			groundSensor->SetOffGround();
 			if (isFalling)
 			{
-				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, 0 });
-				pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
+				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -7.0f });
+
+				//pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
 			}
 			else 
 			{
-				pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
+				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -7.0f });
+				//pBody->body->ApplyLinearImpulse({ 0,-4.0f }, { 0,0, }, true);
 			}
 			
 			jumpCount--;

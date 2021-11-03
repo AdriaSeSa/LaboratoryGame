@@ -41,7 +41,7 @@ void Player::Update()
 
 	if (isFalling && !appliedFallForce)
 	{
-		pBody->body->ApplyLinearImpulse({ 0,1 }, { 0,0, }, true);
+		pBody->body->ApplyLinearImpulse({ 0,0.8f }, { 0,0, }, true);
 		appliedFallForce = true;
 	}
 

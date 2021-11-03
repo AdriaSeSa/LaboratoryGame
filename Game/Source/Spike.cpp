@@ -24,7 +24,7 @@ Spike::Spike(iPoint pos, int angle, std::string name, std::string tag, Applicati
 
 	pos += offset;
 
-	pBody = _app->physics->CreateRectangle(pos.x, pos.y, renderObjects[0].destRect.w, renderObjects[0].destRect.h, this);
+	pBody = _app->physics->CreateRectangle(pos, renderObjects[0].destRect.w, renderObjects[0].destRect.h, this);
 	SetRotation(angle);
 	pBody->body->SetType(b2BodyType::b2_staticBody);
 	pBody->body->GetFixtureList()->SetSensor(true);

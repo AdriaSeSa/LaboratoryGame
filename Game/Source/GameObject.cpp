@@ -58,8 +58,8 @@ void GameObject::PostUpdate()
 			renderObjects[i].rotation = GetDegreeAngle();
 			
 			_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
-				renderObjects[i].section, renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
-				renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
+			renderObjects[i].section, renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
+			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
 		}
 	}
 }

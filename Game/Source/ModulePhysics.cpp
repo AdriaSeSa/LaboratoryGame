@@ -78,11 +78,11 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, GameObject* game
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(int x, int y, int width, int height, GameObject* gameObject)
+PhysBody* ModulePhysics::CreateRectangle(iPoint pos, int width, int height, GameObject* gameObject)
 {
 	b2BodyDef body;
 	body.type = b2_dynamicBody;
-	body.position.Set(PIXELS_TO_METER(x), PIXELS_TO_METER(y));
+	body.position.Set(PIXELS_TO_METER(pos.x), PIXELS_TO_METER(pos.y));
 
 	b2Body* b = world->CreateBody(&body);
 	b2PolygonShape box;
@@ -299,10 +299,23 @@ void ModulePhysics::ShapesRender()
 
 				for (int32 i = 0; i < shape->m_count; ++i)
 				{
-					v = b->GetWorldPoint(shape->m_vertices[i]);
-					if (i > 0)
-						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
-					prev = v;
+					// Variable debug, luego se borra
+					PhysBody* g = (PhysBody*)b->GetUserData();
+					if (g->gameObject->name == "platform")
+					{
+						// TODO BUG!!!!
+						v = b->GetWorldPoint(shape->m_vertices[i]);
+						if (i > 0)
+							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
+						prev = v;
+					}
+					else
+					{
+						v = b->GetWorldPoint(shape->m_vertices[i]);
+						if (i > 0)
+							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
+						prev = v;
+					}
 				}
 				PhysBody* bb = (PhysBody*)f->GetBody()->GetUserData();
 				if (bb->chainLoop)

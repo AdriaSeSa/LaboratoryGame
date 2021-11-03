@@ -12,7 +12,7 @@ class GameObject;
 #define PIXELS_PER_METER 50.0f
 #define METERS_PER_PIXELS 0.02f
 
-#define METERS_TO_PIXELS(m) ((int)floor(PIXELS_PER_METER * m) / 2)
+#define METERS_TO_PIXELS(m) ((int)(PIXELS_PER_METER * m) / 2)
 #define PIXELS_TO_METER(p) ((float)METERS_PER_PIXELS * p * 2)
 
 
@@ -69,7 +69,7 @@ public:
 	bool CleanUp();
 
 	PhysBody* CreateCircle(int x, int y, int radius, GameObject* gameObject = nullptr, bool isSensor = false);
-	PhysBody* CreateRectangle(int x, int y, int width, int height, GameObject* gameObject);
+	PhysBody* CreateRectangle(iPoint pos, int width, int height, GameObject* gameObject);
 	PhysBody* CreateRectangleSensor(iPoint pos, int width, int height);
 	PhysBody* CreateLine(b2Vec2 startPos, b2Vec2 dir, GameObject* gameObject);
 	PhysBody* CreateChainObj(int x, int y, int* points, int size, bool loop);

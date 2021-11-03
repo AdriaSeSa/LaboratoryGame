@@ -3,7 +3,7 @@
 Player::Player(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
 	//Phys Body
-	pBody = _app->physics->CreateRectangle(pos.x, pos.y, 12, 14, this);
+	pBody = _app->physics->CreateRectangle(pos, 12, 14, this);
 	pBody->body->SetFixedRotation(true);
 	pBody->body->SetBullet(true);
 
@@ -87,7 +87,7 @@ void Player::Update()
 
 void Player::OnCollision(PhysBody* col)
 {
-	printf_s("PlayerCol");
+	//printf_s("PlayerCol");
 }
 
 void Player::CleanUp()

@@ -2,7 +2,7 @@
 
 GroundSensor::GroundSensor(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
-	pBody = _app->physics->CreateRectangle(pos.x, pos.y, 8, 2, this);
+	pBody = _app->physics->CreateRectangle(pos, 8, 2, this);
 	pBody->body->GetFixtureList()->SetSensor(true);
 }
 

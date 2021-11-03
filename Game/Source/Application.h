@@ -16,7 +16,7 @@
 #define CONFIG_FILENAME		"config.xml"
 #define SAVE_STATE_FILENAME "save_game.xml"
 
-#define FPS 90
+#define FPS 60
 
 class Application
 {

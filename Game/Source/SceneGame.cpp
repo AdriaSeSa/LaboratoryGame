@@ -63,7 +63,8 @@ void SceneGame::InitScene()
 		if (_app->map->mapObjects[i].id == 0)
 		{
 			GameObject* g = new GameObject("wall", "Wall", _app);
-			g->pBody = _app->physics->CreateRectangle(_app->map->mapObjects[i].position.x + 8, _app->map->mapObjects[i].position.y + 8, 16, 16, g);
+			// +8 = offset, porque pivot de b2Body es el centro, y de tectura es izquierda superiol.
+			g->pBody = _app->physics->CreateRectangle({ _app->map->mapObjects[i].position.x + 8, _app->map->mapObjects[i].position.y + 8 }, 16, 16, g);
 			g->pBody->body->SetType(b2BodyType::b2_staticBody);
 			gameObjects.add(g);
 		}
@@ -83,6 +84,7 @@ void SceneGame::InitScene()
 		}
 		else if (_app->map->mapObjects[i].id == 3)
 		{
+			// +8 = offset (depende del tile, no de mapa), porque pivot de b2Body es el centro, y de tectura es izquierda superiol.
 			Spike* spike = new Spike({ _app->map->mapObjects[i].position.x + 8 ,_app->map->mapObjects[i].position.y + 8 }, _app->map->mapObjects[i].rotation, "spike", "Spike", _app);
 			gameObjects.add(spike);
 		}

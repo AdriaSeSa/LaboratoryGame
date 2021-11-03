@@ -1,5 +1,6 @@
 #include "Application.h"
 
+int cameraSpeed = 1;
 
 ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -52,20 +53,31 @@ UpdateStatus ModuleRender::PreUpdate()
 // Update: debug camera
 UpdateStatus ModuleRender::Update()
 {	
-	int speed = 3;
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+		cameraSpeed++;
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+		cameraSpeed--;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->renderer->camera.y -= speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		App->renderer->camera.y += speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->renderer->camera.x -= speed;
-
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->renderer->camera.x += speed;
-	
+	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		App->renderer->camera.y -= cameraSpeed;
+		printf_s("Camera_X: %d, Camera_Y: %d\n", camera.x, camera.y);
+	}
+	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		App->renderer->camera.y += cameraSpeed;
+		printf_s("Camera_X: %d, Camera_Y: %d\n", camera.x, camera.y);
+	}
+	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+	{
+		App->renderer->camera.x -= cameraSpeed;
+		printf_s("Camera_X: %d, Camera_Y: %d\n", camera.x, camera.y);
+	}
+	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+	{
+		App->renderer->camera.x += cameraSpeed;
+		printf_s("Camera_X: %d, Camera_Y: %d\n", camera.x, camera.y);
+	}
 	return UPDATE_CONTINUE;
 }
 

@@ -68,7 +68,16 @@ void Player::Update()
 		if (jumpCount != 0)
 		{
 			groundSensor->SetOffGround();
-			pBody->body->ApplyLinearImpulse({ 0,-2.0f }, { 0,0, }, true);
+			if (isFalling)
+			{
+				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, 0 });
+				pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
+			}
+			else 
+			{
+				pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
+			}
+			
 			jumpCount--;
 		}
 

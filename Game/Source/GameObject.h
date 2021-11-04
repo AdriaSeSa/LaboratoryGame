@@ -84,6 +84,8 @@ public:
 	RenderObject renderObjects[MAX_GAMEOBJECT_TEXTURES];
 
 	bool pendingToDelete = false;
+
+	bool adjustToGrid = false;
 };
 
 #endif // !GAMEOBJECT_H

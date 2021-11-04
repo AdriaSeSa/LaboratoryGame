@@ -228,6 +228,18 @@ void ModuleRender::AddRectRenderQueue(const SDL_Rect& rect, Uint8 r, Uint8 g, Ui
 	renderLayers[layer].push_back(renderR);
 }
 
+int ModuleRender::RoundToInt(int num)
+{
+	float divisionRes;
+	divisionRes = (float)num / (float)gamePixels;
+
+	divisionRes = lround((double)divisionRes);
+
+
+
+	return (int)(divisionRes * gamePixels);
+}
+
 void ModuleRender::SortRenderObjects(vector<RenderObject> &obj)
 {
 	//sort(obj.begin(), obj.end(), CompareRenderObj);
@@ -327,9 +339,17 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	return ret;
 }
 
-bool ModuleRender::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool use_camera)
+bool ModuleRender::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool adjust, bool use_camera)
 {
 	bool ret = true;
+
+	if (gamePixels != 0 && adjust)
+	{
+		x1 = RoundToInt(x1);
+		y1 = RoundToInt(y1);
+		x2 = RoundToInt(x2);
+		y2 = RoundToInt(y2);
+	}
 
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, r, g, b, a);

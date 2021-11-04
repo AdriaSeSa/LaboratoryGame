@@ -277,17 +277,19 @@ void ModulePhysics::ShapesRender()
 				int32 count = polygonShape->GetVertexCount();
 				b2Vec2 prev, v;
 
+				PhysBody* g = (PhysBody*)b->GetUserData();
+
 				for (int32 i = 0; i < count; ++i)
 				{
 					v = b->GetWorldPoint(polygonShape->GetVertex(i));
 					if (i > 0)
-						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
+						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100, 255, g->gameObject->adjustToGrid);
 
 					prev = v;
 				}
 
 				v = b->GetWorldPoint(polygonShape->GetVertex(0));
-				App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100);
+				App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100, 255, g->gameObject->adjustToGrid);
 			}
 			break;
 
@@ -301,21 +303,13 @@ void ModulePhysics::ShapesRender()
 				{
 					// Variable debug, luego se borra
 					PhysBody* g = (PhysBody*)b->GetUserData();
-					if (g->gameObject->name == "platform")
-					{
-						// TODO BUG!!!!
-						v = b->GetWorldPoint(shape->m_vertices[i]);
-						if (i > 0)
-							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
-						prev = v;
-					}
-					else
-					{
-						v = b->GetWorldPoint(shape->m_vertices[i]);
-						if (i > 0)
-							App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
-						prev = v;
-					}
+
+					// TODO BUG!!!!
+					v = b->GetWorldPoint(shape->m_vertices[i]);
+					if (i > 0)
+						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0, 255, g->gameObject->adjustToGrid);
+					prev = v;
+				
 				}
 				PhysBody* bb = (PhysBody*)f->GetBody()->GetUserData();
 				if (bb->chainLoop)

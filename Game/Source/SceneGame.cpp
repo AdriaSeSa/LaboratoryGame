@@ -66,6 +66,7 @@ void SceneGame::InitScene()
 			// +8 = offset, porque pivot de b2Body es el centro, y de tectura es izquierda superiol.
 			g->pBody = _app->physics->CreateRectangle({ _app->map->mapObjects[i].position.x + 8, _app->map->mapObjects[i].position.y + 8 }, 16, 16, g);
 			g->pBody->body->SetType(b2BodyType::b2_staticBody);
+			g->adjustToGrid = true;
 			gameObjects.add(g);
 		}
 		else if (_app->map->mapObjects[i].id == 1)
@@ -73,7 +74,7 @@ void SceneGame::InitScene()
 			GameObject* g = new GameObject("platform", "Platform", _app);
 			b2Vec2 startPos = { (float)_app->map->mapObjects[i].position.x  ,(float)_app->map->mapObjects[i].position.y };
 			b2Vec2 direcction = { 16, 0 };
-
+			g->adjustToGrid = true;
 			g->pBody = _app->physics->CreateLine(startPos, direcction, g);
 			gameObjects.add(g);
 		}
@@ -86,7 +87,10 @@ void SceneGame::InitScene()
 		{
 			// +8 = offset (depende del tile, no de mapa), porque pivot de b2Body es el centro, y de tectura es izquierda superiol.
 			Spike* spike = new Spike({ _app->map->mapObjects[i].position.x + 8 ,_app->map->mapObjects[i].position.y + 8 }, _app->map->mapObjects[i].rotation, "spike", "Spike", _app);
+			spike->adjustToGrid = true;
 			gameObjects.add(spike);
+
+
 		}
 	}
 }

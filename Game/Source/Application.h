@@ -16,7 +16,8 @@
 #define CONFIG_FILENAME		"config.xml"
 #define SAVE_STATE_FILENAME "save_game.xml"
 
-#define FPS 60
+#define FPS 90
+#define FRAME_TIME (1.0/FPS)
 
 class Application
 {
@@ -72,6 +73,8 @@ private:
 	// Load / Save
 	bool LoadGame();
 	bool SaveGame() const;
+
+	float deltaTime, sleepTime;
 
 	void AddModule(Module* mod);
 };

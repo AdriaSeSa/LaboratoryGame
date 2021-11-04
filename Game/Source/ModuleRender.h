@@ -3,6 +3,7 @@
 #include "Point.h"
 #include <vector>
 #include "RenderObject.h"
+#include "Camera.h"
 
 using namespace std;
 
@@ -29,7 +30,7 @@ class ModuleRender : public Module
 {
 public:
 	SDL_Renderer* renderer;
-	SDL_Rect camera;
+	Camera* camera = nullptr;
 
 public:
 	ModuleRender(Application* app, bool start_enabled = true);

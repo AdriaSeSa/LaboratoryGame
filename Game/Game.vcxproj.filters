@@ -67,6 +67,9 @@
     <ClCompile Include="Source\MobilePlatform.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Camera.cpp">
+      <Filter>SourceFiles\BaseClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -167,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Source\MobilePlatform.h">
       <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,9 +6,12 @@ ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, s
 {
 	name = "renderer";
 	renderer = NULL;
-	camera.x = camera.y = 0;
-	camera.w = SCREEN_WIDTH;
-	camera.h = SCREEN_HEIGHT;
+
+	camera = new Camera(App);
+	camera->x = camera->y = 0;
+	camera->w = SCREEN_WIDTH;
+	camera->h = SCREEN_HEIGHT;
+
 
 	renderLayers.resize(4);
 }
@@ -39,6 +42,8 @@ bool ModuleRender::Init(pugi::xml_node& config)
 		ret = false;
 	}
 
+	camera->Start();
+
 	return ret;
 }
 
@@ -53,31 +58,9 @@ UpdateStatus ModuleRender::PreUpdate()
 // Update: debug camera
 UpdateStatus ModuleRender::Update()
 {	
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
-		cameraSpeed++;
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
-		cameraSpeed--;
 
-	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-	{
-		App->renderer->camera.y -= cameraSpeed;
-		printf_s("Camera_X: %d, Camera_Y: %d\n", camera.x, camera.y);
-	}
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-	{
-		App->renderer->camera.y += cameraSpeed;
-		printf_s("Camera_X: %d, Camera_Y: %d\n", camera.x, camera.y);
-	}
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-	{
-		App->renderer->camera.x -= cameraSpeed;
-		printf_s("Camera_X: %d, Camera_Y: %d\n", camera.x, camera.y);
-	}
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
-	{
-		App->renderer->camera.x += cameraSpeed;
-		printf_s("Camera_X: %d, Camera_Y: %d\n", camera.x, camera.y);
-	}
+	camera->Update();
+
 	return UPDATE_CONTINUE;
 }
 
@@ -156,6 +139,8 @@ bool ModuleRender::CleanUp()
 {
 	LOG("Destroying renderer");
 
+	RELEASE(camera);
+
 	//Destroy window
 	if(renderer != NULL)
 	{
@@ -173,10 +158,10 @@ void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_R
 
 	renderObject.InitAsTexture(texture, destRect, section, layer, orderInlayer, flip, rotation, scale, speed);
 
-	if (layer == 2 || layer == 3) renderObject.speedRegardCamera = 0;	//If texture in UI layer, it moves alongside the camera. Therefor, speed = 0;
+	if (layer == 2 || layer == 3) renderObject.speedRegardCamera = 0;	//If texture in UI layer, it moves alongside the camera-> Therefor, speed = 0;
 
-	renderObject.destRect.x = (int)(-camera.x * speed) + pos.x * App->window->scale;
-	renderObject.destRect.y = (int)(-camera.y * speed) + pos.y * App->window->scale;
+	renderObject.destRect.x = (int)(-camera->x * speed) + pos.x * App->window->scale;
+	renderObject.destRect.y = (int)(-camera->y * speed) + pos.y * App->window->scale;
 
 	if (section.h != 0 && section.w != 0)
 	{
@@ -199,8 +184,8 @@ void ModuleRender::AddTextureRenderQueue(RenderObject obj)
 {
 	RenderObject object = obj;
 
-	object.destRect.x = (int)(-camera.x * object.speedRegardCamera) + object.destRect.x * App->window->scale;
-	object.destRect.y = (int)(-camera.y * object.speedRegardCamera) + object.destRect.y * App->window->scale;
+	object.destRect.x = (int)(-camera->x * object.speedRegardCamera) + object.destRect.x * App->window->scale;
+	object.destRect.y = (int)(-camera->y * object.speedRegardCamera) + object.destRect.y * App->window->scale;
 
 	if (object.section.w != 0 && object.section.h != 0)
 	{
@@ -262,9 +247,9 @@ void ModuleRender::SortRenderObjects(vector<RenderObject> &obj)
 
 void ModuleRender::CameraMove(iPoint pos)
 {
-	camera.x = pos.x + (SCREEN_WIDTH / 2);	//	Camera position = target position
+	camera->x = pos.x + (SCREEN_WIDTH / 2);	//	Camera position = target position
 
-	camera.y = pos.y;
+	camera->y = pos.y;
 }
 
 #pragma region OBSOLETE
@@ -274,8 +259,8 @@ bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, float scale, SDL_Rec
 {
 	bool ret = true;
 	SDL_Rect rect;
-	rect.x = (int) (camera.x * speed) + x * SCREEN_SIZE;
-	rect.y = (int) (camera.y * speed) + y * SCREEN_SIZE;
+	rect.x = (int) (camera->x * speed) + x * SCREEN_SIZE;
+	rect.y = (int) (camera->y * speed) + y * SCREEN_SIZE;
 
 	if(section != NULL)
 	{
@@ -322,8 +307,8 @@ bool ModuleRender::DrawQuad(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uin
 	SDL_Rect rec(rect);
 	if(use_camera)
 	{
-		rec.x = (int)(camera.x + rect.x * App->window->scale);
-		rec.y = (int)(camera.y + rect.y * App->window->scale);
+		rec.x = (int)(camera->x + rect.x * App->window->scale);
+		rec.y = (int)(camera->y + rect.y * App->window->scale);
 		rec.w *= App->window->scale;
 		rec.h *= App->window->scale;
 	}
@@ -357,7 +342,7 @@ bool ModuleRender::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Ui
 	int result = -1;
 
 	if(use_camera)
-		result = SDL_RenderDrawLine(renderer, -camera.x + x1 * App->window->scale, -camera.y + y1 * App->window->scale, -camera.x + x2 * App->window->scale, -camera.y + y2 * App->window->scale);
+		result = SDL_RenderDrawLine(renderer, -camera->x + x1 * App->window->scale, -camera->y + y1 * App->window->scale, -camera->x + x2 * App->window->scale, -camera->y + y2 * App->window->scale);
 	else
 		result = SDL_RenderDrawLine(renderer, x1 * App->window->scale, y1 * App->window->scale, x2 * App->window->scale, y2 * App->window->scale);
 
@@ -384,8 +369,8 @@ bool ModuleRender::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 
 
 	for(uint i = 0; i < 360; ++i)
 	{
-		points[i].x = (int)(-camera.x + x * App->window->scale + radius * cos(i * factor) * App->window->scale);
-		points[i].y = (int)(-camera.y + y * App->window->scale + radius * sin(i * factor) * App->window->scale);
+		points[i].x = (int)(-camera->x + x * App->window->scale + radius * cos(i * factor) * App->window->scale);
+		points[i].y = (int)(-camera->y + y * App->window->scale + radius * sin(i * factor) * App->window->scale);
 	}
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);

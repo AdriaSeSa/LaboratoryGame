@@ -1,0 +1,46 @@
+#pragma once
+class Application;
+class GameObject;
+#include "Point.h"
+
+class Camera
+{
+public:
+	Camera(Application* app, GameObject* target = nullptr);
+
+	void Start();
+
+	void Update();
+
+	void UpdatePosition();
+
+	void SetTarget(GameObject * target);
+
+private:
+
+	iPoint CalculateDistanceToTarget();
+
+	iPoint GetCenter();
+
+	Application* App;
+
+	GameObject* target;
+
+	int pivotX, pivotY;
+
+	int distanceFromTarget;
+
+public:
+	int x = 0;
+	int y = 0;
+	int w;
+	int h;
+
+	int cameraSpeed = 2;
+
+	int moveX = 0, moveY = 1;
+
+	int mapHeight, mapWidth;
+
+};
+

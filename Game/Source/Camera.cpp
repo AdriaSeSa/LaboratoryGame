@@ -48,40 +48,22 @@ void Camera::UpdatePosition()
 		int targetPosY = target->GetPosition().y * App->window->scale;
 		targetPosY = targetPosY - pivotY;
 
+		int distance = abs(targetPosY - y);
 
-		if (targetPosY > y )
-		{
-			int distance = abs(targetPosY - y);
-			y+=distance /20;
-		}
-		else if (targetPosY < y)
-		{
-			int distance = abs(targetPosY - y);
-			y-= distance / 20;
-		}
+		targetPosY > y ? y += distance / cameraDelay : targetPosY <y ? y -= distance / cameraDelay : y = y;
 
-		if (y < 0) y = 0;
-		else if (y > mapHeight) y = mapHeight;
+		y < 0 ? y = 0 : y > mapHeight ? y = mapHeight : y = y;
 
 		// Update X
 
 		int targetPosX = target->GetPosition().x * App->window->scale;
 		targetPosX = targetPosX - pivotX;
 	
+		distance = abs(targetPosX - x);
 
-		if (targetPosX > x)
-		{
-			int distance = abs(targetPosX - x);
-			x += distance / 20;
-		}
-		else if (targetPosX < x)
-		{
-			int distance = abs(targetPosX - x);
-			x -= distance / 20;
-		}
+		targetPosX > x ? x += distance / cameraDelay : targetPosX < x ? x -= distance / cameraDelay : x = x;
 
-		if (x < 0) x = 0;
-		else if (x > mapWidth) x = mapWidth;
+		x < 0 ? x = 0 : x > mapHeight ? x = mapHeight : x = x;
 	}
 	
 }
@@ -91,19 +73,10 @@ void Camera::SetTarget(GameObject* target)
 	this->target = target;
 }
 
-iPoint Camera::CalculateDistanceToTarget()
-{
-	distanceFromTarget = target->GetPosition().DistanceTo({ x + pivotX, y + pivotY });
-
-	iPoint vec = iPoint(target->GetPosition().x, target->GetPosition().y) 
-		- iPoint(GetCenter().x * App->window->scale, GetCenter().y * App->window->scale);
-
-	return vec;
-}
 
 iPoint Camera::GetCenter()
 {
-	return {x + (int)App->window->width/2, y + 160 };
+	return {x + pivotX, y + pivotY };
 }
 
 

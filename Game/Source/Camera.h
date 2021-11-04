@@ -18,8 +18,6 @@ public:
 
 private:
 
-	iPoint CalculateDistanceToTarget();
-
 	iPoint GetCenter();
 
 	Application* App;
@@ -37,6 +35,8 @@ public:
 	int h;
 
 	int cameraSpeed = 2;
+
+	int cameraDelay = 20;
 
 	int moveX = 0, moveY = 1;
 

@@ -14,10 +14,15 @@ public:
 	int lenght = 2;
 	float speed;
 
+private:
+
 	iPoint startPos;
 	iPoint endPos;
 
-	// 0 = start, 1 = move, 2 = end;
+	// 0 = start, 1 = end;
 	int moveState = 0;
+
+	iPoint moveDir = {0,0};
+
 };
 

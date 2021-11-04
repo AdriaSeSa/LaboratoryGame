@@ -17,77 +17,68 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 
 	if (lenght < 2) lenght = 2;
 	else if (lenght > 6)lenght = 6;
-
 	this->lenght = lenght;
-	startPos = position;
-	endPos = position + moveDistance;
-	this->speed = moveSpeed;
 
 	pBody = _app->physics->CreateLine({ (float)position.x, (float)position.y }, { (float)renderObjects[0].destRect.w * lenght, 0, }, this);
 	pBody->body->SetType(b2_kinematicBody);
-	pBody->body->SetLinearVelocity({ 0, -moveSpeed });
+
+	// Init movement
+	this->speed = moveSpeed;
+
+	if (moveDistance.x > 0)moveDir = { 1, 0 };
+	if (moveDistance.x < 0)
+	{
+		moveDir = { -1, 0 };
+		speed *= -1;
+	}
+	if (moveDistance.y > 0)
+	{
+		moveDir = { 0, 1 };
+		speed *= -1;
+	}
+	if (moveDistance.y < 0)moveDir = { 0, -1 };
+
+	if (moveDistance.y < 0 || moveDistance.x > 0)
+	{
+		startPos = position;
+		endPos = position + moveDistance;
+		pBody->body->SetLinearVelocity({ moveDir.x * -speed,  moveDir.y * speed });
+		moveState = 0;
+	}
+	else if (moveDistance.y > 0 || moveDistance.x < 0)
+	{
+		endPos = position;
+		startPos = position + moveDistance;
+		pBody->body->SetLinearVelocity({ moveDir.x * speed,  moveDir.y * -speed });
+		moveState = 1;
+	}
+	else
+	{
+		moveState = 3;
+	}
 }
 
 void MobilePlatform::Update()
 {
 	iPoint myPos = GetPosition();
 
-	if (myPos.y < endPos.y && moveState == 0)
+	if (moveState == 0)
 	{
-		pBody->body->SetLinearVelocity({ 0, speed });
-		moveState = 1;
+		if (myPos.y < endPos.y || myPos.x < startPos.x)
+		{
+			pBody->body->SetLinearVelocity({ moveDir.x * speed,  moveDir.y * -speed });
+			moveState = 1;
+		}
 	}
-	if(myPos.y >= startPos.y && moveState == 1)
+	else if (moveState == 1)
 	{
-		pBody->body->SetLinearVelocity({ 0, -speed });
-		moveState = 0;
+		if (myPos.y > startPos.y || myPos.x > endPos.x)
+		{
+			pBody->body->SetLinearVelocity({ moveDir.x * -speed,  moveDir.y * speed });
+			moveState = 0;
+		}
 	}
-
-	//switch (moveState)
-	//{
-	//case 0:
-	//	if (endPos.y < GetPosition().y)
-	//	{
-	//		pBody->body->SetLinearVelocity({ 0, -speed });		
-	//	}
-	//	else if(endPos.y > GetPosition().y)
-	//	{
-	//		pBody->body->SetLinearVelocity({ 0, speed });
-	//	}
-	//	else if (endPos.x < GetPosition().x)
-	//	{
-	//		pBody->body->SetLinearVelocity({ -speed, 0 });
-	//	}
-	//	else if (endPos.x > GetPosition().x)
-	//	{
-	//		pBody->body->SetLinearVelocity({ speed, 0 });
-	//	}
-	//	moveState = 1;
-	//	break;
-	//case 1:
-	//	if (startPos.y < GetPosition().y)
-	//	{
-	//		pBody->body->SetLinearVelocity({ 0, -speed });
-	//	}
-	//	else if (startPos.y > GetPosition().y)
-	//	{
-	//		pBody->body->SetLinearVelocity({ 0, speed });
-	//	}
-	//	else if (startPos.x < GetPosition().x)
-	//	{
-	//		pBody->body->SetLinearVelocity({ -speed, 0 });
-	//	}
-	//	else if (startPos.x > GetPosition().x)
-	//	{
-	//		pBody->body->SetLinearVelocity({ speed, 0 });
-	//	}
-	//	break;
-	//case 2:
-	//	break;
-	//}
 }
-
-
 
 void MobilePlatform::PostUpdate()
 {

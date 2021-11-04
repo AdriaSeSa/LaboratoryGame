@@ -20,7 +20,7 @@ bool SceneGame::Start()
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 	
-	mobilePlatform1 = new MobilePlatform({ 87, 250 }, "mobilePlatform", "MobilePlatform", _app, 3, { 0,-150 }, 0.75f);
+	mobilePlatform1 = new MobilePlatform({ 87, 250 }, "mobilePlatform", "MobilePlatform", _app, 3, { 0, -150 }, 1.0f);
 
 	gameObjects.add(backGround);
 	gameObjects.add(player);

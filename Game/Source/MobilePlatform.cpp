@@ -21,6 +21,7 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 
 	pBody = _app->physics->CreateLine({ (float)position.x, (float)position.y }, { (float)renderObjects[0].destRect.w * lenght, 0, }, this);
 	pBody->body->SetType(b2_kinematicBody);
+	pBody->body->GetFixtureList()->SetFriction(1000);
 
 	// Init movement
 	this->speed = moveSpeed;

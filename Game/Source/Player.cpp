@@ -7,7 +7,7 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	pBody->body->SetFixedRotation(true);
 	pBody->body->SetBullet(true);
 
-	pBody->body->GetFixtureList()->SetFriction(0);
+	pBody->body->GetFixtureList()->SetFriction(0.02f);
 
 	pBody->body->SetGravityScale(2.0f);
 

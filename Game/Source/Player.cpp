@@ -3,7 +3,7 @@
 Player::Player(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
 	//Phys Body
-	pBody = _app->physics->CreateRectangle(pos, 12, 14, this);
+	pBody = _app->physics->CreateRectangle(pos, 12, 15, this);
 	pBody->body->SetFixedRotation(true);
 	pBody->body->SetBullet(true);
 
@@ -60,6 +60,10 @@ void Player::Update()
 		pBody->body->SetLinearVelocity({ 0,pBody->body->GetLinearVelocity().y  });
 	}
 
+	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		pBody->body->SetLinearVelocity({ 0,speed });
+	}
 
 	if (_app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
@@ -82,7 +86,6 @@ void Player::Update()
 		}
 
 	}
-
 }
 
 void Player::OnCollision(PhysBody* col)

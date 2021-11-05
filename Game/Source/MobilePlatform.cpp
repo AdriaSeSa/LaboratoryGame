@@ -10,7 +10,7 @@
 /// <param name="lenght"></param>
 /// <param name="moveDistance">La distancia que quieres desplazar (al llegar el limite se volvera a la posicion inicial), negativo = subir, positico = bajar (respecto la posicion actual), solo puedes uno de los 2 ejes</param>
 /// <param name="moveSpeed"></param>
-MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string tag, Application* app, int lenght, iPoint moveDistance, float moveSpeed)
+MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string tag, Application* app, int lenght, iPoint moveDistance, float moveSpeed, int stopTime)
 	:GameObject(name, tag, app)
 {
 	InitRenderObjectWithXml();
@@ -25,6 +25,8 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 
 	// Init movement
 	this->speed = moveSpeed;
+	this->stopTime = stopTime;
+	this->countStopTime = stopTime;
 
 	if (moveDistance.x > 0)moveDir = { 1, 0 };
 	if (moveDistance.x < 0)
@@ -32,12 +34,12 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 		moveDir = { -1, 0 };
 		speed *= -1;
 	}
+	if (moveDistance.y < 0)moveDir = { 0, -1 };
 	if (moveDistance.y > 0)
 	{
 		moveDir = { 0, 1 };
 		speed *= -1;
 	}
-	if (moveDistance.y < 0)moveDir = { 0, -1 };
 
 	if (moveDistance.y < 0 || moveDistance.x > 0)
 	{
@@ -67,16 +69,34 @@ void MobilePlatform::Update()
 	{
 		if (myPos.y < endPos.y || myPos.x < startPos.x)
 		{
-			pBody->body->SetLinearVelocity({ moveDir.x * speed,  moveDir.y * -speed });
-			moveState = 1;
+			if (countStopTime > 0)
+			{
+				pBody->body->SetLinearVelocity({ 0,0 });
+				countStopTime--;
+			}
+			else
+			{
+				pBody->body->SetLinearVelocity({ moveDir.x * speed,  moveDir.y * -speed });
+				moveState = 1;
+				countStopTime = stopTime;
+			}
 		}
 	}
 	else if (moveState == 1)
 	{
 		if (myPos.y > startPos.y || myPos.x > endPos.x)
 		{
-			pBody->body->SetLinearVelocity({ moveDir.x * -speed,  moveDir.y * speed });
-			moveState = 0;
+			if (countStopTime > 0)
+			{
+				pBody->body->SetLinearVelocity({ 0,0 });
+				countStopTime--;
+			}
+			else
+			{
+				pBody->body->SetLinearVelocity({ moveDir.x * -speed,  moveDir.y * speed });
+				moveState = 0;
+				countStopTime = stopTime;
+			}
 		}
 	}
 }

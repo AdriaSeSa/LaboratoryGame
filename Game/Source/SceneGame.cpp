@@ -25,8 +25,7 @@ bool SceneGame::Start()
 	_app->renderer->camera->mapHeight = 640;
 	_app->renderer->camera->mapWidth = 320;
 
-	
-	mobilePlatform1 = new MobilePlatform({ 87, 250 }, "mobilePlatform", "MobilePlatform", _app, 3, { -30, 0 }, 1.0f);
+	mobilePlatform1 = new MobilePlatform({ 87, 368 }, "mobilePlatform", "MobilePlatform", _app, 3, { 0, -285}, 1, 100);
 
 	gameObjects.add(backGround);
 	gameObjects.add(player);

@@ -46,7 +46,7 @@ void Camera::UpdatePosition()
 	{
 		// Update Y
 		int targetPosY = target->GetPosition().y * App->window->scale;
-		targetPosY = targetPosY - pivotY;
+		targetPosY = (targetPosY - pivotY) * moveY;
 
 		int distance = abs(targetPosY - y);
 
@@ -57,7 +57,7 @@ void Camera::UpdatePosition()
 		// Update X
 
 		int targetPosX = target->GetPosition().x * App->window->scale;
-		targetPosX = targetPosX - pivotX;
+		targetPosX = (targetPosX - pivotX) * moveX;
 	
 		distance = abs(targetPosX - x);
 

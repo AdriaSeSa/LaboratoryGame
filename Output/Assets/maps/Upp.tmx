@@ -198,6 +198,7 @@
    <property name="IsMeta" type="int" value="0"/>
   </properties>
   <data>
+   <tile gid="200"/>
    <tile gid="180"/>
    <tile gid="222"/>
    <tile gid="222"/>
@@ -205,11 +206,10 @@
    <tile gid="222"/>
    <tile gid="222"/>
    <tile gid="222"/>
-   <tile gid="222"/>
-   <tile gid="222"/>
-   <tile gid="222"/>
-   <tile gid="222"/>
-   <tile gid="222"/>
+   <tile gid="223"/>
+   <tile gid="133"/>
+   <tile gid="135"/>
+   <tile gid="221"/>
    <tile gid="222"/>
    <tile gid="222"/>
    <tile gid="222"/>
@@ -218,8 +218,8 @@
    <tile gid="222"/>
    <tile gid="222"/>
    <tile gid="181"/>
-   <tile gid="201"/>
-   <tile/>
+   <tile gid="180"/>
+   <tile gid="223"/>
    <tile/>
    <tile/>
    <tile/>
@@ -607,8 +607,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="199"/>
-   <tile gid="201"/>
+   <tile gid="221"/>
+   <tile gid="223"/>
    <tile/>
    <tile/>
    <tile/>
@@ -627,8 +627,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="199"/>
-   <tile gid="201"/>
+   <tile gid="177"/>
+   <tile gid="179"/>
    <tile/>
    <tile/>
    <tile/>
@@ -938,9 +938,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="200"/>
-   <tile gid="200"/>
-   <tile gid="200"/>
+   <tile gid="180"/>
+   <tile gid="222"/>
+   <tile gid="181"/>
    <tile gid="201"/>
    <tile/>
    <tile/>
@@ -958,9 +958,9 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="200"/>
-   <tile gid="200"/>
-   <tile gid="200"/>
+   <tile gid="201"/>
+   <tile gid="216"/>
+   <tile gid="199"/>
    <tile gid="202"/>
    <tile gid="178"/>
    <tile gid="178"/>
@@ -968,16 +968,19 @@
    <tile gid="178"/>
    <tile gid="178"/>
    <tile gid="203"/>
+   <tile gid="201"/>
+   <tile gid="89"/>
+   <tile gid="91"/>
+   <tile gid="177"/>
+   <tile gid="178"/>
+   <tile gid="178"/>
+   <tile gid="178"/>
+   <tile gid="178"/>
+   <tile gid="178"/>
+   <tile gid="178"/>
    <tile gid="202"/>
    <tile gid="178"/>
-   <tile gid="178"/>
-   <tile gid="178"/>
-   <tile gid="178"/>
-   <tile gid="178"/>
-   <tile gid="178"/>
-   <tile gid="178"/>
-   <tile gid="178"/>
-   <tile gid="178"/>
+   <tile gid="203"/>
    <tile gid="200"/>
    <tile gid="200"/>
    <tile gid="200"/>
@@ -985,13 +988,10 @@
    <tile gid="200"/>
    <tile gid="200"/>
    <tile gid="200"/>
-   <tile gid="200"/>
-   <tile gid="200"/>
-   <tile gid="200"/>
-   <tile gid="200"/>
-   <tile gid="200"/>
-   <tile gid="200"/>
-   <tile gid="200"/>
+   <tile gid="201"/>
+   <tile gid="133"/>
+   <tile gid="135"/>
+   <tile gid="199"/>
    <tile gid="200"/>
    <tile gid="200"/>
    <tile gid="200"/>
@@ -1000,7 +1000,7 @@
    <tile gid="200"/>
   </data>
  </layer>
- <layer id="2" name="MetaData" width="20" height="40">
+ <layer id="2" name="MetaData" width="20" height="40" visible="0">
   <properties>
    <property name="Draw" type="int" value="0"/>
    <property name="IsMeta" type="int" value="1"/>
@@ -1027,7 +1027,7 @@
    <tile gid="243"/>
    <tile/>
    <tile gid="243"/>
-   <tile/>
+   <tile gid="243"/>
    <tile/>
    <tile/>
    <tile/>

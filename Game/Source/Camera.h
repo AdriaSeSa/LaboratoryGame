@@ -34,7 +34,7 @@ public:
 	int w;
 	int h;
 
-	int cameraSpeed = 2;
+	int cameraSpeed = 1;
 
 	int cameraDelay = 20;
 

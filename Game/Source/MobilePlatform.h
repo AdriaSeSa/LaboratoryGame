@@ -4,7 +4,7 @@
 class MobilePlatform : public GameObject
 {
 public:
-	MobilePlatform(iPoint position, std::string name, std::string tag, Application* app, int lenght = 2, iPoint moveDistance = { 0,0 }, float moveSpeed = 1.0f);
+	MobilePlatform(iPoint position, std::string name, std::string tag, Application* app, int lenght = 2, iPoint moveDistance = { 0,0 }, float moveSpeed = 1.0f, int stopTime = 0);
 
 	void Update() override;
 
@@ -13,6 +13,8 @@ public:
 public:
 	int lenght = 2;
 	float speed;
+	int stopTime = 0;
+	int countStopTime = stopTime;
 
 private:
 

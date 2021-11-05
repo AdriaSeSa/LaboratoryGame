@@ -23,6 +23,5 @@ public:
 	int jumpCount = 2;
 
 	float speed = 5;
-
 };
 

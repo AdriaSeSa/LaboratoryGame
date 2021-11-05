@@ -70,6 +70,9 @@
     <ClCompile Include="Source\Camera.cpp">
       <Filter>SourceFiles\BaseClass</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PowerUp.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -173,6 +176,9 @@
     </ClInclude>
     <ClInclude Include="Source\Camera.h">
       <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PowerUp.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

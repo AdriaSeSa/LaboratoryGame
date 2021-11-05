@@ -5,6 +5,7 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	//Phys Body
 	pBody = _app->physics->CreateRectangle(pos, 12, 15, this);
 	pBody->body->SetFixedRotation(true);
+
 	pBody->body->SetBullet(true);
 
 	pBody->body->GetFixtureList()->SetFriction(0.02f);

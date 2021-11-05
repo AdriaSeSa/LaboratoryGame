@@ -15,6 +15,9 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 {
 	InitRenderObjectWithXml();
 
+	renderObjects[0].textureCenterX = 0;
+	renderObjects[0].textureCenterY = 0;
+
 	if (lenght < 2) lenght = 2;
 	else if (lenght > 6)lenght = 6;
 	this->lenght = lenght;

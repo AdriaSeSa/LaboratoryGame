@@ -2,8 +2,19 @@
 
 Player::Player(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
+	std::string texNames[5] = { "virtualGuyIdle","virtualGuyRun","virtualGuyJump","virtualGuyFall","virtualGuyDoubleJump" };
+
+	for (int i = 0; i < 5; i++)
+	{
+		InitRenderObjectWithXml(texNames[i], i);
+	}
+
 	//Phys Body
-	pBody = _app->physics->CreateRectangle(pos, 12, 15, this);
+	//pBody = _app->physics->CreateRectangle(pos, 12, 15, this);
+
+	// Puede ser que soluciona que el player pega en la pared
+	pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
+
 	pBody->body->SetFixedRotation(true);
 
 	pBody->body->SetBullet(true);
@@ -15,21 +26,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	appliedFallForce = false;
 
 	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app);
-
-	//RenderObjects
-	renderObjects[0].texture = _app->textures->Load("Assets/textures/Main Characters/Virtual Guy/Idle (32x32).png");
-	renderObjects[1].texture = _app->textures->Load("Assets/textures/Main Characters/Virtual Guy/Run (32x32).png");
-	renderObjects[2].texture = _app->textures->Load("Assets/textures/Main Characters/Virtual Guy/Jump (32x32).png");
-	renderObjects[3].texture = _app->textures->Load("Assets/textures/Main Characters/Virtual Guy/Fall (32x32).png");
-	renderObjects[4].texture = _app->textures->Load("Assets/textures/Main Characters/Virtual Guy/Double Jump (32x32).png");
-
-	renderObjects[3].section = { 0,0,32,32 };
-	renderObjects[4].section = { 0,0,32,32 };
-
-	for (int i = 0; i < 5; i++)
-	{
-		renderObjects[i].scale = 0.5f;
-	}
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -54,8 +50,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	doubleJump.hasIdle = false;
 	doubleJump.speed = 0.3f;
-
-
 }
 
 Player::~Player()
@@ -200,12 +194,8 @@ void Player::PostUpdate()
 
 	if (renderObjects[i].texture != nullptr)
 	{
-		int spriteOffsetX, spriteOffsetY;
-		spriteOffsetX = 2;
-		spriteOffsetY = 1;
-
-		renderObjects[i].destRect.x = GetDrawPosition().x - spriteOffsetX;
-		renderObjects[i].destRect.y = GetDrawPosition().y - spriteOffsetY;
+		renderObjects[i].destRect.x = GetDrawPosition().x;
+		renderObjects[i].destRect.y = GetDrawPosition().y;
 
 		renderObjects[i].flip = pBody->body->GetLinearVelocity().x < 0 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
@@ -235,8 +225,7 @@ void Player::PostUpdate()
 
 		_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
 			renderObjects[i].section, renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
-			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
-		
+			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);		
 	}
 
 }

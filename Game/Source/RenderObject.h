@@ -100,4 +100,6 @@ public:
 	SDL_Rect section = { 0,0,0,0 };
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	float rotation = 0.0f;
+	int textureCenterX;
+	int textureCenterY;
 };

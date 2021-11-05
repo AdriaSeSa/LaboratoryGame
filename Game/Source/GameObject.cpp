@@ -85,8 +85,11 @@ iPoint GameObject::GetDrawPosition()
 		b2Vec2 position;
 
 		position = pBody->body->GetPosition();
-		position.x = METERS_TO_PIXELS(position.x) - pBody->width;
-		position.y = METERS_TO_PIXELS(position.y) - pBody->height;
+		//position.x = METERS_TO_PIXELS(position.x) - pBody->width;
+		//position.y = METERS_TO_PIXELS(position.y) - pBody->height;
+
+		position.x = METERS_TO_PIXELS(position.x) - pBody->gameObject->renderObjects[0].textureCenterX;
+		position.y = METERS_TO_PIXELS(position.y) - pBody->gameObject->renderObjects[0].textureCenterY;
 
 		return { (int)position.x, (int)position.y };
 	}
@@ -148,12 +151,17 @@ void GameObject::SetRotation(float angle)
 	}
 }
 
-void GameObject::InitRenderObjectWithXml()
+void GameObject::InitRenderObjectWithXml(std::string texName, int index)
 {
-	renderObjects[0].texture = _app->textures->Load(name, true);
-	renderObjects[0].destRect.w = _app->textures->config.child(name.c_str()).attribute("width").as_int();
-	renderObjects[0].destRect.h = _app->textures->config.child(name.c_str()).attribute("height").as_int();
-	renderObjects[0].layer = _app->textures->config.child(name.c_str()).attribute("layer").as_int(0);
-	renderObjects[0].section.x = _app->textures->config.child(name.c_str()).attribute("sectionX").as_int(0);
-	renderObjects[0].section.y = _app->textures->config.child(name.c_str()).attribute("sectionY").as_int(0);
+	if (texName == "null") texName = name;
+
+	renderObjects[index].texture = _app->textures->Load(texName, true);
+	renderObjects[index].destRect.w = _app->textures->config.child(texName.c_str()).attribute("width").as_int();
+	renderObjects[index].destRect.h = _app->textures->config.child(texName.c_str()).attribute("height").as_int();
+	renderObjects[index].layer = _app->textures->config.child(texName.c_str()).attribute("layer").as_int(0);
+	renderObjects[index].scale = _app->textures->config.child(texName.c_str()).attribute("scale").as_float(1);
+	renderObjects[index].section.x = _app->textures->config.child(texName.c_str()).attribute("sectionX").as_int(0);
+	renderObjects[index].section.y = _app->textures->config.child(texName.c_str()).attribute("sectionY").as_int(0);
+	renderObjects[index].textureCenterX = (renderObjects[index].destRect.w / 2) * renderObjects[index].scale;
+	renderObjects[index].textureCenterY = (renderObjects[index].destRect.h / 2) * renderObjects[index].scale;
 }

@@ -7,6 +7,7 @@ class Spike;
 class Player;
 class MobilePlatform;
 class CheckPoint;
+class PowerUp;
 
 class SceneGame :  public Scene
 {
@@ -30,4 +31,5 @@ public:
 	Player* player;
 	MobilePlatform* mobilePlatform1;
 	CheckPoint* checkPoint;
+	PowerUp* apple;
 };

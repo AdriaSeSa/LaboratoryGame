@@ -64,7 +64,7 @@ public:
 
 	bool HasFinished()
 	{
-		if (current_frame >= last_frame && !loop)
+		if (current_frame > last_frame - 1 && !loop)
 		{
 			return true;
 		}

@@ -83,6 +83,10 @@ public:
 	{
 	
 	}
+
+	virtual void GetSaveData()
+	{
+	}
 };
 
 #endif

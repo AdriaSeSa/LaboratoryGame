@@ -6,6 +6,7 @@ class Saw;
 class Spike;
 class Player;
 class MobilePlatform;
+class CheckPoint;
 
 class SceneGame :  public Scene
 {
@@ -22,8 +23,11 @@ public:
 
 	void InitScene();
 
+	void SetSaveData();
+
 public:
 	BackGround* backGround;
 	Player* player;
 	MobilePlatform* mobilePlatform1;
+	CheckPoint* checkPoint;
 };

@@ -69,8 +69,8 @@ public:
 	bool CleanUp();
 
 	PhysBody* CreateCircle(int x, int y, int radius, GameObject* gameObject = nullptr, bool isSensor = false);
-	PhysBody* CreateRectangle(iPoint pos, int width, int height, GameObject* gameObject);
-	PhysBody* CreateRectangleSensor(iPoint pos, int width, int height);
+	PhysBody* CreateRectangle(iPoint pos, int width, int height, GameObject* gameObject = nullptr);
+	PhysBody* CreateRectangleSensor(iPoint pos, int width, int height, GameObject* g = nullptr);
 	PhysBody* CreateLine(b2Vec2 startPos, b2Vec2 dir, GameObject* gameObject);
 	PhysBody* CreateChainObj(int x, int y, int* points, int size, bool loop);
 	b2Vec2 Perp(b2Vec2 vec1);

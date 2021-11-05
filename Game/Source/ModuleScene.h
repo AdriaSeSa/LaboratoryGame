@@ -41,6 +41,7 @@ public:
 
 	bool ChangeCurrentScene(uint index, int frames);
 
+	void GetSaveData() override;
 
 	bool CleanUp();
 
@@ -51,6 +52,8 @@ public:
 	Scene* currentScene = nullptr;
 
 	Scene* scenes[SCENES_NUM] = { nullptr };
+
+	int playerX, playerY;
 
 private:
 

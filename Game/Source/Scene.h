@@ -38,12 +38,17 @@ public:
 
 	void DestroyGameObject(GameObject* gameObject);
 
+	virtual void SetSaveData();
+
 	int getID()
 	{
 		return ID;
 	}
 
 	int lastID = 0;
+
+	int playerX;
+	int playerY;
 };
 
 

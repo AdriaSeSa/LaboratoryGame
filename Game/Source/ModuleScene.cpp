@@ -83,6 +83,14 @@ bool ModuleScene::ChangeCurrentScene(uint index, int frames)
 	return true;
 }
 
+void ModuleScene::GetSaveData()
+{
+	currentScene->SetSaveData();
+
+	playerX = currentScene->playerX;
+	playerX = currentScene->playerY;
+}
+
 bool ModuleScene::CleanUp()
 {
 	for (int i = 0; i < SCENES_NUM; i++)

@@ -60,4 +60,8 @@ void Scene::DestroyGameObject(GameObject* gameObject)
 	}
 }
 
+void Scene::SetSaveData()
+{
+}
+
 

@@ -4,6 +4,7 @@
 #include "Spike.h"
 #include "Player.h"
 #include "MobilePlatform.h"
+#include "CheckPoint.h"
 
 SceneGame::SceneGame(Application* app) :Scene(app)
 {
@@ -27,9 +28,12 @@ bool SceneGame::Start()
 
 	mobilePlatform1 = new MobilePlatform({ 87, 368 }, "mobilePlatform", "MobilePlatform", _app, 3, { 0, -285}, 1, 100);
 
+	checkPoint = new CheckPoint({ 160, 64 }, "checkpoint", "Checkpoint", _app);
+
 	gameObjects.add(backGround);
 	gameObjects.add(player);
 	gameObjects.add(mobilePlatform1);
+	gameObjects.add(checkPoint);
 
 	return true;
 }
@@ -96,4 +100,10 @@ void SceneGame::InitScene()
 			gameObjects.add(spike);
 		}
 	}
+}
+
+void SceneGame::SetSaveData()
+{
+	playerX = player->GetPosition().x;
+	playerY = player->GetPosition().y;
 }

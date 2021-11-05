@@ -212,31 +212,19 @@ bool Application::SaveGame() const
 {
 	bool ret = true;
 
-	p2List_item<Module*>* item = list_modules.getFirst();
-
-	while (item != NULL)
-	{
-		item->data->GetSaveData();
-		item = item->next;
-	}
-
 	pugi::xml_document saveGame;
 	pugi::xml_parse_result result = saveGame.load_file(SAVE_STATE_FILENAME);
 
 	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description())
 	else ret = saveGame.child("game_state");
 
-	pugi::xml_node n = saveGame.child("game_state");
+	p2List_item<Module*>* item = list_modules.getFirst();
 
-	// Renderer
-	n.child("renderer").child("camera").attribute("x") = renderer->camera->x;
-	n.child("renderer").child("camera").attribute("y") = renderer->camera->y;
-
-	// Scene
-
-	n.child("scene").child("player").attribute("x") = scene->playerX;
-	n.child("scene").child("player").attribute("y") = scene->playerY;
-
+	while (item != NULL)
+	{
+		item->data->GetSaveData(saveGame);
+		item = item->next;
+	}
 
 	saveGame.save_file(SAVE_STATE_FILENAME);
 

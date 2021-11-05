@@ -84,7 +84,7 @@ public:
 	
 	}
 
-	virtual void GetSaveData()
+	virtual void GetSaveData(pugi::xml_document& save)
 	{
 	}
 };

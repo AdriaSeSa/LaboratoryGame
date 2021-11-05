@@ -41,7 +41,7 @@ public:
 
 	bool ChangeCurrentScene(uint index, int frames);
 
-	void GetSaveData() override;
+	void GetSaveData(pugi::xml_document& save) override;
 
 	bool CleanUp();
 

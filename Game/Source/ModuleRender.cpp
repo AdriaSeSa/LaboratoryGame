@@ -245,11 +245,21 @@ void ModuleRender::SortRenderObjects(vector<RenderObject> &obj)
 	}
 }
 
+
 void ModuleRender::CameraMove(iPoint pos)
 {
 	camera->x = pos.x + (SCREEN_WIDTH / 2);	//	Camera position = target position
 
 	camera->y = pos.y;
+}
+
+
+void ModuleRender::GetSaveData(pugi::xml_document& save)
+{
+	pugi::xml_node n = save.child("game_state").child("renderer");
+
+	n.child("camera").attribute("x") = camera->x;
+	n.child("camera").attribute("y") = camera->y;
 }
 
 #pragma region OBSOLETE

@@ -83,12 +83,14 @@ bool ModuleScene::ChangeCurrentScene(uint index, int frames)
 	return true;
 }
 
-void ModuleScene::GetSaveData()
+void ModuleScene::GetSaveData(pugi::xml_document& save)
 {
 	currentScene->SetSaveData();
 
-	playerX = currentScene->playerX;
-	playerX = currentScene->playerY;
+	pugi::xml_node n = save.child("game_state").child("scene");
+
+	n.child("player").attribute("x") = currentScene->playerX;
+	n.child("player").attribute("y") = currentScene->playerY;
 }
 
 bool ModuleScene::CleanUp()

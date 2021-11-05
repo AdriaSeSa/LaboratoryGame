@@ -68,4 +68,5 @@ private:
 
 private:
 	void SortRenderObjects(vector<RenderObject>& obj);
+	void GetSaveData(pugi::xml_document& save) override;
 };

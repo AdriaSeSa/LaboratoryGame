@@ -44,7 +44,7 @@ public:
 
 	pugi::xml_node config;
 	pugi::xml_node configApp;
-
+	
 private:
 
 	p2List<Module*> list_modules;

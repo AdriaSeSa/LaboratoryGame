@@ -1,15 +1,35 @@
 #pragma once
 #include "GameObject.h"
 #include "GroundSensor.h"
+#include "Animation.h"
+
+enum PlayerState
+{
+	IDLE,
+	RUN,
+	JUMP,
+	DOUBLE_JUMP,
+	FALL
+};
 
 class Player : public GameObject
 {
+private:
+	Animation idle;
+	Animation run;
+	Animation doubleJump;
+	PlayerState playerCurrentState;
+
 public:
 	Player(iPoint pos, std::string name, std::string tag, Application* app);
 	~Player();
 	void Update() override;
 
+	void UpdatePlayerState();
+
 	void OnCollision(PhysBody* col) override;
+
+	void PostUpdate() override;
 
 	void CleanUp() override;
 

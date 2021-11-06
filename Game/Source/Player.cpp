@@ -10,10 +10,18 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	}
 
 	//Phys Body
-	//pBody = _app->physics->CreateRectangle(pos, 12, 15, this);
+	pBody = _app->physics->CreateRectangle(pos, 11, 16, this);
 
 	// Puede ser que soluciona que el player pega en la pared
-	pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
+	//pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
+
+	b2CircleShape shape;
+	shape.m_radius = PIXELS_TO_METER(6);
+	b2FixtureDef fixture;
+	fixture.shape = &shape;
+	fixture.friction = 0;
+	fixture.density = 0;
+	pBody->body->CreateFixture(&fixture);
 
 	pBody->body->SetFixedRotation(true);
 
@@ -61,7 +69,7 @@ void Player::Update()
 {	
 	groundSensor->SetPosition(GetPosition() + groundSensorOffset);
 
-	isFalling = pBody->body->GetLinearVelocity().y > 0;
+	isFalling = pBody->body->GetLinearVelocity().y > 0.1f;
 
 	if (groundSensor->isOnGround)
 	{
@@ -124,8 +132,6 @@ void Player::Update()
 	}
 
 	UpdatePlayerState();
-
-
 }
 
 void Player::UpdatePlayerState()

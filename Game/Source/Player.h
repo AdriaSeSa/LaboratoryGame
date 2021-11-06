@@ -20,6 +20,8 @@ private:
 	Animation doubleJump;
 	PlayerState playerCurrentState;
 
+	bool isLookingLeft;
+
 public:
 	Player(iPoint pos, std::string name, std::string tag, Application* app);
 	~Player();

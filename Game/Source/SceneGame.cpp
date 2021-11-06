@@ -89,6 +89,11 @@ bool SceneGame::Update()
 	{
 		_app->LoadGameRequest();
 	}
+	if (_app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && _app->isDebug)
+	{
+		reset = true;
+		_app->SaveGameRequest();
+	}
 
 	return true;
 }
@@ -144,8 +149,11 @@ void SceneGame::InitScene()
 
 void SceneGame::SetSaveData()
 {
-	playerX = player->GetPosition().x;
-	playerY = player->GetPosition().y;
+	playerX = reset ? playerStartPos.x : player->GetPosition().x;
+	playerY = reset ? playerStartPos.y : player->GetPosition().y;
+
+	reset = false;
+
 }
 
 void SceneGame::LoadSaveData(pugi::xml_node save)

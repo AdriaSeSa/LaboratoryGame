@@ -23,16 +23,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	fixture1.density = 0;
 	pBody->body->CreateFixture(&fixture1);
 
-	/*b2PolygonShape box;
-	box.SetAsBox(PIXELS_TO_METER(2) * 0.5f, PIXELS_TO_METER(2) * 0.5f);
-
-	b2FixtureDef fixture2;
-	fixture2.shape = &box;
-	fixture2.density = 1.0f;
-
-	pBody->body->CreateFixture(&fixture2);
-	*/
-
 
 	pBody->body->SetFixedRotation(true);
 

@@ -29,8 +29,13 @@ GameObject::~GameObject()
 	}
 }
 
-void GameObject::OnCollision(PhysBody* col)
+void GameObject::OnCollisionEnter(PhysBody* col)
 {
+}
+
+void GameObject::OnCollisionExit(PhysBody* col)
+{
+
 }
 
 void GameObject::Start()

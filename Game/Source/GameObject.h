@@ -21,7 +21,8 @@ public:
 
 	~GameObject();
 
-	virtual void OnCollision(PhysBody* col);
+	virtual void OnCollisionEnter(PhysBody* col);
+	virtual void OnCollisionExit(PhysBody* col);
 
 	virtual void Start();
 

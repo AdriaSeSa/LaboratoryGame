@@ -162,9 +162,13 @@ void Player::UpdatePlayerState()
 
 }
 
-void Player::OnCollision(PhysBody* col)
+void Player::OnCollisionEnter(PhysBody* col)
 {
 	//printf_s("PlayerCol");
+}
+void Player::OnCollisionExit(PhysBody* col)
+{
+	//printf_s("PlayerColExit");
 }
 
 void Player::PostUpdate()

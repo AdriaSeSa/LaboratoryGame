@@ -27,7 +27,8 @@ public:
 
 	void UpdatePlayerState();
 
-	void OnCollision(PhysBody* col) override;
+	void OnCollisionEnter(PhysBody* col) override;
+	void OnCollisionExit(PhysBody* col) override;
 
 	void PostUpdate() override;
 

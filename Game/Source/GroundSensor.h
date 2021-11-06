@@ -5,7 +5,7 @@ class GroundSensor : public GameObject
 public:
 	GroundSensor(iPoint pos, std::string name, std::string tag, Application* app);
 
-	void OnCollision(PhysBody* col) override;
+	void OnCollisionEnter(PhysBody* col) override;
 
 	void SetOffGround();
 

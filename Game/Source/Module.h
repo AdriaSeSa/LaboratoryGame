@@ -79,7 +79,7 @@ public:
 		return true; 
 	}
 
-	virtual void OnCollision(PhysBody* body1, PhysBody* body2)
+	virtual void OnCollisionEnter(PhysBody* body1, PhysBody* body2)
 	{
 	
 	}

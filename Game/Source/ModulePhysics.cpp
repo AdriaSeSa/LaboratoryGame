@@ -207,6 +207,11 @@ PhysBody* ModulePhysics::CreateChainObj(int x, int y, int* points, int size, boo
 	return pbody;
 }
 
+PhysBody* ModulePhysics::CreateEdgeObj(int x, int y, int* points, int size, bool loop)
+{
+	return nullptr;
+}
+
 b2Vec2 ModulePhysics::Perp(b2Vec2 vec1)
 {
 	b2Vec2 perpend;
@@ -244,15 +249,33 @@ void ModulePhysics::BeginContact(b2Contact* contact)
 
 	if (a && a->gameObject)
 	{
-		a->gameObject->OnCollision(b);
+		a->gameObject->OnCollisionEnter(b);
 	}	
 
 	if (b && b->gameObject)
 	{
-		b->gameObject->OnCollision(a);
+		b->gameObject->OnCollisionEnter(a);
 	}	
 	
 	//LOG("collision!!");
+}
+
+void ModulePhysics::EndContact(b2Contact* contact)
+{
+	PhysBody* a = (PhysBody*)contact->GetFixtureA()->GetBody()->GetUserData();
+
+	PhysBody* b = (PhysBody*)contact->GetFixtureB()->GetBody()->GetUserData();
+
+	if (a && a->gameObject)
+	{
+		a->gameObject->OnCollisionExit(b);
+	}
+
+	if (b && b->gameObject)
+	{
+		b->gameObject->OnCollisionExit(a);
+	}
+
 }
 
 void ModulePhysics::ShapesRender()

@@ -38,9 +38,12 @@ public:
 
 	void CleanUp() override;
 
+	void Die();
+
 	bool appliedFallForce = false;
 	bool isFalling;
 	bool isOnGround;
+	bool isDead = false;
 
 	GroundSensor* groundSensor;
 	iPoint groundSensorOffset = {0,8 };

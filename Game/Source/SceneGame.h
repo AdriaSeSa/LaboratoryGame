@@ -38,4 +38,5 @@ public:
 
 	iPoint playerStartPos = { 40, 567 };
 	bool reset = false;
+	int playerLifes = 3;
 };

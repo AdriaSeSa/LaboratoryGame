@@ -197,7 +197,7 @@ void Player::OnTriggerEnter(PhysBody* col)
 {
 	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
 	{
-		printf_s("HitBox!!!");
+		Die();
 	}
 }
 
@@ -279,6 +279,11 @@ void Player::CleanUp()
 		delete hitBoxSensor;
 		hitBoxSensor = nullptr;
 	}
+}
+
+void Player::Die()
+{
+	isDead = true;
 }
 
 

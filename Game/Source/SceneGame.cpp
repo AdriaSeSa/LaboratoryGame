@@ -15,6 +15,8 @@ SceneGame::SceneGame(Application* app) :Scene(app)
 
 bool SceneGame::Start()
 {
+	playerLifes = 3;
+
 	_app->map->Load("Upp.tmx");
 
 	InitScene();
@@ -72,6 +74,19 @@ bool SceneGame::PreUpdate()
 			}
 		}	
 	}
+
+	if (player->isDead)
+	{
+		if (--playerLifes == 0)
+		{
+			//reset = true;
+			//_app->SaveGameRequest();
+			_app->scene->ChangeCurrentScene(0,0);
+		}
+		_app->LoadGameRequest();
+		player->isDead = false;
+	}
+
 	return true;
 }
 
@@ -94,6 +109,12 @@ bool SceneGame::Update()
 		reset = true;
 		_app->SaveGameRequest();
 	}
+	if (_app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	{
+		_app->scene->ChangeCurrentScene(0, 0);
+	}
+		
+	
 
 	return true;
 }

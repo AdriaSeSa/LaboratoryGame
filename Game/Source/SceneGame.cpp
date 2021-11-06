@@ -75,16 +75,21 @@ bool SceneGame::PreUpdate()
 		}	
 	}
 
-	if (player->isDead)
+	if (player != nullptr && player->isDead)
 	{
 		if (--playerLifes == 0)
 		{
-			//reset = true;
-			//_app->SaveGameRequest();
-			_app->scene->ChangeCurrentScene(0,0);
+			reset = true;
+			_app->SaveGameRequest();
+			_app->scene->ChangeCurrentScene(0, 0);
+			printf("GameOver!!!");
 		}
-		_app->LoadGameRequest();
-		player->isDead = false;
+		else 
+		{
+			_app->LoadGameRequest();
+			player->isDead = false;
+		}
+	
 	}
 
 	return true;
@@ -170,8 +175,12 @@ void SceneGame::InitScene()
 
 void SceneGame::SetSaveData()
 {
-	playerX = reset ? playerStartPos.x : player->GetPosition().x;
-	playerY = reset ? playerStartPos.y : player->GetPosition().y;
+	if (player != nullptr)
+	{
+		playerX = reset ? playerStartPos.x : player->GetPosition().x;
+		playerY = reset ? playerStartPos.y : player->GetPosition().y;
+
+	}
 
 	reset = false;
 
@@ -181,5 +190,5 @@ void SceneGame::LoadSaveData(pugi::xml_node save)
 {
 	pugi::xml_node n = save;
 
-	player->SetPosition({ n.child("player").attribute("x").as_int(),n.child("player").attribute("y").as_int() });
+	if (player != nullptr) player->SetPosition({ n.child("player").attribute("x").as_int(),n.child("player").attribute("y").as_int() });
 }

@@ -33,6 +33,7 @@ public:
 		if (body != nullptr)
 		{
 			body->GetWorld()->DestroyBody(body);
+			body = nullptr;
 		}
 	}
 

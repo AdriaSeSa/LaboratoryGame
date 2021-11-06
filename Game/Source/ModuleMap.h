@@ -171,6 +171,7 @@ public:
 
 private:
 
+	std::string currentMap = "null";
     std::string folder;
     bool mapLoaded;
 };

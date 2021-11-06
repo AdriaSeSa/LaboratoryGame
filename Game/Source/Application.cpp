@@ -131,8 +131,9 @@ UpdateStatus Application::Update()
 	globalTime.Reset();
 
 	//// L02: DONE 1: This is a good place to call Load / Save methods
-	if (loadGameRequested == true) LoadGame();
 	if (saveGameRequested == true) SaveGame();
+	if (loadGameRequested == true) LoadGame();
+
 
 	return ret;
 }

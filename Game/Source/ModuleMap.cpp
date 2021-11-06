@@ -263,6 +263,10 @@ bool ModuleMap::CleanUp()
 // Load new map
 bool ModuleMap::Load(const char* filename)
 {
+	if (filename == currentMap) return true;
+	
+	currentMap = filename;
+
     bool ret = true;
     std::string tmp = folder + filename;
 

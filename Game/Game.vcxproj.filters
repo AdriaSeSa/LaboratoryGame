@@ -34,9 +34,6 @@
     <ClCompile Include="Source\ModuleRender.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\ModuleScene.cpp">
-      <Filter>SourceFiles\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ModuleTextures.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
@@ -74,6 +71,12 @@
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="Source\CheckPoint.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleScene.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SpecialPlatform.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -184,6 +187,9 @@
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Source\CheckPoint.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SpecialPlatform.h">
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

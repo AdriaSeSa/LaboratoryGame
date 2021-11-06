@@ -19,7 +19,7 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 	renderObjects[0].textureCenterY = 0;
 
 	if (lenght < 2) lenght = 2;
-	else if (lenght > 6)lenght = 6;
+	else if (lenght > 7)lenght = 7;
 	this->lenght = lenght;
 
 	pBody = _app->physics->CreateLine({ (float)position.x, (float)position.y }, { (float)renderObjects[0].destRect.w * lenght, 0, }, this);
@@ -128,4 +128,9 @@ void MobilePlatform::PostUpdate()
 
 		_app->renderer->AddTextureRenderQueue(renderObjects[0].texture, { renderPos.x, renderPos.y }, renderSeccion);
 	}
+}
+
+void MobilePlatform::OnCollisionEnter(PhysBody* col)
+{
+
 }

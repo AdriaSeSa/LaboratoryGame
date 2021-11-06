@@ -17,6 +17,10 @@ public:
 	void OnCollisionExit(PhysBody* col) override;
 
 private:
-	Animation anim;
+	Animation idleAnim;
+
+	Animation collectedAnim;
+
+	bool collected = false;
 };
 

@@ -56,7 +56,7 @@ void GameObject::PostUpdate()
 	// Dibujar texturas
 	for (int i = 0; i < MAX_GAMEOBJECT_TEXTURES; i++)
 	{
-		if (renderObjects[i].texture != nullptr)
+		if (renderObjects[i].texture != nullptr && renderObjects[i].draw)
 		{
 			renderObjects[i].destRect.x = GetDrawPosition().x;
 			renderObjects[i].destRect.y = GetDrawPosition().y;

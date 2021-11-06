@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "GroundSensor.h"
 #include "Animation.h"
+#include "HitboxSensor.h"
 
 enum PlayerState
 {
@@ -33,6 +34,7 @@ public:
 
 	void OnCollisionEnter(PhysBody* col) override;
 	void OnCollisionExit(PhysBody* col) override;
+	void OnTriggerEnter(PhysBody* col) override;
 
 	void PreUpdate() override;
 
@@ -40,14 +42,17 @@ public:
 
 	void CleanUp() override;
 
+	void Die();
+
 	bool appliedFallForce = false;
 	bool isFalling;
 	bool isOnGround;
+	bool isDead = false;
 
 	GroundSensor* groundSensor;
 	GroundSensor* openPlatformSensor;
 	GroundSensor* closePlatformSensor;
-	GameObject* hitBoxSensor;
+	HitboxSensor* hitBoxSensor;
 	iPoint groundSensorOffset = { 0, 8 };
 	iPoint platformSensorOffset = { 0, -5 };
 

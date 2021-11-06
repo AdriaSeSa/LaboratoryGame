@@ -15,6 +15,8 @@ SceneGame::SceneGame(Application* app) :Scene(app)
 
 bool SceneGame::Start()
 {
+	playerLifes = 3;
+
 	_app->map->Load("Upp.tmx");
 
 	InitScene();
@@ -72,6 +74,19 @@ bool SceneGame::PreUpdate()
 			}
 		}	
 	}
+
+	if (player->isDead)
+	{
+		if (--playerLifes == 0)
+		{
+			//reset = true;
+			//_app->SaveGameRequest();
+			_app->scene->ChangeCurrentScene(0,0);
+		}
+		_app->LoadGameRequest();
+		player->isDead = false;
+	}
+
 	return true;
 }
 
@@ -89,6 +104,17 @@ bool SceneGame::Update()
 	{
 		_app->LoadGameRequest();
 	}
+	if (_app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && _app->isDebug)
+	{
+		reset = true;
+		_app->SaveGameRequest();
+	}
+	if (_app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	{
+		_app->scene->ChangeCurrentScene(0, 0);
+	}
+		
+	
 
 	return true;
 }
@@ -144,8 +170,11 @@ void SceneGame::InitScene()
 
 void SceneGame::SetSaveData()
 {
-	playerX = player->GetPosition().x;
-	playerY = player->GetPosition().y;
+	playerX = reset ? playerStartPos.x : player->GetPosition().x;
+	playerY = reset ? playerStartPos.y : player->GetPosition().y;
+
+	reset = false;
+
 }
 
 void SceneGame::LoadSaveData(pugi::xml_node save)

@@ -44,6 +44,7 @@ public:
 
 	pugi::xml_node config;
 	pugi::xml_node configApp;
+	pugi::xml_document configF;
 	
 private:
 

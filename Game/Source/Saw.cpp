@@ -17,6 +17,12 @@ Saw::Saw(iPoint pos, std::string name, std::string tag, Application* app) :GameO
 	pBody = _app->physics->CreateCircle(pos.x, pos.y, renderObjects[0].destRect.w / 2, this);
 	pBody->body->SetType(b2BodyType::b2_kinematicBody);
 	pBody->body->GetFixtureList()->SetSensor(true);
+
+	/*b2Filter filter;
+	filter.categoryBits = 0x0004;
+	filter.maskBits = 0x0002;
+	filter.groupIndex = 2;
+	pBody->body->GetFixtureList()->SetFilterData(filter);*/
 }
 
 void Saw::PostUpdate()

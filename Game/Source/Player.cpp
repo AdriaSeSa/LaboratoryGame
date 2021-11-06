@@ -39,8 +39,18 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 4);
 
-	hitBoxSensor = new GameObject("playerHitbox", "PlayerHitBox", _app);
-	hitBoxSensor->pBody = _app->physics->CreateRectangleSensor(pos, 3, 3, hitBoxSensor);
+	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(-2,0),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
+
+	b2Filter physicFilter;
+	physicFilter.groupIndex = -1;
+
+	pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+	pBody->body->GetFixtureList()->GetNext()->SetFilterData(physicFilter);
+	groundSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+	hitBoxSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+
+	hitBoxSensor->hits[0] = "saw";
+	hitBoxSensor->hits[1] = "spike";
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -69,7 +79,7 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 Player::~Player()
 {
-	
+
 }
 
 
@@ -102,7 +112,7 @@ void Player::PreUpdate()
 }
 
 void Player::Update()
-{	
+{
 	// ChangeGravity
 	//if (_app->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
 	//{
@@ -146,11 +156,11 @@ void Player::Update()
 				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -7.0f });
 				//pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
 			}
-			else 
+			else
 			{
 				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -7.0f });
 				//pBody->body->ApplyLinearImpulse({ 0,-4.0f }, { 0,0, }, true);
-			}					
+			}
 			jumpCount--;
 		}
 
@@ -168,7 +178,7 @@ void Player::UpdatePlayerState()
 	}
 
 	if (pBody->body->GetLinearVelocity().y < -fallDetection)
-	{		
+	{
 		if (jumpCount != 0)
 		{
 			playerCurrentState = JUMP;
@@ -190,6 +200,24 @@ void Player::UpdatePlayerState()
 
 	playerCurrentState = IDLE;
 	idle.Update();
+
+}
+
+void Player::OnCollisionEnter(PhysBody* col)
+{
+
+}
+void Player::OnCollisionExit(PhysBody* col)
+{
+	//printf_s("PlayerColExit");
+}
+
+void Player::OnTriggerEnter(PhysBody* col)
+{
+	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
+	{
+		Die();
+	}
 }
 
 void Player::PostUpdate()
@@ -223,7 +251,7 @@ void Player::PostUpdate()
 		renderObjects[i].destRect.y = GetDrawPosition().y;
 
 		isLookingLeft = pBody->body->GetLinearVelocity().x < 0 ? true : pBody->body->GetLinearVelocity().x > 0 ? false : isLookingLeft;
-		
+
 		renderObjects[i].flip = isLookingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
 		if (i == 0)
@@ -241,7 +269,7 @@ void Player::PostUpdate()
 				renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
 			return;
 		}
-		
+
 		if (i == 4)
 		{
 			_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
@@ -252,7 +280,7 @@ void Player::PostUpdate()
 
 		_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
 			renderObjects[i].section, renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
-			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);		
+			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
 	}
 
 }
@@ -299,5 +327,7 @@ void Player::CleanUp()
 	}
 }
 
-
-
+void Player::Die()
+{
+	isDead = true;
+}

@@ -47,12 +47,11 @@ Application::~Application()
 
 bool Application::Init()
 {
-	pugi::xml_document configFile;
 
 	bool ret = true;
 
 	// L01: DONE 3: Load config from XML
-	config = LoadConfig(configFile);
+	config = LoadConfig(configF);
 
 	if (config.empty() == false)
 	{

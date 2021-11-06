@@ -207,7 +207,10 @@ void Player::PostUpdate()
 		renderObjects[i].destRect.x = GetDrawPosition().x;
 		renderObjects[i].destRect.y = GetDrawPosition().y;
 
-		renderObjects[i].flip = pBody->body->GetLinearVelocity().x < 0 ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
+		isLookingLeft = pBody->body->GetLinearVelocity().x < 0 ? true : pBody->body->GetLinearVelocity().x > 0 ? false : isLookingLeft;
+		
+
+		renderObjects[i].flip = isLookingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
 		if (i == 0)
 		{

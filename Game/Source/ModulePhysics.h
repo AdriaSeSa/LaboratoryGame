@@ -36,6 +36,15 @@ public:
 		}
 	}
 
+	void SetSensor(bool isSensor)
+	{
+		body->GetFixtureList()->SetSensor(isSensor);
+
+		this->isSensor = isSensor;
+	}
+
+	bool GetSenser() const { return isSensor; }
+
 	void GetPosition(int& x, int& y) const;
 	b2Vec2 GetPosition();
 	float GetRotation() const;
@@ -45,6 +54,7 @@ public:
 public:
 	int width, height;
 	bool chainLoop = false;
+	bool isSensor = false;
 	b2Body* body = nullptr;
 	GameObject* gameObject = nullptr;
 

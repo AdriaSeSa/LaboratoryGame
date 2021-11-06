@@ -324,15 +324,25 @@ void ModulePhysics::ShapesRender()
 				b2ChainShape* shape = (b2ChainShape*)f->GetShape();
 				b2Vec2 prev, v;
 
+				SDL_Color color = { 0,0,0,255 };
+
 				for (int32 i = 0; i < shape->m_count; ++i)
 				{
 					// Variable debug, luego se borra
 					PhysBody* g = (PhysBody*)b->GetUserData();
 
+					if (g->isSensor)
+					{
+						color = { 0,0,0,100 };
+					}
+					else
+					{
+						color = { 0,0,0,255 };
+					}
 					// TODO BUG!!!!
 					v = b->GetWorldPoint(shape->m_vertices[i]);
 					if (i > 0)
-						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0, 255, g->gameObject->adjustToGrid);
+						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), color.r, color.g, color.b, color.a, g->gameObject->adjustToGrid);
 					prev = v;
 				
 				}
@@ -340,7 +350,7 @@ void ModulePhysics::ShapesRender()
 				if (bb->chainLoop)
 				{
 					v = b->GetWorldPoint(shape->m_vertices[0]);
-					App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 0, 0, 0);
+					App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), color.r, color.g, color.b, color.a);
 				}
 			}
 			break;

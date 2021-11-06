@@ -1148,8 +1148,8 @@
    <tile gid="243"/>
    <tile gid="243"/>
    <tile gid="244"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -1208,26 +1208,6 @@
    <tile gid="243"/>
    <tile gid="243"/>
    <tile gid="244"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="243"/>
-   <tile gid="243"/>
-   <tile gid="2684354806"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="1610612982"/>
-   <tile gid="243"/>
-   <tile gid="243"/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -1307,9 +1287,29 @@
    <tile gid="1610612982"/>
    <tile gid="243"/>
    <tile gid="243"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="243"/>
+   <tile gid="243"/>
+   <tile gid="2684354806"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="1610612982"/>
+   <tile gid="243"/>
+   <tile gid="243"/>
    <tile gid="244"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -1368,26 +1368,6 @@
    <tile gid="243"/>
    <tile gid="243"/>
    <tile gid="244"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="243"/>
-   <tile gid="243"/>
-   <tile gid="2684354806"/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile gid="1610612982"/>
-   <tile gid="243"/>
-   <tile gid="243"/>
-   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -1467,9 +1447,29 @@
    <tile gid="1610612982"/>
    <tile gid="243"/>
    <tile gid="243"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="243"/>
+   <tile gid="243"/>
+   <tile gid="2684354806"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile gid="1610612982"/>
+   <tile gid="243"/>
+   <tile gid="243"/>
    <tile gid="244"/>
-   <tile gid="244"/>
-   <tile gid="244"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>

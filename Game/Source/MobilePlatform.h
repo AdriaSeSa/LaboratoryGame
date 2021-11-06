@@ -4,13 +4,15 @@
 class MobilePlatform : public GameObject
 {
 public:
-	MobilePlatform(iPoint position, std::string name, std::string tag, Application* app, int lenght = 2, iPoint moveDistance = { 0,0 }, float moveSpeed = 1.0f, int stopTime = 0);
+	MobilePlatform(iPoint position, std::string name, std::string tag, Application* app, int lenght = 3, iPoint moveDistance = { 0,0 }, float moveSpeed = 1.0f, int stopTime = 0);
 
 	void Update() override;
 
 	void PostUpdate() override;
 
 	void OnCollisionEnter(PhysBody* col) override;
+
+	void OnCollisionExit(PhysBody* col) override;
 
 public:
 	int lenght = 2;

@@ -20,11 +20,11 @@
 
   <textures>
     <!-- Characters -->
-    <virtualGuyIdle width = "32" height = "32" layer = "1" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Idle(32x32).png"/>
-    <virtualGuyRun width = "32" height = "32" layer = "1" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Run(32x32).png"/>
-    <virtualGuyJump width = "32" height = "32" layer = "1" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Jump(32x32).png"/>
-    <virtualGuyFall width = "32" height = "32" layer = "1" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Fall(32x32).png"/>
-    <virtualGuyDoubleJump width = "32" height = "32" layer = "1" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/DoubleJump(32x32).png"/>
+    <virtualGuyIdle width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Idle(32x32).png"/>
+    <virtualGuyRun width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Run(32x32).png"/>
+    <virtualGuyJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Jump(32x32).png"/>
+    <virtualGuyFall width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Fall(32x32).png"/>
+    <virtualGuyDoubleJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/DoubleJump(32x32).png"/>
     <!-- Fruits -->
     <apple width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Apple.png"/>
     <bananas width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Bananas.png"/>
@@ -44,6 +44,7 @@
     <saw width = "38" height = "38" layer = "1" path = "Assets/textures/Traps/Saw/On(38x38).png"/>
     <spike width = "16" height = "8" layer = "1" path = "Assets/textures/Traps/Spikes/Idle.png"/>
     <mobilePlatform width = "16" height = "16" layer = "1" sectionX = "272" sectionY = "12" path = "Assets/textures/Terrain/Terrain(16x16).png"/>
+    <platform width = "16" height = "16" layer = "1" sectionX = "272" sectionY = "32" path = "Assets/textures/Terrain/Terrain(16x16).png"/>
 
   </textures>
 

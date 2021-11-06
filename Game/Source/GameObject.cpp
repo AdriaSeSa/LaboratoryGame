@@ -164,6 +164,7 @@ void GameObject::InitRenderObjectWithXml(std::string texName, int index)
 	renderObjects[index].destRect.w = _app->textures->config.child(texName.c_str()).attribute("width").as_int();
 	renderObjects[index].destRect.h = _app->textures->config.child(texName.c_str()).attribute("height").as_int();
 	renderObjects[index].layer = _app->textures->config.child(texName.c_str()).attribute("layer").as_int(0);
+	renderObjects[index].orderInLayer = _app->textures->config.child(texName.c_str()).attribute("orderInLayer").as_float(1.0);
 	renderObjects[index].scale = _app->textures->config.child(texName.c_str()).attribute("scale").as_float(1);
 	renderObjects[index].section.x = _app->textures->config.child(texName.c_str()).attribute("sectionX").as_int(0);
 	renderObjects[index].section.y = _app->textures->config.child(texName.c_str()).attribute("sectionY").as_int(0);

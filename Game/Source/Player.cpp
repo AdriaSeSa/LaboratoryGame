@@ -10,33 +10,37 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	}
 
 	//Phys Body
-	pBody = _app->physics->CreateRectangle(pos, 11, 16, this);
+	//pBody = _app->physics->CreateRectangle(pos, 11, 16, this);
 
 	// Puede ser que soluciona que el player pega en la pared
-	//pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
+	pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
 
-	b2CircleShape shape;
-	shape.m_radius = PIXELS_TO_METER(6);
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	fixture.friction = 0;
-	fixture.density = 0;
-	pBody->body->CreateFixture(&fixture);
+	//b2CircleShape shape;
+	//shape.m_radius = PIXELS_TO_METER(6);
+	//b2FixtureDef fixture;
+	//fixture.shape = &shape;
+	//fixture.friction = 0;
+	//fixture.density = 0;
+	//pBody->body->CreateFixture(&fixture);
 
 	pBody->body->SetFixedRotation(true);
 
 	pBody->body->SetBullet(true);
 
-	pBody->body->GetFixtureList()->SetFriction(0.02f);
+	pBody->body->GetFixtureList()->SetFriction(0);
 
-	pBody->body->SetGravityScale(2.0f);
+	pBody->body->SetGravityScale(gravityScale);
 
 	appliedFallForce = false;
 
-	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app);
+	openPlatformSensor = new GroundSensor(GetPosition() + platformSensorOffset, "PlayerPSensor", "PlatformSensor", _app, 10,4);
+
+	closePlatformSensor = new GroundSensor(GetPosition(), "PlayerPSensor", "PlatformSensorClose", _app, 20, 20);
+
+	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 4);
 
 	hitBoxSensor = new GameObject("playerHitbox", "PlayerHitBox", _app);
-	hitBoxSensor->pBody = _app->physics->CreateRectangleSensor(pos, 8, 10, hitBoxSensor);
+	hitBoxSensor->pBody = _app->physics->CreateRectangleSensor(pos, 3, 3, hitBoxSensor);
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -68,15 +72,20 @@ Player::~Player()
 	
 }
 
-void Player::Update()
-{	
+
+void Player::PreUpdate()
+{
 	groundSensor->SetPosition(GetPosition() + groundSensorOffset);
-	hitBoxSensor->SetPosition(GetPosition() + iPoint(1,0));
+	hitBoxSensor->SetPosition(GetPosition() + iPoint(1, 0));
 
-	isFalling = pBody->body->GetLinearVelocity().y > 0.1f;
+	openPlatformSensor->SetPosition(GetPosition() + platformSensorOffset);
+	closePlatformSensor->SetPosition(GetPosition());
 
-	if (groundSensor->isOnGround)
+	isFalling = pBody->body->GetLinearVelocity().y > fallDetection;
+
+	if (groundSensor->isOnGround && jumpCount < 2)
 	{
+		//printf("inGround");
 		jumpCount = 2;
 	}
 
@@ -90,7 +99,25 @@ void Player::Update()
 		pBody->body->ApplyLinearImpulse({ 0,0.8f }, { 0,0, }, true);
 		appliedFallForce = true;
 	}
+}
 
+void Player::Update()
+{	
+	// ChangeGravity
+	//if (_app->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
+	//{
+	//	gravityScale = -gravityScale;
+	//	pBody->body->SetGravityScale(gravityScale);
+	//	pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, (float)gravityScale/2});
+	//}
+
+	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		//pBody->body->SetLinearVelocity({ 0,speed });
+		pBody->body->ApplyLinearImpulse({ 0, speed/2 }, { 0,0, }, true);
+	}
+
+	// Move
 	if (_app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		pBody->body->SetLinearVelocity({ speed,pBody->body->GetLinearVelocity().y });
@@ -108,11 +135,7 @@ void Player::Update()
 		pBody->body->SetLinearVelocity({ 0,pBody->body->GetLinearVelocity().y  });
 	}
 
-	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-	{
-		pBody->body->SetLinearVelocity({ 0,speed });
-	}
-
+	// Jump
 	if (_app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		if (jumpCount != 0)
@@ -121,15 +144,13 @@ void Player::Update()
 			if (isFalling)
 			{
 				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -7.0f });
-
 				//pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
 			}
 			else 
 			{
 				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -7.0f });
 				//pBody->body->ApplyLinearImpulse({ 0,-4.0f }, { 0,0, }, true);
-			}
-			
+			}					
 			jumpCount--;
 		}
 
@@ -145,9 +166,9 @@ void Player::UpdatePlayerState()
 		playerCurrentState = FALL;
 		return;
 	}
-	if (pBody->body->GetLinearVelocity().y < 0)
-	{
-		
+
+	if (pBody->body->GetLinearVelocity().y < -fallDetection)
+	{		
 		if (jumpCount != 0)
 		{
 			playerCurrentState = JUMP;
@@ -169,16 +190,6 @@ void Player::UpdatePlayerState()
 
 	playerCurrentState = IDLE;
 	idle.Update();
-
-}
-
-void Player::OnCollisionEnter(PhysBody* col)
-{
-	//printf_s("PlayerCol");
-}
-void Player::OnCollisionExit(PhysBody* col)
-{
-	//printf_s("PlayerColExit");
 }
 
 void Player::PostUpdate()
@@ -213,7 +224,6 @@ void Player::PostUpdate()
 
 		isLookingLeft = pBody->body->GetLinearVelocity().x < 0 ? true : pBody->body->GetLinearVelocity().x > 0 ? false : isLookingLeft;
 		
-
 		renderObjects[i].flip = isLookingLeft ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE;
 
 		if (i == 0)
@@ -247,6 +257,24 @@ void Player::PostUpdate()
 
 }
 
+void Player::OnCollisionEnter(PhysBody* col)
+{
+	//printf_s("PlayerCol");
+	if (col->gameObject->CompareTag("MobilePlatform"))
+	{
+		fallDetection = 10;
+	}
+}
+
+void Player::OnCollisionExit(PhysBody* col)
+{
+	//printf_s("PlayerColExit");
+	if (col->gameObject->CompareTag("MobilePlatform"))
+	{
+		fallDetection = 0.1f;
+	}
+}
+
 void Player::CleanUp()
 {
 	if (groundSensor != nullptr)
@@ -258,6 +286,16 @@ void Player::CleanUp()
 	{
 		delete hitBoxSensor;
 		hitBoxSensor = nullptr;
+	}
+	if (openPlatformSensor != nullptr)
+	{
+		delete openPlatformSensor;
+		openPlatformSensor = nullptr;
+	}
+	if (closePlatformSensor != nullptr)
+	{
+		delete closePlatformSensor;
+		closePlatformSensor = nullptr;
 	}
 }
 

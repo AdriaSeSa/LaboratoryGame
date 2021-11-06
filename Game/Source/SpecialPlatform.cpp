@@ -7,17 +7,14 @@ SpecialPlatform::SpecialPlatform(iPoint position, std::string name, std::string 
 
 void SpecialPlatform::Update()
 {
-	if (startMove)
-	{
-		MobilePlatform::Update();
-	}
+
 }
 
 void SpecialPlatform::OnCollisionEnter(PhysBody* col)
 {
-	if (col->gameObject->CompareTag("Player"))
+	if (col->gameObject->CompareTag("Player") && !startMove)
 	{
-		pBody->body->SetLinearVelocity({ 0, 2});
+		pBody->body->SetLinearVelocity({ 0, -speed});
 		printf("Player enter");
 		startMove = true;
 	}

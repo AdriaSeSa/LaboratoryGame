@@ -26,6 +26,11 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 	pBody->body->SetType(b2_kinematicBody);
 	pBody->body->GetFixtureList()->SetFriction(1000);
 
+	//if (moveSpeed == 0)
+	//{
+	//	pBody->SetSensor(true);
+	//}
+
 	// Init movement
 	this->speed = moveSpeed;
 	this->stopTime = stopTime;
@@ -131,6 +136,23 @@ void MobilePlatform::PostUpdate()
 }
 
 void MobilePlatform::OnCollisionEnter(PhysBody* col)
-{
+ {
+	if (col->gameObject->CompareTag("PlatformSensor") && speed == 0)
+	{
+		pBody->SetSensor(true);
+	}
+}
 
+void MobilePlatform::OnCollisionExit(PhysBody* col)
+{
+	//if (col->gameObject->CompareTag("PlatformSensor") && speed == 0)
+	//{
+	//	printf("Sensor off\n");
+	//	pBody->body->GetFixtureList()->SetSensor(true);
+	//}
+
+	if (col->gameObject->CompareTag("PlatformSensorClose") && speed == 0)
+	{
+		pBody->SetSensor(false);
+	}
 }

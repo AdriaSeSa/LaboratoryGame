@@ -23,11 +23,11 @@ bool SceneGame::Start()
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	mobilePlatform1 = new MobilePlatform({ 87, 368}, "mobilePlatform", "MobilePlatform", _app, 3, { 0, -285}, 1, 100);
+	//mobilePlatform1 = new MobilePlatform({ 87, 368}, "mobilePlatform", "MobilePlatform", _app, 3, { 0, -285}, 1, 100);
+
+	specialPlatform = new SpecialPlatform({ 185, 82 }, "mobilePlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
 
 	checkPoint = new CheckPoint({ 160, 68 }, "checkpoint", "Checkpoint", _app);
-
-	specialPlatform = new SpecialPlatform({ 185, 82}, "mobilePlatform", "MobilePlatform", _app, 7, { 0, 600}, 1, 50);
 
 	// Camera
 	_app->renderer->camera->SetTarget(player);
@@ -47,7 +47,7 @@ bool SceneGame::Start()
 
 	gameObjects.add(backGround);
 	gameObjects.add(player);
-	gameObjects.add(mobilePlatform1);
+	//gameObjects.add(mobilePlatform1);
 	gameObjects.add(checkPoint);
 	gameObjects.add(specialPlatform);
 
@@ -121,11 +121,11 @@ void SceneGame::InitScene()
 		}
 		else if (_app->map->mapObjects[i].id == 1)
 		{
-			GameObject* g = new GameObject("platform", "Platform", _app);
-			b2Vec2 startPos = { (float)_app->map->mapObjects[i].position.x  ,(float)_app->map->mapObjects[i].position.y };
-			b2Vec2 direcction = { 16, 0 };
+			MobilePlatform* g = new MobilePlatform({ _app->map->mapObjects[i].position.x , _app->map->mapObjects[i].position.y }, "platform", "Platform", _app, 3, { 0,0 }, 0, 0);
+			//b2Vec2 startPos = { (float)_app->map->mapObjects[i].position.x  ,(float)_app->map->mapObjects[i].position.y };
+			//b2Vec2 direcction = { 16, 0 };
 			g->adjustToGrid = true;
-			g->pBody = _app->physics->CreateLine(startPos, direcction, g);
+			//g->pBody = _app->physics->CreateLine(startPos, direcction, g);
 			gameObjects.add(g);
 		}
 		else if (_app->map->mapObjects[i].id == 2)

@@ -22,6 +22,8 @@ private:
 
 	bool isLookingLeft;
 
+	float fallDetection = 0.1f;
+
 public:
 	Player(iPoint pos, std::string name, std::string tag, Application* app);
 	~Player();
@@ -32,6 +34,8 @@ public:
 	void OnCollisionEnter(PhysBody* col) override;
 	void OnCollisionExit(PhysBody* col) override;
 
+	void PreUpdate() override;
+
 	void PostUpdate() override;
 
 	void CleanUp() override;
@@ -41,11 +45,15 @@ public:
 	bool isOnGround;
 
 	GroundSensor* groundSensor;
-	iPoint groundSensorOffset = {0,8 };
+	GroundSensor* openPlatformSensor;
+	GroundSensor* closePlatformSensor;
 	GameObject* hitBoxSensor;
+	iPoint groundSensorOffset = { 0, 8 };
+	iPoint platformSensorOffset = { 0, -5 };
+
+	int gravityScale = 2;
 
 	int jumpCount = 2;
 
 	float speed = 5;
 };
-

@@ -32,7 +32,7 @@ public:
 public:
 	BackGround* backGround = nullptr;
 	Player* player = nullptr;
-	MobilePlatform* mobilePlatform1 = nullptr;
+	//MobilePlatform* mobilePlatform1 = nullptr;
 	CheckPoint* checkPoint = nullptr;
 	SpecialPlatform* specialPlatform = nullptr;
 };

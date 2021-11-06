@@ -6,6 +6,7 @@
 #include "MobilePlatform.h"
 #include "CheckPoint.h"
 #include "PowerUp.h"
+#include "SpecialPlatform.h"
 
 SceneGame::SceneGame(Application* app) :Scene(app)
 {
@@ -22,22 +23,33 @@ bool SceneGame::Start()
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	mobilePlatform1 = new MobilePlatform({ 87, 368 }, "mobilePlatform", "MobilePlatform", _app, 3, { 0, -285}, 1, 100);
-
-	apple = new PowerUp({ 40, 40}, "apple", "PowerUp", _app);
+	mobilePlatform1 = new MobilePlatform({ 87, 368}, "mobilePlatform", "MobilePlatform", _app, 3, { 0, -285}, 1, 100);
 
 	checkPoint = new CheckPoint({ 160, 68 }, "checkpoint", "Checkpoint", _app);
+
+	specialPlatform = new SpecialPlatform({ 185, 82}, "mobilePlatform", "MobilePlatform", _app, 7, { 0, 600}, 1, 50);
 
 	// Camera
 	_app->renderer->camera->SetTarget(player);
 	_app->renderer->camera->mapHeight = 640;
 	_app->renderer->camera->mapWidth = 320;
 
+	// Create test fruits
+	std::string fuits[8] = { "apple","bananas","cherries","kiwi","melon","orange","pineapple","strawberry" };
+
+	for (int i = 0; i < 8; i++)
+	{
+		PowerUp* g;
+		g = new PowerUp({ 80 + 20 * i, 40 }, fuits[i], "PowerUp", _app);
+
+		gameObjects.add(g);
+	}
+
 	gameObjects.add(backGround);
 	gameObjects.add(player);
 	gameObjects.add(mobilePlatform1);
 	gameObjects.add(checkPoint);
-	gameObjects.add(apple);
+	gameObjects.add(specialPlatform);
 
 	_app->LoadGameRequest();
 
@@ -48,7 +60,17 @@ bool SceneGame::PreUpdate()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
-		gameObjects[i]->PreUpdate();
+		if (gameObjects[i] != nullptr)
+		{
+			if (gameObjects[i]->pendingToDelete)
+			{
+				DestroyGameObject(gameObjects[i]);
+			}
+			else
+			{
+				gameObjects[i]->PreUpdate();
+			}
+		}	
 	}
 	return true;
 }
@@ -57,7 +79,10 @@ bool SceneGame::Update()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
-		gameObjects[i]->Update();
+		if (gameObjects[i] != nullptr)
+		{
+			gameObjects[i]->Update();
+		}	
 	}
 
 	if (_app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
@@ -72,7 +97,10 @@ bool SceneGame::PostUpdate()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
-		gameObjects[i]->PostUpdate();
+		if (gameObjects[i] != nullptr)
+		{
+			gameObjects[i]->PostUpdate();
+		}
 	}
 	return true;
 }

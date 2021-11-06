@@ -90,6 +90,7 @@ public:
 	float orderInLayer = 0.0f;
 	float scale = 1.0f;
 	float speedRegardCamera = 1.0f;
+	bool draw = true;
 
 	// Rect
 	SDL_Color color;

@@ -10,6 +10,8 @@ public:
 
 	void PostUpdate() override;
 
+	void OnCollisionEnter(PhysBody* col) override;
+
 public:
 	int lenght = 2;
 	float speed;

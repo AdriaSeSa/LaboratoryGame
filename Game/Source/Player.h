@@ -42,6 +42,7 @@ public:
 
 	GroundSensor* groundSensor;
 	iPoint groundSensorOffset = {0,8 };
+	GameObject* hitBoxSensor;
 
 	int jumpCount = 2;
 

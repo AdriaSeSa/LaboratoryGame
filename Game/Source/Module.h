@@ -87,6 +87,11 @@ public:
 	virtual void GetSaveData(pugi::xml_document& save)
 	{
 	}
+
+	virtual void LoadSaveData(pugi::xml_document& save)
+	{
+
+	}
 };
 
 #endif

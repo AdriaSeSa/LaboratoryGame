@@ -43,6 +43,8 @@ public:
 
 	void GetSaveData(pugi::xml_document& save) override;
 
+	void LoadSaveData(pugi::xml_document& save) override;
+
 	bool CleanUp();
 
 public:

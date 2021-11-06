@@ -39,6 +39,8 @@ bool SceneGame::Start()
 	gameObjects.add(checkPoint);
 	gameObjects.add(apple);
 
+	_app->LoadGameRequest();
+
 	return true;
 }
 
@@ -57,6 +59,12 @@ bool SceneGame::Update()
 	{
 		gameObjects[i]->Update();
 	}
+
+	if (_app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	{
+		_app->LoadGameRequest();
+	}
+
 	return true;
 }
 
@@ -110,4 +118,11 @@ void SceneGame::SetSaveData()
 {
 	playerX = player->GetPosition().x;
 	playerY = player->GetPosition().y;
+}
+
+void SceneGame::LoadSaveData(pugi::xml_node save)
+{
+	pugi::xml_node n = save;
+
+	player->SetPosition({ n.child("player").attribute("x").as_int(),n.child("player").attribute("y").as_int() });
 }

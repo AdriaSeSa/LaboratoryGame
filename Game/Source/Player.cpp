@@ -35,6 +35,9 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app);
 
+	hitBoxSensor = new GameObject("playerHitbox", "PlayerHitBox", _app);
+	hitBoxSensor->pBody = _app->physics->CreateRectangleSensor(pos, 8, 10, hitBoxSensor);
+
 	for (int i = 0; i < 11; i++)
 	{
 		idle.PushBack({ 32 * i, 0, 32, 32 });
@@ -68,6 +71,7 @@ Player::~Player()
 void Player::Update()
 {	
 	groundSensor->SetPosition(GetPosition() + groundSensorOffset);
+	hitBoxSensor->SetPosition(GetPosition() + iPoint(1,0));
 
 	isFalling = pBody->body->GetLinearVelocity().y > 0.1f;
 
@@ -249,6 +253,11 @@ void Player::CleanUp()
 	{
 		delete groundSensor;
 		groundSensor = nullptr;
+	}
+	if (hitBoxSensor != nullptr)
+	{
+		delete hitBoxSensor;
+		hitBoxSensor = nullptr;
 	}
 }
 

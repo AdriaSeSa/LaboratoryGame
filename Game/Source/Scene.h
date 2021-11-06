@@ -40,6 +40,8 @@ public:
 
 	virtual void SetSaveData();
 
+	virtual void LoadSaveData(pugi::xml_node save);
+
 	int getID()
 	{
 		return ID;

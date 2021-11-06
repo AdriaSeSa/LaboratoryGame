@@ -24,7 +24,9 @@ public:
 
 	void InitScene();
 
-	void SetSaveData();
+	void SetSaveData() override;
+
+	void LoadSaveData(pugi::xml_node save) override;
 
 public:
 	BackGround* backGround;

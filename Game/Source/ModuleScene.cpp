@@ -94,6 +94,13 @@ void ModuleScene::GetSaveData(pugi::xml_document& save)
 
 }
 
+void ModuleScene::LoadSaveData(pugi::xml_document& save)
+{
+	pugi::xml_node n = save.child("game_state").child("scene");
+
+	currentScene->LoadSaveData(n);
+}
+
 bool ModuleScene::CleanUp()
 {
 	for (int i = 0; i < SCENES_NUM; i++)

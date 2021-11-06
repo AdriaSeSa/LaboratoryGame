@@ -12,7 +12,9 @@ public:
 
 	void PostUpdate() override;
 
-	void OnCollision(PhysBody* col) override;
+	void OnCollisionEnter(PhysBody* col) override;
+
+	void OnCollisionExit(PhysBody* col) override;
 
 private:
 	Animation anim;

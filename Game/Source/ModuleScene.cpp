@@ -91,6 +91,7 @@ void ModuleScene::GetSaveData(pugi::xml_document& save)
 
 	n.child("player").attribute("x") = currentScene->playerX;
 	n.child("player").attribute("y") = currentScene->playerY;
+
 }
 
 bool ModuleScene::CleanUp()

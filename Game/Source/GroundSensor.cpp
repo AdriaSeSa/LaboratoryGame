@@ -6,7 +6,7 @@ GroundSensor::GroundSensor(iPoint pos, std::string name, std::string tag, Applic
 	pBody->body->GetFixtureList()->SetSensor(true);
 }
 
-void GroundSensor::OnCollision(PhysBody* col)
+void GroundSensor::OnCollisionEnter(PhysBody* col)
 {
 	if (col->gameObject->tag == "Wall" || col->gameObject->tag == "Platform" || col->gameObject->tag == "MobilePlatform")
 	{

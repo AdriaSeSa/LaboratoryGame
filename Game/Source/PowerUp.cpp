@@ -26,10 +26,15 @@ void PowerUp::PostUpdate()
 	GameObject::PostUpdate();
 }
 
-void PowerUp::OnCollision(PhysBody* col)
+void PowerUp::OnCollisionEnter(PhysBody* col)
 {
 	if (col->gameObject->CompareTag("Player"))
 	{
 		//printf("Fruit col player");
 	}
+}
+
+void PowerUp::OnCollisionExit(PhysBody* col)
+{
+	printf_s("ColFruitExit\n");
 }

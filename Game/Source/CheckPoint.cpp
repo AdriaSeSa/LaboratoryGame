@@ -81,7 +81,7 @@ void CheckPoint::PostUpdate()
 	}
 }
 
-void CheckPoint::OnCollision(PhysBody* col)
+void CheckPoint::OnCollisionEnter(PhysBody* col)
 {
 	if (col->gameObject->CompareTag("Player"))
 	{
@@ -91,4 +91,8 @@ void CheckPoint::OnCollision(PhysBody* col)
 			_app->SaveGameRequest();
 		}
 	}
+}
+void CheckPoint::OnCollisionExit(PhysBody* col)
+{
+	//printf_s("ChecpointExit\n");
 }

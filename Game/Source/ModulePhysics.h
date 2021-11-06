@@ -73,6 +73,7 @@ public:
 	PhysBody* CreateRectangleSensor(iPoint pos, int width, int height, GameObject* g = nullptr);
 	PhysBody* CreateLine(b2Vec2 startPos, b2Vec2 dir, GameObject* gameObject);
 	PhysBody* CreateChainObj(int x, int y, int* points, int size, bool loop);
+	PhysBody* CreateEdgeObj(int x, int y, int* points, int size, bool loop);
 	b2Vec2 Perp(b2Vec2 vec1);
 	/*b2Vec2 Normalise(b2Vec2 vecToNormalise);*/
 	void DotProductAngle(b2Vec2 v1,b2Vec2 v2, float& angle);
@@ -80,6 +81,7 @@ public:
 	void Pause();
 
 	void BeginContact(b2Contact* contact) override;
+	void EndContact(b2Contact* contact) override;
 
 	void ShapesRender();
 

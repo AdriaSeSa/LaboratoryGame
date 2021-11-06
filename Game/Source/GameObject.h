@@ -24,6 +24,8 @@ public:
 	virtual void OnCollisionEnter(PhysBody* col);
 	virtual void OnCollisionExit(PhysBody* col);
 
+	virtual void OnTriggerEnter(PhysBody* col);
+
 	virtual void Start();
 
 	virtual void PreUpdate();

@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "GroundSensor.h"
 #include "Animation.h"
+#include "HitboxSensor.h"
 
 enum PlayerState
 {
@@ -31,6 +32,7 @@ public:
 
 	void OnCollisionEnter(PhysBody* col) override;
 	void OnCollisionExit(PhysBody* col) override;
+	void OnTriggerEnter(PhysBody* col) override;
 
 	void PostUpdate() override;
 
@@ -42,7 +44,7 @@ public:
 
 	GroundSensor* groundSensor;
 	iPoint groundSensorOffset = {0,8 };
-	GameObject* hitBoxSensor;
+	HitboxSensor* hitBoxSensor;
 
 	int jumpCount = 2;
 

@@ -28,6 +28,12 @@ Spike::Spike(iPoint pos, int angle, std::string name, std::string tag, Applicati
 	SetRotation(angle);
 	pBody->body->SetType(b2BodyType::b2_staticBody);
 	pBody->body->GetFixtureList()->SetSensor(true);
+
+/*	b2Filter filter;
+	filter.categoryBits = 0x0004;
+	filter.maskBits = 0x0002;
+	filter.groupIndex = 2;
+	pBody->body->GetFixtureList()->SetFilterData(filter);*/
 }
 
 void Spike::PostUpdate()

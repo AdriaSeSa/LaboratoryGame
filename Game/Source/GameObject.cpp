@@ -38,6 +38,10 @@ void GameObject::OnCollisionExit(PhysBody* col)
 
 }
 
+void GameObject::OnTriggerEnter(PhysBody* col)
+{
+}
+
 void GameObject::Start()
 {
 	//Cargar texturas

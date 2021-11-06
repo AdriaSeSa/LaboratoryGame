@@ -15,13 +15,24 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	// Puede ser que soluciona que el player pega en la pared
 	//pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
 
-	b2CircleShape shape;
-	shape.m_radius = PIXELS_TO_METER(6);
-	b2FixtureDef fixture;
-	fixture.shape = &shape;
-	fixture.friction = 0;
-	fixture.density = 0;
-	pBody->body->CreateFixture(&fixture);
+	b2CircleShape circleShape;
+	circleShape.m_radius = PIXELS_TO_METER(6);
+	b2FixtureDef fixture1;
+	fixture1.shape = &circleShape;
+	fixture1.friction = 0;
+	fixture1.density = 0;
+	pBody->body->CreateFixture(&fixture1);
+
+	/*b2PolygonShape box;
+	box.SetAsBox(PIXELS_TO_METER(2) * 0.5f, PIXELS_TO_METER(2) * 0.5f);
+
+	b2FixtureDef fixture2;
+	fixture2.shape = &box;
+	fixture2.density = 1.0f;
+
+	pBody->body->CreateFixture(&fixture2);
+	*/
+
 
 	pBody->body->SetFixedRotation(true);
 
@@ -35,8 +46,19 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app);
 
-	hitBoxSensor = new GameObject("playerHitbox", "PlayerHitBox", _app);
-	hitBoxSensor->pBody = _app->physics->CreateRectangleSensor(pos, 8, 10, hitBoxSensor);
+	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(-2,0),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
+
+
+	b2Filter physicFilter;
+	physicFilter.groupIndex = -1;
+
+	pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+	pBody->body->GetFixtureList()->GetNext()->SetFilterData(physicFilter);
+	groundSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+	hitBoxSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+
+	hitBoxSensor->hits[0] = "saw";
+	hitBoxSensor->hits[1] = "spike";
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -174,11 +196,19 @@ void Player::UpdatePlayerState()
 
 void Player::OnCollisionEnter(PhysBody* col)
 {
-	//printf_s("PlayerCol");
+
 }
 void Player::OnCollisionExit(PhysBody* col)
 {
 	//printf_s("PlayerColExit");
+}
+
+void Player::OnTriggerEnter(PhysBody* col)
+{
+	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
+	{
+		printf_s("HitBox!!!");
+	}
 }
 
 void Player::PostUpdate()

@@ -79,6 +79,9 @@
     <ClCompile Include="Source\SpecialPlatform.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Source\HitboxSensor.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -190,6 +193,9 @@
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Source\SpecialPlatform.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\HitboxSensor.h">
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>

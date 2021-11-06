@@ -45,7 +45,7 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	physicFilter.groupIndex = -1;
 
 	pBody->body->GetFixtureList()->SetFilterData(physicFilter);
-	pBody->body->GetFixtureList()->GetNext()->SetFilterData(physicFilter);
+	//pBody->body->GetFixtureList()->GetNext()->SetFilterData(physicFilter);
 	groundSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
 	hitBoxSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
 
@@ -201,15 +201,6 @@ void Player::UpdatePlayerState()
 	playerCurrentState = IDLE;
 	idle.Update();
 
-}
-
-void Player::OnCollisionEnter(PhysBody* col)
-{
-
-}
-void Player::OnCollisionExit(PhysBody* col)
-{
-	//printf_s("PlayerColExit");
 }
 
 void Player::OnTriggerEnter(PhysBody* col)

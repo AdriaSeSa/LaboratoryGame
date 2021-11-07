@@ -12,7 +12,6 @@ ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, s
 	camera->w = SCREEN_WIDTH;
 	camera->h = SCREEN_HEIGHT;
 
-
 	renderLayers.resize(4);
 }
 
@@ -74,48 +73,13 @@ UpdateStatus ModuleRender::PostUpdate()
 	}
 
 	//Draw
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		for each (auto renderObject in renderLayers[i])
 		{
-			//SDL_SetTextureAlphaMod(renderObject.texture, 100);
-
 			renderObject.Draw(renderer);
-
-			/*if (renderObject.section.w == 0 || renderObject.section.h == 0)
-			{
-				if (SDL_RenderCopyEx(renderer, renderObject.texture, nullptr, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
-				{
-					LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-				}
-			}
-			else
-			{
-				if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
-				{
-					LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-				}
-			}			*/
 		}
 	}
-
-	// Draw Rects
-	//for (int i = 0; i < rects.size(); i++)
-	//{
-	//	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-	//	SDL_SetRenderDrawColor(renderer, rects[i].color.r, rects[i].color.g, rects[i].color.b, rects[i].color.a);
-
-	//	SDL_RenderFillRect(renderer, &rects[i].rect);
-	//}
-
-	// Draw Special Layer
-	//for each (auto renderObject in layers[3])
-	//{
-	//	if (SDL_RenderCopyEx(renderer, renderObject.texture, &renderObject.section, &renderObject.renderRect, renderObject.rotation, NULL, renderObject.flip) != 0)
-	//	{
-	//		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
-	//	}
-	//}
 
 	if (App->isDebug)
 	{
@@ -128,8 +92,6 @@ UpdateStatus ModuleRender::PostUpdate()
 	{
 		renderLayers[i].clear();
 	}
-
-	//rects.clear();
 
 	return UPDATE_CONTINUE;
 }

@@ -53,6 +53,11 @@ public:
 	iPoint GetPosition();
 
 	/// <summary>
+	/// Si exixte pBody devuelve position de pBody, si no {0,0}
+	/// </summary>
+	b2Vec2 GetLinearVelocity();
+
+	/// <summary>
 	/// Si exixte pBody, cambia la position de pBody, si no la de GameObject
 	/// </summary>
 	/// <param name="pos">= position in pixel</param>
@@ -63,6 +68,12 @@ public:
 	/// </summary>
 	/// <param name="angle">= angle in deg</param>
 	void SetRotation(float angle);
+
+	/// <summary>
+	/// Si exixte pBody, cambia la velocidad de pBody, si no saldra un aviso en Console
+	/// </summary>
+	/// <param name="vel"></param>
+	void SetLinearVelocity(b2Vec2 vel);
 
 protected:
 

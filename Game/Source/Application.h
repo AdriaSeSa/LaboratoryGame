@@ -16,7 +16,7 @@
 #define CONFIG_FILENAME		"config.xml"
 #define SAVE_STATE_FILENAME "save_game.xml"
 
-#define FPS 75
+#define FPS 60
 #define FRAME_TIME (1.0/FPS)
 
 class Application
@@ -47,11 +47,9 @@ public:
 	pugi::xml_document configF;
 	
 private:
-
 	p2List<Module*> list_modules;
 
 public:
-
 	Application();
 	~Application();
 

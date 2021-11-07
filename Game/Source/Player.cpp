@@ -51,6 +51,7 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	hitBoxSensor->hits[0] = "saw";
 	hitBoxSensor->hits[1] = "spike";
+	hitBoxSensor->hits[2] = "fireTramp";
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -204,7 +205,7 @@ void Player::UpdatePlayerState()
 
 void Player::OnTriggerEnter(PhysBody* col)
 {
-	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
+	if (col->gameObject->name == "spike" || col->gameObject->name == "saw" || col->gameObject->CompareTag("FireTrampOn"))
 	{
 		Die();
 	}

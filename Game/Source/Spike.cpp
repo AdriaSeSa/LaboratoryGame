@@ -12,7 +12,7 @@ Spike::Spike(iPoint pos, int angle, std::string name, std::string tag, Applicati
 		offset = { 0,4 };
 		break;
 	case 90:
-		offset = { -4,0 };
+		offset = { -5,0 };
 		break;
 	case 180:
 		offset = { 0,-4 };

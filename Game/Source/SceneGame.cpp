@@ -79,6 +79,7 @@ bool SceneGame::PreUpdate()
 	{
 		if (--playerLifes == 0)
 		{
+			// when don't have any life
 			reset = true;
 			_app->SaveGameRequest();
 			_app->scene->ChangeCurrentScene(2, 0);
@@ -86,7 +87,9 @@ bool SceneGame::PreUpdate()
 		}
 		else
 		{
+			// when have life yet
 			_app->LoadGameRequest();
+			specialPlatform->Reset();
 			player->isDead = false;
 		}
 	}

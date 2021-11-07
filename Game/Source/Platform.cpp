@@ -40,7 +40,10 @@ void Platform::PostUpdate()
 		// No se porque hay un offset
 		renderPos.y -= 5;
 
-		_app->renderer->AddTextureRenderQueue(renderObjects[0].texture, { renderPos.x, renderPos.y }, renderSeccion);
+		_app->renderer->AddTextureRenderQueue
+		(renderObjects[0].texture, { renderPos.x, renderPos.y }, renderSeccion, renderObjects[0].scale,
+			renderObjects[0].layer, renderObjects[0].orderInLayer, renderObjects[0].rotation, 
+			renderObjects[0].flip, renderObjects[0].speedRegardCamera);
 	}
 }
 

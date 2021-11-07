@@ -3,6 +3,8 @@
 FireTrap::FireTrap(iPoint position, std::string name, std::string tag, Application* app)
 	:GameObject(name, tag, app)
 {
+	startPos = position;
+
 	// Init renderObject
 	std::string texNames[2] = { "fireTrampFlash","fireTrampOn" };
 	for (int i = 0; i < 2; i++)
@@ -17,7 +19,7 @@ FireTrap::FireTrap(iPoint position, std::string name, std::string tag, Applicati
 	}
 	fireFlash.hasIdle = false;
 	fireFlash.loop = true;
-	fireFlash.speed = 0.4f;
+	fireFlash.speed = 0.2f;
 
 	for (int i = 0; i < 3; i++)
 	{
@@ -25,8 +27,19 @@ FireTrap::FireTrap(iPoint position, std::string name, std::string tag, Applicati
 	}
 	fireOn.hasIdle = false;
 	fireOn.loop = true;
-	fireFlash.speed = 0.4f;
+	fireOn.speed = 0.3f;
 	renderObjects[1].draw = false;
+
+	// Init pBody
+	pBody = _app->physics->CreateRectangleSensor({ position.x, position.y }, 10, renderObjects[0].destRect.h, this);
+}
+
+void FireTrap::Reset()
+{
+	flashDuration = 0;
+	fireDuration = 0;
+	SetPosition(startPos);
+	SetLinearVelocity({ 0,0 });
 }
 
 void FireTrap::Update()
@@ -40,10 +53,12 @@ void FireTrap::Update()
 		else if (fireDuration > 0)
 		{
 			fireDuration--;
+			tag = "FireTrampOn";
 		}
 		else
 		{
 			activeteFire = false;
+			tag = "FireTrampOff";
 		}
 	}
 }
@@ -64,14 +79,24 @@ void FireTrap::PostUpdate()
 			fireOn.Update();
 			renderObjects[0].draw = false;
 			renderObjects[1].draw = true;
-			renderObjects[1].section = fireFlash.GetCurrentFrame();
+			renderObjects[1].section = fireOn.GetCurrentFrame();
 		}
 	}
 	else
 	{
 		renderObjects[1].draw = false;
 		renderObjects[0].draw = true;
-		renderObjects[0].section = { 0,0, 16, 16};
+		renderObjects[0].section = { 0,0, renderObjects[0].destRect.w, renderObjects[0].destRect.h };
+	}
+
+	GameObject::PostUpdate();
+}
+
+void FireTrap::OnCollisionEnter(PhysBody* col)
+{
+	if (col->gameObject->CompareTag("Player"))
+	{
+		//printf_s("Fire\n");
 	}
 }
 

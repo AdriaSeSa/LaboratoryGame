@@ -8,13 +8,23 @@ public:
 
 	FireTrap(iPoint position, std::string name, std::string tag, Application* app);
 
+	void Reset();
+
 	void Update() override;
 
 	void PostUpdate() override;
 
+	void OnCollisionEnter(PhysBody* col) override;
+
+	/// <summary>
+	/// Fight!!!
+	/// </summary>
+	/// <param name="flashDuration">time in ms</param>
+	/// <param name="fireDuration">time in ms</param>
 	void FireOn(int flashDuration = 0, int fireDuration = 0);
 
 private:
+	iPoint startPos;
 
 	int flashDuration = 0;
 	int fireDuration = 0;

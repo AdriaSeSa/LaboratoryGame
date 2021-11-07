@@ -21,7 +21,7 @@ protected:
 
 	b2Vec2 startVeclocity;
 
-private:
+protected:
 
 	iPoint startPos;
 	iPoint endPos;

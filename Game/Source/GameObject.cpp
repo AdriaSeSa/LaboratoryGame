@@ -136,6 +136,16 @@ iPoint GameObject::GetPosition()
 	return this->position;
 }
 
+b2Vec2 GameObject::GetLinearVelocity()
+{
+	if (pBody != nullptr)
+	{
+		return pBody->body->GetLinearVelocity();
+	}
+
+	return { 0,0 };
+}
+
 void GameObject::SetPosition(iPoint pos)
 {
 	if (pBody != nullptr)
@@ -157,6 +167,18 @@ void GameObject::SetRotation(float angle)
 	else
 	{
 		this->rotation = angle;
+	}
+}
+
+void GameObject::SetLinearVelocity(b2Vec2 vel)
+{
+	if (pBody != nullptr)
+	{
+		pBody->body->SetLinearVelocity(vel);
+	}
+	else
+	{
+		printf_s("%s don't have pBody!!!\n", name);
 	}
 }
 

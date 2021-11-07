@@ -15,7 +15,6 @@ class GameObject;
 #define METERS_TO_PIXELS(m) ((int)(PIXELS_PER_METER * m) / 2)
 #define PIXELS_TO_METER(p) ((float)METERS_PER_PIXELS * p * 2)
 
-
 class PhysBody
 {
 public:
@@ -68,7 +67,6 @@ public:
 
 	b2World* world = nullptr;
 	
-
 	ModulePhysics(Application* app, bool start_enabled = true);
 	~ModulePhysics();
 
@@ -86,7 +84,6 @@ public:
 	PhysBody* CreateChainObj(int x, int y, int* points, int size, bool loop);
 	PhysBody* CreateEdgeObj(int x, int y, int* points, int size, bool loop);
 	b2Vec2 Perp(b2Vec2 vec1);
-	/*b2Vec2 Normalise(b2Vec2 vecToNormalise);*/
 	void DotProductAngle(b2Vec2 v1,b2Vec2 v2, float& angle);
 	
 	void Pause();
@@ -99,8 +96,6 @@ public:
 private:
 	b2Body* mouseBody = nullptr;
 	b2MouseJoint* mouseJoint = nullptr;
-
 	bool debug;
-
 	bool pause = false;
 };

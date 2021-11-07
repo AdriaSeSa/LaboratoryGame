@@ -33,9 +33,9 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	appliedFallForce = false;
 
-	openPlatformSensor = new GroundSensor(GetPosition() + platformSensorOffset, "PlayerPSensor", "PlatformSensor", _app, 10,4);
+	openPlatformSensor = new GroundSensor(GetPosition() + platformSensorOffset, "PlayerPSensor", "PlatformSensor", _app, 10, 6);
 
-	closePlatformSensor = new GroundSensor(GetPosition(), "PlayerPSensor", "PlatformSensorClose", _app, 20, 20);
+	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{0, -2}, "PlayerPSensor", "PlatformSensorClose", _app, 18, 20);
 
 	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 4);
 
@@ -79,7 +79,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 Player::~Player()
 {
-
 }
 
 
@@ -89,7 +88,7 @@ void Player::PreUpdate()
 	hitBoxSensor->SetPosition(GetPosition() + iPoint(1, 0));
 
 	openPlatformSensor->SetPosition(GetPosition() + platformSensorOffset);
-	closePlatformSensor->SetPosition(GetPosition());
+	closePlatformSensor->SetPosition(GetPosition() + iPoint{ 0, -2});
 
 	isFalling = pBody->body->GetLinearVelocity().y > fallDetection;
 
@@ -148,17 +147,17 @@ void Player::Update()
 	// Jump
 	if (_app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		if (jumpCount != 0)
+		if (jumpCount != 0 && !jumpBlock)
 		{
 			groundSensor->SetOffGround();
 			if (isFalling)
 			{
-				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -7.0f });
+				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
 				//pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
 			}
 			else
 			{
-				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -7.0f });
+				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
 				//pBody->body->ApplyLinearImpulse({ 0,-4.0f }, { 0,0, }, true);
 			}
 			jumpCount--;
@@ -282,6 +281,11 @@ void Player::OnCollisionEnter(PhysBody* col)
 	if (col->gameObject->CompareTag("MobilePlatform"))
 	{
 		fallDetection = 10;
+
+		if (col->gameObject->name == "specialPlatform")
+		{
+			jumpBlock = true;
+		}
 	}
 }
 
@@ -291,6 +295,11 @@ void Player::OnCollisionExit(PhysBody* col)
 	if (col->gameObject->CompareTag("MobilePlatform"))
 	{
 		fallDetection = 0.1f;
+
+		if (col->gameObject->name == "specialPlatform")
+		{
+			jumpBlock = false;
+		}
 	}
 }
 

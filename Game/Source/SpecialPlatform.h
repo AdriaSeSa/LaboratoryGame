@@ -1,5 +1,8 @@
 #pragma once
 #include "MobilePlatform.h"
+
+class FireTrap;
+
 class SpecialPlatform :  public MobilePlatform
 {
 public:
@@ -8,8 +11,8 @@ public:
 
 	void Update() override;
 
-	void OnCollisionEnter(PhysBody* col) override;
+private:
 
-	bool startMove = false;
+	FireTrap* fireTraps[20] = { nullptr };
 };
 

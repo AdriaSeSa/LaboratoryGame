@@ -25,9 +25,9 @@ bool SceneGame::Start()
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	mobilePlatform1 = new MobilePlatform({ 95, 368}, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285}, 1, 100);
+	mobilePlatform1 = new MobilePlatform({ 95, 368 }, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285 }, 1, true, 200);
 
-	specialPlatform = new SpecialPlatform({ 185, 82 }, "mobilePlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
+	specialPlatform = new SpecialPlatform({ 185, 82 }, "specialPlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
 
 	checkPoint = new CheckPoint({ 160, 68 }, "checkpoint", "Checkpoint", _app);
 
@@ -72,7 +72,7 @@ bool SceneGame::PreUpdate()
 			{
 				gameObjects[i]->PreUpdate();
 			}
-		}	
+		}
 	}
 
 	if (player != nullptr && player->isDead)
@@ -84,14 +84,12 @@ bool SceneGame::PreUpdate()
 			_app->scene->ChangeCurrentScene(0, 0);
 			printf("GameOver!!!");
 		}
-		else 
+		else
 		{
 			_app->LoadGameRequest();
 			player->isDead = false;
 		}
-	
 	}
-
 	return true;
 }
 
@@ -102,7 +100,7 @@ bool SceneGame::Update()
 		if (gameObjects[i] != nullptr)
 		{
 			gameObjects[i]->Update();
-		}	
+		}
 	}
 
 	if (_app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
@@ -118,9 +116,6 @@ bool SceneGame::Update()
 	{
 		_app->scene->ChangeCurrentScene(0, 0);
 	}
-		
-	
-
 	return true;
 }
 
@@ -152,7 +147,7 @@ void SceneGame::InitScene()
 		}
 		else if (_app->map->mapObjects[i].id == 1)
 		{
-			MobilePlatform* g = new MobilePlatform({ _app->map->mapObjects[i].position.x , _app->map->mapObjects[i].position.y }, "platform", "Platform", _app, 3, { 0,0 }, 0, 0);
+			Platform* g = new Platform({ _app->map->mapObjects[i].position.x , _app->map->mapObjects[i].position.y }, "platform", "Platform", _app, 2);
 			//b2Vec2 startPos = { (float)_app->map->mapObjects[i].position.x  ,(float)_app->map->mapObjects[i].position.y };
 			//b2Vec2 direcction = { 16, 0 };
 			g->adjustToGrid = true;
@@ -179,11 +174,9 @@ void SceneGame::SetSaveData()
 	{
 		playerX = reset ? playerStartPos.x : player->GetPosition().x;
 		playerY = reset ? playerStartPos.y : player->GetPosition().y;
-
 	}
 
 	reset = false;
-
 }
 
 void SceneGame::LoadSaveData(pugi::xml_node save)

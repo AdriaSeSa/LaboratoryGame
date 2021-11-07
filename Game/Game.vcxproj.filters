@@ -82,10 +82,13 @@
     <ClCompile Include="Source\HitboxSensor.cpp">
       <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneMainMenu.cpp">
-      <Filter>SourceFiles\Scenes</Filter>
+    <ClCompile Include="Source\Platform.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneGameOver.cpp">
+    <ClCompile Include="Source\FireTrap.cpp">
+      <Filter>SourceFiles\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneMainMenu.cpp">
       <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -204,10 +207,13 @@
     <ClInclude Include="Source\HitboxSensor.h">
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneMainMenu.h">
-      <Filter>HeaderFiles\Scenes</Filter>
+    <ClInclude Include="Source\Platform.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneGameOver.h">
+    <ClInclude Include="Source\FireTrap.h">
+      <Filter>HeaderFiles\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneMainMenu.h">
       <Filter>HeaderFiles\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

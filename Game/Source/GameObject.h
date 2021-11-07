@@ -82,7 +82,7 @@ public:
 
 	std::string tag;
 
-	PhysBody* pBody;
+	PhysBody* pBody = nullptr;
 
 	RenderObject renderObjects[MAX_GAMEOBJECT_TEXTURES];
 

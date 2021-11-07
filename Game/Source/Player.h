@@ -22,6 +22,7 @@ private:
 	PlayerState playerCurrentState;
 
 	bool isLookingLeft;
+	bool jumpBlock = false;
 
 	float fallDetection = 0.1f;
 
@@ -59,6 +60,8 @@ public:
 	int gravityScale = 2;
 
 	int jumpCount = 2;
+
+	float jumpForce = 6.7f;
 
 	float speed = 5;
 };

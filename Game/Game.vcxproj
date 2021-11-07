@@ -92,6 +92,7 @@
     <ClCompile Include="Source\BackGround.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CheckPoint.cpp" />
+    <ClCompile Include="Source\FireTrap.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GroundSensor.cpp" />
     <ClCompile Include="Source\HitboxSensor.cpp" />
@@ -107,12 +108,12 @@
     <ClCompile Include="Source\ModuleTextures.cpp" />
     <ClCompile Include="Source\ModuleUI.cpp" />
     <ClCompile Include="Source\ModuleWindow.cpp" />
+    <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PowerUp.cpp" />
     <ClCompile Include="Source\Saw.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
-    <ClCompile Include="Source\SceneGameOver.cpp" />
     <ClCompile Include="Source\SceneMainMenu.cpp" />
     <ClCompile Include="Source\SpecialPlatform.cpp" />
     <ClCompile Include="Source\Spike.cpp" />
@@ -125,6 +126,7 @@
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\External\PugiXml\src\pugixml.cpp" />
+    <ClInclude Include="Source\FireTrap.h" />
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\GroundSensor.h" />
@@ -145,6 +147,7 @@
     <ClInclude Include="Source\p2DynArray.h" />
     <ClInclude Include="Source\p2List.h" />
     <ClInclude Include="Source\p2Point.h" />
+    <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Point.h" />
     <ClInclude Include="Source\PowerUp.h" />
@@ -152,7 +155,6 @@
     <ClInclude Include="Source\Saw.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneGame.h" />
-    <ClInclude Include="Source\SceneGameOver.h" />
     <ClInclude Include="Source\SceneMainMenu.h" />
     <ClInclude Include="Source\SpecialPlatform.h" />
     <ClInclude Include="Source\Spike.h" />

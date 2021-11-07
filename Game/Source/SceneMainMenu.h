@@ -18,6 +18,12 @@ private:
 
 	int logoY = -100;
 
+	SDL_Texture* mainMenu;
+
+	SDL_Texture* arrow;
+
+	SDL_Texture* logo;
+
 	void SelectDifficulty();
 };
 

@@ -81,8 +81,8 @@ bool SceneGame::PreUpdate()
 		{
 			reset = true;
 			_app->SaveGameRequest();
-			_app->scene->ChangeCurrentScene(0, 0);
-			printf("GameOver!!!");
+			_app->scene->ChangeCurrentScene(2, 0);
+			return true;
 		}
 		else
 		{
@@ -128,6 +128,26 @@ bool SceneGame::PostUpdate()
 			gameObjects[i]->PostUpdate();
 		}
 	}
+	return true;
+}
+
+bool SceneGame::CleanUp()
+{
+	Scene::CleanUp();
+
+	backGround = nullptr;
+	player = nullptr;
+	mobilePlatform1 = nullptr;
+	checkPoint = nullptr;
+	specialPlatform = nullptr;
+
+	if (_app->renderer->camera != nullptr)
+	{
+		_app->renderer->camera->ReleaseTarget();
+	}
+	
+	_app->map->CleanUp();
+
 	return true;
 }
 

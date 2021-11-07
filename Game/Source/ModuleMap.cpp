@@ -235,6 +235,8 @@ bool ModuleMap::CleanUp()
 
     // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     // Remove all tilesets
+	currentMap = "null";
+
 	ListItem<TileSet*>* item;
 	item = mapData.tilesets.start;
 
@@ -256,6 +258,8 @@ bool ModuleMap::CleanUp()
 		item2 = item2->next;
 	}
 	mapData.layers.clear();
+
+	mapObjects.clear();
 
     return true;
 }

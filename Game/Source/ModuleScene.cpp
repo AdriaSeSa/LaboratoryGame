@@ -1,5 +1,6 @@
 #include "SceneGame.h"
 #include "SceneMainMenu.h"
+#include "SceneGameOver.h"
 #include <time.h>
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -8,6 +9,7 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 
 	scenes[0] = new SceneGame(app);
 	scenes[1] = new SceneMainMenu(app);
+	scenes[2] = new SceneGameOver(app);
 }
 
 ModuleScene::~ModuleScene()
@@ -44,6 +46,8 @@ UpdateStatus ModuleScene::PreUpdate()
 		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
+	if (isChangingScene) isChangingScene = false;
+
 	currentScene->PreUpdate();
 
 	return UpdateStatus::UPDATE_CONTINUE;
@@ -52,7 +56,7 @@ UpdateStatus ModuleScene::PreUpdate()
 UpdateStatus ModuleScene::Update()
 {
 
-	if (currentScene == nullptr)
+	if (currentScene == nullptr || isChangingScene)
 	{
 		return UpdateStatus::UPDATE_CONTINUE;
 	}
@@ -67,7 +71,7 @@ UpdateStatus ModuleScene::Update()
 
 UpdateStatus ModuleScene::PostUpdate()
 {
-	if (currentScene == nullptr)
+	if (currentScene == nullptr || isChangingScene)
 	{
 		return UpdateStatus::UPDATE_CONTINUE;
 	}
@@ -80,6 +84,8 @@ UpdateStatus ModuleScene::PostUpdate()
 //CleanUp current scene, change current scene (index), Start current Scene
 bool ModuleScene::ChangeCurrentScene(uint index, int frames)
 {
+	if (isChangingScene)return true;
+	isChangingScene = true;
 	this->index = index;
 	currentScene->CleanUp();
 	currentScene = scenes[index];

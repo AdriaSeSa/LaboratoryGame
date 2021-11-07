@@ -42,7 +42,7 @@ void Camera::Update()
 
 void Camera::UpdatePosition()
 {
-	if (target != nullptr)
+	if (target != nullptr && !App->scene->isChangingScene)
 	{
 		// Update Y
 		int targetPosY = target->GetPosition().y * App->window->scale;
@@ -71,6 +71,12 @@ void Camera::UpdatePosition()
 void Camera::SetTarget(GameObject* target)
 {
 	this->target = target;
+}
+
+void Camera::ReleaseTarget()
+{
+	target = nullptr;
+	x = y = 0;
 }
 
 

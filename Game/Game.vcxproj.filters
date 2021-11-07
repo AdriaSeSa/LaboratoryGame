@@ -91,6 +91,9 @@
     <ClCompile Include="Source\SceneMainMenu.cpp">
       <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneGameOver.cpp">
+      <Filter>SourceFiles\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -214,6 +217,9 @@
       <Filter>HeaderFiles\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="Source\SceneMainMenu.h">
+      <Filter>HeaderFiles\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneGameOver.h">
       <Filter>HeaderFiles\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

@@ -16,6 +16,8 @@ public:
 
 	void SetTarget(GameObject * target);
 
+	void ReleaseTarget();
+
 private:
 
 	iPoint GetCenter();

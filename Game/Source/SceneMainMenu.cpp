@@ -9,16 +9,13 @@ SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
 
 bool SceneMainMenu::Start()
 {
-    SDL_Texture* mainMenu = _app->textures->Load("Assets/textures/Menu/MenuOptions.png");
-    SDL_Texture* logo = _app->textures->Load("Assets/textures/Menu/Logo.png");
-    SDL_Texture* arrow = _app->textures->Load("Assets/textures/Menu/Arrow.png");
+    mainMenu = _app->textures->Load("Assets/textures/Menu/MenuOptions.png");
+    logo = _app->textures->Load("Assets/textures/Menu/Logo.png");
+    arrow = _app->textures->Load("Assets/textures/Menu/Arrow.png");
+
     bg = new BackGround("menuBackGround", "MenuBG", _app);
 
     arrowPos = { 69, 190 };
-
-    sceneTextures.add(mainMenu);
-    sceneTextures.add(logo);
-    sceneTextures.add(arrow);
 
     gameObjects.add(bg);
 
@@ -77,9 +74,9 @@ bool SceneMainMenu::PostUpdate()
         if (gameObjects[i] != nullptr)
             gameObjects[i]->PostUpdate();
     }
-    _app->renderer->AddTextureRenderQueue(sceneTextures[0], { 0,0, });
-    _app->renderer->AddTextureRenderQueue(sceneTextures[1], { 96,logoY, });
-    _app->renderer->AddTextureRenderQueue(sceneTextures[2], arrowPos, { 0,0,0,0 }, 1, 1);
+    _app->renderer->AddTextureRenderQueue(mainMenu, { 0,0, });
+    _app->renderer->AddTextureRenderQueue(logo, { 96,logoY, });
+    _app->renderer->AddTextureRenderQueue(arrow, arrowPos, { 0,0,0,0 }, 1, 1);
 
     return true;
 }

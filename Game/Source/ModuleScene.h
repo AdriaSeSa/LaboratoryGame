@@ -55,9 +55,13 @@ public:
 
 	Scene* scenes[SCENES_NUM] = { nullptr };
 
+	bool isChangingScene = false;
+
 	int playerX, playerY;
 
 private:
+
+
 
 	//int newScene;
 };

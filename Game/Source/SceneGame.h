@@ -23,6 +23,8 @@ public:
 
 	bool PostUpdate() override;
 
+	bool CleanUp() override;
+
 	void InitScene();
 
 	void SetSaveData() override;

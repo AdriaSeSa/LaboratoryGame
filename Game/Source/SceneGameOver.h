@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+class BackGround;
 class SceneGameOver : public Scene
 {
 public:
@@ -10,7 +11,9 @@ public:
 	bool Update() override;
 	bool PostUpdate() override;
 
-	bool CleanUp() override;
 private:
 	iPoint arrowPos;
+	BackGround* bg;
+	SDL_Texture* mainMenu;
+	SDL_Texture* arrow;
 };

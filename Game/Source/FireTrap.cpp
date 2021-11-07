@@ -1,4 +1,5 @@
 #include "FireTrap.h"
+#include "Player.h"
 
 FireTrap::FireTrap(iPoint position, std::string name, std::string tag, Application* app)
 	:GameObject(name, tag, app)
@@ -53,12 +54,11 @@ void FireTrap::Update()
 		else if (fireDuration > 0)
 		{
 			fireDuration--;
-			tag = "FireTrampOn";
 		}
 		else
 		{
 			activeteFire = false;
-			tag = "FireTrampOff";
+			pBody->SetSensor(true);
 		}
 	}
 }
@@ -69,6 +69,7 @@ void FireTrap::PostUpdate()
 	{
 		if (flashDuration > 0)
 		{
+			// Flashing
 			fireFlash.Update();
 			renderObjects[1].draw = false;
 			renderObjects[0].draw = true;
@@ -76,10 +77,16 @@ void FireTrap::PostUpdate()
 		}
 		else
 		{
+			// Fire
 			fireOn.Update();
 			renderObjects[0].draw = false;
 			renderObjects[1].draw = true;
 			renderObjects[1].section = fireOn.GetCurrentFrame();
+			if (player != nullptr)
+			{
+				player->Die();
+				player = nullptr;
+			}
 		}
 	}
 	else
@@ -96,7 +103,18 @@ void FireTrap::OnCollisionEnter(PhysBody* col)
 {
 	if (col->gameObject->CompareTag("Player"))
 	{
-		//printf_s("Fire\n");
+		if (player == nullptr)
+		{
+			player = (Player*)col->gameObject;
+		}
+	}
+}
+
+void FireTrap::OnCollisionExit(PhysBody* col)
+{
+	if (col->gameObject->CompareTag("Player"))
+	{
+		player = nullptr;
 	}
 }
 

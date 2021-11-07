@@ -15,6 +15,8 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 {
 	this->loop = loop;
 
+	offsetY = 5;
+
 	// Init movement
 	this->speed = moveSpeed;
 	this->stopTime = stopTime;

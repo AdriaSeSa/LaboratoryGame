@@ -15,5 +15,9 @@ public:
 	void OnCollisionEnter(PhysBody* col) override;
 
 	void OnCollisionExit(PhysBody* col) override;
+
+protected:
+
+	int offsetY = 0;
 };
 

@@ -13,7 +13,7 @@ Platform::Platform(iPoint position, std::string name, std::string tag, Applicati
 	else if (lenght > 7)lenght = 7;
 	this->lenght = lenght;
 
-	pBody = _app->physics->CreateLine({ (float)position.x, (float)position.y }, { (float)renderObjects[0].destRect.w * lenght, 0, }, this);
+	pBody = _app->physics->CreateLine({ (float)position.x, (float)position.y}, { (float)renderObjects[0].destRect.w * lenght, 0, }, this);
 	pBody->body->SetType(b2_kinematicBody);
 	pBody->body->GetFixtureList()->SetFriction(1000);
 }
@@ -38,10 +38,10 @@ void Platform::PostUpdate()
 		renderPos.x += i * renderObjects[0].destRect.w;
 
 		// No se porque hay un offset
-		renderPos.y -= 5;
+		renderPos.y -= offsetY;
 
 		_app->renderer->AddTextureRenderQueue
-		(renderObjects[0].texture, { renderPos.x, renderPos.y }, renderSeccion, renderObjects[0].scale,
+		(renderObjects[0].texture, { renderPos.x, renderPos.y}, renderSeccion, renderObjects[0].scale,
 			renderObjects[0].layer, renderObjects[0].orderInLayer, renderObjects[0].rotation, 
 			renderObjects[0].flip, renderObjects[0].speedRegardCamera);
 	}

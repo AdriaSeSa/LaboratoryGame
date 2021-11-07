@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Animation.h"
 
+class Player;
+
 class FireTrap :public GameObject
 {
 public: 
@@ -15,6 +17,8 @@ public:
 	void PostUpdate() override;
 
 	void OnCollisionEnter(PhysBody* col) override;
+
+	void OnCollisionExit(PhysBody* col) override;
 
 	/// <summary>
 	/// Fight!!!
@@ -32,5 +36,7 @@ private:
 	bool activeteFire = false;
 	Animation fireFlash;
 	Animation fireOn;
+
+	Player* player = nullptr;
 };
 

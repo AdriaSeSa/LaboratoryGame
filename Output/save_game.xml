@@ -5,7 +5,7 @@
 	<textures />
 	<audio />
 	<scene>
-		<player x="40" y="567" />
+		<player x="164" y="55" />
 	</scene>
 	<renderer>
 		<camera x="0" y="0" />

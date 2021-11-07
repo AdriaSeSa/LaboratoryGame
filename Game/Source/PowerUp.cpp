@@ -7,8 +7,6 @@ PowerUp::PowerUp(iPoint pos, std::string name, std::string tag, Application* app
 	InitRenderObjectWithXml("collected", 1);
 	renderObjects[1].draw = false;
 
-	//InitRenderObjectWithXml("collected", 1);
-
 	for (int i = 0; i < 17; i++)
 	{
 		idleAnim.PushBack({ i * renderObjects[0].destRect.w,0,renderObjects[0].destRect.w,renderObjects[0].destRect.h });

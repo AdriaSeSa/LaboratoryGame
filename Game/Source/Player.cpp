@@ -205,7 +205,7 @@ void Player::UpdatePlayerState()
 
 void Player::OnTriggerEnter(PhysBody* col)
 {
-	if (col->gameObject->name == "spike" || col->gameObject->name == "saw" || col->gameObject->CompareTag("FireTrampOn"))
+	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
 	{
 		Die();
 	}

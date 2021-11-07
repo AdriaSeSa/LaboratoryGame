@@ -170,7 +170,7 @@ void SceneGame::InitScene()
 		}
 		else if (_app->map->mapObjects[i].id == 1)
 		{
-			Platform* g = new Platform({ _app->map->mapObjects[i].position.x , _app->map->mapObjects[i].position.y }, "platform", "Platform", _app, 2);
+			Platform* g = new Platform({ _app->map->mapObjects[i].position.x , _app->map->mapObjects[i].position.y}, "platform", "Platform", _app, 2);
 			//b2Vec2 startPos = { (float)_app->map->mapObjects[i].position.x  ,(float)_app->map->mapObjects[i].position.y };
 			//b2Vec2 direcction = { 16, 0 };
 			g->adjustToGrid = true;

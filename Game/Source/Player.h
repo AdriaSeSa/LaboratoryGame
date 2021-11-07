@@ -23,6 +23,7 @@ private:
 
 	bool isLookingLeft;
 	bool jumpBlock = false;
+	bool invensible = false;
 
 	float fallDetection = 0.1f;
 

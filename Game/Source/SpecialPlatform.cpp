@@ -34,14 +34,41 @@ void SpecialPlatform::Update()
 	{
 		if (fireTraps[i] != nullptr)
 		{
-			fireTraps[i]->Update();
-
-			if (GetPosition().y > 50 && fireStep == 0)
-			{
-				fireStep++;
-				fireTraps[i]->FireOn(200, 100);
-			}
+			fireTraps[i]->Update();			
 		}
+	}
+
+	//int posY = GetPosition().y;
+
+	if (GetPosition().y > 100 + fireStep * 25 && GetPosition().y < 550)
+	{
+		fireStep++;
+
+		int repeateNum = 1;
+
+		repeateNum += fireStep / 8 ;
+
+		for (int i = 0; i < repeateNum; i++)
+		{
+			for (int i = 0; i < 7; i++)
+			{
+				if(fireTraps[i]->HasPlayerIn())
+				{
+					fireTraps[i]->FireOn(50, 50);
+					i++;
+					break;
+				}
+			}
+
+			if (i < repeateNum)
+			{
+				int randNum;
+				do
+				{
+					randNum = rand() % 7;
+				} while (!fireTraps[randNum]->FireOn(50, 50));
+			}
+		}		
 	}
 }
 

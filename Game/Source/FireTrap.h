@@ -25,7 +25,10 @@ public:
 	/// </summary>
 	/// <param name="flashDuration">time in ms</param>
 	/// <param name="fireDuration">time in ms</param>
-	void FireOn(int flashDuration = 0, int fireDuration = 0);
+	/// <returns>Si ya esta encencida, devolvera un false</returns>
+	bool FireOn(int flashDuration = 0, int fireDuration = 0);
+
+	bool HasPlayerIn();
 
 private:
 	iPoint startPos;

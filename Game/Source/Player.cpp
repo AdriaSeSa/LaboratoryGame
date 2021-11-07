@@ -121,6 +121,11 @@ void Player::Update()
 	//	pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, (float)gravityScale/2});
 	//}
 
+	if (_app->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		invensible = !invensible;
+	}
+
 	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
 		//pBody->body->SetLinearVelocity({ 0,speed });
@@ -330,5 +335,8 @@ void Player::CleanUp()
 
 void Player::Die()
 {
-	isDead = true;
+	if(!invensible)
+	{
+		isDead = true;
+	}
 }

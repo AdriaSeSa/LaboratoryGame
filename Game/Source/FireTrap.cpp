@@ -118,12 +118,19 @@ void FireTrap::OnCollisionExit(PhysBody* col)
 	}
 }
 
-void FireTrap::FireOn(int flashDuration,int fireDuration)
+bool FireTrap::FireOn(int flashDuration,int fireDuration)
 {
 	if(!activeteFire)
 	{
 		activeteFire = true;
 		this->flashDuration = flashDuration;
 		this->fireDuration = fireDuration;
+		return true;
 	}
+	return false;
+}
+
+bool FireTrap::HasPlayerIn()
+{
+	return player == nullptr ? false : true;
 }

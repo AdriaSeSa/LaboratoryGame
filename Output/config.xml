@@ -25,6 +25,7 @@
     <virtualGuyJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Jump(32x32).png"/>
     <virtualGuyFall width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Fall(32x32).png"/>
     <virtualGuyDoubleJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/DoubleJump(32x32).png"/>
+    <characterAppearing width = "96" height = "96" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/Appearing(96x96).png"/>
     <!-- Fruits -->
     <apple width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Apple.png"/>
     <bananas width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Bananas.png"/>

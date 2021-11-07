@@ -19,11 +19,14 @@ private:
 	Animation idle;
 	Animation run;
 	Animation doubleJump;
+	Animation appearing;
 	PlayerState playerCurrentState;
 
+	bool isAppear = false;
 	bool isLookingLeft;
 	bool jumpBlock = false;
-	bool invensible = false;
+
+	bool godMod = false;
 
 	float fallDetection = 0.1f;
 
@@ -38,11 +41,15 @@ public:
 	void OnCollisionExit(PhysBody* col) override;
 	void OnTriggerEnter(PhysBody* col) override;
 
+	void Start() override;
+
 	void PreUpdate() override;
 
 	void PostUpdate() override;
 
 	void CleanUp() override;
+
+	void PlayerAppear();
 
 	void Die();
 
@@ -57,6 +64,8 @@ public:
 	HitboxSensor* hitBoxSensor;
 	iPoint groundSensorOffset = { 0, 8 };
 	iPoint platformSensorOffset = { 0, -5 };
+	
+	int lifes = 3;
 
 	int gravityScale = 2;
 

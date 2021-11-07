@@ -44,7 +44,7 @@ UpdateStatus ModulePhysics::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
 	{
-		Pause();
+		Pause(!pause);
 	}
 
 	return UPDATE_CONTINUE;
@@ -236,9 +236,14 @@ void ModulePhysics::DotProductAngle(b2Vec2 v1, b2Vec2 v2, float& angle)
 
 }
 
-void ModulePhysics::Pause()
+void ModulePhysics::Pause(bool pause)
 {
-	pause = !pause;
+	this->pause = pause;
+}
+
+bool ModulePhysics::isPause() const
+{
+	return pause;
 }
 
 void ModulePhysics::BeginContact(b2Contact* contact)

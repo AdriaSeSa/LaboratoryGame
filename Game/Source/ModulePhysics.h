@@ -86,7 +86,9 @@ public:
 	b2Vec2 Perp(b2Vec2 vec1);
 	void DotProductAngle(b2Vec2 v1,b2Vec2 v2, float& angle);
 	
-	void Pause();
+	void Pause(bool pause);
+
+	bool isPause() const;
 
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;

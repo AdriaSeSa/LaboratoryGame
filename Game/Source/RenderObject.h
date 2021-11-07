@@ -91,6 +91,7 @@ public:
 	float scale = 1.0f;
 	float speedRegardCamera = 1.0f;
 	bool draw = true;
+	std::string name = "null";
 
 	// Rect
 	SDL_Color color;

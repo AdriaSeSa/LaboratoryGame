@@ -186,6 +186,7 @@ void GameObject::InitRenderObjectWithXml(std::string texName, int index)
 {
 	if (texName == "null") texName = name;
 
+	renderObjects[index].name = texName;
 	renderObjects[index].texture = _app->textures->Load(texName, true);
 	renderObjects[index].destRect.w = _app->textures->config.child(texName.c_str()).attribute("width").as_int();
 	renderObjects[index].destRect.h = _app->textures->config.child(texName.c_str()).attribute("height").as_int();

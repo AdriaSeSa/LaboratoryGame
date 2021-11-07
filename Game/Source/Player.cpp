@@ -2,9 +2,9 @@
 
 Player::Player(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
-	std::string texNames[5] = { "virtualGuyIdle","virtualGuyRun","virtualGuyJump","virtualGuyFall","virtualGuyDoubleJump" };
+	std::string texNames[6] = { "virtualGuyIdle","virtualGuyRun","virtualGuyJump","virtualGuyFall","virtualGuyDoubleJump", "characterAppearing"};
 
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 6; i++)
 	{
 		InitRenderObjectWithXml(texNames[i], i);
 	}
@@ -53,6 +53,7 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	hitBoxSensor->hits[1] = "spike";
 	hitBoxSensor->hits[2] = "fireTramp";
 
+	// Animations
 	for (int i = 0; i < 11; i++)
 	{
 		idle.PushBack({ 32 * i, 0, 32, 32 });
@@ -68,6 +69,15 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 		doubleJump.PushBack({ 32 * i, 0, 32, 32 });
 	}
 
+	for (int i = 0; i < 7; i++)
+	{
+		appearing.PushBack({ 96 * i,0,96,96 });
+	}
+
+	appearing.hasIdle = false;
+	appearing.speed = 0.3f;
+	appearing.loop = false;
+
 	idle.hasIdle = false;
 	idle.speed = 0.3f;
 
@@ -81,7 +91,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 Player::~Player()
 {
 }
-
 
 void Player::PreUpdate()
 {
@@ -113,6 +122,12 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
+	if (GetPosition().y > 620)
+	{
+		lifes = 0;
+		Die();
+	}
+
 	// ChangeGravity
 	//if (_app->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
 	//{
@@ -121,9 +136,10 @@ void Player::Update()
 	//	pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, (float)gravityScale/2});
 	//}
 
-	if (_app->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	// godMod
+	if (_app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
-		invensible = !invensible;
+		godMod = !godMod;
 	}
 
 	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
@@ -153,22 +169,18 @@ void Player::Update()
 	// Jump
 	if (_app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
-		if (jumpCount != 0 && !jumpBlock)
+		if(godMod)
+		{
+			pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
+		}
+		else if (jumpCount != 0 && !jumpBlock)
 		{
 			groundSensor->SetOffGround();
-			if (isFalling)
-			{
-				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
-				//pBody->body->ApplyLinearImpulse({ 0,-1.7f }, { 0,0, }, true);
-			}
-			else
-			{
-				pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
-				//pBody->body->ApplyLinearImpulse({ 0,-4.0f }, { 0,0, }, true);
-			}
+
+			pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
+
 			jumpCount--;
 		}
-
 	}
 
 	UpdatePlayerState();
@@ -205,7 +217,6 @@ void Player::UpdatePlayerState()
 
 	playerCurrentState = IDLE;
 	idle.Update();
-
 }
 
 void Player::OnTriggerEnter(PhysBody* col)
@@ -216,8 +227,34 @@ void Player::OnTriggerEnter(PhysBody* col)
 	}
 }
 
+void Player::Start()
+{
+	PlayerAppear();
+}
+
 void Player::PostUpdate()
 {
+	if (!isAppear)
+	{
+		appearing.Update();
+
+		renderObjects[5].section = appearing.GetCurrentFrame();
+		renderObjects[5].destRect.x = GetDrawPosition().x;
+		renderObjects[5].destRect.y = GetDrawPosition().y;
+
+		_app->renderer->AddTextureRenderQueue(renderObjects[5].texture, { renderObjects[5].destRect.x - 16,renderObjects[5].destRect.y - 16 },
+			renderObjects[5].section, renderObjects[5].scale, renderObjects[5].layer, renderObjects[5].orderInLayer,
+			renderObjects[5].rotation, renderObjects[5].flip, renderObjects[5].speedRegardCamera);
+
+		if (appearing.HasFinished())
+		{
+			isAppear = true;
+			_app->physics->Pause(false);
+		}
+
+		return;
+	}
+
 	int i = 0;
 
 	switch (playerCurrentState)
@@ -278,7 +315,6 @@ void Player::PostUpdate()
 			renderObjects[i].section, renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
 			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
 	}
-
 }
 
 void Player::OnCollisionEnter(PhysBody* col)
@@ -333,9 +369,16 @@ void Player::CleanUp()
 	}
 }
 
+void Player::PlayerAppear()
+{
+	isAppear = false;
+	_app->physics->Pause(true);
+	appearing.Reset();
+}
+
 void Player::Die()
 {
-	if(!invensible)
+	if(!godMod)
 	{
 		isDead = true;
 	}

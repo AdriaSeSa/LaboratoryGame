@@ -7,7 +7,7 @@
 struct SDL_Texture;
 class PhysBody;
 
-#define MAX_GAMEOBJECT_TEXTURES 5
+#define MAX_GAMEOBJECT_TEXTURES 6
 
 class GameObject 
 {

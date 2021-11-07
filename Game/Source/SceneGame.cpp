@@ -15,8 +15,6 @@ SceneGame::SceneGame(Application* app) :Scene(app)
 
 bool SceneGame::Start()
 {
-	playerLifes = 3;
-
 	_app->map->Load("Upp.tmx");
 
 	InitScene();
@@ -24,6 +22,8 @@ bool SceneGame::Start()
 	backGround = new BackGround("backGround1", "BackGround", _app);
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
+
+	player->lifes = 3;
 
 	mobilePlatform1 = new MobilePlatform({ 95, 368 }, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285 }, 1, true, 200);
 
@@ -55,6 +55,14 @@ bool SceneGame::Start()
 
 	_app->LoadGameRequest();
 
+	for (int i = 0; i < gameObjects.count(); i++)
+	{
+		if (gameObjects[i] != nullptr)
+		{
+			gameObjects[i]->Start();
+		}
+	}
+
 	return true;
 }
 
@@ -77,7 +85,7 @@ bool SceneGame::PreUpdate()
 
 	if (player != nullptr && player->isDead)
 	{
-		if (--playerLifes == 0)
+		if (--player->lifes <= 0)
 		{
 			// when don't have any life
 			reset = true;
@@ -91,6 +99,7 @@ bool SceneGame::PreUpdate()
 			_app->LoadGameRequest();
 			specialPlatform->Reset();
 			player->isDead = false;
+			player->PlayerAppear();
 		}
 	}
 	return true;

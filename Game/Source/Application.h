@@ -34,7 +34,7 @@ public:
 
 	Timer globalTime;
 
-	bool isDebug = true;
+	bool isDebug = false;
 
 	std::string title;
 	std::string organization;

@@ -85,10 +85,10 @@ void CheckPoint::OnCollisionEnter(PhysBody* col)
 {
 	if (col->gameObject->CompareTag("Player"))
 	{
+		_app->SaveGameRequest();
 		if (currentState == IDLE_NO_FLAG)
 		{
 			currentState = GET_CHECKPOINT;
-			_app->SaveGameRequest();
 		}
 	}
 }

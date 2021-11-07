@@ -35,6 +35,10 @@ bool ModuleScene::Start()
 	}
 
 	currentScene->Start();
+	
+	App->audio->PlayMusic("Assets/audio/music/pixelMusic.mp3", 2);
+
+	Mix_VolumeMusic(30);
 
 	return ret;
 }

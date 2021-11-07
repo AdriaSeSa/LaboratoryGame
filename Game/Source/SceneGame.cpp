@@ -17,6 +17,8 @@ bool SceneGame::Start()
 {
 	_app->map->Load("Upp.tmx");
 
+	reset = false;
+
 	InitScene();
 
 	backGround = new BackGround("backGround1", "BackGround", _app);

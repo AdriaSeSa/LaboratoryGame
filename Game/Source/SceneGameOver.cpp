@@ -15,6 +15,8 @@ bool SceneGameOver::Start()
 
     gameObjects.add(bg);
 
+    _app->SaveGameRequest();
+
     for (int i = 0; i < gameObjects.count(); i++)
     {
         if (gameObjects[i] != nullptr)
@@ -72,4 +74,10 @@ bool SceneGameOver::PostUpdate()
     _app->renderer->AddTextureRenderQueue(arrow, arrowPos, { 0,0,0,0 }, 1, 1);
 
     return true;
+}
+
+void SceneGameOver::SetSaveData()
+{
+    playerX = playerStartPos.x;
+    playerY = playerStartPos.y;
 }

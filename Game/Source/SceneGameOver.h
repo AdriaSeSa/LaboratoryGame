@@ -11,9 +11,13 @@ public:
 	bool Update() override;
 	bool PostUpdate() override;
 
+	void SetSaveData() override;
+
 private:
 	iPoint arrowPos;
 	BackGround* bg;
 	SDL_Texture* mainMenu;
 	SDL_Texture* arrow;
+
+	iPoint playerStartPos = { 40, 567 };
 };

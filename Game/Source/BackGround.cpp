@@ -15,8 +15,8 @@ void BackGround::PostUpdate()
 	{
 		for (int j = 0; j < WindowWidth; j += renderObjects[0].destRect.w)
 		{
-			renderObjects[0].destRect.x = j;
-			renderObjects[0].destRect.y = i;
+			renderObjects[0].destRect.x = j + movementX;
+			renderObjects[0].destRect.y = i + movementY;
 
 			//printf_s("DrawBG %d,%d \n", renderObjects[0].destRect.x, renderObjects[0].destRect.y);
 			

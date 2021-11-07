@@ -41,6 +41,7 @@
     <checkPointFlagIdle width = "64" height = "64" layer = "1" scale = "0.5" path="Assets/textures/Items/Checkpoints/Checkpoint/Checkpoint(FlagIdle)(64x64).png"/>
 
     <backGround1 width = "64" height = "64" layer = "0" path="Assets/textures/Background/Blue.png"/>
+     <menuBackGround width = "64" height = "64" layer = "0" path="Assets/textures/Background/Brown.png"/>
     <saw width = "38" height = "38" layer = "1" path = "Assets/textures/Traps/Saw/On(38x38).png"/>
     <spike width = "16" height = "8" layer = "1" path = "Assets/textures/Traps/Spikes/Idle.png"/>
     <mobilePlatform width = "16" height = "16" layer = "1" sectionX = "272" sectionY = "12" path = "Assets/textures/Terrain/Terrain(16x16).png"/>

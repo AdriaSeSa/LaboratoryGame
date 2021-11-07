@@ -112,6 +112,8 @@
     <ClCompile Include="Source\Saw.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
     <ClCompile Include="Source\SceneGame.cpp" />
+    <ClCompile Include="Source\SceneGameOver.cpp" />
+    <ClCompile Include="Source\SceneMainMenu.cpp" />
     <ClCompile Include="Source\SpecialPlatform.cpp" />
     <ClCompile Include="Source\Spike.cpp" />
     <ClInclude Include="Source\Animation.h" />
@@ -150,6 +152,8 @@
     <ClInclude Include="Source\Saw.h" />
     <ClInclude Include="Source\Scene.h" />
     <ClInclude Include="Source\SceneGame.h" />
+    <ClInclude Include="Source\SceneGameOver.h" />
+    <ClInclude Include="Source\SceneMainMenu.h" />
     <ClInclude Include="Source\SpecialPlatform.h" />
     <ClInclude Include="Source\Spike.h" />
     <ClInclude Include="Source\SString.h" />

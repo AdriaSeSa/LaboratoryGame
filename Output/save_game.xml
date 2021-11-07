@@ -5,9 +5,9 @@
 	<textures />
 	<audio />
 	<scene>
-		<player x="40" y="567" />
+		<player x="153" y="63" />
 	</scene>
 	<renderer>
-		<camera x="0" y="523" />
+		<camera x="0" y="0" />
 	</renderer>
 </game_state>

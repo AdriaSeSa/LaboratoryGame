@@ -25,7 +25,7 @@ bool SceneGame::Start()
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	//mobilePlatform1 = new MobilePlatform({ 87, 368}, "mobilePlatform", "MobilePlatform", _app, 3, { 0, -285}, 1, 100);
+	mobilePlatform1 = new MobilePlatform({ 95, 368}, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285}, 1, 100);
 
 	specialPlatform = new SpecialPlatform({ 185, 82 }, "mobilePlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
 
@@ -49,7 +49,7 @@ bool SceneGame::Start()
 
 	gameObjects.add(backGround);
 	gameObjects.add(player);
-	//gameObjects.add(mobilePlatform1);
+	gameObjects.add(mobilePlatform1);
 	gameObjects.add(checkPoint);
 	gameObjects.add(specialPlatform);
 

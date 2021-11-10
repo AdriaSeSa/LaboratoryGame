@@ -4,6 +4,7 @@
 #include "MemLeaks.h"
 
 #include "SDL/include/SDL.h"
+#include "Optick/include/optick.h"
 //#pragma comment( lib, "SDL/libx86/SDL2.lib" )
 //#pragma comment( lib, "SDL/libx86/SDL2main.lib" )
 
@@ -55,6 +56,10 @@ int main(int argc, char ** argv)
 
 		case MAIN_UPDATE:
 		{
+			//OPTICK_FRAME("MyThread");
+
+			OPTICK_FRAME("MyThread");
+
 			int update_return = App->Update();
 
 			if (update_return == UPDATE_ERROR)

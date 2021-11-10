@@ -12,6 +12,7 @@
 #include "ModuleMap.h"
 
 #include "Timer.h"
+#include "Optick/include/optick.h"
 
 #define CONFIG_FILENAME		"config.xml"
 #define SAVE_STATE_FILENAME "save_game.xml"
@@ -59,6 +60,8 @@ public:
 
 	void LoadGameRequest();
 	void SaveGameRequest() const;
+
+	void ShowTime();
 
 	const char* GetTitle() const;
 	const char* GetOrganization() const;

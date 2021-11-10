@@ -47,7 +47,6 @@ Application::~Application()
 
 bool Application::Init()
 {
-
 	bool ret = true;
 
 	// L01: DONE 3: Load config from XML
@@ -90,11 +89,11 @@ bool Application::Init()
 // Call PreUpdate, Update and PostUpdate on all modules
 UpdateStatus Application::Update()
 {
+	OPTICK_EVENT();
 	UpdateStatus ret = UPDATE_CONTINUE;
 	globalTime.Update();
 	p2List_item<Module*>* item = list_modules.getFirst();
 
-	
 	while (item != NULL && ret == UPDATE_CONTINUE)
 	{
 		if (item->data->IsEnabled())
@@ -120,11 +119,13 @@ UpdateStatus Application::Update()
 		item = item->next;
 	}
 
+	// DEBUG:: GlobalTime No hace bien!!!
 	deltaTime = globalTime.getDeltaTime();
 
 	if (deltaTime <= FRAME_TIME)
 	{
 		sleepTime = (FRAME_TIME - deltaTime) * 1000;
+		printf("%f\n", sleepTime);
 		Sleep(sleepTime);
 	}
 
@@ -134,8 +135,15 @@ UpdateStatus Application::Update()
 	if (saveGameRequested == true) SaveGame();
 	if (loadGameRequested == true) LoadGame();
 
+	ShowTime();
 
 	return ret;
+}
+
+void Application::ShowTime()
+{
+	OPTICK_EVENT();
+	LOG("Finish Update");
 }
 
 bool Application::CleanUp()

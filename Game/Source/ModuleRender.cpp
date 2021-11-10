@@ -66,6 +66,8 @@ UpdateStatus ModuleRender::Update()
 // PostUpdate present buffer to screen
 UpdateStatus ModuleRender::PostUpdate()
 {
+	OPTICK_EVENT();
+
 	// Sorting layers
 	for (int i = 0; i < renderLayers.size(); i++)
 	{

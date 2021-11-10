@@ -381,6 +381,7 @@ void Player::Die()
 {
 	if(!godMod)
 	{
+		SDL_Delay(200);
 		isDead = true;
 	}
 }

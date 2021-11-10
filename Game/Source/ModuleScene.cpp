@@ -59,7 +59,7 @@ UpdateStatus ModuleScene::PreUpdate()
 
 UpdateStatus ModuleScene::Update()
 {
-
+	OPTICK_EVENT();
 	if (currentScene == nullptr || isChangingScene)
 	{
 		return UpdateStatus::UPDATE_CONTINUE;

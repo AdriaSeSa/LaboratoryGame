@@ -13,7 +13,10 @@ Platform::Platform(iPoint position, std::string name, std::string tag, Applicati
 	else if (lenght > 7)lenght = 7;
 	this->lenght = lenght;
 
-	pBody = _app->physics->CreateLine({ (float)position.x, (float)position.y}, { (float)renderObjects[0].destRect.w * lenght, 0, }, this);
+	position.x += 16 * lenght / 2;
+
+	//pBody = _app->physics->CreateLine({ (float)position.x, (float)position.y}, { (float)renderObjects[0].destRect.w * lenght, 0, }, this);
+	pBody = _app->physics->CreateRectangle(position, renderObjects[0].destRect.w * lenght, 1, this);
 	pBody->body->SetType(b2_kinematicBody);
 	pBody->body->GetFixtureList()->SetFriction(1000);
 }
@@ -35,7 +38,7 @@ void Platform::PostUpdate()
 
 		iPoint renderPos = GetDrawPosition();
 
-		renderPos.x += i * renderObjects[0].destRect.w;
+		renderPos.x += i * renderObjects[0].destRect.w - (16 * lenght / 2);
 
 		// No se porque hay un offset
 		renderPos.y -= offsetY;
@@ -53,6 +56,7 @@ void Platform::OnCollisionEnter(PhysBody* col)
 	{
 		if (col->gameObject->CompareTag("PlatformSensor"))
 		{
+			//printf("Player col witch platform!!!\n");
 			pBody->SetSensor(true);
 		}
 	}
@@ -64,6 +68,7 @@ void Platform::OnCollisionExit(PhysBody* col)
 	{
 		if (col->gameObject->CompareTag("PlatformSensorClose"))
 		{
+			//printf("Player exit platform!!!\n");
 			pBody->SetSensor(false);
 		}
 	}

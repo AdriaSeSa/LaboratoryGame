@@ -164,7 +164,7 @@ PhysBody* ModulePhysics::CreateLine(b2Vec2 startPos, b2Vec2 dir, GameObject* gam
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateChainObj(int x, int y, int* points, int size, bool loop)
+PhysBody* ModulePhysics::CreateChainObj(int x, int y, int* points, int size, bool loop, GameObject* gameObject)
 {
 	PhysBody* pbody = new PhysBody();
 	b2BodyDef body;
@@ -197,12 +197,15 @@ PhysBody* ModulePhysics::CreateChainObj(int x, int y, int* points, int size, boo
 
 	b->CreateFixture(&fixture);
 
+	b->SetUserData(pbody);
+
 	delete p;
 
 	pbody->body = b;
+
 	pbody->width = pbody->height = 0;
 
-	pbody->body->SetUserData(pbody);
+	pbody->gameObject = gameObject;
 
 	return pbody;
 }

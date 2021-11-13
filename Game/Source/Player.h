@@ -62,8 +62,8 @@ public:
 	GroundSensor* openPlatformSensor;
 	GroundSensor* closePlatformSensor;
 	HitboxSensor* hitBoxSensor;
-	iPoint groundSensorOffset = { 0, 8 };
-	iPoint platformSensorOffset = { 0, -5 };
+	iPoint groundSensorOffset = { 5, 14 };
+	iPoint platformSensorOffset = { 5, 1 };
 	
 	int lifes = 3;
 

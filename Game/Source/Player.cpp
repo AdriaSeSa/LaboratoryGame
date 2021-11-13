@@ -9,11 +9,40 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 		InitRenderObjectWithXml(texNames[i], i);
 	}
 
+	//int playerChain[24] = 
+	//{0,6,
+	//1,1,
+	//6,0,
+	//25,0,
+	//30,1,
+	//31,6,
+	//31,25,
+	//30,30,
+	//25,31,
+	//6,31,
+	//1,30,
+	//0,25};
+
+	int playerChain[8] =
+	{
+		0,0,
+		10,0,
+		10,12,
+		0,12
+	};
+
+	/*for (int i = 0; i < 24; i++)
+	{
+		playerChain[i] /= 2;
+	}*/
+
 	//Phys Body
 	//pBody = _app->physics->CreateRectangle(pos, 11, 16, this);
 
 	// Puede ser que soluciona que el player pega en la pared
-	pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
+	//pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
+
+	pBody = _app->physics->CreateChainObj(pos.x, pos.y, playerChain, 8, true, this);
 
 	//b2CircleShape shape;
 	//shape.m_radius = PIXELS_TO_METER(6);
@@ -35,11 +64,11 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	openPlatformSensor = new GroundSensor(GetPosition() + platformSensorOffset, "PlayerPSensor", "PlatformSensor", _app, 10, 6);
 
-	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{0, -2}, "PlayerPSensor", "PlatformSensorClose", _app, 18, 20);
+	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{5, 6}, "PlayerPSensor", "PlatformSensorClose", _app, 18, 20);
 
 	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 4);
 
-	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(-2,0),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
+	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(3,6),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
 
 	b2Filter physicFilter;
 	physicFilter.groupIndex = -1;
@@ -95,10 +124,10 @@ Player::~Player()
 void Player::PreUpdate()
 {
 	groundSensor->SetPosition(GetPosition() + groundSensorOffset);
-	hitBoxSensor->SetPosition(GetPosition() + iPoint(1, 0));
+	hitBoxSensor->SetPosition(GetPosition() + iPoint(3, 6));
 
 	openPlatformSensor->SetPosition(GetPosition() + platformSensorOffset);
-	closePlatformSensor->SetPosition(GetPosition() + iPoint{ 0, -2});
+	closePlatformSensor->SetPosition(GetPosition() + iPoint{ 5, 4});
 
 	isFalling = pBody->body->GetLinearVelocity().y > fallDetection;
 
@@ -239,8 +268,8 @@ void Player::PostUpdate()
 		appearing.Update();
 
 		renderObjects[5].section = appearing.GetCurrentFrame();
-		renderObjects[5].destRect.x = GetDrawPosition().x;
-		renderObjects[5].destRect.y = GetDrawPosition().y;
+		renderObjects[5].destRect.x = GetDrawPosition().x + 5;
+		renderObjects[5].destRect.y = GetDrawPosition().y + 6;
 
 		_app->renderer->AddTextureRenderQueue(renderObjects[5].texture, { renderObjects[5].destRect.x - 16,renderObjects[5].destRect.y - 16 },
 			renderObjects[5].section, renderObjects[5].scale, renderObjects[5].layer, renderObjects[5].orderInLayer,
@@ -280,8 +309,8 @@ void Player::PostUpdate()
 
 	if (renderObjects[i].texture != nullptr)
 	{
-		renderObjects[i].destRect.x = GetDrawPosition().x;
-		renderObjects[i].destRect.y = GetDrawPosition().y;
+		renderObjects[i].destRect.x = GetDrawPosition().x + 5;
+		renderObjects[i].destRect.y = GetDrawPosition().y + 6;
 
 		isLookingLeft = pBody->body->GetLinearVelocity().x < 0 ? true : pBody->body->GetLinearVelocity().x > 0 ? false : isLookingLeft;
 
@@ -320,7 +349,13 @@ void Player::PostUpdate()
 void Player::OnCollisionEnter(PhysBody* col)
 {
 	//printf_s("PlayerCol");
-	if (col->gameObject->CompareTag("MobilePlatform"))
+
+	if(col->gameObject->CompareTag("Platform"))
+	{
+		//printf("AAAAAAAAAAAAAAA\n");
+	}
+
+	else if (col->gameObject->CompareTag("MobilePlatform"))
 	{
 		fallDetection = 10;
 

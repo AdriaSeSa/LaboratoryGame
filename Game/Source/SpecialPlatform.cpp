@@ -10,6 +10,8 @@ SpecialPlatform::SpecialPlatform(iPoint position, std::string name, std::string 
 		fireTraps[i] = new FireTrap({ position.x + i * renderObjects[0].destRect.w + 7, position.y + 5 }, "fireTramp", "FireTrap", app);
 	}
 
+	position.x += 16 * lenght / 2;
+
 	startPos = position;
 }
 

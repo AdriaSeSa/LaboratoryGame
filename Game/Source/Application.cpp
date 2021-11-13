@@ -91,7 +91,6 @@ UpdateStatus Application::Update()
 {
 	OPTICK_EVENT();
 	UpdateStatus ret = UPDATE_CONTINUE;
-	globalTime.Update();
 	p2List_item<Module*>* item = list_modules.getFirst();
 
 	while (item != NULL && ret == UPDATE_CONTINUE)
@@ -119,21 +118,22 @@ UpdateStatus Application::Update()
 		item = item->next;
 	}
 
-	// DEBUG:: GlobalTime No hace bien!!!
+	//// L02: DONE 1: This is a good place to call Load / Save methods
+	if (saveGameRequested == true) SaveGame();
+	if (loadGameRequested == true) LoadGame();
+
+	// Update globalTime
+	globalTime.Update();
+
 	deltaTime = globalTime.getDeltaTime();
 
 	if (deltaTime <= FRAME_TIME)
 	{
 		sleepTime = (FRAME_TIME - deltaTime) * 1000;
-		printf("%f\n", sleepTime);
 		Sleep(sleepTime);
 	}
 
 	globalTime.Reset();
-
-	//// L02: DONE 1: This is a good place to call Load / Save methods
-	if (saveGameRequested == true) SaveGame();
-	if (loadGameRequested == true) LoadGame();
 
 	ShowTime();
 

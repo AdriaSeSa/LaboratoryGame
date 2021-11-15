@@ -15,7 +15,7 @@ SceneGame::SceneGame(Application* app) :Scene(app)
 
 bool SceneGame::Start()
 {
-	_app->map->Load("Upp.tmx");
+	_app->map->Load("Level1.tmx");
 
 	reset = false;
 

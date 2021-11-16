@@ -26,15 +26,10 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	int playerChain[8] =
 	{
 		0,0,
-		10,0,
-		10,12,
+		9,0,
+		9,12,
 		0,12
 	};
-
-	/*for (int i = 0; i < 24; i++)
-	{
-		playerChain[i] /= 2;
-	}*/
 
 	//Phys Body
 	//pBody = _app->physics->CreateRectangle(pos, 11, 16, this);
@@ -64,9 +59,9 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	openPlatformSensor = new GroundSensor(GetPosition() + platformSensorOffset, "PlayerPSensor", "PlatformSensor", _app, 10, 6);
 
-	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{5, 6}, "PlayerPSensor", "PlatformSensorClose", _app, 18, 20);
+	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{5, 6}, "PlayerPSensor", "PlatformSensorClose", _app, 16, 20);
 
-	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 4);
+	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 2);
 
 	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(3,6),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
 

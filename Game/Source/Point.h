@@ -79,12 +79,12 @@ public:
 		return(*this);
 	}
 
-	const Point& operator *=(const int num)
+	Point operator *=(const int num)
 	{
-		x* = num;
-		y* = num,
+		x *= num;
+		y *= num;
 
-			return(*this);
+		return(*this);
 	}
 
 	bool operator ==(const Point& v) const
@@ -115,6 +115,17 @@ public:
 		y = -y;
 
 		return(*this);
+	}
+
+	Point Normalize()
+	{
+		Point result;
+
+		TYPE magnitud = sqrt(pow(x, 2) + pow(y, 2));
+
+		result = { x / magnitud, y / magnitud };
+
+		return result;
 	}
 
 	// Distances ---------------------------------------------

@@ -22,103 +22,72 @@ MobilePlatform::MobilePlatform(iPoint position, std::string name, std::string ta
 	this->stopTime = stopTime;
 	this->countStopTime = stopTime;
 
-	if (moveDistance.x > 0)moveDir = { 1, 0 };
-	if (moveDistance.x < 0)
-	{
-		moveDir = { -1, 0 };
-		speed *= -1;
-	}
-	if (moveDistance.y < 0)moveDir = { 0, -1 };
-	if (moveDistance.y > 0)
-	{
-		moveDir = { 0, 1 };
-		speed *= -1;
-	}
+	InitStates(moveDistance);
+}
 
-	if (moveDistance.y < 0 || moveDistance.x > 0)
+void MobilePlatform::InitStates(iPoint moveDistance)
+{
+	startPos = GetPosition();
+	endPos = GetPosition() + moveDistance;
+	moveDir = moveDistance.Normalize();
+	distance = startPos.DistanceTo(endPos);
+
+	startVeclocity = { moveDir.x * speed,  moveDir.y * speed };
+
+	if (startMove)
 	{
-		startPos = position;
-		endPos = position + moveDistance;
-		startVeclocity = { moveDir.x * -speed,  moveDir.y * speed };
-		if (startMove)
-		{
-			pBody->body->SetLinearVelocity(startVeclocity);
-		}
-		moveState = 0;
+		pBody->body->SetLinearVelocity(startVeclocity);
 	}
-	else if (moveDistance.y > 0 || moveDistance.x < 0)
+	moveState = 1;
+}
+
+void MobilePlatform::Move()
+{
+	pBody->body->SetLinearVelocity({ moveDir.x * speed,  moveDir.y * speed });
+
+	int dis = startPos.DistanceTo(GetPosition());
+
+	if (dis > distance && moveState == 0)
 	{
-		endPos = position;
-		startPos = position + moveDistance;
-		startVeclocity = { moveDir.x * speed,  moveDir.y * -speed };
-		if (startMove)
-		{
-			pBody->body->SetLinearVelocity(startVeclocity);
-		}
 		moveState = 1;
+		countStopTime = stopTime;
+
+		iPoint tempPos = startPos;
+		startPos = endPos;
+		endPos = tempPos;
+	}
+}
+
+void MobilePlatform::Idle()
+{
+	pBody->body->SetLinearVelocity({ 0,0 });
+
+	if (countStopTime > 0 && loop)
+	{
+		countStopTime--;
 	}
 	else
 	{
-		moveState = 3;
+		moveState = 0;
+		moveDir *= -1;
 	}
 }
 
 void MobilePlatform::Update()
 {
-	if(startMove)
-	{
-		iPoint myPos = GetPosition();
+	if (!startMove) return;
 
-		if (moveState == 0)
-		{
-			if (myPos.y < endPos.y || myPos.x < startPos.x)
-			{
-				if (countStopTime > 0)
-				{
-					pBody->body->SetLinearVelocity({ 0,0 });
-					if (loop)
-					{
-						countStopTime--;
-					}
-				
-				}
-				else
-				{
-					pBody->body->SetLinearVelocity({ moveDir.x * speed,  moveDir.y * -speed });
-					moveState = 1;
-					countStopTime = stopTime;
-				}
-			}
-		}
-		else if (moveState == 1)
-		{
-			if (myPos.y > startPos.y || myPos.x > endPos.x)
-			{
-				if (countStopTime > 0)
-				{
-					pBody->body->SetLinearVelocity({ 0,0 });
-					if (loop)
-					{
-						countStopTime--;
-					}
-				}
-				else
-				{
-					pBody->body->SetLinearVelocity({ moveDir.x * -speed,  moveDir.y * speed });
-					moveState = 0;
-					countStopTime = stopTime;
-				}
-			}
-		}
-	}
+	if (moveState == 0) Move();
+
+	else if (moveState == 1) Idle();
 }
 
 void MobilePlatform::OnCollisionEnter(PhysBody* col)
 {
 	if (col->gameObject->CompareTag("GroundSensor") && !startMove)
 	{	
-		//printf_s("Player enter");
 		pBody->body->SetLinearVelocity(startVeclocity);
 		startMove = true;
+		moveState = 0;
 	}
 }

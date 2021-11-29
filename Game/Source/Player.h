@@ -71,7 +71,7 @@ public:
 
 	int jumpCount = 2;
 
-	float jumpForce = 6.7f;
+	float jumpForce = 7.0f;
 
 	float speed = 5;
 };

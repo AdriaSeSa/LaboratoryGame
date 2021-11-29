@@ -10,6 +10,12 @@ public:
 
 	void OnCollisionEnter(PhysBody* col);
 
+	void InitStates(iPoint moveDistance);
+
+	void Move();
+
+	void Idle();
+
 public:
 	float speed;
 	int stopTime = 0;
@@ -27,6 +33,7 @@ protected:
 	iPoint endPos;
 	// 0 = start, 1 = end;
 	int moveState = 0;
+	int distance = 0;
 
 	iPoint moveDir = {0,0};
 };

@@ -2,7 +2,7 @@
  
 ## Description
 
-Small plataformer made by two videogame development students
+Small plataformer made by two videogame development students.
 
 ## Controls
 
@@ -10,11 +10,11 @@ WASD for movement
 
 SPACE for jump
 
-F1 show collisions and toggle debug
+F1 show collisions
 
-F10 God mode
+F10 God mode (unkillable and infinite jump)
 
-L to save current position
+L to load save file
 
 F5 Reset save file
 

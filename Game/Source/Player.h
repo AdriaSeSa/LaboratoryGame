@@ -30,7 +30,35 @@ private:
 
 	float fallDetection = 0.1f;
 
+	bool appliedFallForce = false;
+	bool isFalling;
+	bool isOnGround;
+
+
+	GroundSensor* groundSensor;
+	GroundSensor* openPlatformSensor;
+	GroundSensor* closePlatformSensor;
+	HitboxSensor* hitBoxSensor;
+	iPoint groundSensorOffset = { 5, 14 };
+	iPoint platformSensorOffset = { 5, 1 };
+
+
 public:
+
+	bool isDead = false;
+
+	int lifes = 3;
+
+	int gravityScale = 2;
+
+	int jumpCount = 2;
+
+	float jumpForce = 7.0f;
+
+	float speed = 5;
+
+public:
+
 	Player(iPoint pos, std::string name, std::string tag, Application* app);
 	~Player();
 	void Update() override;
@@ -53,25 +81,8 @@ public:
 
 	void Die();
 
-	bool appliedFallForce = false;
-	bool isFalling;
-	bool isOnGround;
-	bool isDead = false;
+private:
 
-	GroundSensor* groundSensor;
-	GroundSensor* openPlatformSensor;
-	GroundSensor* closePlatformSensor;
-	HitboxSensor* hitBoxSensor;
-	iPoint groundSensorOffset = { 5, 14 };
-	iPoint platformSensorOffset = { 5, 1 };
-	
-	int lifes = 3;
+	void SetUpAnimations();
 
-	int gravityScale = 2;
-
-	int jumpCount = 2;
-
-	float jumpForce = 7.0f;
-
-	float speed = 5;
 };

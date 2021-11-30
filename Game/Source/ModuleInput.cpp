@@ -80,8 +80,10 @@ UpdateStatus ModuleInput::PreUpdate()
 		}
 	}
 
-	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP)
-		return UPDATE_STOP;
+	if (keyboard[SDL_SCANCODE_ESCAPE] == KEY_UP) 
+	{
+		App->ExitGame();
+	}
 
 	// Handle X button on window
 

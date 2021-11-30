@@ -110,6 +110,7 @@
     <ClCompile Include="Source\ModuleWindow.cpp" />
     <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\PlayerSettings.cpp" />
     <ClCompile Include="Source\PowerUp.cpp" />
     <ClCompile Include="Source\Saw.cpp" />
     <ClCompile Include="Source\Scene.cpp" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Source\p2Point.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Player.h" />
+    <ClInclude Include="Source\PlayerSettings.h" />
     <ClInclude Include="Source\Point.h" />
     <ClInclude Include="Source\PowerUp.h" />
     <ClInclude Include="Source\RenderObject.h" />

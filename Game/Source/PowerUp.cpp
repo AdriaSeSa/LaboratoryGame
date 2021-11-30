@@ -57,7 +57,6 @@ void PowerUp::OnCollisionEnter(PhysBody* col)
 	{
 		if(!collected)
 		{
-			//printf("Fruit col player");
 			renderObjects[0].draw = false;
 			renderObjects[1].draw = true;
 			collected = true;
@@ -67,5 +66,4 @@ void PowerUp::OnCollisionEnter(PhysBody* col)
 
 void PowerUp::OnCollisionExit(PhysBody* col)
 {
-	//printf_s("ColFruitExit\n");
 }

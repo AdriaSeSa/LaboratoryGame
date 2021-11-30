@@ -80,4 +80,6 @@ void SceneGameOver::SetSaveData()
 {
     playerX = playerStartPos.x;
     playerY = playerStartPos.y;
+
+    _app->scene->ResetPlayerSettings();
 }

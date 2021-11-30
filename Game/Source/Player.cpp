@@ -9,20 +9,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 		InitRenderObjectWithXml(texNames[i], i);
 	}
 
-	//int playerChain[24] = 
-	//{0,6,
-	//1,1,
-	//6,0,
-	//25,0,
-	//30,1,
-	//31,6,
-	//31,25,
-	//30,30,
-	//25,31,
-	//6,31,
-	//1,30,
-	//0,25};
-
 	int playerChain[8] =
 	{
 		0,0,
@@ -32,20 +18,8 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	};
 
 	//Phys Body
-	//pBody = _app->physics->CreateRectangle(pos, 11, 16, this);
-
-	// Puede ser que soluciona que el player pega en la pared
-	//pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this);
 
 	pBody = _app->physics->CreateChainObj(pos.x, pos.y, playerChain, 8, true, this);
-
-	//b2CircleShape shape;
-	//shape.m_radius = PIXELS_TO_METER(6);
-	//b2FixtureDef fixture;
-	//fixture.shape = &shape;
-	//fixture.friction = 0;
-	//fixture.density = 0;
-	//pBody->body->CreateFixture(&fixture);
 
 	pBody->body->SetFixedRotation(true);
 
@@ -55,8 +29,7 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	pBody->body->SetGravityScale(gravityScale);
 
-	appliedFallForce = false;
-
+	// Sensors
 	openPlatformSensor = new GroundSensor(GetPosition() + platformSensorOffset, "PlayerPSensor", "PlatformSensor", _app, 10, 6);
 
 	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{5, 6}, "PlayerPSensor", "PlatformSensorClose", _app, 16, 20);
@@ -65,11 +38,11 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(3,6),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
 
+	// Set collisions filter
 	b2Filter physicFilter;
 	physicFilter.groupIndex = -1;
 
 	pBody->body->GetFixtureList()->SetFilterData(physicFilter);
-	//pBody->body->GetFixtureList()->GetNext()->SetFilterData(physicFilter);
 	groundSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
 	hitBoxSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
 
@@ -77,39 +50,8 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	hitBoxSensor->hits[1] = "spike";
 	hitBoxSensor->hits[2] = "fireTramp";
 
-	// Animations
-	for (int i = 0; i < 11; i++)
-	{
-		idle.PushBack({ 32 * i, 0, 32, 32 });
-	}
-
-	for (int i = 0; i < 12; i++)
-	{
-		run.PushBack({ 32 * i, 0, 32, 32 });
-	}
-
-	for (int i = 0; i < 6; i++)
-	{
-		doubleJump.PushBack({ 32 * i, 0, 32, 32 });
-	}
-
-	for (int i = 0; i < 7; i++)
-	{
-		appearing.PushBack({ 96 * i,0,96,96 });
-	}
-
-	appearing.hasIdle = false;
-	appearing.speed = 0.3f;
-	appearing.loop = false;
-
-	idle.hasIdle = false;
-	idle.speed = 0.3f;
-
-	run.hasIdle = false;
-	run.speed = 0.3f;
-
-	doubleJump.hasIdle = false;
-	doubleJump.speed = 0.3f;
+	// Animations Setup
+	SetUpAnimations();
 }
 
 Player::~Player()
@@ -118,17 +60,19 @@ Player::~Player()
 
 void Player::PreUpdate()
 {
+	// Update sensors position
 	groundSensor->SetPosition(GetPosition() + groundSensorOffset);
 	hitBoxSensor->SetPosition(GetPosition() + iPoint(3, 6));
 
 	openPlatformSensor->SetPosition(GetPosition() + platformSensorOffset);
 	closePlatformSensor->SetPosition(GetPosition() + iPoint{ 5, 4});
 
+	
+	// Update falling, jumpcount and appliedDallForce variables
 	isFalling = pBody->body->GetLinearVelocity().y > fallDetection;
 
 	if (groundSensor->isOnGround && jumpCount < 2)
 	{
-		//printf("inGround");
 		jumpCount = 2;
 	}
 
@@ -146,6 +90,7 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
+	// Temporal win condition
 	if (GetPosition().y > 620)
 	{
 		lifes = 0;
@@ -160,15 +105,15 @@ void Player::Update()
 	//	pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, (float)gravityScale/2});
 	//}
 
-	// godMod
+	// God Mode
 	if (_app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
 		godMod = !godMod;
 	}
 
+	// Fall faster
 	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
-		//pBody->body->SetLinearVelocity({ 0,speed });
 		pBody->body->ApplyLinearImpulse({ 0, speed/2 }, { 0,0, }, true);
 	}
 
@@ -207,6 +152,7 @@ void Player::Update()
 		}
 	}
 
+	// Update animation state
 	UpdatePlayerState();
 }
 
@@ -343,14 +289,8 @@ void Player::PostUpdate()
 
 void Player::OnCollisionEnter(PhysBody* col)
 {
-	//printf_s("PlayerCol");
 
-	if(col->gameObject->CompareTag("Platform"))
-	{
-		//printf("AAAAAAAAAAAAAAA\n");
-	}
-
-	else if (col->gameObject->CompareTag("MobilePlatform"))
+	if (col->gameObject->CompareTag("MobilePlatform"))
 	{
 		fallDetection = 10;
 
@@ -363,7 +303,6 @@ void Player::OnCollisionEnter(PhysBody* col)
 
 void Player::OnCollisionExit(PhysBody* col)
 {
-	//printf_s("PlayerColExit");
 	if (col->gameObject->CompareTag("MobilePlatform"))
 	{
 		fallDetection = 0.1f;
@@ -414,4 +353,40 @@ void Player::Die()
 		SDL_Delay(200);
 		isDead = true;
 	}
+}
+
+void Player::SetUpAnimations()
+{
+	for (int i = 0; i < 11; i++)
+	{
+		idle.PushBack({ 32 * i, 0, 32, 32 });
+	}
+
+	for (int i = 0; i < 12; i++)
+	{
+		run.PushBack({ 32 * i, 0, 32, 32 });
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		doubleJump.PushBack({ 32 * i, 0, 32, 32 });
+	}
+
+	for (int i = 0; i < 7; i++)
+	{
+		appearing.PushBack({ 96 * i,0,96,96 });
+	}
+
+	appearing.hasIdle = false;
+	appearing.speed = 0.3f;
+	appearing.loop = false;
+
+	idle.hasIdle = false;
+	idle.speed = 0.3f;
+
+	run.hasIdle = false;
+	run.speed = 0.3f;
+
+	doubleJump.hasIdle = false;
+	doubleJump.speed = 0.3f;
 }

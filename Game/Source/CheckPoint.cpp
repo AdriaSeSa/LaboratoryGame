@@ -60,25 +60,30 @@ void CheckPoint::PostUpdate()
 		renderObjects[i].destRect.x = GetDrawPosition().x - spriteOffsetX;
 		renderObjects[i].destRect.y = GetDrawPosition().y - spriteOffsetY;
 
-		if (i == 1)
-		{
-			_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
-				getCheckpoint.GetCurrentFrame(), renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
-				renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
-			return;
-		}
-		if (i == 2)
-		{
-			_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
-				idleFlag.GetCurrentFrame(), renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
-				renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
-			return;
-		}
-
-		_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
-			renderObjects[i].section, renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
-			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
+		DrawCurrentState(i);
 	}
+}
+
+void CheckPoint::DrawCurrentState(int i)
+{
+	if (i == 1)
+	{
+		_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
+			getCheckpoint.GetCurrentFrame(), renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
+			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
+		return;
+	}
+	if (i == 2)
+	{
+		_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
+			idleFlag.GetCurrentFrame(), renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
+			renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
+		return;
+	}
+
+	_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
+		renderObjects[i].section, renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
+		renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
 }
 
 void CheckPoint::OnCollisionEnter(PhysBody* col)
@@ -94,5 +99,4 @@ void CheckPoint::OnCollisionEnter(PhysBody* col)
 }
 void CheckPoint::OnCollisionExit(PhysBody* col)
 {
-	//printf_s("ChecpointExit\n");
 }

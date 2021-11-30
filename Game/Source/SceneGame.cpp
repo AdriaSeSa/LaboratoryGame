@@ -7,6 +7,7 @@
 #include "CheckPoint.h"
 #include "PowerUp.h"
 #include "SpecialPlatform.h"
+#include "PlayerSettings.h"
 
 SceneGame::SceneGame(Application* app) :Scene(app)
 {
@@ -24,8 +25,6 @@ bool SceneGame::Start()
 	backGround = new BackGround("backGround1", "BackGround", _app);
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
-
-	player->lifes = 3;
 
 	mobilePlatform1 = new MobilePlatform({ 95, 368 }, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285 }, 1, true, 200);
 
@@ -87,7 +86,7 @@ bool SceneGame::PreUpdate()
 
 	if (player != nullptr && player->isDead)
 	{
-		if (--player->lifes <= 0)
+		if (--_app->scene->playerSettings->playerLifes <= 0)
 		{
 			// when don't have any life
 			reset = true;
@@ -182,10 +181,7 @@ void SceneGame::InitScene()
 		else if (_app->map->mapObjects[i].id == 1)
 		{
 			Platform* g = new Platform({ _app->map->mapObjects[i].position.x , _app->map->mapObjects[i].position.y}, "platform", "Platform", _app, 2);
-			//b2Vec2 startPos = { (float)_app->map->mapObjects[i].position.x  ,(float)_app->map->mapObjects[i].position.y };
-			//b2Vec2 direcction = { 16, 0 };
 			g->adjustToGrid = true;
-			//g->pBody = _app->physics->CreateLine(startPos, direcction, g);
 			gameObjects.add(g);
 		}
 		else if (_app->map->mapObjects[i].id == 2)
@@ -218,4 +214,9 @@ void SceneGame::LoadSaveData(pugi::xml_node save)
 	pugi::xml_node n = save;
 
 	if (player != nullptr) player->SetPosition({ n.child("player").attribute("x").as_int(),n.child("player").attribute("y").as_int() });
+
+	if (_app->scene->playerSettings->playerLifes != 0) return;
+
+	_app->scene->playerSettings->playerLifes = n.child("player").attribute("lifes").as_int();
+	_app->scene->playerSettings->playerScore = n.child("player").attribute("score").as_int();
 }

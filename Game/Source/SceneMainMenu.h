@@ -23,7 +23,5 @@ private:
 	SDL_Texture* arrow;
 
 	SDL_Texture* logo;
-
-	void SelectDifficulty();
 };
 

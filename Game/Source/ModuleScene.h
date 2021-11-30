@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "Globals.h"
+#include "PlayerSettings.h"
 
 #define SCENES_NUM 9
 
@@ -45,6 +46,8 @@ public:
 
 	void LoadSaveData(pugi::xml_document& save) override;
 
+	void ResetPlayerSettings();
+
 	bool CleanUp();
 
 public:
@@ -58,6 +61,8 @@ public:
 	bool isChangingScene = false;
 
 	int playerX, playerY;
+
+	PlayerSettings* playerSettings = nullptr;
 
 private:
 

@@ -10,6 +10,8 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 	scenes[0] = new SceneGame(app);
 	scenes[1] = new SceneMainMenu(app);
 	scenes[2] = new SceneGameOver(app);
+
+	playerSettings = PlayerSettings::Instance();
 }
 
 ModuleScene::~ModuleScene()
@@ -104,6 +106,9 @@ void ModuleScene::GetSaveData(pugi::xml_document& save)
 
 	pugi::xml_node n = save.child("game_state").child("scene");
 
+	n.child("player").attribute("lifes") = playerSettings->playerLifes;
+	n.child("player").attribute("score") = playerSettings->playerScore;
+
 	n.child("player").attribute("x") = currentScene->playerX;
 	n.child("player").attribute("y") = currentScene->playerY;
 
@@ -114,6 +119,18 @@ void ModuleScene::LoadSaveData(pugi::xml_document& save)
 	pugi::xml_node n = save.child("game_state").child("scene");
 
 	currentScene->LoadSaveData(n);
+
+	if (!playerSettings->isInit)
+	{
+		playerSettings->playerLifes = n.child("player").attribute("lifes").as_int();
+		playerSettings->playerScore = n.child("player").attribute("score").as_int();
+		playerSettings->isInit = true;
+	}
+}
+
+void ModuleScene::ResetPlayerSettings()
+{
+	playerSettings->Reset();
 }
 
 bool ModuleScene::CleanUp()
@@ -127,6 +144,8 @@ bool ModuleScene::CleanUp()
 			scenes[i] = nullptr;
 		}
 	}
+
+	playerSettings->Release();
 
 	return true;
 }

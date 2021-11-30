@@ -61,7 +61,6 @@ bool SceneMainMenu::Update()
         {
             return false;
         }
-        //SelectDifficulty();
     }
 
     return true;
@@ -81,8 +80,3 @@ bool SceneMainMenu::PostUpdate()
     return true;
 }
 
-void SceneMainMenu::SelectDifficulty()
-{
-   
-
-}

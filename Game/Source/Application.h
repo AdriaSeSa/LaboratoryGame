@@ -68,6 +68,8 @@ public:
 
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
 
+	void ExitGame();
+
 	bool FullScreenDesktop = true;
 
 private:
@@ -79,4 +81,6 @@ private:
 	float deltaTime, sleepTime;
 
 	void AddModule(Module* mod);
+
+	bool isExiting = false;
 };

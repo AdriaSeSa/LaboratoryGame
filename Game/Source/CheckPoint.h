@@ -22,6 +22,8 @@ public:
 
 	void PostUpdate() override;
 
+	void DrawCurrentState(int i);
+
 	void OnCollisionEnter(PhysBody* col)override;
 	void OnCollisionExit(PhysBody* col) override;
 };

@@ -83,12 +83,15 @@ bool Application::Init()
 		item = item->next;
 	}
 
+	LoadGameRequest();
+
 	return ret;
 }
 
 // Call PreUpdate, Update and PostUpdate on all modules
 UpdateStatus Application::Update()
 {
+	if (isExiting) return UPDATE_STOP;
 	OPTICK_EVENT();
 	UpdateStatus ret = UPDATE_CONTINUE;
 	p2List_item<Module*>* item = list_modules.getFirst();
@@ -170,6 +173,12 @@ pugi::xml_node Application::LoadConfig(pugi::xml_document& configFile) const
 	else ret = configFile.child("config");
 
 	return ret;
+}
+
+void Application::ExitGame()
+{
+	SaveGameRequest();
+	isExiting = true;
 }
 
 void Application::AddModule(Module* mod)

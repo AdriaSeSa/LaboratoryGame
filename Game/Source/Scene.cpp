@@ -55,7 +55,7 @@ void Scene::DestroyGameObject(GameObject* gameObject)
 
 	if (index >= 0)
 	{
-		gameObjects.del(gameObjects.At(index));
+		gameObjects.delPtr(gameObjects.At(index));
 	}
 }
 

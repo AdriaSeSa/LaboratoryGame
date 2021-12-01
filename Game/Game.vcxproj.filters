@@ -97,6 +97,7 @@
     <ClCompile Include="Source\PlayerSettings.cpp">
       <Filter>SourceFiles\Util</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PathFinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -141,13 +142,7 @@
     <ClInclude Include="Source\MemLeaks.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\p2DynArray.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\p2List.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\p2Point.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Point.h">
@@ -228,6 +223,10 @@
     <ClInclude Include="Source\PlayerSettings.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\DynArray.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PathFinding.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

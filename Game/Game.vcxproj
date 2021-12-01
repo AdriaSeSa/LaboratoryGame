@@ -108,6 +108,7 @@
     <ClCompile Include="Source\ModuleTextures.cpp" />
     <ClCompile Include="Source\ModuleUI.cpp" />
     <ClCompile Include="Source\ModuleWindow.cpp" />
+    <ClCompile Include="Source\PathFinding.cpp" />
     <ClCompile Include="Source\Platform.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\PlayerSettings.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Source\BackGround.h" />
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CheckPoint.h" />
+    <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp" />
     <ClCompile Include="Source\Application.cpp" />
@@ -146,9 +148,8 @@
     <ClInclude Include="Source\ModuleTextures.h" />
     <ClInclude Include="Source\ModuleUI.h" />
     <ClInclude Include="Source\ModuleWindow.h" />
-    <ClInclude Include="Source\p2DynArray.h" />
     <ClInclude Include="Source\p2List.h" />
-    <ClInclude Include="Source\p2Point.h" />
+    <ClInclude Include="Source\PathFinding.h" />
     <ClInclude Include="Source\Platform.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\PlayerSettings.h" />

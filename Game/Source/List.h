@@ -110,6 +110,45 @@ public:
 			}
 		}
 
+		RELEASE(item);
+		--size;
+		return(true);
+	}
+
+	bool delPtr(ListItem<tdata>* item)
+	{
+		if (item == NULL)
+		{
+			return (false);
+		}
+
+		// Now reconstruct the list
+		if (item->prev != NULL)
+		{
+			item->prev->next = item->next;
+
+			if (item->next != NULL)
+			{
+				item->next->prev = item->prev;
+			}
+			else
+			{
+				end = item->prev;
+			}
+		}
+		else
+		{
+			if (item->next)
+			{
+				item->next->prev = NULL;
+				start = item->next;
+			}
+			else
+			{
+				start = end = NULL;
+			}
+		}
+
 		RELEASE(item->data);
 		RELEASE(item);
 		--size;

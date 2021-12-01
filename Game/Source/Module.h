@@ -6,7 +6,6 @@
 class Application;
 class PhysBody;
 
-
 class Module
 {
 private :

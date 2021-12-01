@@ -1,6 +1,7 @@
 #pragma once
 
-#include "p2List.h"
+//#include "p2List.h"
+#include "List.h"
 #include "ModuleWindow.h"
 #include "ModuleRender.h"
 #include "ModuleTextures.h"
@@ -48,7 +49,7 @@ public:
 	pugi::xml_document configF;
 	
 private:
-	p2List<Module*> list_modules;
+	List<Module*> list_modules;
 
 public:
 	Application();

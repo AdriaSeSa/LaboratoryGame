@@ -1,6 +1,8 @@
 #ifndef __LIST_H__
 #define __LIST_H__
 
+#include "Globals.h"
+
 // Contains items from double linked list
 template<class tdata>
 struct ListItem

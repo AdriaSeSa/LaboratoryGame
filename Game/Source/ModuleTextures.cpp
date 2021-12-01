@@ -39,7 +39,7 @@ bool ModuleTextures::CleanUp()
 {
 	LOG("Freeing textures and Image library");
 
-	p2List_item<SDL_Texture*>* item = textures.getFirst();
+	ListItem<SDL_Texture*>* item = textures.start;
 
 	while(item != NULL)
 	{
@@ -59,7 +59,7 @@ bool ModuleTextures::CleanUpTextures()
 {
 	LOG("Freeing textures and Image library");
 
-	p2List_item<SDL_Texture*>* item = textures.getFirst();
+	ListItem<SDL_Texture*>* item = textures.start;
 
 	while (item != NULL)
 	{
@@ -121,7 +121,7 @@ SDL_Texture* ModuleTextures::Load(std::string path, bool isName)
 // Free texture from memory
 void ModuleTextures::Unload(SDL_Texture* texture)
 {
-	p2List_item<SDL_Texture*>* item = textures.getFirst();
+	ListItem<SDL_Texture*>* item = textures.start;
 
 	while(item != NULL)
 	{

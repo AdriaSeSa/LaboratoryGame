@@ -95,9 +95,11 @@
       <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\PlayerSettings.cpp">
-      <Filter>SourceFiles\Util</Filter>
+      <Filter>SourceFiles\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Source\PathFinding.cpp" />
+    <ClCompile Include="Source\PathFinding.cpp">
+      <Filter>SourceFiles\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -142,13 +144,7 @@
     <ClInclude Include="Source\MemLeaks.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\p2List.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Point.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\SString.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
@@ -226,7 +222,9 @@
     <ClInclude Include="Source\DynArray.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\PathFinding.h" />
+    <ClInclude Include="Source\PathFinding.h">
+      <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -274,11 +272,8 @@
     <Filter Include="SourceFiles\GameObjects">
       <UniqueIdentifier>{7e8d42d7-1222-41af-8828-f8fda5db251b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SourceFiles\Util">
+    <Filter Include="SourceFiles\Utils">
       <UniqueIdentifier>{ec64f11d-cfbb-401b-8a2b-27a08bcd6219}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="HeaderFiles\Util">
-      <UniqueIdentifier>{87f175ad-e35c-4bf8-b571-90aa3dac2cfb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

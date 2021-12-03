@@ -1,4 +1,5 @@
-#include "SceneGame.h"
+#include "SceneLevel1.h"
+#include "SceneLevel2.h"
 #include "SceneMainMenu.h"
 #include "SceneGameOver.h"
 #include <time.h>
@@ -7,9 +8,10 @@ ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, sta
 {
 	name = "scene";
 
-	scenes[0] = new SceneGame(app);
-	scenes[1] = new SceneMainMenu(app);
-	scenes[2] = new SceneGameOver(app);
+	scenes[0] = new SceneMainMenu(app);
+	scenes[1] = new SceneGameOver(app);
+	scenes[2] = new SceneLevel1(app);
+	scenes[3] = new SceneLevel2(app);
 
 	playerSettings = PlayerSettings::Instance();
 }
@@ -27,7 +29,7 @@ bool ModuleScene::Init(pugi::xml_node& config)
 
 bool ModuleScene::Start()
 {
-	currentScene = scenes[1];
+	currentScene = scenes[0];
 
 	bool ret = true;
 
@@ -62,6 +64,7 @@ UpdateStatus ModuleScene::PreUpdate()
 UpdateStatus ModuleScene::Update()
 {
 	OPTICK_EVENT();
+
 	if (currentScene == nullptr || isChangingScene)
 	{
 		return UpdateStatus::UPDATE_CONTINUE;
@@ -71,6 +74,8 @@ UpdateStatus ModuleScene::Update()
 	{
 		return UpdateStatus::UPDATE_STOP;
 	}
+
+	DebugChangeScene();
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -90,11 +95,18 @@ UpdateStatus ModuleScene::PostUpdate()
 //CleanUp current scene, change current scene (index), Start current Scene
 bool ModuleScene::ChangeCurrentScene(uint index, int frames)
 {
-	if (isChangingScene)return true;
+	if (isChangingScene) return true;
+
 	isChangingScene = true;
+
 	this->index = index;
+
+	if (scenes[index] == nullptr) return false;
+
 	currentScene->CleanUp();
+
 	currentScene = scenes[index];
+
 	currentScene->Start();
 
 	return true;
@@ -111,7 +123,6 @@ void ModuleScene::GetSaveData(pugi::xml_document& save)
 
 	n.child("player").attribute("x") = currentScene->playerX;
 	n.child("player").attribute("y") = currentScene->playerY;
-
 }
 
 void ModuleScene::LoadSaveData(pugi::xml_document& save)
@@ -148,4 +159,23 @@ bool ModuleScene::CleanUp()
 	playerSettings->Release();
 
 	return true;
+}
+
+void ModuleScene::DebugChangeScene()
+{
+	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)
+	{
+		for (int i = 0; i < SCENES_NUM; i++)
+		{
+			if (App->input->GetKey(debugKeys[i]) == KEY_DOWN)
+			{
+				ChangeCurrentScene(i, 0);
+			}
+		}
+
+		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+		{
+			ChangeCurrentScene(currentScene->getID(), 0);
+		}
+	}
 }

@@ -3,6 +3,7 @@
 
 SceneGameOver::SceneGameOver(Application* app) : Scene(app)
 {
+    ID = 1;
 }
 
 bool SceneGameOver::Start()
@@ -51,11 +52,11 @@ bool SceneGameOver::Update()
     {
         if (arrowPos.y == 190)
         {
-            _app->scene->ChangeCurrentScene(0, 0);
+            _app->scene->ChangeCurrentScene(2, 0);
         }
         else
         {
-            _app->scene->ChangeCurrentScene(1, 0);
+            _app->scene->ChangeCurrentScene(0, 0);
         }
         //SelectDifficulty();
     }

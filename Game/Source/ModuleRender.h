@@ -32,6 +32,8 @@ public:
 	SDL_Renderer* renderer;
 	Camera* camera = nullptr;
 
+	int zoom = 1;
+
 public:
 	ModuleRender(Application* app, bool start_enabled = true);
 	~ModuleRender();

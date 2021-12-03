@@ -112,31 +112,33 @@ void Player::Update()
 	}
 
 	// Fall faster
-	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
-		pBody->body->ApplyLinearImpulse({ 0, speed/2 }, { 0,0, }, true);
+		pBody->body->ApplyLinearImpulse({ 0, speed*2 }, { 0,0, }, true);
 	}
 
 	// Move
-	if (_app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	if (_app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || _app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
 		pBody->body->SetLinearVelocity({ speed,pBody->body->GetLinearVelocity().y });
 	}
-	else if(_app->input->GetKey(SDL_SCANCODE_D) == KEY_UP)
+	else if(_app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || _app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
 	{
 		pBody->body->SetLinearVelocity({ 0,pBody->body->GetLinearVelocity().y });
 	}
-	if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || _app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
 		pBody->body->SetLinearVelocity({ -speed,pBody->body->GetLinearVelocity().y });
 	}
-	else if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	else if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_UP || _app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
 	{
 		pBody->body->SetLinearVelocity({ 0,pBody->body->GetLinearVelocity().y  });
 	}
 
 	// Jump
-	if (_app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (_app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN 
+		|| _app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN
+		|| _app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
 		if(godMod)
 		{

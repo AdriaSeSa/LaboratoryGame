@@ -50,6 +50,8 @@ public:
 
 	bool CleanUp();
 
+	void DebugChangeScene();
+
 public:
 
 	int index = 2;
@@ -58,18 +60,15 @@ public:
 
 	Scene* scenes[SCENES_NUM] = { nullptr };
 
+	SDL_Scancode debugKeys[SCENES_NUM] = { SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3, SDL_SCANCODE_4
+	, SDL_SCANCODE_5 , SDL_SCANCODE_6, SDL_SCANCODE_7, SDL_SCANCODE_8, SDL_SCANCODE_9};
+
 	bool isChangingScene = false;
 
 	int playerX, playerY;
 
 	PlayerSettings* playerSettings = nullptr;
 
-private:
-
-
-
-	//int newScene;
 };
 
 #endif // __MODULESCENE_H__
-

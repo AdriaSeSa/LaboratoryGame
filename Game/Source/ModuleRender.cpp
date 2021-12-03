@@ -124,8 +124,8 @@ void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_R
 
 	if (layer == 2 || layer == 3) renderObject.speedRegardCamera = 0;	//If texture in UI layer, it moves alongside the camera-> Therefor, speed = 0;
 
-	renderObject.destRect.x = (int)(-camera->x * speed) + pos.x * App->window->scale;
-	renderObject.destRect.y = (int)(-camera->y * speed) + pos.y * App->window->scale;
+	renderObject.destRect.x = (int)(-camera->x * speed) + pos.x * App->window->scale * zoom;
+	renderObject.destRect.y = (int)(-camera->y * speed) + pos.y * App->window->scale * zoom;
 
 	if (section.h != 0 && section.w != 0)
 	{
@@ -138,8 +138,8 @@ void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_R
 		SDL_QueryTexture(texture, nullptr, nullptr, &renderObject.destRect.w, &renderObject.destRect.h);
 	}
 
-	renderObject.destRect.w *= scale * App->window->scale;
-	renderObject.destRect.h *= scale * App->window->scale;
+	renderObject.destRect.w *= scale * App->window->scale * zoom;
+	renderObject.destRect.h *= scale * App->window->scale * zoom;
 
 	renderLayers[layer].push_back(renderObject);
 }
@@ -172,7 +172,9 @@ void ModuleRender::AddRectRenderQueue(const SDL_Rect& rect, Uint8 r, Uint8 g, Ui
 {
 	RenderObject renderR;
 
-	renderR.InitAsRect(rect, { r,g,b,a }, filled, layer, orderInlayer, speed);
+	SDL_Rect rec = { rect.x * zoom, rect.y * zoom,rect.w * zoom, rect.h * zoom };
+
+	renderR.InitAsRect(rec, { r,g,b,a }, filled, layer, orderInlayer, speed);
 
 	renderLayers[layer].push_back(renderR);
 }

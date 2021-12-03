@@ -2,9 +2,7 @@
 #define _SCENE_H_
 
 #include "Application.h"
-
 #include "GameObject.h"
-
 #include "List.h"
 
 class Scene
@@ -12,6 +10,8 @@ class Scene
 protected:
 
 	int ID;
+
+	int platformLenght = 2;
 
 	Application* _app;
 
@@ -25,6 +25,8 @@ public:
 
 	// Destructor
 	~Scene();
+
+	virtual bool InitScene();
 
 	virtual bool Start();
 
@@ -53,6 +55,4 @@ public:
 	int playerY;
 };
 
-
 #endif //_SCENE_H_
-

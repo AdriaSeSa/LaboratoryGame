@@ -1,4 +1,4 @@
-#include "SceneGame.h"
+#include "SceneLevel1.h"
 #include "BackGround.h"
 #include "Saw.h"
 #include "Spike.h"
@@ -9,17 +9,21 @@
 #include "SpecialPlatform.h"
 #include "PlayerSettings.h"
 
-SceneGame::SceneGame(Application* app) :Scene(app)
+SceneLevel1::SceneLevel1(Application* app) :Scene(app)
 {
+	ID = 2;
 
+	// Define platform lenght
+	platformLenght = 2;
 }
 
-bool SceneGame::Start()
+bool SceneLevel1::Start()
 {
 	_app->map->Load("Level1.tmx");
 
 	reset = false;
 
+	// Init scene with tmx metaDate
 	InitScene();
 
 	backGround = new BackGround("backGround1", "BackGround", _app);
@@ -29,8 +33,6 @@ bool SceneGame::Start()
 	mobilePlatform1 = new MobilePlatform({ 95, 368 }, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285 }, 1, true, 200);
 
 	specialPlatform = new SpecialPlatform({ 185, 82 }, "specialPlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
-
-	checkPoint = new CheckPoint({ 160, 68 }, "checkpoint", "Checkpoint", _app);
 
 	// Camera
 	_app->renderer->camera->SetTarget(player);
@@ -67,7 +69,7 @@ bool SceneGame::Start()
 	return true;
 }
 
-bool SceneGame::PreUpdate()
+bool SceneLevel1::PreUpdate()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
@@ -91,7 +93,7 @@ bool SceneGame::PreUpdate()
 			// when don't have any life
 			reset = true;
 			_app->SaveGameRequest();
-			_app->scene->ChangeCurrentScene(2, 0);
+			_app->scene->ChangeCurrentScene(1, 0);
 			return true;
 		}
 		else
@@ -106,7 +108,7 @@ bool SceneGame::PreUpdate()
 	return true;
 }
 
-bool SceneGame::Update()
+bool SceneLevel1::Update()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
@@ -127,12 +129,12 @@ bool SceneGame::Update()
 	}
 	if (_app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
-		_app->scene->ChangeCurrentScene(0, 0);
+		_app->scene->ChangeCurrentScene(2, 0);
 	}
 	return true;
 }
 
-bool SceneGame::PostUpdate()
+bool SceneLevel1::PostUpdate()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
@@ -144,15 +146,9 @@ bool SceneGame::PostUpdate()
 	return true;
 }
 
-bool SceneGame::CleanUp()
+bool SceneLevel1::CleanUp()
 {
 	Scene::CleanUp();
-
-	backGround = nullptr;
-	player = nullptr;
-	mobilePlatform1 = nullptr;
-	checkPoint = nullptr;
-	specialPlatform = nullptr;
 
 	if (_app->renderer->camera != nullptr)
 	{
@@ -164,41 +160,7 @@ bool SceneGame::CleanUp()
 	return true;
 }
 
-void SceneGame::InitScene()
-{
-	for (int i = 0; i < _app->map->mapObjects.count(); i++)
-	{
-		if (_app->map->mapObjects[i].id == 0)
-		{
-			GameObject* g = new GameObject("wall", "Wall", _app);
-			// +8 = offset, porque pivot de b2Body es el centro, y de tectura es izquierda superiol.
-			g->pBody = _app->physics->CreateRectangle({ _app->map->mapObjects[i].position.x + 8, _app->map->mapObjects[i].position.y + 8 }, 16, 16, g);
-			g->pBody->body->SetType(b2BodyType::b2_staticBody);
-			g->pBody->body->GetFixtureList()->SetFriction(0);
-			g->adjustToGrid = true;
-			gameObjects.add(g);
-		}
-		else if (_app->map->mapObjects[i].id == 1)
-		{
-			Platform* g = new Platform({ _app->map->mapObjects[i].position.x , _app->map->mapObjects[i].position.y}, "platform", "Platform", _app, 2);
-			g->adjustToGrid = true;
-			gameObjects.add(g);
-		}
-		else if (_app->map->mapObjects[i].id == 2)
-		{
-			Saw* saw = new Saw({ _app->map->mapObjects[i].position.x ,_app->map->mapObjects[i].position.y }, "saw", "Saw", _app);
-			gameObjects.add(saw);
-		}
-		else if (_app->map->mapObjects[i].id == 3)
-		{
-			// +8 = offset (depende del tile, no de mapa), porque pivot de b2Body es el centro, y de tectura es izquierda superiol.
-			Spike* spike = new Spike({ _app->map->mapObjects[i].position.x + 8 ,_app->map->mapObjects[i].position.y + 8 }, _app->map->mapObjects[i].rotation, "spike", "Spike", _app);
-			gameObjects.add(spike);
-		}
-	}
-}
-
-void SceneGame::SetSaveData()
+void SceneLevel1::SetSaveData()
 {
 	if (player != nullptr)
 	{
@@ -209,7 +171,7 @@ void SceneGame::SetSaveData()
 	reset = false;
 }
 
-void SceneGame::LoadSaveData(pugi::xml_node save)
+void SceneLevel1::LoadSaveData(pugi::xml_node save)
 {
 	pugi::xml_node n = save;
 

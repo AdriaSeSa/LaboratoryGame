@@ -3,7 +3,7 @@
 
 SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
 {
-
+    ID = 0;
 }
 
 
@@ -15,6 +15,10 @@ bool SceneMainMenu::Start()
 
     bg = new BackGround("menuBackGround", "MenuBG", _app);
 
+    // Reset logo position
+    logoY = -100;
+
+    // Reset arrow position
     arrowPos = { 69, 190 };
 
     gameObjects.add(bg);
@@ -55,7 +59,7 @@ bool SceneMainMenu::Update()
     {
         if (arrowPos.y == 190)
         {
-            _app->scene->ChangeCurrentScene(0, 0);
+            _app->scene->ChangeCurrentScene(2, 0);
         }
         else
         {
@@ -79,4 +83,3 @@ bool SceneMainMenu::PostUpdate()
 
     return true;
 }
-

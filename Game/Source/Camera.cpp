@@ -18,6 +18,8 @@ void Camera::Update()
 {
 	UpdatePosition();
 
+	if (!App->isDebug) return;
+
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
 		y -= cameraSpeed;
@@ -42,30 +44,31 @@ void Camera::Update()
 
 void Camera::UpdatePosition()
 {
-	if (target != nullptr && !App->scene->isChangingScene)
+	if (target == nullptr || App->scene->isChangingScene) return;
+
+	// Update Y
+	int targetPosY = target->GetPosition().y * App->window->scale * App->renderer->zoom;
+	targetPosY = (targetPosY - pivotY * App->renderer->zoom) * moveY;
+
+	int distance = abs(targetPosY - y);
+
+	if (distance > 200)
 	{
-		// Update Y
-		int targetPosY = target->GetPosition().y * App->window->scale;
-		targetPosY = (targetPosY - pivotY) * moveY;
-
-		int distance = abs(targetPosY - y);
-
-		targetPosY > y ? y += distance / cameraDelay : targetPosY <y ? y -= distance / cameraDelay : y = y;
-
-		y < 0 ? y = 0 : y > mapHeight ? y = mapHeight : y = y;
-
-		// Update X
-
-		int targetPosX = target->GetPosition().x * App->window->scale;
-		targetPosX = (targetPosX - pivotX) * moveX;
-	
-		distance = abs(targetPosX - x);
-
-		targetPosX > x ? x += distance / cameraDelay : targetPosX < x ? x -= distance / cameraDelay : x = x;
-
-		x < 0 ? x = 0 : x > mapHeight ? x = mapHeight : x = x;
+		targetPosY > y ? y += distance / (cameraDelay / 3) : targetPosY < y ? y -= distance / (cameraDelay / 3) : y = y;
 	}
-	
+	else if (distance != 0) targetPosY > y ? y += distance / cameraDelay : targetPosY < y ? y -= distance / cameraDelay : y = y;
+
+	// Update X
+	int targetPosX = target->GetPosition().x * App->window->scale * App->renderer->zoom;
+	targetPosX = (targetPosX - pivotX * App->window->scale) * moveX;
+
+	distance = abs(targetPosX - x);
+
+	if (distance != 0) targetPosX > x ? x += distance / cameraDelay : targetPosX < x ? x -= distance / cameraDelay : x = x;
+
+	// Limite de camera
+	y < 0 ? y = 0 : y > mapHeight ? y = mapHeight : y = y;
+	x < 0 ? x = 0 : x > mapHeight ? x = mapHeight : x = x;
 }
 
 void Camera::SetTarget(GameObject* target)

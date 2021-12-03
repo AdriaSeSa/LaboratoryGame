@@ -43,7 +43,7 @@
     <ClCompile Include="Source\ModuleWindow.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="Source\SceneGame.cpp">
+    <ClCompile Include="Source\SceneLevel1.cpp">
       <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Source\BackGround.cpp">
@@ -99,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="Source\PathFinding.cpp">
       <Filter>SourceFiles\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\SceneLevel2.cpp">
+      <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +168,7 @@
     <ClInclude Include="Source\ModuleAudio.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Source\SceneGame.h">
+    <ClInclude Include="Source\SceneLevel1.h">
       <Filter>HeaderFiles\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Source\BackGround.h">
@@ -224,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="Source\PathFinding.h">
       <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneLevel2.h">
+      <Filter>HeaderFiles\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

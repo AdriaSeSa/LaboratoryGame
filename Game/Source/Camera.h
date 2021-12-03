@@ -26,6 +26,7 @@ private:
 
 	GameObject* target;
 
+	// use for offset with target
 	int pivotX, pivotY;
 
 	int distanceFromTarget;
@@ -38,11 +39,11 @@ public:
 
 	int cameraSpeed = 1;
 
-	int cameraDelay = 20;
+	// mas grande, mas lento se mueve la camera
+	int cameraDelay = 45;
 
+	// decidir si se mueve o no
 	int moveX = 0, moveY = 1;
 
 	int mapHeight, mapWidth;
-
 };
-

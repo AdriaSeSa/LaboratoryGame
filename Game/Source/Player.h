@@ -34,14 +34,14 @@ private:
 	bool isFalling;
 	bool isOnGround;
 
-
 	GroundSensor* groundSensor;
 	GroundSensor* openPlatformSensor;
 	GroundSensor* closePlatformSensor;
 	HitboxSensor* hitBoxSensor;
-	iPoint groundSensorOffset = { 5, 14 };
-	iPoint platformSensorOffset = { 5, 1 };
-
+	iPoint groundSensorOffset = { 5, 14};
+	iPoint platformSensorOffset = { 5, 1};
+	float relativeVelocity_X = 0;
+	PhysBody* mobPlatform = nullptr;
 
 public:
 

@@ -10,7 +10,6 @@
 SceneLevel2::SceneLevel2(Application* app) :Scene(app)
 {
 	ID = 3;
-
 	// Define platform lenght
 	platformLenght = 3;
 }
@@ -28,7 +27,8 @@ bool SceneLevel2::Start()
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	//mobilePlatform1 = new MobilePlatform({ 95, 368 }, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285 }, 1, true, 200);
+	mobilePlatform1 = new MobilePlatform({ 200, 500 }, "mobilePlatform", "MobilePlatform_H", _app, 2, { -120, 0 }, 1, true, 200);
+	mobilePlatform1->speed = 2.5;
 
 	// Camera
 	_app->renderer->camera->SetTarget(player);
@@ -37,7 +37,7 @@ bool SceneLevel2::Start()
 
 	gameObjects.add(backGround);
 	gameObjects.add(player);
-	//gameObjects.add(mobilePlatform1);
+	gameObjects.add(mobilePlatform1);
 	
 	_app->LoadGameRequest();
 
@@ -87,6 +87,7 @@ bool SceneLevel2::PreUpdate()
 			player->PlayerAppear();
 		}
 	}
+
 	return true;
 }
 

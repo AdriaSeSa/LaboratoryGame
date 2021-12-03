@@ -86,6 +86,11 @@ void Player::PreUpdate()
 		pBody->body->ApplyLinearImpulse({ 0,0.8f }, { 0,0, }, true);
 		appliedFallForce = true;
 	}
+
+	if(mobPlatform != nullptr)
+	{
+		relativeVelocity_X = mobPlatform->gameObject->GetLinearVelocity().x;
+	}
 }
 
 void Player::Update()
@@ -105,6 +110,8 @@ void Player::Update()
 	//	pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, (float)gravityScale/2});
 	//}
 
+	pBody->body->SetLinearVelocity({ relativeVelocity_X , pBody->body->GetLinearVelocity().y });
+
 	// God Mode
 	if (_app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 	{
@@ -120,7 +127,7 @@ void Player::Update()
 	// Move
 	if (_app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || _app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		pBody->body->SetLinearVelocity({ speed,pBody->body->GetLinearVelocity().y });
+		pBody->body->SetLinearVelocity({ relativeVelocity_X + speed,pBody->body->GetLinearVelocity().y });
 	}
 	else if(_app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || _app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_UP)
 	{
@@ -128,7 +135,7 @@ void Player::Update()
 	}
 	if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || _app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		pBody->body->SetLinearVelocity({ -speed,pBody->body->GetLinearVelocity().y });
+		pBody->body->SetLinearVelocity({ relativeVelocity_X - speed,pBody->body->GetLinearVelocity().y });
 	}
 	else if (_app->input->GetKey(SDL_SCANCODE_A) == KEY_UP || _app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_UP)
 	{
@@ -140,7 +147,7 @@ void Player::Update()
 		|| _app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN
 		|| _app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
-		if(godMod)
+ 		if(godMod)
 		{
 			pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
 		}
@@ -180,7 +187,7 @@ void Player::UpdatePlayerState()
 			return;
 		}
 	}
-	if (pBody->body->GetLinearVelocity().x > 0 || pBody->body->GetLinearVelocity().x < 0)
+	if (abs(pBody->body->GetLinearVelocity().x - relativeVelocity_X) > 0 || abs(pBody->body->GetLinearVelocity().x - relativeVelocity_X) < 0)
 	{
 		playerCurrentState = RUN;
 		run.Update();
@@ -291,7 +298,6 @@ void Player::PostUpdate()
 
 void Player::OnCollisionEnter(PhysBody* col)
 {
-
 	if (col->gameObject->CompareTag("MobilePlatform"))
 	{
 		fallDetection = 10;
@@ -300,6 +306,12 @@ void Player::OnCollisionEnter(PhysBody* col)
 		{
 			jumpBlock = true;
 		}
+	}
+	else if (col->gameObject->CompareTag("MobilePlatform_H"))
+	{
+		jumpCount = 2;
+		jumpBlock = false;
+		mobPlatform = col;
 	}
 }
 
@@ -313,6 +325,11 @@ void Player::OnCollisionExit(PhysBody* col)
 		{
 			jumpBlock = false;
 		}
+	}
+	else if (col->gameObject->CompareTag("MobilePlatform_H"))
+	{
+		mobPlatform = nullptr;
+		relativeVelocity_X = 0;
 	}
 }
 

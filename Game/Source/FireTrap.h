@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Animation.h"
+#include "HitboxSensor.h"
 
 class Player;
 
@@ -8,7 +9,9 @@ class FireTrap :public GameObject
 {
 public: 
 
-	FireTrap(iPoint position, std::string name, std::string tag, Application* app);
+	FireTrap(iPoint position, std::string name, std::string tag, Application* app, bool isController = true);
+
+	~FireTrap();
 
 	void Reset();
 
@@ -16,9 +19,11 @@ public:
 
 	void PostUpdate() override;
 
-	void OnCollisionEnter(PhysBody* col) override;
+	void OnTriggerEnter(PhysBody* col) override;
 
-	void OnCollisionExit(PhysBody* col) override;
+	void OnTriggerExit(PhysBody* col) override;
+
+	void CleanUp() override;
 
 	/// <summary>
 	/// Fight!!!
@@ -32,6 +37,11 @@ public:
 
 private:
 	iPoint startPos;
+
+	HitboxSensor* hitBox;
+
+	// Controlado por si mismo o por un script externo
+	bool isController = true;
 
 	int flashDuration = 0;
 	int fireDuration = 0;

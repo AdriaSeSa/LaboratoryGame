@@ -1,13 +1,13 @@
 #include "FireTrap.h"
 #include "Player.h"
 
-FireTrap::FireTrap(iPoint position, std::string name, std::string tag, Application* app)
+FireTrap::FireTrap(iPoint position, std::string name, std::string tag, Application* app, bool isController)
 	:GameObject(name, tag, app)
 {
-	startPos = position;
+	this->isController = isController;
 
 	// Init renderObject
-	std::string texNames[2] = { "fireTrampFlash","fireTrampOn" };
+	std::string texNames[2] = { "fireTrapFlash","fireTrapOn" };
 	for (int i = 0; i < 2; i++)
 	{
 		InitRenderObjectWithXml(texNames[i], i);
@@ -32,15 +32,35 @@ FireTrap::FireTrap(iPoint position, std::string name, std::string tag, Applicati
 	renderObjects[1].draw = false;
 
 	// Init pBody
-	pBody = _app->physics->CreateRectangleSensor({ position.x, position.y }, 10, renderObjects[0].destRect.h, this);
+	pBody = _app->physics->CreateRectangle({ position.x, position.y + 8 }, 16, 16, this);
+	pBody->body->SetType(b2BodyType::b2_kinematicBody);
+
+	hitBox = new HitboxSensor({ position.x, position.y }, 10, renderObjects[0].destRect.h, this, "fireTrapSensor", "FireTrapSensor", app);
+	
+	hitBox->hits[0] = "PlayerGSensor";
+
+	startPos = GetPosition();
+}
+
+FireTrap::~FireTrap()
+{
+	if (hitBox != nullptr)
+	{
+		delete hitBox;
+		hitBox = nullptr;
+	}
 }
 
 void FireTrap::Reset()
 {
-	flashDuration = 0;
-	fireDuration = 0;
-	SetPosition(startPos);
-	SetLinearVelocity({ 0,0 });
+	if(!isController)
+	{
+		flashDuration = 0;
+		fireDuration = 0;
+		SetPosition(startPos);
+		hitBox->SetPosition({ startPos.x,startPos.y - 8 });
+		SetLinearVelocity({ 0,0 });
+	}
 }
 
 void FireTrap::Update()
@@ -58,8 +78,18 @@ void FireTrap::Update()
 		else
 		{
 			activeteFire = false;
-			pBody->SetSensor(true);
+			//pBody->SetSensor(true);
 		}
+	}
+
+	if (isController && HasPlayerIn())
+	{
+		FireOn(100, 50);
+	}
+	else if (hitBox != nullptr)
+	{
+		b2Vec2 vel = GetLinearVelocity();
+		hitBox->SetLinearVelocity(vel);
 	}
 }
 
@@ -96,25 +126,49 @@ void FireTrap::PostUpdate()
 		renderObjects[0].section = { 0,0, renderObjects[0].destRect.w, renderObjects[0].destRect.h };
 	}
 
-	GameObject::PostUpdate();
-}
-
-void FireTrap::OnCollisionEnter(PhysBody* col)
-{
-	if (col->gameObject->CompareTag("Player"))
+	for (int i = 0; i < MAX_GAMEOBJECT_TEXTURES; i++)
 	{
-		if (player == nullptr)
+		if (renderObjects[i].texture != nullptr && renderObjects[i].draw)
 		{
-			player = (Player*)col->gameObject;
+			renderObjects[i].destRect.x = GetDrawPosition().x;
+			renderObjects[i].destRect.y = GetDrawPosition().y - 8;
+			renderObjects[i].rotation = GetDegreeAngle();
+
+			_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
+				renderObjects[i].section, renderObjects[i].scale, renderObjects[i].layer, renderObjects[i].orderInLayer,
+				renderObjects[i].rotation, renderObjects[i].flip, renderObjects[i].speedRegardCamera);
 		}
 	}
 }
 
-void FireTrap::OnCollisionExit(PhysBody* col)
+void FireTrap::OnTriggerEnter(PhysBody* col)
 {
-	if (col->gameObject->CompareTag("Player"))
+	if (col->gameObject->CompareTag("GroundSensor"))
+	{
+		if (player == nullptr)
+		{
+			// NO DETECTA COLISION  DE PLAYER !!!
+			GroundSensor* g = (GroundSensor*)col->gameObject;
+
+			player = (Player*)g->father;
+		}
+	}
+}
+
+void FireTrap::OnTriggerExit(PhysBody* col)
+{
+	if (col->gameObject->CompareTag("GroundSensor"))
 	{
 		player = nullptr;
+	}
+}
+
+void FireTrap::CleanUp()
+{
+	if (hitBox != nullptr)
+	{
+		delete hitBox;
+		hitBox = nullptr;
 	}
 }
 

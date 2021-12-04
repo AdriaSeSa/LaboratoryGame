@@ -8,6 +8,8 @@ public:
 
 	void OnCollisionEnter(PhysBody* col);
 
+	void OnCollisionExit(PhysBody* col);
+
 	std::string hits[6];
 
 private:

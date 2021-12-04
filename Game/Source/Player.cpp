@@ -30,13 +30,15 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	pBody->body->SetGravityScale(gravityScale);
 
 	// Sensors
-	openPlatformSensor = new GroundSensor(GetPosition() + platformSensorOffset, "PlayerPSensor", "PlatformSensor", _app, 10, 6);
+	openPlatformSensor = new GroundSensor(GetPosition() + platformSensorOffset, "PlayerPSensor", "PlatformSensor", _app, 10, 6, this);
 
-	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{5, 6}, "PlayerPSensor", "PlatformSensorClose", _app, 16, 20);
+	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{ 5, 6 }, "PlayerPSensor", "PlatformSensorClose", _app, 16, 20, this);
 
-	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 2);
+	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 2, this);
 
 	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(3,6),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
+
+	hitBoxSensor->pBody->body->SetType(b2BodyType::b2_dynamicBody);
 
 	// Set collisions filter
 	b2Filter physicFilter;
@@ -48,7 +50,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	hitBoxSensor->hits[0] = "saw";
 	hitBoxSensor->hits[1] = "spike";
-	hitBoxSensor->hits[2] = "fireTramp";
 
 	// Animations Setup
 	SetUpAnimations();
@@ -67,7 +68,6 @@ void Player::PreUpdate()
 	openPlatformSensor->SetPosition(GetPosition() + platformSensorOffset);
 	closePlatformSensor->SetPosition(GetPosition() + iPoint{ 5, 4});
 
-	
 	// Update falling, jumpcount and appliedDallForce variables
 	isFalling = pBody->body->GetLinearVelocity().y > fallDetection;
 
@@ -87,9 +87,9 @@ void Player::PreUpdate()
 		appliedFallForce = true;
 	}
 
-	if(mobPlatform != nullptr)
+	if(parent != nullptr)
 	{
-		relativeVelocity_X = mobPlatform->gameObject->GetLinearVelocity().x;
+		relativeVelocity_X = parent->gameObject->GetLinearVelocity().x;
 	}
 }
 
@@ -149,7 +149,7 @@ void Player::Update()
 	{
  		if(godMod)
 		{
-			pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
+			pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce * 2 });
 		}
 		else if (jumpCount != 0 && !jumpBlock)
 		{
@@ -309,9 +309,7 @@ void Player::OnCollisionEnter(PhysBody* col)
 	}
 	else if (col->gameObject->CompareTag("MobilePlatform_H"))
 	{
-		jumpCount = 2;
-		jumpBlock = false;
-		mobPlatform = col;
+		parent = col;
 	}
 }
 
@@ -328,7 +326,7 @@ void Player::OnCollisionExit(PhysBody* col)
 	}
 	else if (col->gameObject->CompareTag("MobilePlatform_H"))
 	{
-		mobPlatform = nullptr;
+		parent = nullptr;
 		relativeVelocity_X = 0;
 	}
 }

@@ -42,6 +42,10 @@ void GameObject::OnTriggerEnter(PhysBody* col)
 {
 }
 
+void GameObject::OnTriggerExit(PhysBody* col)
+{
+}
+
 void GameObject::Start()
 {
 	//Cargar texturas

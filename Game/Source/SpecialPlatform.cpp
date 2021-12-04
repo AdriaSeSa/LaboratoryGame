@@ -7,7 +7,7 @@ SpecialPlatform::SpecialPlatform(iPoint position, std::string name, std::string 
 
 	for (int i = 0; i < lenght; i++)
 	{
-		fireTraps[i] = new FireTrap({ position.x + i * renderObjects[0].destRect.w + 7, position.y + 5 }, "fireTramp", "FireTrap", app);
+		fireTraps[i] = new FireTrap({ position.x + i * renderObjects[0].destRect.w + 7, position.y + 5 }, "fireTramp", "FireTrap", app, false);
 	}
 
 	position.x += 16 * lenght / 2;
@@ -50,26 +50,23 @@ void SpecialPlatform::Update()
 
 		repeateNum += fireStep / 8 ;
 
+		for (int i = 0; i < 7; i++)
+		{
+			if (fireTraps[i]->HasPlayerIn())
+			{
+				fireTraps[i]->FireOn(50, 50);
+				repeateNum--;
+				break;
+			}
+		}
+
 		for (int i = 0; i < repeateNum; i++)
 		{
-			for (int i = 0; i < 7; i++)
+			int randNum;
+			do
 			{
-				if(fireTraps[i]->HasPlayerIn())
-				{
-					fireTraps[i]->FireOn(50, 50);
-					i++;
-					break;
-				}
-			}
-
-			if (i < repeateNum)
-			{
-				int randNum;
-				do
-				{
-					randNum = rand() % 7;
-				} while (!fireTraps[randNum]->FireOn(50, 50));
-			}
+				randNum = rand() % 7;
+			} while (!fireTraps[randNum]->FireOn(50, 50));
 		}		
 	}
 }

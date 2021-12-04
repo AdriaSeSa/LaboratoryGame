@@ -40,8 +40,10 @@ private:
 	HitboxSensor* hitBoxSensor;
 	iPoint groundSensorOffset = { 5, 14};
 	iPoint platformSensorOffset = { 5, 1};
+
+	// Para plataforma H
 	float relativeVelocity_X = 0;
-	PhysBody* mobPlatform = nullptr;
+	PhysBody* parent = nullptr;
 
 public:
 

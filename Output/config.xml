@@ -47,6 +47,8 @@
     <spike width = "16" height = "8" layer = "1" path = "Assets/textures/Traps/Spikes/Idle.png"/>
     <fireTrapFlash width = "16" height = "32" layer = "0" orderInLayer = "0.3" path = "Assets/textures/Traps/Fire/Flash.png"/>
     <fireTrapOn width = "16" height = "32" layer = "0" orderInLayer = "0.3" path = "Assets/textures/Traps/Fire/On(16x32).png"/>
+    <fireTrap2Flash width = "16" height = "32" layer = "0" orderInLayer = "0.3" path = "Assets/textures/Traps/Fire2/Flash.png"/>
+    <fireTrap2On width = "16" height = "32" layer = "0" orderInLayer = "0.3" path = "Assets/textures/Traps/Fire2/On(16x32).png"/>
     <mobilePlatform width = "16" height = "16" layer = "0" orderInLayer = "0.4" sectionX = "272" sectionY = "11" path = "Assets/textures/Terrain/Terrain(16x16).png"/>
     <specialPlatform width = "16" height = "16" layer = "0" orderInLayer = "0.4" sectionX = "272" sectionY = "42" path = "Assets/textures/Terrain/Terrain(16x16).png"/>
     <platform width = "16" height = "16" layer = "1" sectionX = "272" sectionY = "32" path = "Assets/textures/Terrain/Terrain(16x16).png"/>

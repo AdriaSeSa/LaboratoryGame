@@ -7,9 +7,11 @@ FireTrap::FireTrap(iPoint position, std::string name, std::string tag, Applicati
 	this->isController = isController;
 
 	// Init renderObject
-	std::string texNames[2] = { "fireTrapFlash","fireTrapOn" };
+	std::string texNames[2] = { "Flash","On" };
+
 	for (int i = 0; i < 2; i++)
 	{
+		texNames[i] = name + texNames[i];
 		InitRenderObjectWithXml(texNames[i], i);
 	}
 

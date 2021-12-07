@@ -9,9 +9,12 @@
 
 class Scene;
 
-enum SCENE_NUM
+enum SCENES
 {
-// Escenas totales
+	MAIN_MENU,
+	GAME_OVER,
+	LEVEL_1,
+	LEVEL_2
 };
 
 class ModuleScene : public Module
@@ -68,7 +71,6 @@ public:
 	int playerX, playerY;
 
 	PlayerSettings* playerSettings = nullptr;
-
 };
 
 #endif // __MODULESCENE_H__

@@ -84,8 +84,13 @@ bool Scene::CleanUp()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
-		if (gameObjects[i])
+		if (i == 258)
 		{
+			printf("i");
+			GameObject* g = gameObjects[i];
+		}
+		if (gameObjects[i])
+		{		
 			gameObjects[i]->CleanUp();
 		}
 	}

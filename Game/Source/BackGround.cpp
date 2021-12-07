@@ -27,3 +27,9 @@ void BackGround::PostUpdate()
 		}
 	}
 }
+
+int BackGround::Testt()
+{
+	printf("Say hi");
+	return 1;
+}

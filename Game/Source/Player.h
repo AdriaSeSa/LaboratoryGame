@@ -49,8 +49,6 @@ public:
 
 	bool isDead = false;
 
-	int lifes = 3;
-
 	int gravityScale = 2;
 
 	int jumpCount = 2;

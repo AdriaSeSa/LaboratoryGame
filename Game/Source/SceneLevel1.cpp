@@ -12,7 +12,6 @@
 SceneLevel1::SceneLevel1(Application* app) :Scene(app)
 {
 	ID = 2;
-
 	// Define platform lenght
 	platformLenght = 2;
 }
@@ -34,10 +33,9 @@ bool SceneLevel1::Start()
 
 	specialPlatform = new SpecialPlatform({ 185, 82 }, "specialPlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
 
-	// Camera
-	_app->renderer->camera->SetTarget(player);
-	_app->renderer->camera->mapHeight = 640;
-	_app->renderer->camera->mapWidth = 320;
+	// Win trigger
+	winTrigger = new GameObject("winTrigger", "WinTrigger", _app);
+	winTrigger->pBody = _app->physics->CreateRectangleSensor({ 320 ,592 }, 20, 32, winTrigger);
 
 	// Create test fruits
 	std::string fuits[8] = { "apple","bananas","cherries","kiwi","melon","orange","pineapple","strawberry" };
@@ -55,6 +53,12 @@ bool SceneLevel1::Start()
 	gameObjects.add(mobilePlatform1);
 	gameObjects.add(checkPoint);
 	gameObjects.add(specialPlatform);
+	gameObjects.add(winTrigger);
+
+	// Camera
+	_app->renderer->camera->SetTarget(player);
+	_app->renderer->camera->mapHeight = 640;
+	_app->renderer->camera->mapWidth = 320;
 
 	_app->LoadGameRequest();
 
@@ -129,8 +133,14 @@ bool SceneLevel1::Update()
 	}
 	if (_app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
-		_app->scene->ChangeCurrentScene(2, 0);
+		_app->scene->ChangeCurrentScene(SCENES::LEVEL_1, 0);
 	}
+
+	if (isWin)
+	{
+		Win();
+	}
+
 	return true;
 }
 
@@ -181,4 +191,9 @@ void SceneLevel1::LoadSaveData(pugi::xml_node save)
 
 	_app->scene->playerSettings->playerLifes = n.child("player").attribute("lifes").as_int();
 	_app->scene->playerSettings->playerScore = n.child("player").attribute("score").as_int();
+}
+
+void SceneLevel1::Win()
+{
+	_app->scene->ChangeCurrentScene(SCENES::LEVEL_2, 0);
 }

@@ -27,6 +27,8 @@ public:
 
 	void LoadSaveData(pugi::xml_node save) override;
 
+	void Win();
+
 public:
 
 	BackGround* backGround = nullptr;
@@ -40,4 +42,6 @@ public:
 	iPoint playerStartPos = { 40, 567 };
 
 	bool reset = false;
+
+	GameObject* winTrigger;
 };

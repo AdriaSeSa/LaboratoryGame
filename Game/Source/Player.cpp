@@ -1,4 +1,5 @@
 #include "Player.h"
+#include "Scene.h"
 
 Player::Player(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
@@ -95,13 +96,6 @@ void Player::PreUpdate()
 
 void Player::Update()
 {
-	// Temporal win condition
-	if (GetPosition().y > 620)
-	{
-		lifes = 0;
-		Die();
-	}
-
 	// ChangeGravity
 	//if (_app->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
 	//{
@@ -118,6 +112,15 @@ void Player::Update()
 		godMod = !godMod;
 	}
 
+	if (godMod && _app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+	{
+		pBody->SetSensor(true);
+	}
+	if (godMod && _app->input->GetKey(SDL_SCANCODE_B) == KEY_UP)
+	{
+		pBody->SetSensor(false);
+	}
+	
 	// Fall faster
 	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 	{
@@ -310,6 +313,11 @@ void Player::OnCollisionEnter(PhysBody* col)
 	else if (col->gameObject->CompareTag("MobilePlatform_H"))
 	{
 		parent = col;
+	}
+
+	if (col->gameObject->CompareTag("WinTrigger"))
+	{
+		_app->scene->currentScene->isWin = true;
 	}
 }
 

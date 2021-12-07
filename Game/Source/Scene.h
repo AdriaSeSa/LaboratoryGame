@@ -53,6 +53,8 @@ public:
 
 	int playerX;
 	int playerY;
+
+	int isWin = false;
 };
 
 #endif //_SCENE_H_

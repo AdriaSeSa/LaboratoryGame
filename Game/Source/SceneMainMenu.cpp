@@ -6,7 +6,6 @@ SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
     ID = 0;
 }
 
-
 bool SceneMainMenu::Start()
 {
     mainMenu = _app->textures->Load("Assets/textures/Menu/MenuOptions.png");

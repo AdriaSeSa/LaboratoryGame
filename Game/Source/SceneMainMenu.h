@@ -2,6 +2,7 @@
 #include "Scene.h"
 
 class BackGround;
+
 class SceneMainMenu : public Scene
 {
 public:
@@ -10,10 +11,12 @@ public:
 	bool Start() override;
 
 	bool Update() override;
+
 	bool PostUpdate() override;
 
 private:
 	iPoint arrowPos;
+
 	BackGround* bg;
 
 	int logoY = -100;

@@ -30,6 +30,10 @@ bool SceneLevel2::Start()
 	mobilePlatform1 = new MobilePlatform({ 200, 500 }, "mobilePlatform", "MobilePlatform_H", _app, 2, { -120, 0 }, 1, true, 200);
 	mobilePlatform1->speed = 2.5;
 
+	// Win trigger
+	winTrigger = new GameObject("winTrigger", "WinTrigger", _app);
+	winTrigger->pBody = _app->physics->CreateRectangleSensor({ 320, 40 }, 20, 48, winTrigger);
+
 	// Camera
 	_app->renderer->camera->SetTarget(player);
 	_app->renderer->camera->mapHeight = 640;
@@ -38,6 +42,7 @@ bool SceneLevel2::Start()
 	gameObjects.add(backGround);
 	gameObjects.add(player);
 	gameObjects.add(mobilePlatform1);
+	gameObjects.add(winTrigger);
 	
 	_app->LoadGameRequest();
 
@@ -112,7 +117,12 @@ bool SceneLevel2::Update()
 	}
 	if (_app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
-		_app->scene->ChangeCurrentScene(2, 0);
+		_app->scene->ChangeCurrentScene(SCENES::LEVEL_2, 0);
+	}
+
+	if(isWin)
+	{
+		Win();
 	}
 
 	return true;
@@ -165,4 +175,9 @@ void SceneLevel2::LoadSaveData(pugi::xml_node save)
 
 	_app->scene->playerSettings->playerLifes = n.child("player").attribute("lifes").as_int();
 	_app->scene->playerSettings->playerScore = n.child("player").attribute("score").as_int();
+}
+
+void SceneLevel2::Win()
+{
+	_app->scene->ChangeCurrentScene(SCENES::MAIN_MENU, 0);
 }

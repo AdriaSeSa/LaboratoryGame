@@ -103,6 +103,9 @@
     <ClCompile Include="Source\SceneLevel2.cpp">
       <Filter>SourceFiles\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>SourceFiles\BaseClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -230,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="Source\SceneLevel2.h">
       <Filter>HeaderFiles\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

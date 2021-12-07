@@ -16,7 +16,24 @@ SceneLevel2::SceneLevel2(Application* app) :Scene(app)
 
 bool SceneLevel2::Start()
 {
-	_app->map->Load("Level2.tmx");
+	if (_app->map->Load("Level2.tmx") == true)
+	{
+		int w, h;
+		uchar* data = NULL;
+
+		if (_app->map->CreateWalkabilityMap(w, h, &data)) _app->map->pathFinding->SetMap(w, h, data);
+
+		RELEASE_ARRAY(data);
+	}
+	
+	_app->map->pathFinding->CreatePath({ 1,36 }, { 2,27 });
+
+	const DynArray<iPoint>* test = _app->map->pathFinding->GetLastPath();
+
+	for (int i = 0; i < test->Count(); i++)
+	{
+		printf("x %d , y %d\n", test->At(i)->x, test->At(i)->y);
+	}
 
 	reset = false;
 

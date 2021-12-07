@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "PathFinding.h"
 
 struct MapObject
 {
@@ -144,6 +145,8 @@ public:
 
 	void LoadLayerMeta();
 
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+
 private:
 
 	// L03: Methods to load all required map data
@@ -168,6 +171,8 @@ public:
 	MapData mapData;
 
 	List<MapObject> mapObjects;
+
+	PathFinding* pathFinding = nullptr;
 
 private:
 

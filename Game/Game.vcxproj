@@ -92,6 +92,7 @@
     <ClCompile Include="Source\BackGround.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
     <ClCompile Include="Source\CheckPoint.cpp" />
+    <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\FireTrap.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GroundSensor.cpp" />
@@ -127,6 +128,7 @@
     <ClInclude Include="Source\Camera.h" />
     <ClInclude Include="Source\CheckPoint.h" />
     <ClInclude Include="Source\DynArray.h" />
+    <ClInclude Include="Source\Enemy.h" />
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="Source\External\PugiXml\src\pugixml.hpp" />
     <ClCompile Include="Source\Application.cpp" />

@@ -2,6 +2,15 @@
 #include "Enemy.h"
 #include "HitboxSensor.h"
 
+enum BAT_STATE
+{
+	BAT_IDLE,
+	BAT_FLYING,
+	BAT_CEILINGIN,
+	BAT_CEILINGOUT,
+	BAT_HIT
+};
+
 class BatEnemy : public Enemy
 {
 private:
@@ -9,12 +18,22 @@ private:
 
 	HitboxSensor* detectionSensor;
 
-	int detectionRadius = 100;
+	int detectionRadius = 140;
+
+	Animation anims[5];
+
+	Animation currentAnim;
+
+	BAT_STATE batState;
 
 public:
 	BatEnemy(iPoint pos, Player* player, std::string name, std::string tag, Application* app);
 
-	void Update();
+	void PreUpdate() override;
+
+	void Update() override;
+
+	void PostUpdate() override;
 
 	void OnCollisionEnter(PhysBody* col) override;
 
@@ -23,4 +42,8 @@ public:
 	void OnTriggerExit(PhysBody* col) override;
 
 	void CleanUp() override;
+
+	void SetUpAnimations() override;
+
+	void ChangeState(BAT_STATE state);
 };

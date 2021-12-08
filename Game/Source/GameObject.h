@@ -89,7 +89,6 @@ private :
 
 protected:
 	Application* _app = nullptr;
-
 public:
 
 	std::string name;
@@ -103,6 +102,8 @@ public:
 	bool pendingToDelete = false;
 
 	bool adjustToGrid = false;
+
+	bool isDie = false;
 };
 
 #endif // !GAMEOBJECT_H

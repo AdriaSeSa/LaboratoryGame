@@ -1,5 +1,9 @@
 #include "Enemy.h"
 
+void Enemy::SetUpAnimations()
+{
+}
+
 Enemy::Enemy(Player* player, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
 	this->player = player;
@@ -12,7 +16,15 @@ Enemy::~Enemy()
 
 void Enemy::Die()
 {
+	if(player!=nullptr)
+	{
+		player->ResetJumpCount();
+		player->Jump();
+	}
+
 	// Play Die Animation && Give score && call CleanUp()
+	isDie = true;
+	SetLinearVelocity(iPoint{ 0,0 });
 }
 
 iPoint Enemy::GetPathDirection(iPoint destination)

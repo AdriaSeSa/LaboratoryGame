@@ -4,10 +4,12 @@
 #include "Spike.h"
 #include "CheckPoint.h"
 #include "FireTrap.h"
+#include "BatEnemy.h"
 
-Scene::Scene(Application* app)
+Scene::Scene(Application* app, string name)
 {
 	_app = app;
+	this->name = name;
 }
 
 Scene::~Scene()
@@ -16,6 +18,7 @@ Scene::~Scene()
 
 bool Scene::InitScene()
 {
+	// Envirouments
 	for (int i = 0; i < _app->map->mapObjects.count(); i++)
 	{
 		if (_app->map->mapObjects[i].id == 0)

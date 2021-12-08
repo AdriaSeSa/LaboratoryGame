@@ -77,6 +77,10 @@ public:
 
 	void CleanUp() override;
 
+	void ResetJumpCount(int count = 2);
+
+	void Jump();
+
 	void PlayerAppear();
 
 	void Die();
@@ -84,5 +88,4 @@ public:
 private:
 
 	void SetUpAnimations();
-
 };

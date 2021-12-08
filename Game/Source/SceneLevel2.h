@@ -12,9 +12,11 @@ class BatEnemy;
 class SceneLevel2 : public Scene
 {
 public:
-	SceneLevel2(Application* app);
+	SceneLevel2(Application* app, string name);
 
 	bool Start(bool isReseting = false) override;
+
+	void LoadEnemies();
 
 	bool PreUpdate() override;
 

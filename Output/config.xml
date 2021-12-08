@@ -26,6 +26,14 @@
     <virtualGuyFall width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Fall(32x32).png"/>
     <virtualGuyDoubleJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/DoubleJump(32x32).png"/>
     <characterAppearing width = "96" height = "96" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/Appearing(96x96).png"/>
+
+    <!-- Enemy -->
+    <batIdle width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/Idle(46x30).png"/>
+    <batCeilingIn width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/CeilingIn(46x30).png"/>
+    <batCeilingOut width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/CeilingOut(46x30).png"/>
+    <batFlying width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/Flying(46x30).png"/>
+    <batHit width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/Hit(46x30).png"/>
+
     <!-- Fruits -->
     <apple width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Apple.png"/>
     <bananas width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Bananas.png"/>
@@ -56,8 +64,15 @@
   </textures>
 
   <scenes>
-    <sceneGame1>
-    </sceneGame1>
+    <level1>
+    </level1>
+
+    <level2>
+      <enemies>
+        <bat positionX = "120" positionY ="104"/>
+        <bat positionX = "264" positionY ="168"/>
+      </enemies>
+    </level2>
   </scenes>
 
   <!-- L03: Added maps folder as config option -->

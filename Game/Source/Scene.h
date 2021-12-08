@@ -1,7 +1,6 @@
 #ifndef _SCENE_H_
 #define _SCENE_H_
 
-#include "Application.h"
 #include "GameObject.h"
 #include "List.h"
 
@@ -21,7 +20,7 @@ protected:
 
 public:
 	// Constructor
-	Scene(Application* app);
+	Scene(Application* app, string name = "null");
 
 	// Destructor
 	~Scene();
@@ -55,6 +54,8 @@ public:
 	int playerY;
 
 	int isWin = false;
+
+	string name = "null";
 };
 
 #endif //_SCENE_H_

@@ -24,7 +24,7 @@ void HitboxSensor::OnCollisionEnter(PhysBody* col)
 	{
 		if (col->gameObject->name == hits[i])
 		{
-			father->OnTriggerEnter(col);
+ 			father->OnTriggerEnter(col);
 		}
 	}
 }

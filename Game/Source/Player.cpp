@@ -59,6 +59,55 @@ Player::~Player()
 {
 }
 
+void Player::Start()
+{
+	PlayerAppear();
+}
+
+void Player::SetUpAnimations()
+{
+	for (int i = 0; i < 11; i++)
+	{
+		idle.PushBack({ 32 * i, 0, 32, 32 });
+	}
+
+	for (int i = 0; i < 12; i++)
+	{
+		run.PushBack({ 32 * i, 0, 32, 32 });
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		doubleJump.PushBack({ 32 * i, 0, 32, 32 });
+	}
+
+	for (int i = 0; i < 7; i++)
+	{
+		appearing.PushBack({ 96 * i,0,96,96 });
+	}
+
+	appearing.hasIdle = false;
+	appearing.speed = 0.3f;
+	appearing.loop = false;
+
+	idle.hasIdle = false;
+	idle.speed = 0.3f;
+
+	run.hasIdle = false;
+	run.speed = 0.3f;
+
+	doubleJump.hasIdle = false;
+	doubleJump.speed = 0.3f;
+}
+
+void Player::PlayerAppear()
+{
+	SetLinearVelocity(iPoint(0, 0));
+	isAppear = false;
+	_app->physics->Pause(true);
+	appearing.Reset();
+}
+
 void Player::PreUpdate()
 {
 	// Update sensors position
@@ -74,7 +123,7 @@ void Player::PreUpdate()
 
 	if (groundSensor->isOnGround && jumpCount < 2)
 	{
-		jumpCount = 2;
+		ResetJumpCount();
 	}
 
 	if (appliedFallForce && !isFalling)
@@ -150,18 +199,7 @@ void Player::Update()
 		|| _app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN
 		|| _app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
- 		if(godMod)
-		{
-			pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce * 2 });
-		}
-		else if (jumpCount != 0 && !jumpBlock)
-		{
-			groundSensor->SetOffGround();
-
-			pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
-
-			jumpCount--;
-		}
+		Jump();
 	}
 
 	// Update animation state
@@ -201,19 +239,6 @@ void Player::UpdatePlayerState()
 	idle.Update();
 }
 
-void Player::OnTriggerEnter(PhysBody* col)
-{
-	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
-	{
-		Die();
-	}
-}
-
-void Player::Start()
-{
-	PlayerAppear();
-}
-
 void Player::PostUpdate()
 {
 	if (!isAppear)
@@ -247,11 +272,9 @@ void Player::PostUpdate()
 	case RUN:
 		i = 1;
 		break;
-
 	case JUMP:
 		i = 2;
 		break;
-
 	case FALL:
 		i = 3;
 		break;
@@ -299,6 +322,14 @@ void Player::PostUpdate()
 	}
 }
 
+void Player::OnTriggerEnter(PhysBody* col)
+{
+	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
+	{
+		Die();
+	}
+}
+
 void Player::OnCollisionEnter(PhysBody* col)
 {
 	if (col->gameObject->CompareTag("MobilePlatform"))
@@ -314,10 +345,17 @@ void Player::OnCollisionEnter(PhysBody* col)
 	{
 		parent = col;
 	}
-
 	if (col->gameObject->CompareTag("WinTrigger"))
 	{
 		_app->scene->currentScene->isWin = true;
+	}
+
+	if(col->gameObject->name=="bat")
+	{
+		if(!col->gameObject->isDie)
+		{
+			Die();
+		}
 	}
 }
 
@@ -363,12 +401,26 @@ void Player::CleanUp()
 	}
 }
 
-void Player::PlayerAppear()
+void Player::ResetJumpCount(int count)
 {
-	SetLinearVelocity(iPoint(0,0));
-	isAppear = false;
-	_app->physics->Pause(true);
-	appearing.Reset();
+	count = count > 2 ? 2 : count;
+	jumpCount = count;
+}
+
+void Player::Jump()
+{
+	if (godMod)
+	{
+		pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce * 2 });
+	}
+	else if (jumpCount != 0 && !jumpBlock)
+	{
+		groundSensor->SetOffGround();
+
+		pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
+
+		jumpCount--;
+	}
 }
 
 void Player::Die()
@@ -378,40 +430,4 @@ void Player::Die()
 		SDL_Delay(200);
 		isDead = true;
 	}
-}
-
-void Player::SetUpAnimations()
-{
-	for (int i = 0; i < 11; i++)
-	{
-		idle.PushBack({ 32 * i, 0, 32, 32 });
-	}
-
-	for (int i = 0; i < 12; i++)
-	{
-		run.PushBack({ 32 * i, 0, 32, 32 });
-	}
-
-	for (int i = 0; i < 6; i++)
-	{
-		doubleJump.PushBack({ 32 * i, 0, 32, 32 });
-	}
-
-	for (int i = 0; i < 7; i++)
-	{
-		appearing.PushBack({ 96 * i,0,96,96 });
-	}
-
-	appearing.hasIdle = false;
-	appearing.speed = 0.3f;
-	appearing.loop = false;
-
-	idle.hasIdle = false;
-	idle.speed = 0.3f;
-
-	run.hasIdle = false;
-	run.speed = 0.3f;
-
-	doubleJump.hasIdle = false;
-	doubleJump.speed = 0.3f;
 }

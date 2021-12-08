@@ -6,12 +6,12 @@
 
 ModuleScene::ModuleScene(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
-	name = "scene";
+	name = "scenes";
 
 	scenes[0] = new SceneMainMenu(app);
 	scenes[1] = new SceneGameOver(app);
 	scenes[2] = new SceneLevel1(app);
-	scenes[3] = new SceneLevel2(app);
+	scenes[3] = new SceneLevel2(app,"level2");
 
 	playerSettings = PlayerSettings::Instance();
 }

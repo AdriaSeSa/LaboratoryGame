@@ -22,6 +22,9 @@ protected:
 	// player offset wen detect center of player
 	iPoint playerOffset = { 5,6 };
 
+protected:
+	virtual void SetUpAnimations();
+
 public:
 	Enemy(Player* player, std::string name, std::string tag, Application* app);
 

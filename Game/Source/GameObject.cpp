@@ -98,8 +98,6 @@ iPoint GameObject::GetDrawPosition()
 		b2Vec2 position;
 
 		position = pBody->body->GetPosition();
-		//position.x = METERS_TO_PIXELS(position.x) - pBody->width;
-		//position.y = METERS_TO_PIXELS(position.y) - pBody->height;
 
 		position.x = METERS_TO_PIXELS(position.x) - pBody->gameObject->renderObjects[0].textureCenterX;
 		position.y = METERS_TO_PIXELS(position.y) - pBody->gameObject->renderObjects[0].textureCenterY;

@@ -76,7 +76,7 @@ bool SceneMainMenu::PostUpdate()
         if (gameObjects[i] != nullptr)
             gameObjects[i]->PostUpdate();
     }
-    _app->renderer->AddTextureRenderQueue(mainMenu, { 0,0, });
+    _app->renderer->AddTextureRenderQueue(mainMenu, { 0,0, }, { 0,0,0,0 }, 0.5f);
     _app->renderer->AddTextureRenderQueue(logo, { 96,logoY, });
     _app->renderer->AddTextureRenderQueue(arrow, arrowPos, { 0,0,0,0 }, 1, 1);
 

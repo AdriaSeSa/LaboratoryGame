@@ -8,7 +8,7 @@
 #include "PlayerSettings.h"
 #include "BatEnemy.h"
 
-SceneLevel2::SceneLevel2(Application* app) :Scene(app)
+SceneLevel2::SceneLevel2(Application* app, string name) :Scene(app, name)
 {
 	ID = 3;
 	// Define platform lenght
@@ -17,6 +17,7 @@ SceneLevel2::SceneLevel2(Application* app) :Scene(app)
 
 bool SceneLevel2::Start(bool isReseting)
 {
+	// Load Map
 	if (_app->map->Load("Level2.tmx") == true)
 	{
 		int w, h;
@@ -27,25 +28,19 @@ bool SceneLevel2::Start(bool isReseting)
 		RELEASE_ARRAY(data);
 	}
 	
-	/*_app->map->pathFinding->CreatePath({ 1,36 }, { 2,27 });
-
-	const DynArray<iPoint>* test = _app->map->pathFinding->GetLastPath();
-
-	for (int i = 0; i < test->Count(); i++)
-	{
-		printf("x %d , y %d\n", test->At(i)->x, test->At(i)->y);
-	}*/
-
 	reset = false;
-
-	// Init scene with tmx metaDate
-	InitScene();
 
 	backGround = new BackGround("backGround1", "BackGround", _app);
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	testEnemy = new BatEnemy({ 104,72 }, player, "bat", "Bat", _app);
+	// Init scene with tmx metaDate
+	InitScene();
+
+	// Init Enemies
+	LoadEnemies();
+
+	//testEnemy = new BatEnemy({ 120, 104}, player, "bat", "Bat", _app);
 
 	mobilePlatform1 = new MobilePlatform({ 200, 500 }, "mobilePlatform", "MobilePlatform_H", _app, 2, { -120, 0 }, 1, true, 200);
 	mobilePlatform1->speed = 2.5;
@@ -65,7 +60,6 @@ bool SceneLevel2::Start(bool isReseting)
 	gameObjects.add(player);
 	gameObjects.add(mobilePlatform1);
 	gameObjects.add(winTrigger);
-	gameObjects.add(testEnemy);
 	gameObjects.add(checkPoint);
 	
 	// If we are resetting the scene, call reset before calling load
@@ -87,6 +81,25 @@ bool SceneLevel2::Start(bool isReseting)
 	return true;
 }
 
+void SceneLevel2::LoadEnemies()
+{
+	// Enemic
+	pugi::xml_node enemicNode = _app->scene->config.child(name.c_str()).child("enemies");
+
+	for (enemicNode = enemicNode.first_child(); enemicNode; enemicNode = enemicNode.next_sibling())
+	{
+		string name = enemicNode.name();
+		if (name == "bat")
+		{
+			iPoint position = { enemicNode.attribute("positionX").as_int(0),enemicNode.attribute("positionY").as_int(0) };
+
+			BatEnemy* bat = new BatEnemy(position, player, "bat", "Bat", _app);
+
+			gameObjects.add(bat);
+		}
+	}
+}
+
 bool SceneLevel2::PreUpdate()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
@@ -95,6 +108,7 @@ bool SceneLevel2::PreUpdate()
 		{
 			if (gameObjects[i]->pendingToDelete)
 			{
+				gameObjects[i]->CleanUp();
 				DestroyGameObject(gameObjects[i]);
 			}
 			else

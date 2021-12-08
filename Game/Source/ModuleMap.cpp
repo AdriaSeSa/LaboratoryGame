@@ -134,7 +134,6 @@ iPoint ModuleMap::MapToWorld(iPoint pos) const
 	return ret;
 }
 
-
 // L05: DON 2: Add orthographic world to map coordinates
 iPoint ModuleMap::WorldToMap(int x, int y) const
 {
@@ -159,7 +158,6 @@ iPoint ModuleMap::WorldToMap(int x, int y) const
 		//LOG("Unknown map type");
 		ret.x = x; ret.y = y;
 	}
-
 	return ret;
 }
 

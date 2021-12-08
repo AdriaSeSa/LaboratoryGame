@@ -6,6 +6,8 @@ public:
 
 	HitboxSensor(iPoint pos, int width, int height, GameObject* father, std::string name, std::string tag, Application* app);
 
+	HitboxSensor(iPoint pos, int radius, GameObject* father, std::string name, std::string tag, Application* app);
+
 	void OnCollisionEnter(PhysBody* col);
 
 	void OnCollisionExit(PhysBody* col);

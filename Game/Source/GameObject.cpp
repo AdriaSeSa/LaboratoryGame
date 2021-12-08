@@ -186,6 +186,20 @@ void GameObject::SetLinearVelocity(b2Vec2 vel)
 	}
 }
 
+void GameObject::SetLinearVelocity(iPoint vel)
+{
+	b2Vec2 v = { (float)vel.x, (float)vel.y };
+
+	if (pBody != nullptr)
+	{
+		pBody->body->SetLinearVelocity(v);
+	}
+	else
+	{
+		printf_s("%s don't have pBody!!!\n", name);
+	}
+}
+
 void GameObject::InitRenderObjectWithXml(std::string texName, int index)
 {
 	if (texName == "null") texName = name;

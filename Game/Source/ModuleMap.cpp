@@ -109,6 +109,32 @@ iPoint ModuleMap::MapToWorld(int x, int y) const
 	return ret;
 }
 
+// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
+iPoint ModuleMap::MapToWorld(iPoint pos) const
+{
+	iPoint ret;
+
+	// L05: DONE 1: Add isometric map to world coordinates
+	if (mapData.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = pos.x * mapData.tileWidth;
+		ret.y = pos.y * mapData.tileHeight;
+	}
+	else if (mapData.type == MAPTYPE_ISOMETRIC)
+	{
+		ret.x = (pos.x - pos.y) * (mapData.tileWidth / 2);
+		ret.y = (pos.x + pos.y) * (mapData.tileHeight / 2);
+	}
+	else
+	{
+		//LOG("Unknown map type");
+		ret.x = pos.x; ret.y = pos.y;
+	}
+
+	return ret;
+}
+
+
 // L05: DON 2: Add orthographic world to map coordinates
 iPoint ModuleMap::WorldToMap(int x, int y) const
 {
@@ -136,6 +162,49 @@ iPoint ModuleMap::WorldToMap(int x, int y) const
 
 	return ret;
 }
+
+// L05: DON 2: Add orthographic world to map coordinates
+iPoint ModuleMap::WorldToMap(iPoint pos) const
+{
+	iPoint ret(0, 0);
+
+	// L05: DONE 3: Add the case for isometric maps to WorldToMap
+	if (mapData.type == MAPTYPE_ORTHOGONAL)
+	{
+		ret.x = pos.x / mapData.tileWidth;
+		ret.y = pos.y / mapData.tileHeight;
+	}
+	else if (mapData.type == MAPTYPE_ISOMETRIC)
+	{
+
+		float half_width = mapData.tileWidth * 0.5f;
+		float half_height = mapData.tileHeight * 0.5f;
+		ret.x = int((pos.x / half_width + pos.y / half_height) / 2);
+		ret.y = int((pos.y / half_height - (pos.x / half_width)) / 2);
+	}
+	else
+	{
+		//LOG("Unknown map type");
+		ret.x = pos.x; ret.y = pos.y;
+	}
+
+	return ret;
+}
+
+bool ModuleMap::InTileCenter(iPoint worldPos, int tileDimensions) const
+{
+	if (tileDimensions > 8) tileDimensions = 8;
+
+	iPoint mapPos = WorldToMap(worldPos);
+
+	iPoint tileWorldPos = MapToWorld(mapPos);
+
+	if (worldPos.x > tileWorldPos.x - tileDimensions && worldPos.x < tileWorldPos.x + tileDimensions &&
+		worldPos.y > tileWorldPos.y - tileDimensions && worldPos.y < tileWorldPos.y + tileDimensions) return true;
+	
+	return false;
+}
+
 
 void ModuleMap::LoadLayerMeta()
 {

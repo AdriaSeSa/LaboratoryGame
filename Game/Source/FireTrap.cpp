@@ -61,7 +61,7 @@ void FireTrap::Reset()
 		fireDuration = 0;
 		SetPosition(startPos);
 		hitBox->SetPosition({ startPos.x,startPos.y - 8 });
-		SetLinearVelocity({ 0,0 });
+		SetLinearVelocity(iPoint(0,0));
 	}
 }
 

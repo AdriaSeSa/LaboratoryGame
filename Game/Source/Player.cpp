@@ -365,7 +365,7 @@ void Player::CleanUp()
 
 void Player::PlayerAppear()
 {
-	SetLinearVelocity({ 0,0 });
+	SetLinearVelocity(iPoint(0,0));
 	isAppear = false;
 	_app->physics->Pause(true);
 	appearing.Reset();

@@ -9,6 +9,14 @@ HitboxSensor::HitboxSensor(iPoint pos, int width, int height, GameObject* father
 	this->father = father;
 }
 
+HitboxSensor::HitboxSensor(iPoint pos, int radius, GameObject* father, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
+{
+	pBody = _app->physics->CreateCircle(pos.x, pos.y, radius, this, true);
+	pBody->body->SetType(b2BodyType::b2_kinematicBody);
+
+	this->father = father;
+}
+
 void HitboxSensor::OnCollisionEnter(PhysBody* col)
 {
   	if (col->gameObject == father) return;

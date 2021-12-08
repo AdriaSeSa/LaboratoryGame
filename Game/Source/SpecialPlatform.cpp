@@ -18,7 +18,7 @@ SpecialPlatform::SpecialPlatform(iPoint position, std::string name, std::string 
 void SpecialPlatform::Reset()
 {
 	SetPosition(startPos);
-	SetLinearVelocity({ 0,0 });
+	SetLinearVelocity(iPoint(0,0));
 	fireStep = 0;
 	for (int i = 0; i < MAX_FIRENUM; i++)
 	{

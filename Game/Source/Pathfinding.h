@@ -30,6 +30,8 @@ public:
 	// To request all tiles involved in the last generated path
 	const DynArray<iPoint>* GetLastPath() const;
 
+	const iPoint* GetStepFromLastPath(int index);
+
 	// Utility: return true if pos is inside the map boundaries
 	bool CheckBoundaries(const iPoint& pos) const;
 

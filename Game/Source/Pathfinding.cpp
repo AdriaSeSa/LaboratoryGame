@@ -64,6 +64,13 @@ const DynArray<iPoint>* PathFinding::GetLastPath() const
 	return &lastPath;
 }
 
+const iPoint* PathFinding::GetStepFromLastPath(int index)
+{
+	const iPoint* res = GetLastPath()->At(index);
+
+	return res;
+}
+
 // PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
 // ---------------------------------------------------------------------------------

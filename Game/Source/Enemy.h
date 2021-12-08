@@ -1,27 +1,31 @@
 #pragma once
 #include "GameObject.h"
-
-class Player;
-
-enum Directions
-{
-	
-};
+#include "PathFinding.h"
+#include "Player.h"
 
 class Enemy : public GameObject
 {
-private:
+protected:
+
 	int life;
-	
+
 	float speed;
-	
+
 	int score;
 
 	Player* player = nullptr;
 
+	bool movesDiagonally;
+
+	bool isActive;
+
+	PathFinding* pathFinding = nullptr;
+
 public:
 	Enemy(Player* player, std::string name, std::string tag, Application* app);
 
-	iPoint GetPathDirection();
-};
+	virtual void Die();
 
+	iPoint GetPathDirection(iPoint destination);
+
+};

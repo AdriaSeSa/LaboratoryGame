@@ -106,6 +106,9 @@
     <ClCompile Include="Source\Enemy.cpp">
       <Filter>SourceFiles\BaseClass</Filter>
     </ClCompile>
+    <ClCompile Include="Source\BatEnemy.cpp">
+      <Filter>SourceFiles\GameObjects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -155,9 +158,6 @@
     </ClInclude>
     <ClInclude Include="Source\Timer.h">
       <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Scene.h">
-      <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
     <ClInclude Include="Source\Module.h">
       <Filter>HeaderFiles\BaseClass</Filter>
@@ -237,6 +237,12 @@
     <ClInclude Include="Source\Enemy.h">
       <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Scene.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\BatEnemy.h">
+      <Filter>HeaderFiles\GameObjects\Enemies</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -286,6 +292,12 @@
     </Filter>
     <Filter Include="SourceFiles\Utils">
       <UniqueIdentifier>{ec64f11d-cfbb-401b-8a2b-27a08bcd6219}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GameObjects\Enemies">
+      <UniqueIdentifier>{0fd79495-0826-4bb6-a946-6ed4613fc2d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GameObjects\Enemies">
+      <UniqueIdentifier>{4ba30545-91d4-40a8-81fa-5c6fa286bfc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

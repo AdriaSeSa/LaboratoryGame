@@ -6,6 +6,7 @@
 #include "CheckPoint.h"
 #include "PowerUp.h"
 #include "PlayerSettings.h"
+#include "BatEnemy.h"
 
 SceneLevel2::SceneLevel2(Application* app) :Scene(app)
 {
@@ -44,6 +45,8 @@ bool SceneLevel2::Start()
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
+	testEnemy = new BatEnemy({ 100,50 }, player, "bat", "Bat", _app);
+
 	mobilePlatform1 = new MobilePlatform({ 200, 500 }, "mobilePlatform", "MobilePlatform_H", _app, 2, { -120, 0 }, 1, true, 200);
 	mobilePlatform1->speed = 2.5;
 
@@ -60,6 +63,7 @@ bool SceneLevel2::Start()
 	gameObjects.add(player);
 	gameObjects.add(mobilePlatform1);
 	gameObjects.add(winTrigger);
+	gameObjects.add(testEnemy);
 	
 	_app->LoadGameRequest();
 

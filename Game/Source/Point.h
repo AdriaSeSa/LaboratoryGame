@@ -123,6 +123,8 @@ public:
 
 		TYPE magnitud = sqrt(pow(x, 2) + pow(y, 2));
 
+		if (magnitud == 0) return { 0,0 };
+
 		result = { x / magnitud, y / magnitud };
 
 		return result;

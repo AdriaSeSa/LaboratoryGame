@@ -19,7 +19,6 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	};
 
 	//Phys Body
-
 	pBody = _app->physics->CreateChainObj(pos.x, pos.y, playerChain, 8, true, this);
 
 	pBody->body->SetFixedRotation(true);
@@ -66,6 +65,7 @@ void Player::PreUpdate()
 	groundSensor->SetPosition(GetPosition() + groundSensorOffset);
 	hitBoxSensor->SetPosition(GetPosition() + iPoint(3, 6));
 
+	// Sensor for open or close platform collision
 	openPlatformSensor->SetPosition(GetPosition() + platformSensorOffset);
 	closePlatformSensor->SetPosition(GetPosition() + iPoint{ 5, 4});
 

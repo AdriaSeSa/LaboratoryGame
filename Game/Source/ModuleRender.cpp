@@ -172,7 +172,8 @@ void ModuleRender::AddRectRenderQueue(const SDL_Rect& rect, Uint8 r, Uint8 g, Ui
 {
 	RenderObject renderR;
 
-	SDL_Rect rec = { rect.x * zoom, rect.y * zoom,rect.w * zoom, rect.h * zoom };
+	SDL_Rect rec = { (-camera->x * speed) + rect.x * App->window->scale, (-camera->y * speed) + rect.y * App->window->scale,
+		rect.w * App->window->scale, rect.h * App->window->scale };
 
 	renderR.InitAsRect(rec, { r,g,b,a }, filled, layer, orderInlayer, speed);
 

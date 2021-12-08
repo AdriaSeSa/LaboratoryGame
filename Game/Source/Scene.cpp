@@ -47,7 +47,7 @@ bool Scene::InitScene()
 		}
 		else if (_app->map->mapObjects[i].id == 4)
 		{
-			FireTrap* ft = new FireTrap({ _app->map->mapObjects[i].position.x ,_app->map->mapObjects[i].position.y }, "fireTrap2", "FireTrap", _app);
+			FireTrap* ft = new FireTrap({ _app->map->mapObjects[i].position.x + 8 ,_app->map->mapObjects[i].position.y }, "fireTrap2", "FireTrap", _app);
 			gameObjects.add(ft);
 		}
 		else if (_app->map->mapObjects[i].id == 5)

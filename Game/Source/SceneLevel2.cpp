@@ -27,14 +27,14 @@ bool SceneLevel2::Start()
 		RELEASE_ARRAY(data);
 	}
 	
-	_app->map->pathFinding->CreatePath({ 1,36 }, { 2,27 });
+	/*_app->map->pathFinding->CreatePath({ 1,36 }, { 2,27 });
 
 	const DynArray<iPoint>* test = _app->map->pathFinding->GetLastPath();
 
 	for (int i = 0; i < test->Count(); i++)
 	{
 		printf("x %d , y %d\n", test->At(i)->x, test->At(i)->y);
-	}
+	}*/
 
 	reset = false;
 
@@ -45,7 +45,7 @@ bool SceneLevel2::Start()
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	testEnemy = new BatEnemy({ 100,50 }, player, "bat", "Bat", _app);
+	testEnemy = new BatEnemy({ 104,72 }, player, "bat", "Bat", _app);
 
 	mobilePlatform1 = new MobilePlatform({ 200, 500 }, "mobilePlatform", "MobilePlatform_H", _app, 2, { -120, 0 }, 1, true, 200);
 	mobilePlatform1->speed = 2.5;

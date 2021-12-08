@@ -55,6 +55,16 @@ public:
 		return(r);
 	}
 
+	Point operator * (const TYPE num) const
+	{
+		Point r;
+
+		r.x = x * num;
+		r.y = y * num;
+
+		return(r);
+	}
+
 	const Point& operator -=(const Point& v)
 	{
 		x -= v.x;

@@ -199,12 +199,14 @@ bool ModuleMap::InTileCenter(iPoint worldPos, int tileDimensions) const
 
 	iPoint tileWorldPos = MapToWorld(mapPos);
 
+	tileWorldPos.x += 8;
+	tileWorldPos.y += 8;
+
 	if (worldPos.x > tileWorldPos.x - tileDimensions && worldPos.x < tileWorldPos.x + tileDimensions &&
 		worldPos.y > tileWorldPos.y - tileDimensions && worldPos.y < tileWorldPos.y + tileDimensions) return true;
 	
 	return false;
 }
-
 
 void ModuleMap::LoadLayerMeta()
 {
@@ -226,8 +228,6 @@ void ModuleMap::LoadLayerMeta()
 					if (gid > 0) 
 					{
 						MapObject obj;
-
-						//printf_s("%d\n",gid);
 
 						if (gid > 3221225470)
 						{

@@ -6,7 +6,6 @@
 class Enemy : public GameObject
 {
 protected:
-
 	int life;
 
 	float speed;
@@ -20,12 +19,15 @@ protected:
 	bool isActive;
 
 	PathFinding* pathFinding = nullptr;
+	// player offset wen detect center of player
+	iPoint playerOffset = { 5,6 };
 
 public:
 	Enemy(Player* player, std::string name, std::string tag, Application* app);
 
+	~Enemy();
+
 	virtual void Die();
 
 	iPoint GetPathDirection(iPoint destination);
-
 };

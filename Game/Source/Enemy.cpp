@@ -6,6 +6,10 @@ Enemy::Enemy(Player* player, std::string name, std::string tag, Application* app
 	pathFinding = _app->map->pathFinding;
 }
 
+Enemy::~Enemy()
+{
+}
+
 void Enemy::Die()
 {
 	// Play Die Animation && Give score && call CleanUp()
@@ -13,31 +17,33 @@ void Enemy::Die()
 
 iPoint Enemy::GetPathDirection(iPoint destination)
 {
-	//printf("OriginX: %d OriginY: %d\tDestinationX: %d DestinationY: %d\n", _app->map->WorldToMap(GetPosition()).x, _app->map->WorldToMap(GetPosition()).y, 
-	//_app->map->WorldToMap(destination).x, _app->map->WorldToMap(destination).y);
+	iPoint destPos = _app->map->MapToWorld(_app->map->WorldToMap(destination));
 
+	iPoint myPos = _app->map->MapToWorld(_app->map->WorldToMap(GetPosition()));
+
+	// If is in destination tile
 	if ((_app->map->WorldToMap(GetPosition()) == _app->map->WorldToMap(destination)))
 	{
-		printf("x = %d y = %d \n", _app->map->WorldToMap(GetPosition()).x, _app->map->WorldToMap(GetPosition()).y);
 		return iPoint(0, 0);
 	}
 	
 	if (pathFinding->CreatePath(_app->map->WorldToMap(GetPosition()), _app->map->WorldToMap(destination)) == -1) return iPoint(0,0);
 	
 	iPoint direction;
+
+	// Get first step on Pathfinding
+	iPoint firstStep = pathFinding->GetStepFromLastPath(1) == NULL ? _app->map->WorldToMap(GetPosition()) : *pathFinding->GetStepFromLastPath(1);
+
 	if (!movesDiagonally)
 	{
-		// Get next step on the pathfinding
-		const iPoint nextStep = *pathFinding->GetLastPath()->At(1);
-
 		// Calculate direction for next step
-		direction = nextStep - _app->map->WorldToMap(GetPosition());
+		direction = firstStep - _app->map->WorldToMap(GetPosition());
 
 		return direction;
 	}
 
 	// Get second step on Pathfinding
-	iPoint secondStep = pathFinding->GetLastPath()->At(2) == NULL ? _app->map->WorldToMap(GetPosition()) : *pathFinding->GetLastPath()->At(2);
+	iPoint secondStep = pathFinding->GetStepFromLastPath(2) == NULL ? firstStep : *pathFinding->GetStepFromLastPath(2);
 
 	// Calculate direction to second Step
 	direction = secondStep - _app->map->WorldToMap(GetPosition());
@@ -51,21 +57,20 @@ iPoint Enemy::GetPathDirection(iPoint destination)
 		// ... check if the sides are walkable
 		if (_app->map->pathFinding->IsWalkable(directionX) && pathFinding->IsWalkable(directionY))
 		{
-			// If they are, return the diagonal direction normalized
+			// Move diagonally
 			return direction.Normalize();
 		}
 		else 
 		{
 			// If they are not, return the next step and proceed normally
-			direction = *pathFinding->GetLastPath()->At(1) - _app->map->WorldToMap(GetPosition());
+			direction = firstStep - _app->map->WorldToMap(GetPosition());
 			return direction;
 		}
 	}
 	else
 	{
-		// If it is not diagonal, return the next step and proceed normally
-		direction = *pathFinding->GetLastPath()->At(1) - _app->map->WorldToMap(GetPosition());
+		// If there is not step 2, move to step 1
+		direction = firstStep - _app->map->WorldToMap(GetPosition());
 		return direction;
 	}
-
 }

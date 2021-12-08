@@ -23,26 +23,35 @@ void BatEnemy::Update()
 	detectionSensor->SetPosition(GetPosition());
 
 	// If we are not near the center of the tile, we dont update our pathfinding
-	if (!_app->map->InTileCenter(GetPosition()))return;
+	if (!_app->map->InTileCenter(GetPosition(), 2))return;
 
-	iPoint dir = GetPathDirection(player->GetPosition());
+	// If is in destination tile
+	if (_app->map->WorldToMap(GetPosition()) == _app->map->WorldToMap(player->GetPosition() + playerOffset))
+	{
+		// Don't move
+		this->SetLinearVelocity(b2Vec2{0,0});
+		return;
+	}
 
-	//iPoint dir = { 0,0 };
+	iPoint dir = GetPathDirection(player->GetPosition() + playerOffset);
 
 	//Check if we are active and if there is a path to the player
 	if (!isActive || dir == iPoint(0, 0))
 	{
-		// If we are not active, we return to our initialPos
-		dir = GetPathDirection(initialPos);
+		if(_app->map->WorldToMap(GetPosition()) == _app->map->WorldToMap(initialPos))
+		{
+			iPoint offset = { 8,8 };
+			SetPosition(_app->map->MapToWorld(_app->map->WorldToMap(GetPosition())) + offset);
+		}
+		else
+		{
+			// If we are not active, we return to our initialPos
+			dir = GetPathDirection(initialPos);
+		}
 	}
 
-	if (dir != iPoint(0, 0))
-	{
-		printf("x:%d y:%d\n", dir.x, dir.y);
-	}
 	// Move to direction
-	this->SetLinearVelocity(dir);
-
+	this->SetLinearVelocity(dir * speed);
 }
 
 void BatEnemy::OnCollisionEnter(PhysBody* col)

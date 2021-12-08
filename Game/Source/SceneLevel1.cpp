@@ -16,11 +16,13 @@ SceneLevel1::SceneLevel1(Application* app) :Scene(app)
 	platformLenght = 2;
 }
 
-bool SceneLevel1::Start()
+bool SceneLevel1::Start(bool isReseting)
 {
 	_app->map->Load("Level1.tmx");
 
 	reset = false;
+
+	isWin = false;
 
 	// Init scene with tmx metaDate
 	InitScene();
@@ -36,6 +38,8 @@ bool SceneLevel1::Start()
 	// Win trigger
 	winTrigger = new GameObject("winTrigger", "WinTrigger", _app);
 	winTrigger->pBody = _app->physics->CreateRectangleSensor({ 320 ,592 }, 20, 32, winTrigger);
+
+	checkPoint = new CheckPoint({ 160, 68 }, "checkPoint", "CheckPoint", _app);
 
 	// Create test fruits
 	std::string fuits[8] = { "apple","bananas","cherries","kiwi","melon","orange","pineapple","strawberry" };
@@ -60,6 +64,12 @@ bool SceneLevel1::Start()
 	_app->renderer->camera->mapHeight = 640;
 	_app->renderer->camera->mapWidth = 320;
 
+	// If we are resetting the scene, call reset before calling load
+	if (isReseting)
+	{
+		reset = true;
+		_app->SaveGameRequest();
+	}
 	_app->LoadGameRequest();
 
 	for (int i = 0; i < gameObjects.count(); i++)
@@ -178,6 +188,8 @@ void SceneLevel1::SetSaveData()
 		playerY = reset ? playerStartPos.y : player->GetPosition().y;
 	}
 
+	if (checkPoint != nullptr) _app->scene->playerSettings->reachedCheckPoint = checkPoint->isActive;
+
 	reset = false;
 }
 
@@ -187,6 +199,8 @@ void SceneLevel1::LoadSaveData(pugi::xml_node save)
 
 	if (player != nullptr) player->SetPosition({ n.child("player").attribute("x").as_int(),n.child("player").attribute("y").as_int() });
 
+	if (checkPoint != nullptr) checkPoint->isActive = _app->scene->playerSettings->reachedCheckPoint;
+	
 	if (_app->scene->playerSettings->playerLifes != 0) return;
 
 	_app->scene->playerSettings->playerLifes = n.child("player").attribute("lifes").as_int();
@@ -195,5 +209,5 @@ void SceneLevel1::LoadSaveData(pugi::xml_node save)
 
 void SceneLevel1::Win()
 {
-	_app->scene->ChangeCurrentScene(SCENES::LEVEL_2, 0);
+	_app->scene->ChangeCurrentScene(SCENES::LEVEL_2, 1);
 }

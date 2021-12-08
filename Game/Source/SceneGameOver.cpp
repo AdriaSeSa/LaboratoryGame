@@ -6,7 +6,7 @@ SceneGameOver::SceneGameOver(Application* app) : Scene(app)
     ID = 1;
 }
 
-bool SceneGameOver::Start()
+bool SceneGameOver::Start(bool reset)
 {
     mainMenu = _app->textures->Load("Assets/textures/Menu/GameOverOptions.png", false);
     arrow = _app->textures->Load("Assets/textures/Menu/ArrowGO.png", false);

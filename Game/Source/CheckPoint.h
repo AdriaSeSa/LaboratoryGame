@@ -26,5 +26,7 @@ public:
 
 	void OnCollisionEnter(PhysBody* col)override;
 	void OnCollisionExit(PhysBody* col) override;
+
+	bool isActive = false;
 };
 

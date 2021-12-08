@@ -52,15 +52,15 @@ bool Scene::InitScene()
 		}
 		else if (_app->map->mapObjects[i].id == 5)
 		{
-			CheckPoint* chekPoint = new CheckPoint({ _app->map->mapObjects[i].position.x ,_app->map->mapObjects[i].position.y + 4}, "checkpoint", "Checkpoint", _app);
-			gameObjects.add(chekPoint);
+			//CheckPoint* chekPoint = new CheckPoint({ _app->map->mapObjects[i].position.x ,_app->map->mapObjects[i].position.y + 4}, "checkpoint", "Checkpoint", _app);
+			//gameObjects.add(chekPoint);
 		}
 	}
 
 	return true;
 }
 
-bool Scene::Start()
+bool Scene::Start(bool reset)
 {
 	return true;
 }

@@ -93,7 +93,7 @@ UpdateStatus ModuleScene::PostUpdate()
 }
 
 //CleanUp current scene, change current scene (index), Start current Scene
-bool ModuleScene::ChangeCurrentScene(uint index, int frames)
+bool ModuleScene::ChangeCurrentScene(uint index, bool reset)
 {
 	if (isChangingScene) return true;
 
@@ -107,7 +107,7 @@ bool ModuleScene::ChangeCurrentScene(uint index, int frames)
 
 	currentScene = scenes[index];
 
-	currentScene->Start();
+	currentScene->Start(reset);
 
 	return true;
 }
@@ -123,6 +123,8 @@ void ModuleScene::GetSaveData(pugi::xml_document& save)
 
 	n.child("player").attribute("x") = currentScene->playerX;
 	n.child("player").attribute("y") = currentScene->playerY;
+
+	n.child("checkPoint").attribute("isActive") = playerSettings->reachedCheckPoint;
 }
 
 void ModuleScene::LoadSaveData(pugi::xml_document& save)
@@ -169,13 +171,13 @@ void ModuleScene::DebugChangeScene()
 		{
 			if (App->input->GetKey(debugKeys[i]) == KEY_DOWN)
 			{
-				ChangeCurrentScene(i, 0);
+				ChangeCurrentScene(i, true);
 			}
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		{
-			ChangeCurrentScene(currentScene->getID(), 0);
+			ChangeCurrentScene(currentScene->getID(), true);
 		}
 	}
 }

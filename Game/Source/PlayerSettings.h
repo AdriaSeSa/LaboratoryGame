@@ -24,6 +24,8 @@ public:
 	bool isLevelCompleted[2];
 
 	bool isInit = false;
+
+	bool reachedCheckPoint = false;
 };
 
 

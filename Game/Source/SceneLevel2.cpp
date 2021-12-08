@@ -15,7 +15,7 @@ SceneLevel2::SceneLevel2(Application* app) :Scene(app)
 	platformLenght = 3;
 }
 
-bool SceneLevel2::Start()
+bool SceneLevel2::Start(bool isReseting)
 {
 	if (_app->map->Load("Level2.tmx") == true)
 	{
@@ -54,6 +54,8 @@ bool SceneLevel2::Start()
 	winTrigger = new GameObject("winTrigger", "WinTrigger", _app);
 	winTrigger->pBody = _app->physics->CreateRectangleSensor({ 320, 40 }, 20, 48, winTrigger);
 
+	checkPoint = new CheckPoint({ 144, 308 }, "checkPoint", "CheckPoint", _app);
+
 	// Camera
 	_app->renderer->camera->SetTarget(player);
 	_app->renderer->camera->mapHeight = 640;
@@ -64,7 +66,14 @@ bool SceneLevel2::Start()
 	gameObjects.add(mobilePlatform1);
 	gameObjects.add(winTrigger);
 	gameObjects.add(testEnemy);
+	gameObjects.add(checkPoint);
 	
+	// If we are resetting the scene, call reset before calling load
+	if (isReseting)
+	{
+		reset = true;
+		_app->SaveGameRequest();
+	}
 	_app->LoadGameRequest();
 
 	for (int i = 0; i < gameObjects.count(); i++)

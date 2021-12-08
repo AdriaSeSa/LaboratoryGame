@@ -8,7 +8,7 @@ class SceneMainMenu : public Scene
 public:
 	SceneMainMenu(Application* app);
 
-	bool Start() override;
+	bool Start(bool reset = false) override;
 
 	bool Update() override;
 

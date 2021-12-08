@@ -15,7 +15,7 @@ class SceneLevel1 :  public Scene
 public:
 	SceneLevel1(Application* app);
 
-	bool Start() override;
+	bool Start(bool isReseting = false) override;
 
 	bool PreUpdate() override;
 

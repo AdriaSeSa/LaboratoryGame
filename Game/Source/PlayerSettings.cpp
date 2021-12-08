@@ -33,4 +33,5 @@ void PlayerSettings::Reset()
 {
 	playerLifes = 3;
 	playerScore = 0;
+	reachedCheckPoint = false;
 }

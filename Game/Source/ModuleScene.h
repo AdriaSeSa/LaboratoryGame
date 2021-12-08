@@ -43,7 +43,7 @@ public:
 	// Performs the render call of all the parts of the scene's background
 	UpdateStatus PostUpdate();
 
-	bool ChangeCurrentScene(uint index, int frames);
+	bool ChangeCurrentScene(uint index, bool reset);
 
 	void GetSaveData(pugi::xml_document& save) override;
 

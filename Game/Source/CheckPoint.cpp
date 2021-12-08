@@ -35,6 +35,8 @@ void CheckPoint::PostUpdate()
 {
 	if (getCheckpoint.HasFinished()) currentState = IDLE_FLAG;
 
+	if (isActive && currentState == IDLE_NO_FLAG) currentState = GET_CHECKPOINT;
+
 	int i = 0;
 	switch (currentState)
 	{
@@ -42,6 +44,7 @@ void CheckPoint::PostUpdate()
 		i = 0;
 		break;
 	case GET_CHECKPOINT:
+		isActive = true;
 		i = 1;
 		getCheckpoint.Update();
 		break;
@@ -50,6 +53,7 @@ void CheckPoint::PostUpdate()
 		idleFlag.Update();
 		break;
 	}
+
 
 	if (renderObjects[i].texture != nullptr)
 	{

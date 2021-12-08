@@ -28,7 +28,7 @@ public:
 
 	virtual bool InitScene();
 
-	virtual bool Start();
+	virtual bool Start(bool reset = false);
 
 	virtual bool PreUpdate();
 

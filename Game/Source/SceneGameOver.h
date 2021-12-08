@@ -6,7 +6,7 @@ class SceneGameOver : public Scene
 public:
 	SceneGameOver(Application* app);
 
-	bool Start() override;
+	bool Start(bool reset = false) override;
 
 	bool Update() override;
 	bool PostUpdate() override;

@@ -6,7 +6,7 @@ SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
     ID = 0;
 }
 
-bool SceneMainMenu::Start()
+bool SceneMainMenu::Start(bool reset)
 {
     mainMenu = _app->textures->Load("Assets/textures/Menu/MenuOptions.png");
     logo = _app->textures->Load("Assets/textures/Menu/Logo.png");
@@ -58,7 +58,7 @@ bool SceneMainMenu::Update()
     {
         if (arrowPos.y == 190)
         {
-            _app->scene->ChangeCurrentScene(2, 0);
+            _app->scene->ChangeCurrentScene(2, true);
         }
         else
         {

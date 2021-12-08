@@ -9,7 +9,7 @@
 #include "SpecialPlatform.h"
 #include "PlayerSettings.h"
 
-SceneLevel1::SceneLevel1(Application* app) :Scene(app)
+SceneLevel1::SceneLevel1(Application* app, string name) :Scene(app, name)
 {
 	ID = 2;
 	// Define platform lenght
@@ -27,8 +27,6 @@ bool SceneLevel1::Start(bool isReseting)
 	// Init scene with tmx metaDate
 	InitScene();
 
-	backGround = new BackGround("backGround1", "BackGround", _app);
-
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
 	mobilePlatform1 = new MobilePlatform({ 95, 368 }, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285 }, 1, true, 200);
@@ -44,6 +42,7 @@ bool SceneLevel1::Start(bool isReseting)
 	// Create test fruits
 	std::string fuits[8] = { "apple","bananas","cherries","kiwi","melon","orange","pineapple","strawberry" };
 
+	// Create test powerUps
 	for (int i = 0; i < 8; i++)
 	{
 		PowerUp* g;
@@ -52,17 +51,14 @@ bool SceneLevel1::Start(bool isReseting)
 		gameObjects.add(g);
 	}
 
-	gameObjects.add(backGround);
 	gameObjects.add(player);
 	gameObjects.add(mobilePlatform1);
-	gameObjects.add(checkPoint);
 	gameObjects.add(specialPlatform);
 	gameObjects.add(winTrigger);
+	gameObjects.add(checkPoint);
 
-	// Camera
-	_app->renderer->camera->SetTarget(player);
-	_app->renderer->camera->mapHeight = 640;
-	_app->renderer->camera->mapWidth = 320;
+	// init camera
+	_app->renderer->camera->Init(player, 320, 640);
 
 	// If we are resetting the scene, call reset before calling load
 	if (isReseting)
@@ -72,6 +68,7 @@ bool SceneLevel1::Start(bool isReseting)
 	}
 	_app->LoadGameRequest();
 
+	// Start all gameobjects
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
 		if (gameObjects[i] != nullptr)

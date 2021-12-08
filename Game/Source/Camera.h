@@ -8,6 +8,8 @@ class Camera
 public:
 	Camera(Application* app, GameObject* target = nullptr);
 
+	void Init(GameObject* target, int width, int height);
+
 	void Start();
 
 	void Update();

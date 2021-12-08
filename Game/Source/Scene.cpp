@@ -5,6 +5,8 @@
 #include "CheckPoint.h"
 #include "FireTrap.h"
 #include "BatEnemy.h"
+#include "BackGround.h"
+#include "CheckPoint.h"
 
 Scene::Scene(Application* app, string name)
 {
@@ -18,7 +20,7 @@ Scene::~Scene()
 
 bool Scene::InitScene()
 {
-	// Envirouments
+	// Obstacles
 	for (int i = 0; i < _app->map->mapObjects.count(); i++)
 	{
 		if (_app->map->mapObjects[i].id == 0)
@@ -58,6 +60,26 @@ bool Scene::InitScene()
 			//CheckPoint* chekPoint = new CheckPoint({ _app->map->mapObjects[i].position.x ,_app->map->mapObjects[i].position.y + 4}, "checkpoint", "Checkpoint", _app);
 			//gameObjects.add(chekPoint);
 		}
+	}
+
+	// Envirouments
+	pugi::xml_node enviroument = _app->scene->config.child(name.c_str()).child("enviroument");
+
+	for (enviroument = enviroument.first_child(); enviroument; enviroument = enviroument.next_sibling())
+	{
+		string name = enviroument.name();
+		if (name == "backGround")
+		{
+			BackGround* bg = new BackGround(enviroument.attribute("name").as_string("null"), enviroument.attribute("tag").as_string("null"), _app);
+
+			gameObjects.add(bg);
+		}
+		//if (name == "checkPoint")
+		//{
+		//	iPoint position = { enviroument.attribute("positionX").as_int(0),enviroument.attribute("positionY").as_int(0) };
+		//	CheckPoint* cp = new CheckPoint(position,"checkPoint","CheckPoint", _app);
+		//	gameObjects.add(cp);
+		//}
 	}
 
 	return true;

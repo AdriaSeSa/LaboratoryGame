@@ -8,6 +8,13 @@ Camera::Camera(Application* app, GameObject* target)
 	this->target = target;
 }
 
+void Camera::Init(GameObject* target, int width, int height)
+{
+	this->target = target;
+	mapWidth = width;
+	mapHeight = height;
+}
+
 void Camera::Start()
 {
 	pivotX = App->window->width / 2;

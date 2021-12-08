@@ -1,13 +1,11 @@
 #pragma once
 #include "Scene.h"
 
-class BackGround;
 class Saw;
 class Player;
 class MobilePlatform;
 class CheckPoint;
 class PowerUp;
-class BatEnemy;
 
 class SceneLevel2 : public Scene
 {
@@ -34,8 +32,6 @@ public:
 
 public:
 
-	BackGround* backGround = nullptr;
-
 	Player* player = nullptr;
 
 	MobilePlatform* mobilePlatform1 = nullptr;
@@ -47,6 +43,4 @@ public:
 	bool reset = false;
 
 	GameObject* winTrigger;
-
-	BatEnemy* testEnemy = nullptr;
 };

@@ -1,5 +1,4 @@
 #include "SceneLevel2.h"
-#include "BackGround.h"
 #include "Saw.h"
 #include "Player.h"
 #include "MobilePlatform.h"
@@ -30,8 +29,6 @@ bool SceneLevel2::Start(bool isReseting)
 	
 	reset = false;
 
-	backGround = new BackGround("backGround1", "BackGround", _app);
-
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
 	// Init scene with tmx metaDate
@@ -39,8 +36,6 @@ bool SceneLevel2::Start(bool isReseting)
 
 	// Init Enemies
 	LoadEnemies();
-
-	//testEnemy = new BatEnemy({ 120, 104}, player, "bat", "Bat", _app);
 
 	mobilePlatform1 = new MobilePlatform({ 200, 500 }, "mobilePlatform", "MobilePlatform_H", _app, 2, { -120, 0 }, 1, true, 200);
 	mobilePlatform1->speed = 2.5;
@@ -51,12 +46,9 @@ bool SceneLevel2::Start(bool isReseting)
 
 	checkPoint = new CheckPoint({ 144, 308 }, "checkPoint", "CheckPoint", _app);
 
-	// Camera
-	_app->renderer->camera->SetTarget(player);
-	_app->renderer->camera->mapHeight = 640;
-	_app->renderer->camera->mapWidth = 320;
+	// Init camera
+	_app->renderer->camera->Init(player, 320, 640);
 
-	gameObjects.add(backGround);
 	gameObjects.add(player);
 	gameObjects.add(mobilePlatform1);
 	gameObjects.add(winTrigger);

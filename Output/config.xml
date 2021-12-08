@@ -65,14 +65,23 @@
 
   <scenes>
     <level1>
+      <enviroument>
+        <backGround name = "backGround1" tag = "BackGround" />
+        <checkPoint positionX = "160" positionY ="68"/>
+      </enviroument>
     </level1>
 
     <level2>
+      <enviroument>
+        <backGround name = "backGround1" tag = "BackGround" />
+        <checkPoint positionX = "144" positionY ="308"/>
+      </enviroument>
       <enemies>
         <bat positionX = "120" positionY ="104"/>
         <bat positionX = "264" positionY ="168"/>
       </enemies>
     </level2>
+
   </scenes>
 
   <!-- L03: Added maps folder as config option -->

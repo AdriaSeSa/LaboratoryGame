@@ -13,7 +13,7 @@ class SpecialPlatform;
 class SceneLevel1 :  public Scene
 {
 public:
-	SceneLevel1(Application* app);
+	SceneLevel1(Application* app,string name);
 
 	bool Start(bool isReseting = false) override;
 

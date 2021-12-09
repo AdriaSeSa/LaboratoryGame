@@ -10,12 +10,32 @@ public:
 
 	bool Start(bool reset = false) override;
 
+	void InitTextures();
+
+	void MoveArrow();
+
 	bool Update() override;
 
 	bool PostUpdate() override;
 
+	void ChangeScreen(int screen);
+
+	void SelectOption();
+
+	void ScreenOptions0();
+
+	void ScreenOptions1();
+
+	void ScreenOptions2();
+
+	bool CleanUp() override;
+
 private:
-	iPoint arrowPos;
+	int currentArrowPos;
+
+	int currentScreen;
+
+	List<iPoint> arrowPositions;
 
 	BackGround* bg;
 
@@ -26,5 +46,13 @@ private:
 	SDL_Texture* arrow;
 
 	SDL_Texture* logo;
+
+	List<SDL_Texture*> currentTextures;
+
+	List<SDL_Texture*> mainMenuTextures;
+
+	List<SDL_Texture*> selectLevelTextures;
+
+	bool exit;
 };
 

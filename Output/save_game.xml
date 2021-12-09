@@ -5,10 +5,10 @@
 	<textures />
 	<audio />
 	<scene>
-		<player x="135" y="285" lifes="1" score="0" />
+		<player x="0" y="0" lifes="1" score="0" />
 		<checkPoint isActive="false" />
 	</scene>
 	<renderer>
-		<camera x="0" y="382" />
+		<camera x="0" y="0" />
 	</renderer>
 </game_state>

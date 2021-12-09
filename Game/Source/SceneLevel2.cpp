@@ -1,11 +1,9 @@
 #include "SceneLevel2.h"
-#include "Saw.h"
 #include "Player.h"
-#include "MobilePlatform.h"
+#include "Saw.h"
 #include "CheckPoint.h"
 #include "PowerUp.h"
 #include "PlayerSettings.h"
-#include "BatEnemy.h"
 
 SceneLevel2::SceneLevel2(Application* app, string name) :Scene(app, name)
 {
@@ -29,6 +27,8 @@ bool SceneLevel2::Start(bool isReseting)
 	
 	reset = false;
 
+	isWin = false;
+
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
 	// Init scene with tmx metaDate
@@ -37,21 +37,12 @@ bool SceneLevel2::Start(bool isReseting)
 	// Init Enemies
 	LoadEnemies();
 
-	mobilePlatform1 = new MobilePlatform({ 200, 500 }, "mobilePlatform", "MobilePlatform_H", _app, 2, { -120, 0 }, 1, true, 200);
-	mobilePlatform1->speed = 2.5;
-
-	// Win trigger
-	winTrigger = new GameObject("winTrigger", "WinTrigger", _app);
-	winTrigger->pBody = _app->physics->CreateRectangleSensor({ 320, 40 }, 20, 48, winTrigger);
-
 	checkPoint = new CheckPoint({ 144, 308 }, "checkPoint", "CheckPoint", _app);
 
 	// Init camera
 	_app->renderer->camera->Init(player, 320, 640);
 
 	gameObjects.add(player);
-	gameObjects.add(mobilePlatform1);
-	gameObjects.add(winTrigger);
 	gameObjects.add(checkPoint);
 	
 	// If we are resetting the scene, call reset before calling load
@@ -62,6 +53,7 @@ bool SceneLevel2::Start(bool isReseting)
 	}
 	_app->LoadGameRequest();
 
+	// Start all gameobjects
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
 		if (gameObjects[i] != nullptr)

@@ -47,7 +47,7 @@ void BatEnemy::Update()
 	detectionSensor->SetPosition(GetPosition());
 
 	// If we are not near the center of the tile, we dont update our pathfinding
-	if (!_app->map->InTileCenter(GetPosition(), 3))return;
+	if (!_app->map->InTileCenter(GetPosition(), 4))return;
 
 	// If is in destination tile
 	if (_app->map->WorldToMap(GetPosition()) == _app->map->WorldToMap(player->GetPosition() + playerOffset))
@@ -124,7 +124,7 @@ void BatEnemy::PostUpdate()
 	}
 	renderObjects[batState].section = currentAnim.GetCurrentFrame();
 
-	if(batState==BAT_FLYING)
+	if(batState == BAT_FLYING)
 	renderObjects[batState].flip = GetLinearVelocity().x > 0 ? SDL_RendererFlip::SDL_FLIP_HORIZONTAL : SDL_RendererFlip::SDL_FLIP_NONE;
 
 	GameObject::PostUpdate();

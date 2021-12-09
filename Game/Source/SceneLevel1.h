@@ -1,11 +1,9 @@
 #pragma once
 #include "Scene.h"
 
-class BackGround;
 class Saw;
 class Spike;
 class Player;
-class MobilePlatform;
 class CheckPoint;
 class PowerUp;
 class SpecialPlatform;
@@ -32,11 +30,7 @@ public:
 	void Win();
 
 public:
-	BackGround* backGround = nullptr;
-
 	Player* player = nullptr;
-
-	MobilePlatform* mobilePlatform1 = nullptr;
 
 	CheckPoint* checkPoint = nullptr;
 
@@ -45,6 +39,4 @@ public:
 	iPoint playerStartPos = { 40, 567 };
 
 	bool reset = false;
-
-	GameObject* winTrigger;
 };

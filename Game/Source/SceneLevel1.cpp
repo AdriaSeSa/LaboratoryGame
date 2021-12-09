@@ -1,9 +1,7 @@
 #include "SceneLevel1.h"
-#include "BackGround.h"
+#include "Player.h"
 #include "Saw.h"
 #include "Spike.h"
-#include "Player.h"
-#include "MobilePlatform.h"
 #include "CheckPoint.h"
 #include "PowerUp.h"
 #include "SpecialPlatform.h"
@@ -29,13 +27,7 @@ bool SceneLevel1::Start(bool isReseting)
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	mobilePlatform1 = new MobilePlatform({ 95, 368 }, "mobilePlatform", "MobilePlatform", _app, 2, { 0, -285 }, 1, true, 200);
-
 	specialPlatform = new SpecialPlatform({ 185, 82 }, "specialPlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
-
-	// Win trigger
-	winTrigger = new GameObject("winTrigger", "WinTrigger", _app);
-	winTrigger->pBody = _app->physics->CreateRectangleSensor({ 320 ,592 }, 20, 32, winTrigger);
 
 	checkPoint = new CheckPoint({ 160, 68 }, "checkPoint", "CheckPoint", _app);
 
@@ -52,9 +44,7 @@ bool SceneLevel1::Start(bool isReseting)
 	}
 
 	gameObjects.add(player);
-	gameObjects.add(mobilePlatform1);
 	gameObjects.add(specialPlatform);
-	gameObjects.add(winTrigger);
 	gameObjects.add(checkPoint);
 
 	// init camera

@@ -7,6 +7,7 @@
 #include "BatEnemy.h"
 #include "BackGround.h"
 #include "CheckPoint.h"
+#include "MobilePlatform.h"
 
 Scene::Scene(Application* app, string name)
 {
@@ -73,6 +74,28 @@ bool Scene::InitScene()
 			BackGround* bg = new BackGround(enviroument.attribute("name").as_string("null"), enviroument.attribute("tag").as_string("null"), _app);
 
 			gameObjects.add(bg);
+		}
+		if (name == "winTrigger")
+		{
+			iPoint position = { enviroument.attribute("positionX").as_int(0),enviroument.attribute("positionY").as_int(0) };
+
+			GameObject* winTrigger = new GameObject("winTrigger", "WinTrigger", _app);
+
+			winTrigger->pBody = _app->physics->CreateRectangleSensor(position, enviroument.attribute("width").as_int(0), enviroument.attribute("height").as_int(0), winTrigger);
+
+			gameObjects.add(winTrigger);
+		}
+		if (name == "mobilePlatform")
+		{
+			iPoint position = { enviroument.attribute("positionX").as_int(0),enviroument.attribute("positionY").as_int(0) };
+
+			iPoint moveDistance = { enviroument.attribute("moveX").as_int(0),enviroument.attribute("moveY").as_int(0) };
+
+			MobilePlatform* mobPlatform = new MobilePlatform
+			(position, "mobilePlatform", enviroument.attribute("tag").as_string("MobilePlatform"), _app, enviroument.attribute("lenght").as_int(1), moveDistance,
+				enviroument.attribute("moveSpeed").as_int(0), enviroument.attribute("loop").as_bool(true), enviroument.attribute("stopTime").as_int(0));
+				
+			gameObjects.add(mobPlatform);
 		}
 		//if (name == "checkPoint")
 		//{

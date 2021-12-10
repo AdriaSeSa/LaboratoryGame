@@ -47,7 +47,8 @@ public:
 	pugi::xml_node config;
 	pugi::xml_node configApp;
 	pugi::xml_document configF;
-	
+	pugi::xml_document saveF;
+
 private:
 	List<Module*> list_modules;
 
@@ -68,6 +69,7 @@ public:
 	const char* GetOrganization() const;
 
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	bool LoadSaveFile();
 
 	void ExitGame();
 
@@ -77,7 +79,7 @@ private:
 
 	// Load / Save
 	bool LoadGame();
-	bool SaveGame() const;
+	bool SaveGame();
 
 	float deltaTime, sleepTime;
 

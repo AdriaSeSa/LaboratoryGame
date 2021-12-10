@@ -24,8 +24,9 @@ public:
 	virtual void OnCollisionEnter(PhysBody* col);
 	virtual void OnCollisionExit(PhysBody* col);
 
-	virtual void OnTriggerEnter(PhysBody* col);
-	virtual void OnTriggerExit(PhysBody* col);
+	virtual void OnTriggerEnter(PhysBody* trigger, PhysBody* col);
+	virtual void OnTriggerStay(PhysBody* trigger, PhysBody* col);
+	virtual void OnTriggerExit(PhysBody* trigger, PhysBody* col);
 
 	virtual void Start();
 
@@ -39,7 +40,7 @@ public:
 
 	bool CompareTag(std::string tag);
 
-	iPoint GetDrawPosition();
+	iPoint GetDrawPosition(int index = 0);
 
 	/// <summary>
 	/// Si exixte pBody devuelve angluo de pBody, si no el de GameObject 
@@ -89,8 +90,8 @@ private :
 
 protected:
 	Application* _app = nullptr;
-public:
 
+public:
 	std::string name;
 
 	std::string tag;
@@ -104,6 +105,8 @@ public:
 	bool adjustToGrid = false;
 
 	bool isDie = false;
+
+	bool enable = true;
 };
 
 #endif // !GAMEOBJECT_H

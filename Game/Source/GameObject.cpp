@@ -38,11 +38,15 @@ void GameObject::OnCollisionExit(PhysBody* col)
 
 }
 
-void GameObject::OnTriggerEnter(PhysBody* col)
+void GameObject::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
 {
 }
 
-void GameObject::OnTriggerExit(PhysBody* col)
+void GameObject::OnTriggerStay(PhysBody* trigger, PhysBody* col)
+{
+}
+
+void GameObject::OnTriggerExit(PhysBody* trigger, PhysBody* col)
 {
 }
 
@@ -66,8 +70,8 @@ void GameObject::PostUpdate()
 	{
 		if (renderObjects[i].texture != nullptr && renderObjects[i].draw)
 		{
-			renderObjects[i].destRect.x = GetDrawPosition().x;
-			renderObjects[i].destRect.y = GetDrawPosition().y;
+			renderObjects[i].destRect.x = GetDrawPosition(i).x;
+			renderObjects[i].destRect.y = GetDrawPosition(i).y;
 			renderObjects[i].rotation = GetDegreeAngle();
 			
 			_app->renderer->AddTextureRenderQueue(renderObjects[i].texture, { renderObjects[i].destRect.x,renderObjects[i].destRect.y },
@@ -91,7 +95,7 @@ bool GameObject::CompareTag(std::string tag)
 	return false;
 }
 
-iPoint GameObject::GetDrawPosition()
+iPoint GameObject::GetDrawPosition(int index)
 {
 	if (pBody != nullptr)
 	{
@@ -99,8 +103,8 @@ iPoint GameObject::GetDrawPosition()
 
 		position = pBody->body->GetPosition();
 
-		position.x = METERS_TO_PIXELS(position.x) - pBody->gameObject->renderObjects[0].textureCenterX;
-		position.y = METERS_TO_PIXELS(position.y) - pBody->gameObject->renderObjects[0].textureCenterY;
+		position.x = METERS_TO_PIXELS(position.x) - pBody->gameObject->renderObjects[index].textureCenterX;
+		position.y = METERS_TO_PIXELS(position.y) - pBody->gameObject->renderObjects[index].textureCenterY;
 
 		return { (int)position.x, (int)position.y };
 	}

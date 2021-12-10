@@ -37,9 +37,9 @@ public:
 
 	void OnCollisionEnter(PhysBody* col) override;
 
-	void OnTriggerEnter(PhysBody* col) override;
+	void OnTriggerEnter(PhysBody* trigger, PhysBody* col) override;
 
-	void OnTriggerExit(PhysBody* col) override;
+	void OnTriggerExit(PhysBody* trigger, PhysBody* col) override;
 
 	void CleanUp() override;
 

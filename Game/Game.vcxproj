@@ -92,6 +92,7 @@
     <ClCompile Include="Source\BackGround.cpp" />
     <ClCompile Include="Source\BatEnemy.cpp" />
     <ClCompile Include="Source\Camera.cpp" />
+    <ClCompile Include="Source\ChameleonEnemy.cpp" />
     <ClCompile Include="Source\CheckPoint.cpp" />
     <ClCompile Include="Source\Enemy.cpp" />
     <ClCompile Include="Source\FireTrap.cpp" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Source\BackGround.h" />
     <ClInclude Include="Source\BatEnemy.h" />
     <ClInclude Include="Source\Camera.h" />
+    <ClInclude Include="Source\ChameleonEnemy.h" />
     <ClInclude Include="Source\CheckPoint.h" />
     <ClInclude Include="Source\DynArray.h" />
     <ClInclude Include="Source\Enemy.h" />

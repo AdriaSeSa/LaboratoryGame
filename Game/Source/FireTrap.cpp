@@ -143,7 +143,7 @@ void FireTrap::PostUpdate()
 	}
 }
 
-void FireTrap::OnTriggerEnter(PhysBody* col)
+void FireTrap::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
 {
 	if (col->gameObject->CompareTag("GroundSensor"))
 	{
@@ -157,7 +157,7 @@ void FireTrap::OnTriggerEnter(PhysBody* col)
 	}
 }
 
-void FireTrap::OnTriggerExit(PhysBody* col)
+void FireTrap::OnTriggerExit(PhysBody* trigger, PhysBody* col)
 {
 	if (col->gameObject->CompareTag("GroundSensor"))
 	{

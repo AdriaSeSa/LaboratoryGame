@@ -28,11 +28,17 @@
     <characterAppearing width = "96" height = "96" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/Appearing(96x96).png"/>
 
     <!-- Enemy -->
+    <!-- Bat -->
     <batIdle width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/Idle(46x30).png"/>
     <batCeilingIn width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/CeilingIn(46x30).png"/>
     <batCeilingOut width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/CeilingOut(46x30).png"/>
     <batFlying width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/Flying(46x30).png"/>
     <batHit width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/Hit(46x30).png"/>
+    <!-- Chameleon -->
+    <chameleonIdle width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Idle(84x38).png"/>
+    <chameleonRun width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Run(84x38).png"/>
+    <chameleonAttack width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Attack(84x38).png"/>
+    <chameleonHit width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Hit(84x38).png"/>
 
     <!-- Fruits -->
     <apple width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Apple.png"/>
@@ -74,16 +80,22 @@
     </level1>
 
     <level2>
+
       <enviroument>
         <backGround name = "backGround1" tag = "BackGround" />
         <checkPoint positionX = "144" positionY ="308"/>
-		<winTrigger positionX = "320" positionY ="40" width = "20" height = "48"/>
-		<mobilePlatform tag = "MobilePlatform_H" positionX = "200" positionY ="500" lenght = "2" moveX = "-120"  moveY = "0" moveSpeed = "2.5" loop="true" stopTime = "200"/>
+		    <winTrigger positionX = "320" positionY ="40" width = "20" height = "48"/>
+		    <mobilePlatform tag = "MobilePlatform_H" positionX = "200" positionY ="500" lenght = "2" moveX = "-120"  moveY = "0" moveSpeed = "2.5" loop="true" stopTime = "200"/>
       </enviroument>
+
       <enemies>
         <bat positionX = "120" positionY ="104"/>
         <bat positionX = "264" positionY ="168"/>
+        <chameleon positionX = "296" positionY ="360"/>
+        <chameleon positionX = "184" positionY ="392"/>
+        <chameleon positionX = "296" positionY ="552"/>
       </enemies>
+
     </level2>
 
   </scenes>

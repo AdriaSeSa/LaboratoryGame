@@ -8,6 +8,8 @@ public:
 
 	HitboxSensor(iPoint pos, int radius, GameObject* father, std::string name, std::string tag, Application* app);
 
+	void Update() override;
+
 	void OnCollisionEnter(PhysBody* col);
 
 	void OnCollisionExit(PhysBody* col);
@@ -16,5 +18,7 @@ public:
 
 private:
 	GameObject* father;
+
+	List<PhysBody*> collisionList;
 };
 

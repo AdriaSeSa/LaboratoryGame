@@ -3,6 +3,8 @@
 #include "Saw.h"
 #include "CheckPoint.h"
 #include "PowerUp.h"
+#include "BatEnemy.h"
+#include "ChameleonEnemy.h"
 #include "PlayerSettings.h"
 
 SceneLevel2::SceneLevel2(Application* app, string name) :Scene(app, name)
@@ -65,21 +67,33 @@ bool SceneLevel2::Start(bool isReseting)
 	return true;
 }
 
+/// <summary>
+/// Init enemic for this scene with xml
+/// </summary>
 void SceneLevel2::LoadEnemies()
 {
-	// Enemic
+	// Get Enemy node in Xml
 	pugi::xml_node enemicNode = _app->scene->config.child(name.c_str()).child("enemies");
 
+	// Iterate the node
 	for (enemicNode = enemicNode.first_child(); enemicNode; enemicNode = enemicNode.next_sibling())
 	{
+		// get the enemic name
 		string name = enemicNode.name();
+
+		// get enemic init position
+		iPoint position = { enemicNode.attribute("positionX").as_int(0),enemicNode.attribute("positionY").as_int(0) };	
+
+		// Create diferent enemic depend name
 		if (name == "bat")
 		{
-			iPoint position = { enemicNode.attribute("positionX").as_int(0),enemicNode.attribute("positionY").as_int(0) };
-
-			BatEnemy* bat = new BatEnemy(position, player, "bat", "Bat", _app);
-
-			gameObjects.add(bat);
+			// Create BatEnemy and add to gameobjects list
+			gameObjects.add(new BatEnemy(position, player, "bat", "Bat", _app));
+		}
+		else if (name == "chameleon")
+		{
+			// Create ChameleonEnemy and add to gameobjects list
+			gameObjects.add(new ChameleonEnemy(position, player, "chameleon", "Chameleon", _app));
 		}
 	}
 }
@@ -116,8 +130,8 @@ bool SceneLevel2::PreUpdate()
 		{
 			// when have life yet
 			_app->LoadGameRequest();
-			player->isDead = false;
 			player->PlayerAppear();
+			player->isDead = false;
 		}
 	}
 

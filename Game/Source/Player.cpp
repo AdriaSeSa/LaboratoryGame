@@ -34,7 +34,7 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{ 5, 6 }, "PlayerPSensor", "PlatformSensorClose", _app, 16, 20, this);
 
-	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 2, this);
+	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 10, 3, this);
 
 	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(3,6),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
 
@@ -45,11 +45,14 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 	physicFilter.groupIndex = -1;
 
 	pBody->body->GetFixtureList()->SetFilterData(physicFilter);
-	groundSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
-	hitBoxSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+	//groundSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+	//hitBoxSensor->pBody->body->GetFixtureList()->SetFilterData(physicFilter);
 
 	hitBoxSensor->hits[0] = "saw";
 	hitBoxSensor->hits[1] = "spike";
+	hitBoxSensor->hits[2] = "bat";
+	hitBoxSensor->hits[3] = "chameleon";
+	hitBoxSensor->hits[4] = "chameleonAttack";
 
 	// Animations Setup
 	SetUpAnimations();
@@ -204,6 +207,8 @@ void Player::Update()
 
 	// Update animation state
 	UpdatePlayerState();
+
+	hitBoxSensor->Update();
 }
 
 void Player::UpdatePlayerState()
@@ -322,14 +327,6 @@ void Player::PostUpdate()
 	}
 }
 
-void Player::OnTriggerEnter(PhysBody* col)
-{
-	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
-	{
-		Die();
-	}
-}
-
 void Player::OnCollisionEnter(PhysBody* col)
 {
 	if (col->gameObject->CompareTag("MobilePlatform"))
@@ -349,14 +346,6 @@ void Player::OnCollisionEnter(PhysBody* col)
 	{
 		_app->scene->currentScene->isWin = true;
 	}
-
-	if(col->gameObject->name=="bat")
-	{
-		if(!col->gameObject->isDie)
-		{
-			Die();
-		}
-	}
 }
 
 void Player::OnCollisionExit(PhysBody* col)
@@ -374,6 +363,34 @@ void Player::OnCollisionExit(PhysBody* col)
 	{
 		parent = nullptr;
 		relativeVelocity_X = 0;
+	}
+}
+
+void Player::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
+{
+	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
+	{
+		Die();
+	}
+
+	if (col->gameObject->name == "bat" || col->gameObject->name == "chameleon")
+	{
+		if (!col->gameObject->isDie)
+		{
+			Die();
+		}
+	}
+}
+
+void Player::OnTriggerStay(PhysBody* trigger, PhysBody* col)
+{
+	if (col->gameObject->name == "chameleonAttack")
+	{
+		if (col->gameObject->enable && !isDead)
+		{
+			trigger->gameObject->OnCollisionExit(col);
+			Die();
+		}
 	}
 }
 

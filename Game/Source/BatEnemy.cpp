@@ -9,6 +9,7 @@ BatEnemy::BatEnemy(iPoint pos, Player* player, std::string name, std::string tag
 		InitRenderObjectWithXml(texNames[i], i);
 	}
 
+	// Offset with axis Y
 	renderObjects[BAT_IDLE].textureCenterY += 2;
 
 	// Initialize enemy variables
@@ -24,12 +25,12 @@ BatEnemy::BatEnemy(iPoint pos, Player* player, std::string name, std::string tag
 
 	// Create detecting sensor
 	detectionSensor = new HitboxSensor(pos, detectionRadius, this, "batSensor", "BatSensor", _app);
-	detectionSensor->hits[0] = "player";
+	detectionSensor->hits[0] = "PlayerHitBox";
 
 	// Animations Setup
 	SetUpAnimations();
 
-	ChangeState(BAT_STATE::BAT_IDLE);
+	ChangeState(BAT_IDLE);
 }
 
 void BatEnemy::PreUpdate()
@@ -142,12 +143,12 @@ void BatEnemy::OnCollisionEnter(PhysBody* col)
 	}
 }
 
-void BatEnemy::OnTriggerEnter(PhysBody* col)
+void BatEnemy::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
 {
 	isActive = true;
 }
 
-void BatEnemy::OnTriggerExit(PhysBody* col)
+void BatEnemy::OnTriggerExit(PhysBody* trigger, PhysBody* col)
 {
 	isActive = false;
 }

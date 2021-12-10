@@ -109,6 +109,9 @@
     <ClCompile Include="Source\BatEnemy.cpp">
       <Filter>SourceFiles\GameObjects\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ChameleonEnemy.cpp">
+      <Filter>SourceFiles\GameObjects\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -241,6 +244,9 @@
       <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
     <ClInclude Include="Source\BatEnemy.h">
+      <Filter>HeaderFiles\GameObjects\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ChameleonEnemy.h">
       <Filter>HeaderFiles\GameObjects\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

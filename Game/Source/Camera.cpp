@@ -89,7 +89,6 @@ void Camera::ReleaseTarget()
 	x = y = 0;
 }
 
-
 iPoint Camera::GetCenter()
 {
 	return {x + pivotX, y + pivotY };

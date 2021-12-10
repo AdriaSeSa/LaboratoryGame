@@ -9,8 +9,6 @@ public:
 
 	int movementX = 0, movementY = 0;
 
-	int Testt();
-
 private:
 	int WindowHeight = 640;
 	int WindowWidth = 320;

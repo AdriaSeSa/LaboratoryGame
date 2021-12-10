@@ -101,6 +101,7 @@ void CheckPoint::OnCollisionEnter(PhysBody* col)
 		}
 	}
 }
+
 void CheckPoint::OnCollisionExit(PhysBody* col)
 {
 }

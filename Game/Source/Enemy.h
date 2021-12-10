@@ -18,12 +18,14 @@ protected:
 
 	bool isActive;
 
+	Animation currentAnim;
+
 	PathFinding* pathFinding = nullptr;
 	// player offset wen detect center of player
 	iPoint playerOffset = { 5,6 };
 
 protected:
-	virtual void SetUpAnimations();
+	virtual void SetUpAnimations() = 0;
 
 public:
 	Enemy(Player* player, std::string name, std::string tag, Application* app);

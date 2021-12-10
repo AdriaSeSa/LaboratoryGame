@@ -67,7 +67,8 @@ public:
 
 	void OnCollisionEnter(PhysBody* col) override;
 	void OnCollisionExit(PhysBody* col) override;
-	void OnTriggerEnter(PhysBody* col) override;
+	void OnTriggerEnter(PhysBody* trigger, PhysBody* col) override;
+	void OnTriggerStay(PhysBody* trigger, PhysBody* col) override;
 
 	void Start() override;
 

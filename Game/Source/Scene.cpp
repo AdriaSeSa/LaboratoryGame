@@ -134,7 +134,6 @@ bool Scene::CleanUp()
 	{
 		if (i == 258)
 		{
-			printf("i");
 			GameObject* g = gameObjects[i];
 		}
 		if (gameObjects[i])

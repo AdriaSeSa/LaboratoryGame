@@ -290,6 +290,11 @@ void ModulePhysics::ShapesRender()
 {
 	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{
+		// If GameObject not enable, not render
+		PhysBody* pb = (PhysBody*)b->GetUserData();
+		if (pb && !pb->gameObject->enable) continue;
+
+		// Render object collision
 		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
 		{
 			switch (f->GetType())

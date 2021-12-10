@@ -17,14 +17,24 @@ HitboxSensor::HitboxSensor(iPoint pos, int radius, GameObject* father, std::stri
 	this->father = father;
 }
 
+void HitboxSensor::Update()
+{
+	for (int i = 0; i < collisionList.count(); i++)
+	{
+		father->OnTriggerStay(pBody, collisionList[i]);
+	}
+}
+
 void HitboxSensor::OnCollisionEnter(PhysBody* col)
 {
-  	if (col->gameObject == father) return;
+   	if (col->gameObject == father) return;
+
 	for (int i = 0; i < 6; i++)
 	{
 		if (col->gameObject->name == hits[i])
 		{
- 			father->OnTriggerEnter(col);
+ 			father->OnTriggerEnter(pBody,col);
+			collisionList.add(col);
 		}
 	}
 }
@@ -36,7 +46,8 @@ void HitboxSensor::OnCollisionExit(PhysBody* col)
 	{
 		if (col->gameObject->name == hits[i])
 		{
-			father->OnTriggerExit(col);
+			father->OnTriggerExit(pBody, col);
+			collisionList.remove(collisionList.At(collisionList.find(col)));
 		}
 	}
 }

@@ -1,4 +1,5 @@
 #include "CheckPoint.h"
+#include "Scene.h"
 
 CheckPoint::CheckPoint(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
@@ -95,6 +96,7 @@ void CheckPoint::OnCollisionEnter(PhysBody* col)
 	if (col->gameObject->CompareTag("Player"))
 	{
 		_app->SaveGameRequest();
+		_app->saveF.child("game_state").child("scene").child(_app->scene->currentScene->name.c_str()).child("checkPoint").attribute("isActive") = "true";
 		if (currentState == IDLE_NO_FLAG)
 		{
 			currentState = GET_CHECKPOINT;

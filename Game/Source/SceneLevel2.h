@@ -15,6 +15,8 @@ public:
 
 	void LoadEnemies();
 
+	void SetEnemiesData();
+
 	bool PreUpdate() override;
 
 	bool Update() override;
@@ -35,7 +37,7 @@ public:
 
 	CheckPoint* checkPoint = nullptr;
 
-	iPoint playerStartPos = { 40, 567 };
+	iPoint playerStartPos = { 40, 594 };
 
 	bool reset = false;
 };

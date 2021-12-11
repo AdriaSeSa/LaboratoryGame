@@ -94,11 +94,11 @@
       </enviroument>
 
       <enemies>
-        <bat positionX = "120" positionY ="104"/>
-        <bat positionX = "264" positionY ="168"/>
-        <chameleon positionX = "296" positionY ="360"/>
-        <chameleon positionX = "184" positionY ="392"/>
-        <chameleon positionX = "296" positionY ="552"/>
+        <bat positionX = "120" positionY ="104" ID = "11"/>
+        <bat positionX = "264" positionY ="168" ID = "12"/>
+        <chameleon positionX = "296" positionY ="360" ID = "21"/>
+        <chameleon positionX = "184" positionY ="392" ID = "22"/>
+        <chameleon positionX = "296" positionY ="552" ID = "23"/>
       </enemies>
 
     </level2>

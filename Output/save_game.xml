@@ -5,10 +5,21 @@
 	<textures />
 	<audio />
 	<scene>
-		<player x="40" y="567" lifes="3" score="0" />
-		<checkPoint isActive="false" />
+		<player lifes="3" score="0" />
+		<level1>
+			<player x="33" y="355" />
+			<checkPoint isActive="true" />
+		</level1>
+		<level2>
+			<player x="135" y="307" />
+			<checkPoint isActive="true" />
+			<enemies>
+				<bat11 ID="11" lifes="1" isAlive="true" />
+				<bat12 ID="12" lifes="1" isAlive="true" />
+				<chameleon21 ID="21" lifes="0" isAlive="false" />
+				<chameleon22 ID="22" lifes="0" isAlive="false" />
+				<chameleon23 ID="23" lifes="0" isAlive="false" />
+			</enemies>
+		</level2>
 	</scene>
-	<renderer>
-		<camera x="0" y="0" />
-	</renderer>
 </game_state>

@@ -1,5 +1,6 @@
 #pragma once
 #include "Scene.h"
+#include "Animation.h"
 
 class BackGround;
 
@@ -35,24 +36,32 @@ private:
 
 	int currentScreen;
 
+	int arrowAnimOffset;
+
+	bool arrowAnimLeft = false;
+
 	List<iPoint> arrowPositions;
 
 	BackGround* bg;
 
 	int logoY = -100;
 
-	SDL_Texture* mainMenu;
-
 	SDL_Texture* arrow;
 
-	SDL_Texture* logo;
+	SDL_Rect arrowSection;
 
-	List<SDL_Texture*> currentTextures;
+	SDL_Texture* sArrow;
 
-	List<SDL_Texture*> mainMenuTextures;
+	List<RenderObject> currentTextures;
 
-	List<SDL_Texture*> selectLevelTextures;
+	List<RenderObject> mainMenuTextures;
+
+	List<RenderObject> selectLevelTextures;
+
+	Animation logoAnim;
 
 	bool exit;
+
+	int arrowCounter = 20;
 };
 

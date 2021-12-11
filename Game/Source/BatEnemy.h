@@ -29,6 +29,8 @@ private:
 public:
 	BatEnemy(iPoint pos, Player* player, std::string name, std::string tag, Application* app);
 
+	BatEnemy(iPoint pos, Player* player, int ID, int lifes, std::string name, std::string tag, Application* app);
+
 	void PreUpdate() override;
 
 	void Update() override;

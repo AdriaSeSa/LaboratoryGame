@@ -33,6 +33,40 @@ BatEnemy::BatEnemy(iPoint pos, Player* player, std::string name, std::string tag
 	ChangeState(BAT_IDLE);
 }
 
+BatEnemy::BatEnemy(iPoint pos, Player* player, int ID, int lifes, std::string name, std::string tag, Application* app) : Enemy(player, name, tag, app)
+{
+	std::string texNames[5] = { "batIdle","batFlying","batCeilingIn","batCeilingOut","batHit" };
+
+	for (int i = 0; i < 5; i++)
+	{
+		InitRenderObjectWithXml(texNames[i], i);
+	}
+
+	// Offset with axis Y
+	renderObjects[BAT_IDLE].textureCenterY += 2;
+
+	// Initialize enemy variables
+	life = lifes;
+	this->ID = ID;
+	score = 200;
+	speed = 1.0f;
+	movesDiagonally = true;
+	initialPos = pos;
+
+	// Create pBody
+	this->pBody = _app->physics->CreateCircle(pos.x, pos.y, 6, this, true);
+	pBody->body->SetGravityScale(0);
+
+	// Create detecting sensor
+	detectionSensor = new HitboxSensor(pos, detectionRadius, this, "batSensor", "BatSensor", _app);
+	detectionSensor->hits[0] = "PlayerHitBox";
+
+	// Animations Setup
+	SetUpAnimations();
+
+	ChangeState(BAT_IDLE);
+}
+
 void BatEnemy::PreUpdate()
 {
 	if(batState==BAT_HIT && currentAnim.HasFinished())

@@ -14,9 +14,6 @@ ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, std::string name, std
 		renderObjects[i].textureCenterY += 2;
 	}
 
-	// Test code
-	//flip = false;
-
 	// Initialize enemy variables
 	life = 2;
 	score = 300;
@@ -62,9 +59,6 @@ ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, int ID, int lifes, st
 		// Offset with axis Y
 		renderObjects[i].textureCenterY += 2;
 	}
-
-	// Test code
-	//flip = false;
 
 	// Initialize enemy variables
 	life = lifes;
@@ -117,16 +111,21 @@ void ChameleonEnemy::Update()
 
 		iPoint dir = GetPathDirection(player->GetPosition() + playerOffset);
 
-		dir.y = 0;
-
 		if (chameleonState != CHAMELEON_RUN)
 		{
 			ChangeState(CHAMELEON_RUN);
 		}
 
-		this->SetLinearVelocity(dir * speed);
+		if (dir.y == 0)
+		{
+			this->SetLinearVelocity(dir * speed);
+		}
+		else if (dir.y < 0)
+		{
+			chameleonMode = CHAMELEON_PATROL_MODE;
+		}
 	}
-	else if (chameleonMode == CHAMELEON_PATROL_MODE)
+	if (chameleonMode == CHAMELEON_PATROL_MODE)
 	{
 		b2Vec2 vel = GetLinearVelocity();
 
@@ -144,7 +143,7 @@ void ChameleonEnemy::Update()
 			{			
 				// Cambia sentido
 				int dir = vel.x > 0 ? -1 : 1;
-				SetLinearVelocity(b2Vec2{ dir * speed,0 });
+				SetLinearVelocity(b2Vec2{ dir * speed, GetLinearVelocity().y});
 			}
 		}
 		else if(vel.x == 0)
@@ -152,7 +151,7 @@ void ChameleonEnemy::Update()
 			int randDir = rand() % 2;
 			randDir = randDir == 0 ? -1 : randDir;
 			
-			SetLinearVelocity(b2Vec2{ randDir * speed ,0 });
+			SetLinearVelocity(b2Vec2{ randDir * speed , GetLinearVelocity().y});
 		}
 
 		if (chameleonState != CHAMELEON_RUN)
@@ -164,6 +163,8 @@ void ChameleonEnemy::Update()
 
 void ChameleonEnemy::PreUpdate()
 {
+	b2Vec2 vel = GetLinearVelocity();
+
 	if (life <=0 && chameleonState == CHAMELEON_HIT && currentAnim.HasFinished())
 	{
 		pendingToDelete = true;
@@ -191,10 +192,14 @@ void ChameleonEnemy::PostUpdate()
 		if (currentAnim.HasFinished())
 		{
 			renderObjects[chameleonState].draw = false;
-			if (life > 0)
+			if (life > 0 && !isDie)
 			{
 				if (GetLinearVelocity().x != 0) ChangeState(CHAMELEON_RUN);
 				else ChangeState(CHAMELEON_IDLE);
+			}
+			else
+			{
+				pendingToDelete = true;
 			}
 		}
 		break;	
@@ -209,6 +214,8 @@ void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 	{
 		if (!isDie)
 		{
+			attack->enable = false;
+
 			ChangeState(CHAMELEON_HIT);
 
 			if(--life == 0)
@@ -224,7 +231,7 @@ void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
  					speed = 2;
 					anims[CHAMELEON_RUN].speed = 0.6f;
 					int dir = GetLinearVelocity().x > 0 ? 1 : -1;
-					SetLinearVelocity(b2Vec2{ dir * speed,0 });
+					SetLinearVelocity(b2Vec2{ dir * speed, GetLinearVelocity().y});
 					ChangeSecondTexture();
 				}
 				player->ResetJumpCount();
@@ -244,7 +251,7 @@ void ChameleonEnemy::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
 	else if (trigger->gameObject->CompareTag("ChameleonAttack") && chameleonState != CHAMELEON_ATTACK)
 	{
 		// Don't move when attack
-		this->SetLinearVelocity(b2Vec2{ 0, 0 });
+		this->SetLinearVelocity(b2Vec2{ 0, GetLinearVelocity().y});
 		ChangeState(CHAMELEON_ATTACK);
 	}
 }

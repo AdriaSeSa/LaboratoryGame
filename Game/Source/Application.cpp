@@ -80,8 +80,6 @@ bool Application::Init()
 
 	LoadGameRequest();
 
-	ShowTime();
-
 	return ret;
 }
 

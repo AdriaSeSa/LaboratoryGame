@@ -11,14 +11,14 @@
 			<checkPoint isActive="true" />
 		</level1>
 		<level2>
-			<player x="135" y="307" />
-			<checkPoint isActive="true" />
+			<player x="40" y="594" />
+			<checkPoint isActive="false" />
 			<enemies>
 				<bat11 ID="11" lifes="1" isAlive="true" />
 				<bat12 ID="12" lifes="1" isAlive="true" />
-				<chameleon21 ID="21" lifes="0" isAlive="false" />
-				<chameleon22 ID="22" lifes="0" isAlive="false" />
-				<chameleon23 ID="23" lifes="0" isAlive="false" />
+				<chameleon21 ID="21" lifes="2" isAlive="true" />
+				<chameleon22 ID="22" lifes="2" isAlive="true" />
+				<chameleon23 ID="23" lifes="2" isAlive="true" />
 			</enemies>
 		</level2>
 	</scene>

@@ -659,7 +659,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="5"/>
+   <tile/>
    <tile gid="208"/>
    <tile gid="210"/>
    <tile/>
@@ -692,7 +692,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="5"/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -899,7 +899,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="5"/>
+   <tile/>
    <tile gid="208"/>
    <tile gid="232"/>
    <tile/>
@@ -1003,7 +1003,7 @@
    <tile gid="209"/>
   </data>
  </layer>
- <layer id="2" name="MetaData" width="20" height="40">
+ <layer id="2" name="MetaData" width="20" height="40" visible="0">
   <properties>
    <property name="Draw" type="int" value="0"/>
    <property name="IsMeta" type="int" value="1"/>
@@ -1729,7 +1729,7 @@
    <tile gid="1"/>
    <tile gid="1"/>
    <tile/>
-   <tile/>
+   <tile gid="1"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1749,7 +1749,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="1"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2300,7 +2300,7 @@
    <tile gid="253"/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile/>
    <tile/>
    <tile/>
@@ -2320,7 +2320,7 @@
    <tile gid="253"/>
    <tile/>
    <tile/>
-   <tile/>
+   <tile gid="253"/>
    <tile gid="253"/>
    <tile gid="253"/>
    <tile gid="253"/>

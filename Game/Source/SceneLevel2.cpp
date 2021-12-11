@@ -16,6 +16,8 @@ SceneLevel2::SceneLevel2(Application* app, string name) :Scene(app, name)
 
 bool SceneLevel2::Start(bool isReseting)
 {
+	_app->scene->lastLevel = 3; // Set this as the last Level (for GameOver)
+
 	// Load Map
 	if (_app->map->Load("Level2.tmx") == true)
 	{
@@ -36,9 +38,6 @@ bool SceneLevel2::Start(bool isReseting)
 	// Init scene with tmx metaDate
 	InitScene();
 
-	// Init Enemies
-	LoadEnemies();
-
 	checkPoint = new CheckPoint({ 144, 308 }, "checkPoint", "CheckPoint", _app);
 
 	// Init camera
@@ -52,8 +51,12 @@ bool SceneLevel2::Start(bool isReseting)
 	{
 		reset = true;
 		_app->SaveGameRequest();
+		SetEnemiesData();
 	}
 	_app->LoadGameRequest();
+
+	// Init Enemies
+	LoadEnemies();
 
 	// Start all gameobjects
 	for (int i = 0; i < gameObjects.count(); i++)
@@ -72,6 +75,8 @@ bool SceneLevel2::Start(bool isReseting)
 /// </summary>
 void SceneLevel2::LoadEnemies()
 {
+	pugi::xml_node saveNode = _app->saveF.child("game_state").child("scene").child(name.c_str()).child("enemies");
+
 	// Get Enemy node in Xml
 	pugi::xml_node enemicNode = _app->scene->config.child(name.c_str()).child("enemies");
 
@@ -79,21 +84,73 @@ void SceneLevel2::LoadEnemies()
 	for (enemicNode = enemicNode.first_child(); enemicNode; enemicNode = enemicNode.next_sibling())
 	{
 		// get the enemic name
-		string name = enemicNode.name();
+		string enemyName = enemicNode.name();
 
 		// get enemic init position
 		iPoint position = { enemicNode.attribute("positionX").as_int(0),enemicNode.attribute("positionY").as_int(0) };	
 
+		int enemyID = enemicNode.attribute("ID").as_int(0);
+
+		string nameID = enemyName.c_str() + std::to_string(enemyID);
+
+		int lifes = saveNode.child(nameID.c_str()).attribute("lifes").as_int();
+
+		bool isAlive = saveNode.child(nameID.c_str()).attribute("isAlive").as_bool();
+
 		// Create diferent enemic depend name
-		if (name == "bat")
+		if (enemyName == "bat")
 		{
 			// Create BatEnemy and add to gameobjects list
-			gameObjects.add(new BatEnemy(position, player, "bat", "Bat", _app));
+			if (isAlive) gameObjects.add(new BatEnemy(position, player, enemyID, 1, "bat", "Bat", _app));
 		}
-		else if (name == "chameleon")
+		else if (enemyName == "chameleon")
 		{
 			// Create ChameleonEnemy and add to gameobjects list
-			gameObjects.add(new ChameleonEnemy(position, player, "chameleon", "Chameleon", _app));
+			if (isAlive) gameObjects.add(new ChameleonEnemy(position, player, enemyID, lifes, "chameleon", "Chameleon", _app));
+		}
+	}
+}
+
+void SceneLevel2::SetEnemiesData()
+{
+	// Enemies
+	pugi::xml_node saveNode = _app->saveF.child("game_state").child("scene").child(name.c_str()).child("enemies");
+
+	// Reset all enemies data
+	for (saveNode = saveNode.first_child(); saveNode; saveNode = saveNode.next_sibling())
+	{
+		string enemyName = saveNode.name();
+		enemyName.pop_back();
+		enemyName.pop_back();
+
+		if (reset)
+		{
+			saveNode.attribute("lifes") = enemyName == "bat" ? 1 : 2;
+			saveNode.attribute("isAlive") = "true";
+		}
+		else
+		{
+			saveNode.attribute("lifes") = "0";
+			saveNode.attribute("isAlive") = "false";
+		}
+	}
+
+	saveNode = _app->saveF.child("game_state").child("scene").child(name.c_str()).child("enemies");
+
+	for (int i = 0; i < gameObjects.count(); i++)
+	{
+		if (gameObjects[i]->name == "bat" || gameObjects[i]->name == "chameleon")
+		{
+			string enemyName = gameObjects[i]->name;
+
+			Enemy* tempEnemy = (Enemy*)gameObjects[i];
+
+			int enemyID = tempEnemy->ID;
+
+			int enemyLifes = !reset ? tempEnemy->life : enemyName == "bat" ? 1 : 2;
+
+			saveNode.child((enemyName.c_str() + std::to_string(enemyID)).c_str()).attribute("lifes") = enemyLifes;
+			saveNode.child((enemyName.c_str() + std::to_string(enemyID)).c_str()).attribute("isAlive") = enemyLifes > 0;
 		}
 	}
 }
@@ -203,6 +260,10 @@ void SceneLevel2::SetSaveData()
 		playerX = reset ? playerStartPos.x : player->GetPosition().x;
 		playerY = reset ? playerStartPos.y : player->GetPosition().y;
 	}
+	
+	_app->saveF.child("game_state").child("scene").child(name.c_str()).child("checkPoint").attribute("isActive") = reset ? "false" : "true";
+
+	SetEnemiesData();
 
 	reset = false;
 }
@@ -211,7 +272,7 @@ void SceneLevel2::LoadSaveData(pugi::xml_node save)
 {
 	pugi::xml_node n = save;
 
-	if (player != nullptr) player->SetPosition({ n.child("player").attribute("x").as_int(),n.child("player").attribute("y").as_int() });
+	if (player != nullptr) player->SetPosition({ n.child(name.c_str()).child("player").attribute("x").as_int(),n.child(name.c_str()).child("player").attribute("y").as_int() });
 
 	if (_app->scene->playerSettings->playerLifes != 0) return;
 

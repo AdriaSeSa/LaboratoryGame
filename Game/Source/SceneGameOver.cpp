@@ -52,7 +52,7 @@ bool SceneGameOver::Update()
     {
         if (arrowPos.y == 190)
         {
-            _app->scene->ChangeCurrentScene(2, 0);
+            _app->scene->ChangeCurrentScene(_app->scene->lastLevel, true);
         }
         else
         {

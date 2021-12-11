@@ -70,6 +70,8 @@ public:
 
 	int playerX, playerY;
 
+	int lastLevel;
+
 	PlayerSettings* playerSettings = nullptr;
 };
 

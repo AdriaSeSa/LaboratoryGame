@@ -22,6 +22,8 @@ bool SceneLevel1::Start(bool isReseting)
 
 	isWin = false;
 
+	_app->scene->lastLevel = 2; // Set this as the last Level (for GameOver)
+
 	// Init scene with tmx metaDate
 	InitScene();
 
@@ -175,7 +177,7 @@ void SceneLevel1::SetSaveData()
 		playerY = reset ? playerStartPos.y : player->GetPosition().y;
 	}
 
-	if (checkPoint != nullptr) _app->scene->playerSettings->reachedCheckPoint = checkPoint->isActive;
+	_app->saveF.child("game_state").child("scene").child(name.c_str()).child("checkPoint").attribute("isActive") = reset ? "false" : "true";
 
 	reset = false;
 }
@@ -184,7 +186,7 @@ void SceneLevel1::LoadSaveData(pugi::xml_node save)
 {
 	pugi::xml_node n = save;
 
-	if (player != nullptr) player->SetPosition({ n.child("player").attribute("x").as_int(),n.child("player").attribute("y").as_int() });
+	if (player != nullptr) player->SetPosition({ n.child(name.c_str()).child("player").attribute("x").as_int(),n.child(name.c_str()).child("player").attribute("y").as_int() });
 
 	if (checkPoint != nullptr) checkPoint->isActive = _app->scene->playerSettings->reachedCheckPoint;
 	

@@ -49,6 +49,56 @@ ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, std::string name, std
 	ChangeState(CHAMELEON_IDLE);
 }
 
+ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, int ID, int lifes, std::string name, std::string tag, Application* app) : Enemy(player, name, tag, app)
+{
+	std::string texNames[4] = { "chameleonIdle","chameleonRun","chameleonAttack","chameleonHit" };
+
+	for (int i = 0; i < 4; i++)
+	{
+		InitRenderObjectWithXml(texNames[i], i);
+
+		// Offset with axis X
+		renderObjects[i].textureCenterX -= 10;
+		// Offset with axis Y
+		renderObjects[i].textureCenterY += 2;
+	}
+
+	// Test code
+	//flip = false;
+
+	// Initialize enemy variables
+	life = lifes;
+	this->ID = ID;
+	score = 300;
+	speed = 1.0f;
+	movesDiagonally = false;
+
+	// Create pBody
+	pBody = _app->physics->CreateCircle(pos.x, pos.y, 7, this, true);
+	pBody->SetSensor(false);
+	pBody->body->SetFixedRotation(true);
+
+	// Must not collision with player
+	b2Filter physicFilter;
+	physicFilter.groupIndex = -1;
+	pBody->body->GetFixtureList()->SetFilterData(physicFilter);
+
+	// Create detecting sensor
+	detectionSensor = new HitboxSensor(pos + detectionOffset, 400, 60, this, "chameleonSensor", "ChameleonSensor", _app);
+	detectionSensor->hits[0] = "PlayerHitBox";
+
+	// Create attack sensor
+	attack = new HitboxSensor(pos, 25, 2, this, "chameleonAttack", "ChameleonAttack", _app);
+	attack->hits[0] = "PlayerHitBox";
+	attack->enable = false;
+
+	// Animations Setup
+	SetUpAnimations();
+
+	// Set initial state
+	ChangeState(CHAMELEON_IDLE);
+}
+
 void ChameleonEnemy::Update()
 {
 	if (isDie || chameleonState == CHAMELEON_ATTACK  || chameleonState == CHAMELEON_HIT) return;

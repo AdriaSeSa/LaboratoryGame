@@ -6,7 +6,6 @@
 class Enemy : public GameObject
 {
 protected:
-	int life;
 
 	float speed;
 
@@ -36,4 +35,8 @@ public:
 	virtual void Die();
 
 	iPoint GetPathDirection(iPoint destination);
+
+	int ID;
+
+	int life;
 };

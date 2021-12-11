@@ -8,11 +8,16 @@ SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
 
 bool SceneMainMenu::Start(bool reset)
 {
-    bg = new BackGround("menuBackGround", "MenuBG", _app);
-
     // Reset logo position
     logoY = -100;
     
+    arrowAnimOffset = 0;
+
+    arrowAnimLeft = false;
+
+    InitTextures();
+
+    bg = new BackGround("menuBackGround", "MenuBG", _app);
     gameObjects.add(bg);
 
     for (int i = 0; i < gameObjects.count(); i++)
@@ -29,13 +34,57 @@ bool SceneMainMenu::Start(bool reset)
 
 void SceneMainMenu::InitTextures()
 {
+    arrow = _app->textures->Load("Assets/textures/Menu/Arrow.png");
+    arrowSection = { 0,0,32,32 };
+    sArrow = _app->textures->Load("Assets/textures/Menu/Levels.png");
     // Main Menu
-    mainMenu = _app->textures->Load("Assets/textures/Menu/MenuOptions.png");
-    logo = _app->textures->Load("Assets/textures/Menu/Logo.png");
-   // arrow = _app->textures->Load("Assets/textures/Menu/Arrow.png");
+    RenderObject l;
+    l.texture = _app->textures->Load("Assets/textures/Menu/LogoAnim.png");
+    l.destRect.x = 100;
+    l.destRect.y = 100;
+    l.name = "logo";
+    for (int i = 0; i < 4; i++)
+    {
+        logoAnim.PushBack({ 128 * i, 0, 128, 64 });
+    }
+    logoAnim.loop = true;
+    logoAnim.speed = 0.1f;
+    logoAnim.hasIdle = false;
 
-    mainMenuTextures.add(mainMenu);
-    mainMenuTextures.add(logo);
+    RenderObject m;
+    m.texture = _app->textures->Load("Assets/textures/Menu/MenuOptions.png");
+    m.destRect.x = 0;
+    m.destRect.y = 0;
+    m.scale = 0.5f;
+
+    mainMenuTextures.add(l);
+    mainMenuTextures.add(m);
+
+    // Select Level
+
+    RenderObject sl;
+    sl.texture = _app->textures->Load("Assets/textures/Menu/SelectLevel.png");
+    sl.destRect.x = 0;
+    sl.destRect.y = 0;
+    sl.scale = 0.5f;
+
+    RenderObject l1;
+    l1.texture = _app->textures->Load("Assets/textures/Menu/Levels.png");
+    l1.destRect.x = 69;
+    l1.destRect.y = 135;
+    l1.section = { 64, 0, 32, 32 };
+
+    RenderObject l2;
+    l2.texture = _app->textures->Load("Assets/textures/Menu/Levels.png");
+    l2.destRect.x = 210;
+    l2.destRect.y = 135;
+    l2.section = { 96, 0, 32, 32 };
+
+    selectLevelTextures.add(sl);
+    selectLevelTextures.add(l1);
+    selectLevelTextures.add(l2);
+    
+
 }
 
 void SceneMainMenu::MoveArrow()
@@ -43,23 +92,39 @@ void SceneMainMenu::MoveArrow()
     if (_app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
     {
         // If we are at the last position of arrowPositions, we go back to the beginning. if not, we advance one position.
-        currentArrowPos == arrowPositions.count() ? currentArrowPos = 0 : currentArrowPos++;
+        currentArrowPos == arrowPositions.count()-1 ? currentArrowPos = 0 : currentArrowPos++;
     }
     if (_app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
     {
         // If we are at the first position of arrowPositions, we go forward to the end. if not, we go back one position.
-        currentArrowPos == 0 ? currentArrowPos = arrowPositions.count() : currentArrowPos--;
+        currentArrowPos == 0 ? currentArrowPos = arrowPositions.count()-1 : currentArrowPos--;
     }
 
     if (_app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
         SelectOption();
+        //arrowSection = { 32,0,32,32 };
     }
 }
 
 bool SceneMainMenu::Update()
 {
     if (exit) return false;
+    /*
+    if (arrowSection.x = 32 && arrowCounter > 0)
+    {
+        arrowCounter--;
+    }
+    else
+    {
+        arrowSection = { 0,0,32,32 };
+        arrowCounter = 20;
+    }
+    */
+
+    arrowAnimLeft = arrowAnimOffset == 20 ? true : arrowAnimOffset == 0 ? false : arrowAnimLeft;
+
+    arrowAnimLeft ? arrowAnimOffset-- : arrowAnimOffset++;
 
     for (int i = 0; i < gameObjects.count(); i++)
     {
@@ -67,14 +132,14 @@ bool SceneMainMenu::Update()
         gameObjects[i]->Update();
     }
 
+    if (bg->movementY == -256) bg->movementY = 0;
+
+    bg->movementY--;
+
     // Main Menu Animation
     if (currentScreen == 0)
     {
-        if (bg->movementY == -256) bg->movementY = 0;
-
-        bg->movementY--;
-
-        logoY = logoY == 58 ? logoY : logoY + 1;
+        logoY = logoY == 58 ? logoY : logoY + 2;
     }
 
     MoveArrow();
@@ -89,12 +154,28 @@ bool SceneMainMenu::PostUpdate()
         if (gameObjects[i] != nullptr)
             gameObjects[i]->PostUpdate();
     }
+    if (currentScreen == 0) _app->renderer->AddTextureRenderQueue(arrow, arrowPositions[currentArrowPos] + iPoint(arrowAnimOffset/4, 0), arrowSection, 1, 2, 1);
+    if (currentScreen == 1)
+    {
+        if (currentArrowPos < 2) _app->renderer->AddTextureRenderQueue(sArrow, arrowPositions[currentArrowPos], { 0,0,32,32 }, 1, 2, 2);
+        else  _app->renderer->AddTextureRenderQueue(arrow, arrowPositions[currentArrowPos] + iPoint(arrowAnimOffset/4, 0), arrowSection, 1, 2, 1);
+    }
+       
+   
 
     for (int i = 0; i < currentTextures.count(); i++)
     {
         // Make currentTextures a List<RenderObjects> and use that to render
-
-        //_app->renderer->AddTextureRenderQueue()
+        if (currentTextures[i].name == "logo")
+        {
+            logoAnim.Update();
+            _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, logoY }, logoAnim.GetCurrentFrame(), 1, 2, 1);
+        }
+        else
+        {
+            _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, currentTextures[i].destRect.y }, currentTextures[i].section, 
+              currentTextures[i].scale, 2, 1);
+        }
     }
 
     return true;
@@ -103,7 +184,9 @@ bool SceneMainMenu::PostUpdate()
 void SceneMainMenu::ChangeScreen(int screen)
 {
     arrowPositions.clear();
+    currentArrowPos = 0;
     currentScreen = screen;
+    currentTextures.clear();
     switch (screen)
     {
     // Main Menu
@@ -117,8 +200,13 @@ void SceneMainMenu::ChangeScreen(int screen)
         break;
     // Select Level   
     case 1:
-
-        currentTextures = selectLevelTextures;
+        arrowPositions.add({ 69, 135 });
+        arrowPositions.add({ 210, 135 });
+        arrowPositions.add({ 95, 180 });
+        for (int i = 0; i <selectLevelTextures.count(); i++)
+        {
+            currentTextures.add(selectLevelTextures[i]);
+        }
         break;
 
     }
@@ -142,18 +230,31 @@ void SceneMainMenu::ScreenOptions0()
     switch (currentArrowPos)
     {
     case 0:
-        _app->scene->ChangeCurrentScene(2, true);
+        ChangeScreen(1);
         break;
     case 1:
         exit = true;
-        break;
-    case 2:
         break;
     }
 }
 
 void SceneMainMenu::ScreenOptions1()
 {
+    bool resetting;
+    switch (currentArrowPos)
+    {
+    case 0:
+        resetting = _app->saveF.child("game_state").child("scene").child("level1").child("checkPoint").attribute("isActive").as_bool();
+        _app->scene->ChangeCurrentScene(2, !resetting);
+        break;
+    case 1:
+        resetting = _app->saveF.child("game_state").child("scene").child("level2").child("checkPoint").attribute("isActive").as_bool();
+        _app->scene->ChangeCurrentScene(3, !resetting);
+        break;
+    case 2:
+        ChangeScreen(0);
+        break;
+    }
 }
 
 void SceneMainMenu::ScreenOptions2()

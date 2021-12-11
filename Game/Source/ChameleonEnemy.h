@@ -36,6 +36,8 @@ private:
 public:
 	ChameleonEnemy(iPoint pos, Player* player, std::string name, std::string tag, Application* app);
 
+	ChameleonEnemy(iPoint pos, Player* player, int ID, int lifes, std::string name, std::string tag, Application* app);
+
 	void Update() override;
 
 	void PreUpdate() override;

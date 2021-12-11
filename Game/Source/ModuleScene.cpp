@@ -121,10 +121,8 @@ void ModuleScene::GetSaveData(pugi::xml_document& save)
 	n.child("player").attribute("lifes") = playerSettings->playerLifes;
 	n.child("player").attribute("score") = playerSettings->playerScore;
 
-	n.child("player").attribute("x") = currentScene->playerX;
-	n.child("player").attribute("y") = currentScene->playerY;
-
-	n.child("checkPoint").attribute("isActive") = playerSettings->reachedCheckPoint;
+	n.child(currentScene->name.c_str()).child("player").attribute("x") = currentScene->playerX;
+	n.child(currentScene->name.c_str()).child("player").attribute("y") = currentScene->playerY;
 }
 
 void ModuleScene::LoadSaveData(pugi::xml_document& save)

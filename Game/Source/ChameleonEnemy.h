@@ -61,4 +61,6 @@ public:
 	void ChangeSecondTexture();
 
 	void ChangeState(CHAMELEON_STATE state);
+
+	void GetHit();
 };

@@ -89,6 +89,9 @@ ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, int ID, int lifes, st
 	// Animations Setup
 	SetUpAnimations();
 
+	// To change our current state if our life == 1
+	GetHit();
+
 	// Set initial state
 	ChangeState(CHAMELEON_IDLE);
 }
@@ -218,26 +221,8 @@ void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 			attack->enable = false;
 
 			ChangeState(CHAMELEON_HIT);
-
-			if(--life == 0)
-			{
-				pBody->body->SetGravityScale(0);
-				pBody->SetSensor(true);
-				Die();
-			}
-			else if(player != nullptr)
-			{
-				if (life == 1)
-				{
- 					speed = 2;
-					anims[CHAMELEON_RUN].speed = 0.6f;
-					int dir = GetLinearVelocity().x > 0 ? 1 : -1;
-					SetLinearVelocity(b2Vec2{ dir * speed, GetLinearVelocity().y});
-					ChangeSecondTexture();
-				}
-				player->ResetJumpCount();
-				player->Jump();
-			}
+			life--;
+			GetHit();
 		}
 	}
 }
@@ -390,4 +375,27 @@ void ChameleonEnemy::ChangeState(CHAMELEON_STATE state)
 	currentAnim.Reset();
 
 	chameleonState = state;
+}
+
+void ChameleonEnemy::GetHit()
+{
+	if (life == 0)
+	{
+		pBody->body->SetGravityScale(0);
+		pBody->SetSensor(true);
+		Die();
+	}
+	else if (player != nullptr)
+	{
+		if (life == 1)
+		{
+			speed = 2;
+			anims[CHAMELEON_RUN].speed = 0.6f;
+			int dir = GetLinearVelocity().x > 0 ? 1 : -1;
+			SetLinearVelocity(b2Vec2{ dir * speed,0 });
+			ChangeSecondTexture();
+		}
+		player->ResetJumpCount();
+		player->Jump();
+	}
 }

@@ -45,6 +45,7 @@ bool Application::Init()
 
 	// L01: DONE 3: Load config from XML
 	config = LoadConfig(configF);
+	LoadSaveFile();
 
 	if (config.empty() == false)
 	{
@@ -169,6 +170,16 @@ pugi::xml_node Application::LoadConfig(pugi::xml_document& configFile) const
 	return ret;
 }
 
+bool Application::LoadSaveFile() 
+{
+	pugi::xml_parse_result result = saveF.load_file(SAVE_STATE_FILENAME);
+
+	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description())
+	else return true;
+
+	return false;
+}
+
 void Application::ExitGame()
 {
 	SaveGameRequest();
@@ -211,18 +222,11 @@ bool Application::LoadGame()
 {
 	bool ret = false;
 
-	pugi::xml_document saveGame;
-	pugi::xml_parse_result result = saveGame.load_file(SAVE_STATE_FILENAME);
-
-	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description())
-	else ret = saveGame.child("game_state");
-
-
 	ListItem<Module*>* item = list_modules.start;
 
 	while (item != NULL)
 	{
-		item->data->LoadSaveData(saveGame);
+		item->data->LoadSaveData(saveF);
 		item = item->next;
 	}
 
@@ -232,25 +236,19 @@ bool Application::LoadGame()
 }
 
 // L02: TODO 7: Implement the xml save method for current state
-bool Application::SaveGame() const
+bool Application::SaveGame()
 {
 	bool ret = true;
-
-	pugi::xml_document saveGame;
-	pugi::xml_parse_result result = saveGame.load_file(SAVE_STATE_FILENAME);
-
-	if (result == NULL) LOG("Could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description())
-	else ret = saveGame.child("game_state");
 
 	ListItem<Module*>* item = list_modules.start;
 
 	while (item != NULL)
 	{
-		item->data->GetSaveData(saveGame);
+		item->data->GetSaveData(saveF);
 		item = item->next;
 	}
 
-	saveGame.save_file(SAVE_STATE_FILENAME);
+	saveF.save_file(SAVE_STATE_FILENAME);
 
 	saveGameRequested = false;
 

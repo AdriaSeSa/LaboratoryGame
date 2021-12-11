@@ -90,7 +90,7 @@ void Player::SetUpAnimations()
 	}
 
 	appearing.hasIdle = false;
-	appearing.speed = 0.3f;
+	appearing.speed = 0.2f;
 	appearing.loop = false;
 
 	idle.hasIdle = false;
@@ -444,7 +444,7 @@ void Player::Die()
 {
 	if(!godMod)
 	{
-		SDL_Delay(200);
+		//SDL_Delay(200);
 		isDead = true;
 	}
 }

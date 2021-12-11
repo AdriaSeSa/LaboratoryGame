@@ -163,9 +163,8 @@ void ChameleonEnemy::Update()
 
 void ChameleonEnemy::PreUpdate()
 {
-	b2Vec2 vel = GetLinearVelocity();
-
-	if (life <=0 && chameleonState == CHAMELEON_HIT && currentAnim.HasFinished())
+	// Is is die, change pendingToDelete true
+	if (life <=0 && chameleonState == CHAMELEON_HIT && currentAnim.HasFinished() || isDie && chameleonState == CHAMELEON_IDLE)
 	{
 		pendingToDelete = true;
 	}
@@ -210,6 +209,8 @@ void ChameleonEnemy::PostUpdate()
 
 void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 {
+	if (isDie) return;
+
 	if (col->gameObject->CompareTag("GroundSensor") && col->gameObject->GetLinearVelocity().y > 0)
 	{
 		if (!isDie)
@@ -243,6 +244,8 @@ void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 
 void ChameleonEnemy::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
 {
+	if (isDie) return;
+
 	if (trigger->gameObject->CompareTag("ChameleonSensor"))
 	{
 		chameleonMode = CHAMELEON_CHASE_MODE;

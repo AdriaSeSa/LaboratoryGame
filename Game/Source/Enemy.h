@@ -21,7 +21,8 @@ protected:
 	Animation currentAnim;
 
 	PathFinding* pathFinding = nullptr;
-	// player offset wen detect center of player
+
+	// player offset when detect center of player
 	iPoint playerOffset = { 5,6 };
 
 protected:

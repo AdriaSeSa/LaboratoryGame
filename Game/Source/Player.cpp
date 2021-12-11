@@ -34,9 +34,9 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 
 	closePlatformSensor = new GroundSensor(GetPosition() + iPoint{ 5, 6 }, "PlayerPSensor", "PlatformSensorClose", _app, 16, 20, this);
 
-	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 10, 3, this);
+	groundSensor = new GroundSensor(GetPosition() + groundSensorOffset, "PlayerGSensor", "GroundSensor", _app, 8, 2, this);
 
-	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(3,6),6, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
+	hitBoxSensor = new HitboxSensor(GetPosition() + iPoint(3,6), 7, 8,this, "PlayerHitBox", "PlayerHitBox", _app);
 
 	hitBoxSensor->pBody->body->SetType(b2BodyType::b2_dynamicBody);
 

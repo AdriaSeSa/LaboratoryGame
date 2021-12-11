@@ -40,6 +40,11 @@
     <chameleonAttack width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Attack(84x38).png"/>
     <chameleonHit width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Hit(84x38).png"/>
 
+    <chameleonIdle2 width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Idle2(84x38).png"/>
+    <chameleonRun2 width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Run2(84x38).png"/>
+    <chameleonAttack2 width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Attack2(84x38).png"/>
+    <chameleonHit2 width = "84" height = "38" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Chameleon/Hit2(84x38).png"/>
+
     <!-- Fruits -->
     <apple width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Apple.png"/>
     <bananas width = "32" height = "32" layer = "1" scale = "0.5" path = "Assets/textures/Items/Fruits/Bananas.png"/>

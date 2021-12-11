@@ -57,7 +57,8 @@ void BatEnemy::Update()
 		this->SetLinearVelocity(b2Vec2{ 0, 0 });
 		return;
 	}
-
+	
+	// Get dirrection for move to player
 	iPoint dir = GetPathDirection(player->GetPosition() + playerOffset);
 
 	//Check if we are active and if there is a path to the player

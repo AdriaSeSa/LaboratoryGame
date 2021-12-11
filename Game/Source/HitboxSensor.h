@@ -21,4 +21,3 @@ private:
 
 	List<PhysBody*> collisionList;
 };
-

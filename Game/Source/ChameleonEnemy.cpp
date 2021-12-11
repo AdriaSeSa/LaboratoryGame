@@ -2,7 +2,7 @@
 
 ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, std::string name, std::string tag, Application* app) : Enemy(player, name, tag, app)
 {
-	std::string texNames[4] = { "chameleonIdle","chameleonRun","chameleonAttack","chameleonHit" };
+	std::string texNames[4] = { "chameleonIdle","chameleonRun","chameleonAttack","chameleonHit"};
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -15,7 +15,7 @@ ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, std::string name, std
 	}
 
 	// Test code
-	flip = false;
+	//flip = false;
 
 	// Initialize enemy variables
 	life = 2;
@@ -26,6 +26,7 @@ ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, std::string name, std
 	// Create pBody
 	pBody = _app->physics->CreateCircle(pos.x, pos.y, 7, this, true);
 	pBody->SetSensor(false);
+	pBody->body->SetFixedRotation(true);
 
 	// Must not collision with player
 	b2Filter physicFilter;
@@ -33,8 +34,8 @@ ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, std::string name, std
 	pBody->body->GetFixtureList()->SetFilterData(physicFilter);
 
 	// Create detecting sensor
-	detectionSensor = new HitboxSensor(pos, 20, 10, this, "chameleonSensor", "ChameleonSensor", _app);
-	detectionSensor->hits[0] = "Player";
+	detectionSensor = new HitboxSensor(pos + detectionOffset, 400, 60, this, "chameleonSensor", "ChameleonSensor", _app);
+	detectionSensor->hits[0] = "PlayerHitBox";
 
 	// Create attack sensor
 	attack = new HitboxSensor(pos, 25, 2, this, "chameleonAttack", "ChameleonAttack", _app);
@@ -50,11 +51,65 @@ ChameleonEnemy::ChameleonEnemy(iPoint pos, Player* player, std::string name, std
 
 void ChameleonEnemy::Update()
 {
-	if (isDie) return;
+	if (isDie || chameleonState == CHAMELEON_ATTACK  || chameleonState == CHAMELEON_HIT) return;
 
-	detectionSensor->SetPosition(GetPosition());
+	// Update detectionSensor position
+	detectionSensor->SetPosition(GetPosition() + detectionOffset);
 
-	CheckFlip();
+	if (chameleonMode == CHAMELEON_GUARD_MODE)
+	{
+		// No hace nada
+	}
+	else if (chameleonMode == CHAMELEON_CHASE_MODE)
+	{
+		// If we are not near the center of the tile, we dont update our pathfinding
+		if (!_app->map->InTileCenter(GetPosition(), 4) && GetLinearVelocity().x!=0) return;
+
+		iPoint dir = GetPathDirection(player->GetPosition() + playerOffset);
+
+		dir.y = 0;
+
+		if (chameleonState != CHAMELEON_RUN)
+		{
+			ChangeState(CHAMELEON_RUN);
+		}
+
+		this->SetLinearVelocity(dir * speed);
+	}
+	else if (chameleonMode == CHAMELEON_PATROL_MODE)
+	{
+		b2Vec2 vel = GetLinearVelocity();
+
+		if (vel.x != 0 && _app->map->InTileCenter(GetPosition(), 4))
+		{
+			iPoint mapPos = _app->map->WorldToMap(GetPosition());
+			iPoint mapPosDiagonal = mapPos;
+
+			mapPos.x += vel.x > 0 ? 1 : -1;
+			mapPosDiagonal.x = mapPos.x;
+			mapPosDiagonal.y += 1;
+
+			// Si el siguiente tile esta vacio
+			if (!_app->map->pathFinding->IsWalkable(mapPos) || _app->map->pathFinding->IsWalkable(mapPosDiagonal))
+			{			
+				// Cambia sentido
+				int dir = vel.x > 0 ? -1 : 1;
+				SetLinearVelocity(b2Vec2{ dir * speed,0 });
+			}
+		}
+		else if(vel.x == 0)
+		{
+			int randDir = rand() % 2;
+			randDir = randDir == 0 ? -1 : randDir;
+			
+			SetLinearVelocity(b2Vec2{ randDir * speed ,0 });
+		}
+
+		if (chameleonState != CHAMELEON_RUN)
+		{
+			ChangeState(CHAMELEON_RUN);
+		}
+	}
 }
 
 void ChameleonEnemy::PreUpdate()
@@ -67,9 +122,11 @@ void ChameleonEnemy::PreUpdate()
 
 void ChameleonEnemy::PostUpdate()
 {
+	CheckFlip();
+
 	// Update Animation
 	currentAnim.Update();
-	renderObjects[chameleonState].section = currentAnim.GetCurrentFrame();
+ 	renderObjects[chameleonState].section = currentAnim.GetCurrentFrame();
 
 	switch (chameleonState)
 	{
@@ -84,7 +141,11 @@ void ChameleonEnemy::PostUpdate()
 		if (currentAnim.HasFinished())
 		{
 			renderObjects[chameleonState].draw = false;
-			if(life>0) ChangeState(CHAMELEON_IDLE);		
+			if (life > 0)
+			{
+				if (GetLinearVelocity().x != 0) ChangeState(CHAMELEON_RUN);
+				else ChangeState(CHAMELEON_IDLE);
+			}
 		}
 		break;	
 	}
@@ -94,7 +155,7 @@ void ChameleonEnemy::PostUpdate()
 
 void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 {
-	if (col->gameObject->CompareTag("GroundSensor"))
+	if (col->gameObject->CompareTag("GroundSensor") && col->gameObject->GetLinearVelocity().y > 0)
 	{
 		if (!isDie)
 		{
@@ -108,6 +169,14 @@ void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 			}
 			else if(player != nullptr)
 			{
+				if (life == 1)
+				{
+ 					speed = 2;
+					anims[CHAMELEON_RUN].speed = 0.6f;
+					int dir = GetLinearVelocity().x > 0 ? 1 : -1;
+					SetLinearVelocity(b2Vec2{ dir * speed,0 });
+					ChangeSecondTexture();
+				}
 				player->ResetJumpCount();
 				player->Jump();
 			}
@@ -117,14 +186,25 @@ void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 
 void ChameleonEnemy::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
 {
-	if (trigger->gameObject->CompareTag("ChameleonAttack") && chameleonState != CHAMELEON_ATTACK)
+	if (trigger->gameObject->CompareTag("ChameleonSensor"))
 	{
+		chameleonMode = CHAMELEON_CHASE_MODE;
+	}
+	// Attack!!!
+	else if (trigger->gameObject->CompareTag("ChameleonAttack") && chameleonState != CHAMELEON_ATTACK)
+	{
+		// Don't move when attack
+		this->SetLinearVelocity(b2Vec2{ 0, 0 });
 		ChangeState(CHAMELEON_ATTACK);
 	}
 }
 
 void ChameleonEnemy::OnTriggerExit(PhysBody* trigger, PhysBody* col)
 {
+	if (trigger->gameObject->CompareTag("ChameleonSensor"))
+	{
+		chameleonMode = CHAMELEON_PATROL_MODE;
+	}
 }
 
 void ChameleonEnemy::CleanUp()
@@ -189,6 +269,7 @@ void ChameleonEnemy::CheckFlip()
 		renderObjects[chameleonState].flip = SDL_RendererFlip::SDL_FLIP_NONE;
 		renderObjects[chameleonState].textureCenterX = (renderObjects[chameleonState].destRect.w / 2) * (renderObjects[chameleonState].scale) + 10;
 	}
+
 	attack->SetPosition(attackPos);
 }
 
@@ -203,12 +284,40 @@ void ChameleonEnemy::Attack()
 		attack->enable = false;
 	}
 
-	if (currentAnim.HasFinished()) ChangeState(CHAMELEON_IDLE);
+	if (currentAnim.HasFinished())
+	{
+		if (GetLinearVelocity().x != 0) ChangeState(CHAMELEON_RUN);
+		else ChangeState(CHAMELEON_IDLE);
+	}
+}
+
+void ChameleonEnemy::ChangeSecondTexture()
+{
+	std::string texNames[4] = { "chameleonIdle2","chameleonRun2","chameleonAttack2","chameleonHit2" };
+
+	for (int i = 0; i < 4; i++)
+	{
+		InitRenderObjectWithXml(texNames[i], i);
+
+		if (flip)
+		{
+			renderObjects[i].flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;
+			renderObjects[i].textureCenterX = (renderObjects[i].destRect.w / 2) * (renderObjects[i].scale) - 10;
+		}
+		else
+		{
+			renderObjects[i].flip = SDL_RendererFlip::SDL_FLIP_NONE;
+			renderObjects[i].textureCenterX = (renderObjects[i].destRect.w / 2) * (renderObjects[i].scale) + 10;
+		}
+
+		// Offset with axis Y
+		renderObjects[i].textureCenterY += 2;
+	}
 }
 
 void ChameleonEnemy::ChangeState(CHAMELEON_STATE state)
 {
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		renderObjects[i].draw = false;
 	}

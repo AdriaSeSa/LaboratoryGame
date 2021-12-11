@@ -9,6 +9,13 @@ enum CHAMELEON_STATE
 	CHAMELEON_HIT
 };
 
+enum CHAMELEON_MODE
+{
+	CHAMELEON_GUARD_MODE,
+	CHAMELEON_CHASE_MODE,
+	CHAMELEON_PATROL_MODE
+};
+
 class ChameleonEnemy :  public Enemy
 {
 private:
@@ -19,6 +26,10 @@ private:
 	Animation anims[5];
 
 	CHAMELEON_STATE chameleonState;
+
+	CHAMELEON_MODE chameleonMode = CHAMELEON_GUARD_MODE;
+
+	iPoint detectionOffset = { 0, 20};
 
 	bool flip = false;
 
@@ -45,6 +56,7 @@ public:
 
 	void Attack();
 
+	void ChangeSecondTexture();
+
 	void ChangeState(CHAMELEON_STATE state);
 };
-

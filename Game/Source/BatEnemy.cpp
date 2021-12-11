@@ -57,12 +57,11 @@ void BatEnemy::Update()
 		this->SetLinearVelocity(b2Vec2{ 0, 0 });
 		return;
 	}
-	
-	// Get dirrection for move to player
-	iPoint dir = GetPathDirection(player->GetPosition() + playerOffset);
 
+	iPoint dir;
+	
 	//Check if we are active and if there is a path to the player
-	if (!isActive || dir == iPoint( 0, 0))
+	if (!isActive)
 	{
 		if(_app->map->WorldToMap(GetPosition()) == _app->map->WorldToMap(initialPos))
 		{
@@ -81,6 +80,9 @@ void BatEnemy::Update()
 	}
 	else if(isActive)
 	{
+		// Get dirrection for move to player
+		dir = GetPathDirection(player->GetPosition() + playerOffset);
+
  		if (batState == BAT_IDLE)
 		{
 			ChangeState(BAT_CEILINGOUT);

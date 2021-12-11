@@ -63,7 +63,7 @@ void ChameleonEnemy::Update()
 	else if (chameleonMode == CHAMELEON_CHASE_MODE)
 	{
 		// If we are not near the center of the tile, we dont update our pathfinding
-		if (!_app->map->InTileCenter(GetPosition(), 4) && GetLinearVelocity().x!=0) return;
+		if (!_app->map->InTileCenter(GetPosition(), 4) && GetLinearVelocity().x != 0) return;
 
 		iPoint dir = GetPathDirection(player->GetPosition() + playerOffset);
 

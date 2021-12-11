@@ -57,7 +57,6 @@ UpdateStatus ModuleRender::PreUpdate()
 // Update: debug camera
 UpdateStatus ModuleRender::Update()
 {	
-
 	camera->Update();
 
 	return UPDATE_CONTINUE;
@@ -194,6 +193,7 @@ int ModuleRender::RoundToInt(int num)
 
 void ModuleRender::SortRenderObjects(vector<RenderObject> &obj)
 {
+	OPTICK_EVENT();
 	//sort(obj.begin(), obj.end(), CompareRenderObj);
 
 	int less = 0;

@@ -75,7 +75,7 @@ UpdateStatus ModuleScene::Update()
 		return UpdateStatus::UPDATE_STOP;
 	}
 
-	DebugChangeScene();
+	//DebugChangeScene();
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }

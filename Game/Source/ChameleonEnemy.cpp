@@ -216,6 +216,7 @@ void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 
 	if (col->gameObject->CompareTag("GroundSensor") && col->gameObject->GetLinearVelocity().y > 0)
 	{
+		_app->scene->playerSettings->currentSkillCD -= 5;
 		if (player->usingSkill)
 		{
 			attack->enable = false;

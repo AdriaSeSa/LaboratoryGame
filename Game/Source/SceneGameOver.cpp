@@ -16,7 +16,7 @@ bool SceneGameOver::Start(bool reset)
 
     gameObjects.add(bg);
 
-    _app->SaveGameRequest();
+    //_app->SaveGameRequest();
 
     for (int i = 0; i < gameObjects.count(); i++)
     {

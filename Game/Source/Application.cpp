@@ -81,7 +81,7 @@ bool Application::Init()
 		item = item->next;
 	}
 
-	//LoadGameRequest();
+	LoadGameRequest();
 
 	return ret;
 }

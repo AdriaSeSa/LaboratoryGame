@@ -33,7 +33,7 @@ void PlayerSettings::Release()
 
 void PlayerSettings::Reset()
 {
-	playerLifes = 3;
+	playerLifes = 2;
 	playerScore = 0;
 	reachedCheckPoint = false;
 }

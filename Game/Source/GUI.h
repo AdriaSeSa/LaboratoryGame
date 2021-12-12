@@ -27,7 +27,7 @@ private:
 
 	Application* _app;
 
-	uint scoreUI;
+	uint scoreUI, coolDownUI;
 
 public:
 	GUI(int character, Application* app);

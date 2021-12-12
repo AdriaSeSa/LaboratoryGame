@@ -8,6 +8,8 @@ GUI::GUI(int character, Application* app)
 	// Init App
 	_app = app;
 
+	coolDownUI = -1;
+
 	// Initialize textures
 	gui = _app->textures->Load("Assets/textures/UI/UIOverlay.png");
 
@@ -36,6 +38,10 @@ GUI::GUI(int character, Application* app)
 GUI::~GUI()
 {
 	_app->ui->DestroyUI(scoreUI);
+	if (coolDownUI != -1)
+	{
+		_app->ui->DestroyUI(coolDownUI);
+	}
 }
 
 void GUI::Update()
@@ -50,6 +56,28 @@ void GUI::Update()
 		hearthsSection[i] = { 0,0, 28, 24 };
 	}
 	_app->ui->uiArray[scoreUI]->ChangeUI(_app->scene->playerSettings->playerScore);
+
+	if (_app->scene->playerSettings->currentSkillCD > 0)
+	{
+		int coolDown = (int)_app->scene->playerSettings->currentSkillCD;
+		if (coolDownUI == -1)
+		{
+			coolDownUI = _app->ui->CreateUI(coolDown, 148, 14, 0.5f, 2, 4);
+		}
+		else
+		{
+			_app->ui->uiArray[coolDownUI]->ChangeUI(coolDown);
+		}
+	
+	}
+	else if (_app->scene->playerSettings->currentSkillCD <= 0)
+	{
+		if (coolDownUI != -1 && _app->ui->uiArray[coolDownUI] != nullptr)
+		{
+			_app->ui->DestroyUI(coolDownUI);
+			coolDownUI = -1;
+		}
+	}
 }
 
 void GUI::PostUpdate()
@@ -61,6 +89,8 @@ void GUI::PostUpdate()
 		_app->renderer->AddTextureRenderQueue(hearths[i], { 35 * i + 16, 12 }, hearthsSection[i], 1, 2, 2, 0,SDL_FLIP_NONE, 0);
 	}
 
-	_app->renderer->AddTextureRenderQueue(skill[currentCharacter], { 144, 8 }, { 0,0,32,32 }, 1, 2, 2, 0, SDL_FLIP_NONE, 0);
+	int skillCd = _app->scene->playerSettings->currentSkillCD > 0 ? 0 : 32;
+
+	_app->renderer->AddTextureRenderQueue(skill[currentCharacter], { 144, 8 }, { skillCd,0,32,32 }, 1, 2, 2, 0, SDL_FLIP_NONE, 0);
 }
 

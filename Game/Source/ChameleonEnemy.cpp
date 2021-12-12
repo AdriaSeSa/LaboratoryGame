@@ -216,6 +216,16 @@ void ChameleonEnemy::OnCollisionEnter(PhysBody* col)
 
 	if (col->gameObject->CompareTag("GroundSensor") && col->gameObject->GetLinearVelocity().y > 0)
 	{
+		if (player->usingSkill)
+		{
+			attack->enable = false;
+
+			ChangeState(CHAMELEON_HIT);
+			life -= life;
+			GetHit();
+
+			player->usingSkill = false;
+		}
 		if (!isDie)
 		{
 			attack->enable = false;

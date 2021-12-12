@@ -5,6 +5,10 @@ Player::Player(iPoint pos, std::string name, std::string tag, Application* app) 
 {
 	std::string texNames[6] = { "virtualGuyIdle","virtualGuyRun","virtualGuyJump","virtualGuyFall","virtualGuyDoubleJump", "characterAppearing"};
 
+	usingSkill = false;
+
+	skillCoolDown = 0;
+
 	for (int i = 0; i < 6; i++)
 	{
 		InitRenderObjectWithXml(texNames[i], i);
@@ -144,10 +148,20 @@ void Player::PreUpdate()
 	{
 		relativeVelocity_X = parent->gameObject->GetLinearVelocity().x;
 	}
+
+	if (groundSensor->isOnGround) usingSkill = false;
 }
 
 void Player::Update()
 {
+	if (skillCoolDown > 0)
+	{
+		_app->globalTime.Update();
+		skillCoolDown -= _app->globalTime.getDeltaTime()*10;
+	}
+	
+	_app->scene->playerSettings->currentSkillCD = skillCoolDown;
+
 	// ChangeGravity
 	//if (_app->input->GetKey(SDL_SCANCODE_G) == KEY_UP)
 	//{
@@ -172,11 +186,14 @@ void Player::Update()
 	{
 		pBody->SetSensor(false);
 	}
-	
+	printf("%f\n", skillCoolDown);
 	// Fall faster
-	if (_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	if ((_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+		&& skillCoolDown <= 0)
 	{
 		pBody->body->ApplyLinearImpulse({ 0, speed*2 }, { 0,0, }, true);
+		usingSkill = true;
+		skillCoolDown = totalSkillCoolDown;
 	}
 
 	// Move

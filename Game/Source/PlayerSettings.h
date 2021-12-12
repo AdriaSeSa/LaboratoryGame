@@ -33,6 +33,8 @@ public:
 	bool isInit = false;
 
 	bool reachedCheckPoint = false;
+
+	float currentSkillCD = 0;
 };
 
 

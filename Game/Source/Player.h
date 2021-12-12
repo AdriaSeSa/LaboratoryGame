@@ -34,6 +34,8 @@ private:
 	bool isFalling;
 	bool isOnGround;
 
+	float totalSkillCoolDown = 20;
+
 	GroundSensor* groundSensor;
 	GroundSensor* openPlatformSensor;
 	GroundSensor* closePlatformSensor;
@@ -56,6 +58,12 @@ public:
 	float jumpForce = 7.0f;
 
 	float speed = 5;
+
+	bool usingSkill; // De momento esto solo funciona con la habilidad de bajar rapido. Si se añaden habilidades se tiene que cambiar el sistema
+						// Ahora mismo el enemigo comprueba esta variable para morir de golpe o no. Mas adelante deberá tener en cuenta si esta habilidad
+						// es la de bajar rapido o es cualquier otra
+	float skillCoolDown = 20;
+
 
 public:
 

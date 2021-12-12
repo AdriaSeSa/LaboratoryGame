@@ -40,16 +40,16 @@ void PlayerSettings::Reset()
 
 void PlayerSettings::AddScore(int num)
 {
-	int lastScore = playerScore;
+	int to1000 = (playerScore - 1000 * (playerScore / 1000)) + num;
+
 	playerScore += num;
 
-	if (playerScore % 1000 == 0 && playerScore != 0)
+	if ((playerScore % 1000 == 0  || to1000 >= 1000 )&& playerScore != 0)
 	{
 		if (playerLifes < 3)
 		{
 			playerLifes++;
 			_app->ui->CreateUI(1, 20, 8, 1, 2, 3, true, 90, { 0,-1 });
 		}
-		playerLifes < 3 ? playerLifes++ : playerLifes = playerLifes;
 	}
 }

@@ -13,6 +13,7 @@ void GroundSensor::OnCollisionEnter(PhysBody* col)
 	{
 		if(col->gameObject->CompareTag(colObjects[i]))
 		{
+			if (name == "PlayerGSensor" && father->GetLinearVelocity().y >= 0) _app->audio->PlayFx(SFX::GROUND);
 			isOnGround = true;
 		}
 	}

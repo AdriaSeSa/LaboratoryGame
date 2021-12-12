@@ -91,6 +91,7 @@ bool SceneLevel2::Start(bool isReseting)
 /// </summary>
 void SceneLevel2::LoadEnemies()
 {
+	// Get EnemySave node in Xml
 	pugi::xml_node saveNode = _app->saveF.child("game_state").child("scene").child(name.c_str()).child("enemies");
 
 	// Get Enemy node in Xml
@@ -129,6 +130,9 @@ void SceneLevel2::LoadEnemies()
 
 void SceneLevel2::SetEnemiesData()
 {
+	// If doc is not loaded
+	if(!_app->saveF) _app->saveF.load_file(SAVE_STATE_FILENAME);
+
 	// Enemies
 	pugi::xml_node saveNode = _app->saveF.child("game_state").child("scene").child(name.c_str()).child("enemies");
 
@@ -223,16 +227,12 @@ bool SceneLevel2::Update()
 
 	if (_app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 	{
-		_app->LoadGameRequest();
+		//_app->LoadGameRequest();
 	}
-	if (_app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && _app->isDebug)
+	if (_app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
-		reset = true;
-		_app->SaveGameRequest();
-	}
-	if (_app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-	{
-		_app->scene->ChangeCurrentScene(SCENES::LEVEL_2, 0);
+		//reset = true;
+		//_app->SaveGameRequest();
 	}
 
 	gui->Update();

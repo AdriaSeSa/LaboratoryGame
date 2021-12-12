@@ -39,7 +39,7 @@ public:
 
 	GUI* gui = nullptr;
 
-	iPoint playerStartPos = { 40, 567 };
+	iPoint playerStartPos = { 40, 560 };
 
 	bool reset = false;
 

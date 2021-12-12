@@ -40,8 +40,8 @@ public:
 
 	bool Init(pugi::xml_node&);
 	UpdateStatus PreUpdate() override;
-	UpdateStatus Update();
-	UpdateStatus PostUpdate();
+	UpdateStatus Update() override;
+	UpdateStatus PostUpdate() override;
 	bool CleanUp();
 
 	void AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_Rect section = {0,0,0,0}, float scale = 1, int layer = 0, float orderInlayer = 0.0f, float rotation = 0, SDL_RendererFlip flip = SDL_FLIP_NONE, float speed = 1.0f);// Speed = 1.0f = Fullscreen camera

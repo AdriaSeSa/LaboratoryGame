@@ -41,15 +41,18 @@ bool SceneGameOver::Update()
 
     if (_app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
     {
+        _app->audio->PlayFx(SFX::BLIP_SELECT);
         arrowPos.y = arrowPos.y == 250 ? 190 : 250;
     }
     if (_app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
     {
+        _app->audio->PlayFx(SFX::BLIP_SELECT);
         arrowPos.y = arrowPos.y == 190 ? 250 : 190;
     }
 
     if (_app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
+        _app->audio->PlayFx(SFX::SELECT);
         if (arrowPos.y == 190)
         {
             _app->scene->ChangeCurrentScene(_app->scene->lastLevel, true);

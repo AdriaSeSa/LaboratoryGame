@@ -330,6 +330,11 @@ void ChameleonEnemy::CheckFlip()
 
 void ChameleonEnemy::Attack()
 {
+	if(chameleonMode != CHAMELEON_CHASE_MODE)
+	{
+		chameleonMode = CHAMELEON_CHASE_MODE;
+	}
+
 	if (IN_RANGE(currentAnim.getCurrentFrameI(), 6, 7))
 	{
 		attack->enable = true;
@@ -399,6 +404,7 @@ void ChameleonEnemy::GetHit()
 	{
 		if (life == 1)
 		{
+			_app->audio->PlayFx(SFX::ENEMY_HIT);
 			speed = 2;
 			anims[CHAMELEON_RUN].speed = 0.6f;
 			int dir = GetLinearVelocity().x > 0 ? 1 : -1;
@@ -406,6 +412,6 @@ void ChameleonEnemy::GetHit()
 			ChangeSecondTexture();
 		}
 		player->ResetJumpCount();
-		player->Jump();
+		player->Jump(false);
 	}
 }

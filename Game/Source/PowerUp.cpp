@@ -57,6 +57,7 @@ void PowerUp::OnCollisionEnter(PhysBody* col)
 	{
 		if(!collected)
 		{
+			_app->audio->PlayFx(SFX::POWER_UP_COLLECT);
 			renderObjects[0].draw = false;
 			renderObjects[1].draw = true;
 			collected = true;

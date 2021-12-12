@@ -42,7 +42,7 @@ bool ModuleScene::Start()
 	
 	App->audio->PlayMusic("Assets/audio/music/pixelMusic.mp3", 2);
 
-	Mix_VolumeMusic(30);
+	Mix_VolumeMusic(5);
 
 	return ret;
 }
@@ -95,6 +95,8 @@ UpdateStatus ModuleScene::PostUpdate()
 //CleanUp current scene, change current scene (index), Start current Scene
 bool ModuleScene::ChangeCurrentScene(uint index, bool reset)
 {
+	currentSceneState = (SCENES)index;
+
 	if (isChangingScene) return true;
 
 	isChangingScene = true;

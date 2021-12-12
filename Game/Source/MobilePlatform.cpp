@@ -84,7 +84,7 @@ void MobilePlatform::Update()
 
 void MobilePlatform::OnCollisionEnter(PhysBody* col)
 {
-	if (col->gameObject->CompareTag("GroundSensor") && !startMove)
+	if (col->gameObject->CompareTag("Player") && !startMove)
 	{	
 		pBody->body->SetLinearVelocity(startVeclocity);
 		startMove = true;

@@ -2,20 +2,20 @@
 <!-- L01: DONE 1: Create configuration file-->
 <config>
   <app>
-    <title>Game Development Testbed</title>
+    <title>Up!</title>
     <organization>UPC</organization>
   </app>
 
   <renderer>
-    <vsync value="false"/>
+    <vsync value = "true"/>
   </renderer>
 
   <window>
-    <resolution width="640" height="640" scale="2"/>
-    <fullscreen value="false"/>
-    <borderless value="false"/>
-    <resizable value="false"/>
-    <fullscreen_window value="false"/>
+    <resolution width = "640" height = "640" scale = "2"/>
+    <fullscreen value = "false"/>
+    <borderless value = "false"/>
+    <resizable value = "false"/>
+    <fullscreen_window value = "false"/>
   </window>
 
   <textures>
@@ -73,6 +73,18 @@
     <platform width = "16" height = "16" layer = "1" sectionX = "272" sectionY = "32" path = "Assets/textures/Terrain/Terrain(16x16).png"/>
 
   </textures>
+
+  <audios>
+    <playerJump path = "Assets/audio/fx/jump.wav" volum = "15"/>
+    <powerUp path = "Assets/audio/fx/powerUp.wav" volum = "20"/>
+    <checkPoint path = "Assets/audio/fx/checkPoint.wav" volum = "25"/>
+    <jumpBlock path = "Assets/audio/fx/jumpBlock.wav" volum = "15"/>
+    <enemyDie path = "Assets/audio/fx/enemyDie.wav" volum = "15"/>
+    <enemyHit path = "Assets/audio/fx/enemyHit.wav" volum = "30"/>
+    <ground path = "Assets/audio/fx/ground.wav" volum = "10"/>
+    <select path = "Assets/audio/fx/select.wav" volum = "30"/>
+    <blipSelect path = "Assets/audio/fx/blipSelect.wav" volum = "15"/>
+  </audios>
 
   <scenes>
     <level1>

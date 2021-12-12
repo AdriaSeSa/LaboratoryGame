@@ -115,6 +115,9 @@
     <ClCompile Include="Source\GUI.cpp">
       <Filter>SourceFiles\BaseClass</Filter>
     </ClCompile>
+    <ClCompile Include="Source\ModuleDebug.cpp">
+      <Filter>SourceFiles\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -254,6 +257,9 @@
     </ClInclude>
     <ClInclude Include="Source\GUI.h">
       <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleDebug.h">
+      <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

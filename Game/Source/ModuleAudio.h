@@ -6,6 +6,19 @@
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
+enum SFX
+{
+	PLAYER_JUMP,
+	POWER_UP_COLLECT,
+	CHECK_POINT,
+	PLAYER_JUMP_BLOCK,
+	ENEMY_DIE,
+	ENEMY_HIT,
+	GROUND,
+	SELECT,
+	BLIP_SELECT
+};
+
 class ModuleAudio : public Module
 {
 public:

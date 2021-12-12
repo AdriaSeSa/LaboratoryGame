@@ -1,4 +1,5 @@
 #include "Application.h"
+#include <iostream>
 
 Application::Application()
 {
@@ -11,6 +12,7 @@ Application::Application()
 	scene = new ModuleScene(this);
 	ui = new ModuleUI(this);
 	map = new ModuleMap(this);
+	debug = new ModuleDebug(this);
 
 	// The order of calls is very important!
 	// Modules will Init() Start() and Update in this order
@@ -19,6 +21,7 @@ Application::Application()
 	// Main Modules
 	AddModule(window);
 	AddModule(input);
+	AddModule(debug);
 	AddModule(physics);
 
 	// Game Logic
@@ -78,7 +81,7 @@ bool Application::Init()
 		item = item->next;
 	}
 
-	LoadGameRequest();
+	//LoadGameRequest();
 
 	return ret;
 }
@@ -86,6 +89,8 @@ bool Application::Init()
 // Call PreUpdate, Update and PostUpdate on all modules
 UpdateStatus Application::Update()
 {
+	double startFrame = SDL_GetPerformanceCounter();
+
 	if (isExiting) return UPDATE_STOP;
 	OPTICK_EVENT();
 	UpdateStatus ret = UPDATE_CONTINUE;
@@ -125,14 +130,19 @@ UpdateStatus Application::Update()
 
 	deltaTime = globalTime.getDeltaTime();
 
-	if (deltaTime <= FRAME_TIME)
+	if (deltaTime <= frameTime)
 	{
-		sleepTime = (FRAME_TIME - deltaTime) * 1000;
+		sleepTime = (frameTime - deltaTime) * 1000;
 		Sleep(sleepTime);
 	}
 
+	// Update info for title
+	UpdateTitle();
+
+	// Resete timer
 	globalTime.Reset();
 
+	// Test func
 	ShowTime();
 
 	return ret;
@@ -252,4 +262,26 @@ bool Application::SaveGame()
 	saveGameRequested = false;
 
 	return ret;
+}
+
+void Application::UpdateTitle()
+{
+	// Update globalTime
+	globalTime.Update();
+
+	dt = globalTime.getDeltaTime();
+
+	double fps = 1 / dt;
+
+	averageFps = (averageFps + fps) / 2;
+
+	string printTitle;
+
+	printTitle = title + " | FPS: " + to_string(fps) +
+		" | Avg.FPS: " + to_string(averageFps) +
+		" | Last dt: " + to_string(dt * 1000) +
+		"ms | Vsync: " + vsync;
+
+	// Print new title
+	window->SetTitle(printTitle.c_str());
 }

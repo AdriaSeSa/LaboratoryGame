@@ -88,7 +88,7 @@ public:
 
 	void ResetJumpCount(int count = 2);
 
-	void Jump();
+	void Jump(bool playSFX = true);
 
 	void PlayerAppear();
 

@@ -88,8 +88,6 @@ public:
 	
 	void Pause(bool pause);
 
-	bool isPause() const;
-
 	void BeginContact(b2Contact* contact) override;
 	void EndContact(b2Contact* contact) override;
 
@@ -99,5 +97,5 @@ private:
 	b2Body* mouseBody = nullptr;
 	b2MouseJoint* mouseJoint = nullptr;
 	bool debug;
-	bool pause = false;
+	bool physPause = false;
 };

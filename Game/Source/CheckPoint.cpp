@@ -99,6 +99,7 @@ void CheckPoint::OnCollisionEnter(PhysBody* col)
 		_app->saveF.child("game_state").child("scene").child(_app->scene->currentScene->name.c_str()).child("checkPoint").attribute("isActive") = "true";
 		if (currentState == IDLE_NO_FLAG)
 		{
+			_app->audio->PlayFx(SFX::CHECK_POINT);
 			currentState = GET_CHECKPOINT;
 		}
 	}

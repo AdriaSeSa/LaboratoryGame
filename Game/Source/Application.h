@@ -11,6 +11,7 @@
 #include "ModuleScene.h"
 #include "ModuleUI.h"
 #include "ModuleMap.h"
+#include "ModuleDebug.h"
 
 #include "Timer.h"
 #include "Optick/include/optick.h"
@@ -33,13 +34,18 @@ public:
 	ModuleScene* scene;
 	ModuleUI* ui;
 	ModuleMap* map;
+	ModuleDebug* debug;
 
 	Timer globalTime;
 
-	bool isDebug = false;
+	//bool isDebug = false;
 
 	std::string title;
 	std::string organization;
+	float averageFps = 0.0f;
+	float dt = 0.0f;
+	float frameTime = 1.0f / 60.0f;
+	string vsync = "false";
 
 	mutable bool saveGameRequested;
 	bool loadGameRequested;
@@ -76,10 +82,11 @@ public:
 	bool FullScreenDesktop = true;
 
 private:
-
 	// Load / Save
 	bool LoadGame();
 	bool SaveGame();
+
+	void UpdateTitle();
 
 	float deltaTime, sleepTime;
 

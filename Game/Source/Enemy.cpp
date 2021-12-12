@@ -19,16 +19,18 @@ void Enemy::Die()
 	if(player!=nullptr)
 	{
 		player->ResetJumpCount();
-		player->Jump();
+		player->Jump(false);
 	}
 
-	// Play Die Animation && Give score && call CleanUp()
-	isDie = true;
-	SetLinearVelocity(iPoint{ 0,0 });
-
-	_app->scene->playerSettings->AddScore(score);
-	_app->ui->CreateUI(score, GetPosition().x - 5, GetPosition().y, 0.3f, 2, 0, true, 90, { 0,-1 });
-
+	if (!isDie)
+	{
+		// Play Die Animation && Give score
+		isDie = true;
+		_app->audio->PlayFx(SFX::ENEMY_DIE);
+		SetLinearVelocity(iPoint{ 0, 0});
+		_app->scene->playerSettings->AddScore(score);
+		_app->ui->CreateUI(score, GetPosition().x - 5, GetPosition().y, 0.3f, 2, 0, true, 90, { 0,-1 });
+	}
 }
 
 iPoint Enemy::GetPathDirection(iPoint destination)
@@ -42,9 +44,21 @@ iPoint Enemy::GetPathDirection(iPoint destination)
 	{
 		return iPoint(0, 0);
 	}
-	
+
 	if (pathFinding->CreatePath(_app->map->WorldToMap(GetPosition()), _app->map->WorldToMap(destination)) == -1) return iPoint(0,0);
-	
+
+	if(_app->debug->debugCollisionView)
+	{
+		const DynArray<iPoint>* path = pathFinding->GetLastPath();
+
+		for (size_t i = 0; i < path->Count(); i++)
+		{
+			iPoint pos = _app->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+
+			_app->renderer->AddRectRenderQueue(SDL_Rect{ pos.x, pos.y, 16, 16 }, 255, 0, 0, 100, 3);
+		}
+	}
+
 	iPoint direction;
 
 	// Get first step on Pathfinding
@@ -66,7 +80,7 @@ iPoint Enemy::GetPathDirection(iPoint destination)
 
 	// If direction is diagonal...
 	if (abs(direction.x) == abs(direction.y))
-	{	
+	{
 		iPoint directionX =  iPoint(direction.x, 0) + _app->map->WorldToMap(GetPosition());
 		iPoint directionY = iPoint(0, direction.y) + _app->map->WorldToMap(GetPosition());
 
@@ -76,7 +90,7 @@ iPoint Enemy::GetPathDirection(iPoint destination)
 			// Move diagonally
 			return direction.Normalize();
 		}
-		else 
+		else
 		{
 			// If they are not, return the next step and proceed normally
 			direction = firstStep - _app->map->WorldToMap(GetPosition());

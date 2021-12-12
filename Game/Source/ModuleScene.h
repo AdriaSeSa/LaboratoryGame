@@ -61,6 +61,8 @@ public:
 
 	Scene* currentScene = nullptr;
 
+	SCENES currentSceneState = MAIN_MENU;
+
 	Scene* scenes[SCENES_NUM] = { nullptr };
 
 	SDL_Scancode debugKeys[SCENES_NUM] = { SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3, SDL_SCANCODE_4

@@ -25,7 +25,7 @@ void Camera::Update()
 {
 	UpdatePosition();
 
-	if (!App->isDebug) return;
+	if (!App->debug->debugCamera) return;
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{

@@ -24,18 +24,19 @@ bool ModuleRender::Init(pugi::xml_node& config)
 {
 	LOG("Creating Renderer context");
 	bool ret = true;
-	Uint32 flags = 0;
+	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
 	this->config = config;
 
-	if(VSYNC == true)
+	if (config.child("vsync").attribute("value").as_bool(false))
 	{
+		App->vsync = "true";
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 	}
 
 	renderer = SDL_CreateRenderer(App->window->window, -1, flags);
 	
-	if(renderer == NULL)
+	if (renderer == NULL)
 	{
 		LOG("Renderer could not be created! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
@@ -82,7 +83,7 @@ UpdateStatus ModuleRender::PostUpdate()
 		}
 	}
 
-	if (App->isDebug)
+	if (App->debug->debugCollisionView)
 	{
 		App->physics->ShapesRender();
 	}

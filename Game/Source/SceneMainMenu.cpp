@@ -83,25 +83,25 @@ void SceneMainMenu::InitTextures()
     selectLevelTextures.add(sl);
     selectLevelTextures.add(l1);
     selectLevelTextures.add(l2);
-    
-
 }
 
 void SceneMainMenu::MoveArrow()
 {
     if (_app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
     {
+        _app->audio->PlayFx(SFX::BLIP_SELECT);
         // If we are at the last position of arrowPositions, we go back to the beginning. if not, we advance one position.
         currentArrowPos == arrowPositions.count()-1 ? currentArrowPos = 0 : currentArrowPos++;
     }
     if (_app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
     {
+        _app->audio->PlayFx(SFX::BLIP_SELECT);
         // If we are at the first position of arrowPositions, we go forward to the end. if not, we go back one position.
         currentArrowPos == 0 ? currentArrowPos = arrowPositions.count()-1 : currentArrowPos--;
     }
-
     if (_app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
     {
+        _app->audio->PlayFx(SFX::SELECT);
         SelectOption();
         //arrowSection = { 32,0,32,32 };
     }
@@ -161,8 +161,6 @@ bool SceneMainMenu::PostUpdate()
         else  _app->renderer->AddTextureRenderQueue(arrow, arrowPositions[currentArrowPos] + iPoint(arrowAnimOffset/4, 0), arrowSection, 1, 2, 1);
     }
        
-   
-
     for (int i = 0; i < currentTextures.count(); i++)
     {
         // Make currentTextures a List<RenderObjects> and use that to render

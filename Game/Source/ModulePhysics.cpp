@@ -34,17 +34,81 @@ bool ModulePhysics::Start()
  
 UpdateStatus ModulePhysics::PreUpdate()
 {
-	if(!pause)
-	world->Step(1.0f / 60, 6, 2);
+	if(!App->debug->debugPause && !physPause)
+	world->Step(App->frameTime, 6, 2);
 
 	return UPDATE_CONTINUE;
 }
 
 UpdateStatus ModulePhysics::Update()
 {
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	return UPDATE_CONTINUE;
+}
+
+UpdateStatus ModulePhysics::PostUpdate()
+{
+	if (!App->debug->debugTakeObject)
+		return UPDATE_CONTINUE;
+
+	// If mouse button 1 is pressed ...
+	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
 	{
-		Pause(!pause);
+		if (b->GetType() != b2BodyType::b2_dynamicBody) continue;
+
+		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
+		{
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
+			{
+				PhysBody* pBody = (PhysBody*)b->GetUserData();
+
+				// test if the current body contains mouse position
+				if (pBody && pBody->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
+				{
+					b2MouseJointDef def;
+					def.bodyA = mouseBody;
+					def.bodyB = pBody->body;
+					def.target = b2Vec2(PIXELS_TO_METER(App->input->GetMouseX()), PIXELS_TO_METER(App->input->GetMouseY()));
+					def.dampingRatio = 0.5f;
+					def.frequencyHz = 2.0f;
+					def.maxForce = 100.0f * pBody->body->GetMass();
+					mouseJoint = (b2MouseJoint*)world->CreateJoint(&def);
+				}
+			}
+
+			bool hasMouseJoint = false;
+			b2JointEdge* tempJoint = b->GetJointList();
+
+			while (tempJoint != nullptr)
+			{
+				if (tempJoint->joint == mouseJoint)
+				{
+					hasMouseJoint = true;
+				}
+				tempJoint = tempJoint->next;
+			}
+
+			if (!hasMouseJoint) break;
+
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && b->GetJointList() != nullptr && mouseJoint != nullptr)
+			{
+				b2Vec2 nextPos = { (float)App->input->GetMouseX(),(float)App->input->GetMouseY() };
+
+				nextPos.x = PIXELS_TO_METER(nextPos.x);
+				nextPos.y = PIXELS_TO_METER(nextPos.y);
+
+				mouseJoint->SetTarget(nextPos);
+				// -------------------------------------------
+				/*App->renderer->DrawLine(METERS_TO_PIXELS(mouseJoint->GetAnchorA().x), METERS_TO_PIXELS(mouseJoint->GetAnchorA().y),
+					METERS_TO_PIXELS(mouseJoint->GetAnchorB().x), METERS_TO_PIXELS(mouseJoint->GetAnchorB().y),
+					255, 0, 0);*/
+			}
+
+			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && b->GetJointList() != nullptr && mouseJoint != nullptr)
+			{
+				world->DestroyJoint(mouseJoint);
+				mouseJoint = nullptr;
+			}
+		}
 	}
 
 	return UPDATE_CONTINUE;
@@ -241,12 +305,7 @@ void ModulePhysics::DotProductAngle(b2Vec2 v1, b2Vec2 v2, float& angle)
 
 void ModulePhysics::Pause(bool pause)
 {
-	this->pause = pause;
-}
-
-bool ModulePhysics::isPause() const
-{
-	return pause;
+	physPause = pause;
 }
 
 void ModulePhysics::BeginContact(b2Contact* contact)
@@ -382,75 +441,6 @@ void ModulePhysics::ShapesRender()
 			}
 		}
 	}
-}
-
-UpdateStatus ModulePhysics::PostUpdate()
-{
-	if (!App->isDebug)
-		return UPDATE_CONTINUE;
-
-	// If mouse button 1 is pressed ...
-	for (b2Body* b = world->GetBodyList(); b; b = b->GetNext())
-	{
-		if (b->GetType() != b2BodyType::b2_dynamicBody) continue;
-
-		for (b2Fixture* f = b->GetFixtureList(); f; f = f->GetNext())
-		{
-			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_DOWN)
-			{
-				PhysBody* pBody = (PhysBody*)b->GetUserData();
-
-				// test if the current body contains mouse position
-				if (pBody && pBody->Contains(App->input->GetMouseX(), App->input->GetMouseY()))
-				{
-					b2MouseJointDef def;
-					def.bodyA = mouseBody;
-					def.bodyB = pBody->body;
-					def.target = b2Vec2(PIXELS_TO_METER(App->input->GetMouseX()), PIXELS_TO_METER(App->input->GetMouseY()));
-					def.dampingRatio = 0.5f;
-					def.frequencyHz = 2.0f;
-					def.maxForce = 100.0f * pBody->body->GetMass();
-					mouseJoint = (b2MouseJoint*)world->CreateJoint(&def);
-				}
-			}
-
-			bool hasMouseJoint = false;
-			b2JointEdge* tempJoint = b->GetJointList();
-
-			while (tempJoint != nullptr)
-			{
-				if (tempJoint->joint == mouseJoint)
-				{
-					hasMouseJoint = true;
-				}
-				tempJoint = tempJoint->next;
-			}
-
-			if (!hasMouseJoint) break;
-
-			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_REPEAT && b->GetJointList() != nullptr && mouseJoint != nullptr)
-			{
-				b2Vec2 nextPos = { (float)App->input->GetMouseX(),(float)App->input->GetMouseY() };
-
-				nextPos.x = PIXELS_TO_METER(nextPos.x);
-				nextPos.y = PIXELS_TO_METER(nextPos.y);
-
-				mouseJoint->SetTarget(nextPos);
-				// -------------------------------------------
-				/*App->renderer->DrawLine(METERS_TO_PIXELS(mouseJoint->GetAnchorA().x), METERS_TO_PIXELS(mouseJoint->GetAnchorA().y),
-					METERS_TO_PIXELS(mouseJoint->GetAnchorB().x), METERS_TO_PIXELS(mouseJoint->GetAnchorB().y),
-					255, 0, 0);*/
-			}
-
-			if (App->input->GetMouseButton(SDL_BUTTON_LEFT) == KEY_UP && b->GetJointList() != nullptr && mouseJoint != nullptr)
-			{
-				world->DestroyJoint(mouseJoint);
-				mouseJoint = nullptr;
-			}
-		}
-	}
-
-	return UPDATE_CONTINUE;
 }
 
 // Called before quitting

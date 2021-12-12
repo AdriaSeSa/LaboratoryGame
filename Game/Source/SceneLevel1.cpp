@@ -30,7 +30,7 @@ bool SceneLevel1::Start(bool isReseting)
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
-	specialPlatform = new SpecialPlatform({ 185, 82 }, "specialPlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
+	specialPlatform = new SpecialPlatform({ 185, 85}, "specialPlatform", "MobilePlatform", _app, 7, { 0, 600 }, 0.5f, 500);
 
 	checkPoint = new CheckPoint({ 160, 68 }, "checkPoint", "CheckPoint", _app);
 
@@ -130,14 +130,10 @@ bool SceneLevel1::Update()
 	{
 		_app->LoadGameRequest();
 	}
-	if (_app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && _app->isDebug)
+	if (_app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
 		reset = true;
 		_app->SaveGameRequest();
-	}
-	if (_app->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-	{
-		_app->scene->ChangeCurrentScene(SCENES::LEVEL_1, 0);
 	}
 
 	gui->Update();

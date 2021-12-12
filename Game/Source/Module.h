@@ -2,6 +2,7 @@
 #define _MODULE_H_
 
 #include "External/PugiXml/src/pugixml.hpp"
+#include "Globals.h"
 
 class Application;
 class PhysBody;
@@ -12,7 +13,6 @@ private :
 	bool enabled;
 
 public:
-
 	Application* App;
 
 	std::string name;

@@ -6,7 +6,7 @@
 
 ModuleAudio::ModuleAudio(Application* app, bool start_enabled) : Module(app, start_enabled), music(NULL)
 {
-	name= "audio";
+	name= "audios";
 }
 
 // Destructor
@@ -43,6 +43,16 @@ bool ModuleAudio::Init(pugi::xml_node& config)
 	{
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		ret = false;
+	}
+
+	// Load all SFX
+	for (pugi::xml_node audio = config.first_child(); audio; audio = audio.next_sibling())
+	{
+		string path = audio.attribute("path").as_string("null");
+
+		LoadFx(path.c_str());
+
+		fx.end->data->volume = audio.attribute("volum").as_int(10);
 	}
 
 	return ret;
@@ -166,9 +176,9 @@ bool ModuleAudio::PlayFx(unsigned int id, int repeat)
 	}
 	*/
 
-	if (fx.find(fx[id - 1]) != -1)
+	if (fx.find(fx[id]) != -1)
 	{
-		Mix_PlayChannel(-1, fx[id - 1], repeat);
+		Mix_PlayChannel(-1, fx[id], repeat);
 		ret = true;
 	}
 

@@ -170,6 +170,8 @@ void Player::Update()
 	//	pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, (float)gravityScale/2});
 	//}
 
+	if (_app->debug->debugPause) return;
+
 	pBody->body->SetLinearVelocity({ relativeVelocity_X , pBody->body->GetLinearVelocity().y });
 
 	// God Mode
@@ -385,6 +387,11 @@ void Player::OnCollisionExit(PhysBody* col)
 
 void Player::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
 {
+	if (col->gameObject->name == "specialPlatform")
+	{
+		jumpBlock = true;
+	}
+
 	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
 	{
 		Die();
@@ -441,7 +448,7 @@ void Player::ResetJumpCount(int count)
 	jumpCount = count;
 }
 
-void Player::Jump()
+void Player::Jump(bool playSFX)
 {
 	if (godMod)
 	{
@@ -449,11 +456,17 @@ void Player::Jump()
 	}
 	else if (jumpCount != 0 && !jumpBlock)
 	{
+		if(playSFX) _app->audio->PlayFx(SFX::PLAYER_JUMP);	
+
 		groundSensor->SetOffGround();
 
 		pBody->body->SetLinearVelocity({ pBody->body->GetLinearVelocity().x, -jumpForce });
 
 		jumpCount--;
+	}
+	else if(jumpBlock)
+	{
+		_app->audio->PlayFx(SFX::PLAYER_JUMP_BLOCK);
 	}
 }
 

@@ -36,6 +36,18 @@ bool SceneLevel2::Start(bool isReseting)
 
 	player = new Player({ 32,32 }, "player", "Player", _app);
 
+	// Create test fruits
+	std::string fuits[8] = { "apple","bananas","cherries","kiwi","melon","orange","pineapple","strawberry" };
+
+	// Create test powerUps
+	for (int i = 0; i < 15; i++)
+	{
+		PowerUp* g;
+		g = new PowerUp(fruitsPos[i], fuits[rand() % 8], "PowerUp", _app);
+
+		gameObjects.add(g);
+	}
+
 	// Init scene with tmx metaDate
 	InitScene();
 
@@ -223,12 +235,12 @@ bool SceneLevel2::Update()
 		_app->scene->ChangeCurrentScene(SCENES::LEVEL_2, 0);
 	}
 
+	gui->Update();
+
 	if(isWin)
 	{
 		Win();
 	}
-
-	gui->Update();
 
 	return true;
 }

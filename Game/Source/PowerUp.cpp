@@ -61,7 +61,7 @@ void PowerUp::OnCollisionEnter(PhysBody* col)
 			renderObjects[1].draw = true;
 			collected = true;
 			_app->scene->playerSettings->AddScore(100);
-			_app->ui->CreateUI(100, GetPosition().x-6, GetPosition().y, 0.2f, 2, 0, true, 90, { 0,-1 });
+			_app->ui->CreateUI(100, GetPosition().x-6, GetPosition().y, 0.2f, 2, 0, true, 60, { 0,-1 });
 		}
 	}
 }

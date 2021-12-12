@@ -186,7 +186,7 @@ void Player::Update()
 	{
 		pBody->SetSensor(false);
 	}
-	printf("%f\n", skillCoolDown);
+
 	// Fall faster
 	if ((_app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
 		&& skillCoolDown <= 0)

@@ -38,10 +38,10 @@ bool SceneLevel1::Start(bool isReseting)
 	std::string fuits[8] = { "apple","bananas","cherries","kiwi","melon","orange","pineapple","strawberry" };
 
 	// Create test powerUps
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		PowerUp* g;
-		g = new PowerUp({ 80 + 20 * i, 40 }, fuits[i], "PowerUp", _app);
+		g = new PowerUp(fruitsPos[i], fuits[rand() % 8], "PowerUp", _app);
 
 		gameObjects.add(g);
 	}
@@ -140,12 +140,12 @@ bool SceneLevel1::Update()
 		_app->scene->ChangeCurrentScene(SCENES::LEVEL_1, 0);
 	}
 
+	gui->Update();
+
 	if (isWin)
 	{
 		Win();
 	}
-
-	gui->Update();
 
 	return true;
 }

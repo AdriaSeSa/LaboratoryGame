@@ -6,6 +6,7 @@
 #include "BatEnemy.h"
 #include "ChameleonEnemy.h"
 #include "PlayerSettings.h"
+#include "GUI.h"
 
 SceneLevel2::SceneLevel2(Application* app, string name) :Scene(app, name)
 {
@@ -66,6 +67,9 @@ bool SceneLevel2::Start(bool isReseting)
 			gameObjects[i]->Start();
 		}
 	}
+
+	// Init GUI
+	gui = new GUI(0, _app);
 
 	return true;
 }
@@ -224,6 +228,8 @@ bool SceneLevel2::Update()
 		Win();
 	}
 
+	gui->Update();
+
 	return true;
 }
 
@@ -236,6 +242,9 @@ bool SceneLevel2::PostUpdate()
 			gameObjects[i]->PostUpdate();
 		}
 	}
+
+	gui->PostUpdate();
+
 	return true;
 }
 
@@ -247,6 +256,8 @@ bool SceneLevel2::CleanUp()
 	{
 		_app->renderer->camera->ReleaseTarget();
 	}
+
+	RELEASE(gui);
 
 	_app->map->CleanUp();
 

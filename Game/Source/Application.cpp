@@ -182,7 +182,6 @@ bool Application::LoadSaveFile()
 
 void Application::ExitGame()
 {
-	//SaveGameRequest();
 	isExiting = true;
 }
 

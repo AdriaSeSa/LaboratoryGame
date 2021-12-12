@@ -98,6 +98,7 @@
     <ClCompile Include="Source\FireTrap.cpp" />
     <ClCompile Include="Source\GameObject.cpp" />
     <ClCompile Include="Source\GroundSensor.cpp" />
+    <ClCompile Include="Source\GUI.cpp" />
     <ClCompile Include="Source\HitboxSensor.cpp" />
     <ClCompile Include="Source\Log.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="Source\GameObject.h" />
     <ClInclude Include="Source\Globals.h" />
     <ClInclude Include="Source\GroundSensor.h" />
+    <ClInclude Include="Source\GUI.h" />
     <ClInclude Include="Source\HitboxSensor.h" />
     <ClInclude Include="Source\List.h" />
     <ClInclude Include="Source\MobilePlatform.h" />

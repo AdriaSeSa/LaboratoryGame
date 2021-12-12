@@ -5,6 +5,7 @@ class Saw;
 class Player;
 class CheckPoint;
 class PowerUp;
+class GUI;
 
 class SceneLevel2 : public Scene
 {
@@ -38,6 +39,8 @@ public:
 	CheckPoint* checkPoint = nullptr;
 
 	iPoint playerStartPos = { 40, 594 };
+
+	GUI* gui;
 
 	bool reset = false;
 };

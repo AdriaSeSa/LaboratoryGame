@@ -1,4 +1,7 @@
 #pragma once
+
+class Application;
+
 class PlayerSettings
 {
 private:
@@ -7,13 +10,17 @@ private:
 	PlayerSettings();
 	~PlayerSettings();
 
+	Application* _app;
+
 public:
 
-	static PlayerSettings* Instance();
+	static PlayerSettings* Instance(Application* app);
 
 	static void Release();
 
 	void Reset();
+
+	void AddScore(int num);
 
 public:
 

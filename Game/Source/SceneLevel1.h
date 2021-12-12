@@ -7,6 +7,7 @@ class Player;
 class CheckPoint;
 class PowerUp;
 class SpecialPlatform;
+class GUI;
 
 class SceneLevel1 :  public Scene
 {
@@ -35,6 +36,8 @@ public:
 	CheckPoint* checkPoint = nullptr;
 
 	SpecialPlatform* specialPlatform = nullptr;
+
+	GUI* gui = nullptr;
 
 	iPoint playerStartPos = { 40, 567 };
 

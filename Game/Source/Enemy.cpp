@@ -25,6 +25,10 @@ void Enemy::Die()
 	// Play Die Animation && Give score && call CleanUp()
 	isDie = true;
 	SetLinearVelocity(iPoint{ 0,0 });
+
+	_app->scene->playerSettings->AddScore(score);
+	_app->ui->CreateUI(score, GetPosition().x - 5, GetPosition().y, 0.3f, 2, 0, true, 90, { 0,-1 });
+
 }
 
 iPoint Enemy::GetPathDirection(iPoint destination)

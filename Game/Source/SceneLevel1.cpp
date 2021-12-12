@@ -6,6 +6,7 @@
 #include "PowerUp.h"
 #include "SpecialPlatform.h"
 #include "PlayerSettings.h"
+#include "GUI.h"
 
 SceneLevel1::SceneLevel1(Application* app, string name) :Scene(app, name)
 {
@@ -68,6 +69,10 @@ bool SceneLevel1::Start(bool isReseting)
 			gameObjects[i]->Start();
 		}
 	}
+
+	// Init GUI
+
+	gui = new GUI(PlayerCharacters::VIRTUAL_GUY, _app);
 
 	return true;
 }
@@ -140,6 +145,8 @@ bool SceneLevel1::Update()
 		Win();
 	}
 
+	gui->Update();
+
 	return true;
 }
 
@@ -152,6 +159,9 @@ bool SceneLevel1::PostUpdate()
 			gameObjects[i]->PostUpdate();
 		}
 	}
+
+	gui->PostUpdate();
+
 	return true;
 }
 
@@ -163,6 +173,8 @@ bool SceneLevel1::CleanUp()
 	{
 		_app->renderer->camera->ReleaseTarget();
 	}
+
+	RELEASE(gui);
 	
 	_app->map->CleanUp();
 

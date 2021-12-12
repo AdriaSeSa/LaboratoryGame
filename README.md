@@ -10,15 +10,25 @@ WASD for movement
 
 SPACE for jump
 
-F1 show collisions
+S for falling faster (special ability, kills enemies on one hit)
+
+## Debug Keys
+
+F1 Charge Level 1
+
+F2 Charge Level 2
+
+F3 Charge current level
+
+F5 Save State
+
+F6 Load State
+
+F9 Show Collisions/Logic/Pathfinding
 
 F10 God mode (unkillable and infinite jump)
 
-L to load save file
-
-F5 Reset save file
-
-F4 for recharge scene
+F11 Toggle framerate 60/30 fps
 
 ## Developers
 

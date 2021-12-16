@@ -1,6 +1,5 @@
 #pragma once
 
-#include "SDL/include/SDL.h"
 #include "Application.h"
 
 #define CHARACTERS_NUM 1

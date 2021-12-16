@@ -237,7 +237,6 @@ void Player::UpdatePlayerState()
 		playerCurrentState = FALL;
 		return;
 	}
-
 	if (pBody->body->GetLinearVelocity().y < -fallDetection)
 	{
 		if (jumpCount != 0)
@@ -391,12 +390,10 @@ void Player::OnTriggerEnter(PhysBody* trigger, PhysBody* col)
 	{
 		jumpBlock = true;
 	}
-
 	if (col->gameObject->name == "spike" || col->gameObject->name == "saw")
 	{
 		Die();
 	}
-
 	if (col->gameObject->name == "bat" || col->gameObject->name == "chameleon")
 	{
 		if (!col->gameObject->isDie)

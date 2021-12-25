@@ -15,7 +15,7 @@
 class itemUI
 {
 public:
-	std::vector<int> digitVec = { 0 };
+	std::vector<int> digitVec;
 	float digitScale = 0;
 	int totalDigits = 0;
 

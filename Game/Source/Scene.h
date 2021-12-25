@@ -14,9 +14,9 @@ protected:
 
 	Application* _app = nullptr;
 
-	List<GameObject*> gameObjects = { nullptr };
+	List<GameObject*> gameObjects;
 
-	List<SDL_Texture*> sceneTextures = { nullptr };
+	List<SDL_Texture*> sceneTextures;
 
 public:
 	// Constructor

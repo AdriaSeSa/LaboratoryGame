@@ -92,9 +92,9 @@ protected:
 	Application* _app = nullptr;
 
 public:
-	std::string name;
+	std::string name = "";
 
-	std::string tag;
+	std::string tag = "";
 
 	PhysBody* pBody = nullptr;
 

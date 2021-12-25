@@ -134,6 +134,7 @@ uint ModuleUI::CreateUI(int num, int x, int y, float scale, int layer, float ord
 
 void ModuleUI::DestroyUI(uint index)
 {
+	//if (uiArray[index] == nullptr)return;
 	delete uiArray[index];
 	uiArray[index] = nullptr;
 }

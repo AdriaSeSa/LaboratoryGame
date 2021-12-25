@@ -41,7 +41,7 @@ public:
 private:
 
 	Mix_Music*			music = nullptr;
-	List<Mix_Chunk*>	fx = { nullptr };
+	List<Mix_Chunk*>	fx;
 };
 
 #endif // __ModuleAudio_H__

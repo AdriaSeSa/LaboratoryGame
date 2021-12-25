@@ -70,9 +70,9 @@ public:
 
 	bool isChangingScene = false;
 
-	int playerX, playerY;
+	int playerX, playerY = 0;
 
-	int lastLevel;
+	int lastLevel = 0;
 
 	PlayerSettings* playerSettings = nullptr;
 };

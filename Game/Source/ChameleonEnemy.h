@@ -19,13 +19,13 @@ enum CHAMELEON_MODE
 class ChameleonEnemy :  public Enemy
 {
 private:
-	HitboxSensor* detectionSensor;
+	HitboxSensor* detectionSensor = nullptr;
 
-	HitboxSensor* attack;
+	HitboxSensor* attack = nullptr;
 
 	Animation anims[5];
 
-	CHAMELEON_STATE chameleonState;
+	CHAMELEON_STATE chameleonState = CHAMELEON_IDLE;
 
 	CHAMELEON_MODE chameleonMode = CHAMELEON_GUARD_MODE;
 

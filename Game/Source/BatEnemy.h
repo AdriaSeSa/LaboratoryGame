@@ -14,9 +14,9 @@ enum BAT_STATE
 class BatEnemy : public Enemy
 {
 private:
-	iPoint initialPos;
+	iPoint initialPos = { 0,0 };
 
-	HitboxSensor* detectionSensor;
+	HitboxSensor* detectionSensor = nullptr;
 
 	int detectionRadius = 140;
 

@@ -36,9 +36,9 @@ public:
 	bool HasPlayerIn();
 
 private:
-	iPoint startPos;
+	iPoint startPos = {0,0};
 
-	HitboxSensor* hitBox;
+	HitboxSensor* hitBox = nullptr;
 
 	// Controlado por si mismo o por un script externo
 	bool isController = true;
@@ -52,4 +52,3 @@ private:
 
 	Player* player = nullptr;
 };
-

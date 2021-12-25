@@ -33,14 +33,14 @@ public:
 
 private:
 
-	unsigned int size;
+	unsigned int size = 0;
 
 public:
 
 	// Constructor
 	inline List()
 	{
-		start = end = NULL;
+		start = end = nullptr;
 		size = 0;
 	}
 
@@ -59,10 +59,10 @@ public:
 	// Add new item
 	ListItem<tdata>* add(const tdata& item)
 	{
-		ListItem<tdata>* dataItem;
+		ListItem<tdata>* dataItem = nullptr;
 		dataItem = new ListItem<tdata>(item);
 
-		if(start == NULL)
+		if(start == nullptr)
 		{
 			start = end = dataItem;
 		}
@@ -80,17 +80,17 @@ public:
 	// Deletes an item from the list
 	bool del(ListItem<tdata>* item)
 	{
-		if(item == NULL)
+		if(item == nullptr)
 		{
 			return (false);
 		}
 
 		// Now reconstruct the list
-		if(item->prev != NULL)
+		if(item->prev != nullptr)
 		{
 			item->prev->next = item->next;
 
-			if(item->next != NULL)
+			if(item->next != nullptr)
 			{
 				item->next->prev = item->prev;
 			}
@@ -103,12 +103,12 @@ public:
 		{
 			if(item->next)
 			{
-				item->next->prev = NULL;
+				item->next->prev = nullptr;
 				start = item->next;
 			}
 			else
 			{
-				start = end = NULL;
+				start = end = nullptr;
 			}
 		}
 
@@ -120,17 +120,17 @@ public:
 	// Remove an itrm from the list
 	bool remove(ListItem<tdata>* item)
 	{
-		if (item == NULL)
+		if (item == nullptr)
 		{
 			return (false);
 		}
 
 		// Now reconstruct the list
-		if (item->prev != NULL)
+		if (item->prev != nullptr)
 		{
 			item->prev->next = item->next;
 
-			if (item->next != NULL)
+			if (item->next != nullptr)
 			{
 				item->next->prev = item->prev;
 			}
@@ -143,12 +143,12 @@ public:
 		{
 			if (item->next)
 			{
-				item->next->prev = NULL;
+				item->next->prev = nullptr;
 				start = item->next;
 			}
 			else
 			{
-				start = end = NULL;
+				start = end = nullptr;
 			}
 		}
 		RELEASE(item);
@@ -158,17 +158,17 @@ public:
 
 	bool delPtr(ListItem<tdata>* item)
 	{
-		if (item == NULL)
+		if (item == nullptr)
 		{
 			return (false);
 		}
 
 		// Now reconstruct the list
-		if (item->prev != NULL)
+		if (item->prev != nullptr)
 		{
 			item->prev->next = item->next;
 
-			if (item->next != NULL)
+			if (item->next != nullptr)
 			{
 				item->next->prev = item->prev;
 			}
@@ -181,12 +181,12 @@ public:
 		{
 			if (item->next)
 			{
-				item->next->prev = NULL;
+				item->next->prev = nullptr;
 				start = item->next;
 			}
 			else
 			{
-				start = end = NULL;
+				start = end = nullptr;
 			}
 		}
 
@@ -199,8 +199,8 @@ public:
 	// Destroy and free all mem
 	void clear()
 	{
-		ListItem<tdata>*   p_data;
-		ListItem<tdata>*   p_next;
+		ListItem<tdata>*   p_data = nullptr;
+		ListItem<tdata>*   p_next = nullptr;
 		p_data = start;
 
 		while(p_data != NULL)
@@ -210,7 +210,7 @@ public:
 			p_data = p_next;
 		}
 
-		start = end = NULL;
+		start = end = nullptr;
 		size = 0;
 	}
 
@@ -221,7 +221,7 @@ public:
 		ListItem<tdata>* p_next = nullptr;
 		p_data = start;
 
-		while (p_data != NULL)
+		while (p_data != nullptr)
 		{
 			p_next = p_data->next;
 			RELEASE(p_data->data);
@@ -229,19 +229,19 @@ public:
 			p_data = p_next;
 		}
 
-		start = end = NULL;
+		start = end = nullptr;
 		size = 0;
 	}
 
 	// Read/write operator access directly to a position in the list
 	tdata& operator [](const unsigned int index)
 	{
-		long pos;
-		ListItem<tdata>* p_item;
+		long pos = 0;
+		ListItem<tdata>* p_item = nullptr;
 		pos = 0;
 		p_item = start;
 
-		while(p_item != NULL)
+		while(p_item != nullptr)
 		{
 			if(pos == index)
 			{
@@ -260,12 +260,12 @@ public:
 	*/
 	const tdata& operator [](const unsigned int index) const
 	{
-		long				  pos;
-		ListItem<tdata>*   p_item;
+		long				  pos = 0;
+		ListItem<tdata>*   p_item = nullptr;
 		pos = 0;
 		p_item = start;
 
-		while(p_item != NULL)
+		while(p_item != NUnullptrLL)
 		{
 			if(pos == index)
 			{
@@ -288,7 +288,7 @@ public:
 	{
 		ListItem<tdata>*   p_item = other_list.start;
 
-		while(p_item != NULL)
+		while(p_item != nullptr)
 		{
 			add(p_item->data);
 			p_item = p_item->next;
@@ -305,7 +305,7 @@ public:
 		long				  pos = 0;
 		ListItem<tdata>*   p_item = start;
 
-		while(p_item != NULL)
+		while(p_item != nullptr)
 		{
 			if(pos++ == index)
 				break;
@@ -324,7 +324,7 @@ public:
 		long				  pos = 0;
 		ListItem<tdata>*   p_item = start;
 
-		while(p_item != NULL)
+		while(p_item != nullptr)
 		{
 			if(pos++ == index)
 				break;
@@ -346,7 +346,7 @@ public:
 			swapped = false;
 			ListItem<tdata>* tmp = start;
 
-			while(tmp != NULL && tmp->next != NULL)
+			while(tmp != nullptr && tmp->next != nullptr)
 			{
 				++ret;
 				if(tmp->data > tmp->next->data)
@@ -370,7 +370,7 @@ public:
 		ListItem<tdata>* tmp = start;
 		int index = 0;
 
-		while(tmp != NULL)
+		while(tmp != nullptr)
 		{
 			if(tmp->data == data)
 				return(index);
@@ -386,20 +386,20 @@ public:
 		ListItem<tdata>* p_my_list = At(position);
 		ListItem<tdata>* p_other_list = list.start;
 
-		while(p_other_list != NULL)
+		while(p_other_list != nullptr)
 		{
 			ListItem<tdata>* p_new_item = new ListItem<tdata>(p_other_list->data);
 
-			p_new_item->next = (p_my_list) ? p_my_list->next : NULL;
+			p_new_item->next = (p_my_list) ? p_my_list->next : nullptr;
 
-			if(p_new_item->next != NULL)
+			if(p_new_item->next != nullptr)
 				p_new_item->next->prev = p_new_item;
 			else
 				end = p_new_item;
 
 			p_new_item->prev = p_my_list;
 
-			if(p_new_item->prev != NULL)
+			if(p_new_item->prev != nullptr)
 				p_new_item->prev->next = p_new_item;
 			else
 				start = p_new_item;

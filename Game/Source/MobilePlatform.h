@@ -17,7 +17,7 @@ public:
 	void Idle();
 
 public:
-	float speed;
+	float speed = 0;
 	int stopTime = 0;
 	int countStopTime = stopTime;
 	bool startMove = false;
@@ -25,12 +25,12 @@ public:
 
 protected:
 
-	b2Vec2 startVeclocity;
+	b2Vec2 startVeclocity = {0,0};
 
 protected:
 
-	iPoint startPos;
-	iPoint endPos;
+	iPoint startPos = {0,0};
+	iPoint endPos = { 0,0 };
 	// 0 = start, 1 = end;
 	int moveState = 0;
 	int distance = 0;

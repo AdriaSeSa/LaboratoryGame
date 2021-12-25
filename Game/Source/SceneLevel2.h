@@ -40,7 +40,7 @@ public:
 
 	iPoint playerStartPos = { 40, 594 };
 
-	GUI* gui;
+	GUI* gui = nullptr;
 
 	bool reset = false;
 

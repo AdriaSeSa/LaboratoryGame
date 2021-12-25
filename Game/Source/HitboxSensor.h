@@ -17,7 +17,7 @@ public:
 	std::string hits[6];
 
 private:
-	GameObject* father;
+	GameObject* father = nullptr;
 
 	List<PhysBody*> collisionList;
 };

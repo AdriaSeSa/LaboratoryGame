@@ -26,7 +26,7 @@ private:
 
 	Application* App = nullptr;
 
-	GameObject* targetv;
+	GameObject* target = nullptr;
 
 	// use for offset with target
 	int pivotX = 0, pivotY = 0;

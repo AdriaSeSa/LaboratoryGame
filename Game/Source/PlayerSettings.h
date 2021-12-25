@@ -10,7 +10,7 @@ private:
 	PlayerSettings();
 	~PlayerSettings();
 
-	Application* _app;
+	Application* _app = nullptr;
 
 public:
 
@@ -24,9 +24,9 @@ public:
 
 public:
 
-	int playerLifes;
+	int playerLifes = 0;
 
-	int playerScore;
+	int playerScore = 0;
 
 	bool isLevelCompleted[2];
 

@@ -9,8 +9,6 @@ ModuleRender::ModuleRender(Application* app, bool start_enabled) : Module(app, s
 
 	camera = new Camera(App);
 	camera->x = camera->y = 0;
-	camera->w = SCREEN_WIDTH;
-	camera->h = SCREEN_HEIGHT;
 
 	renderLayers.resize(4);
 }

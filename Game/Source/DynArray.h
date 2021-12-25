@@ -10,19 +10,19 @@ class DynArray
 {
 private:
 
-	VALUE* data;
-	unsigned int memCapacity;
-	unsigned int numElements;
+	VALUE* data = nullptr;
+	unsigned int memCapacity = 0;
+	unsigned int numElements = 0;
 
 public:
 
 	// Constructors
-	DynArray() : memCapacity(0), numElements(0), data(NULL)
+	DynArray() : memCapacity(0), numElements(0), data(nullptr)
 	{
 		Alloc(DYN_ARRAY_BLOCK_SIZE);
 	}
 
-	DynArray(unsigned int capacity) : memCapacity(0), numElements(0), data(NULL)
+	DynArray(unsigned int capacity) : memCapacity(0), numElements(0), data(nullptr)
 	{
 		Alloc(capacity);
 	}
@@ -128,7 +128,7 @@ public:
 
 	VALUE* At(unsigned int index)
 	{
-		VALUE* result = NULL;
+		VALUE* result = nullptr;
 
 		if(index < numElements)
 			return result = &data[index];
@@ -138,7 +138,7 @@ public:
 
 	const VALUE* At(unsigned int index) const
 	{
-		VALUE* result = NULL;
+		VALUE* result = nullptr;
 
 		if(index < numElements)
 			return result = &data[index];
@@ -183,7 +183,7 @@ public:
 	int BubbleSortOptimized()
 	{
 		int ret = 0;
-		unsigned int count;
+		unsigned int count = 0;
 		unsigned int last = numElements - 2;
 
 		while(last > 0)
@@ -249,7 +249,7 @@ private:
 
 		numElements = MIN(memCapacity, numElements);
 
-		if(tmp != NULL)
+		if(tmp != nullptr)
 		{
 			for(unsigned int i = 0; i < numElements; ++i) data[i] = tmp[i];
 

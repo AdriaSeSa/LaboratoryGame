@@ -11,6 +11,7 @@ public:
 
 	void SetOffGround();
 
+public:
 	bool isOnGround = true;
 
 	GameObject* father = nullptr;

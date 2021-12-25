@@ -64,10 +64,10 @@ struct PathList;
 // ---------------------------------------------------------------------
 struct PathNode
 {
-	int g;
-	int h;
-	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	int g = 0;
+	int h = 0;
+	iPoint pos = {0,0};
+	const PathNode* parent = nullptr; // needed to reconstruct the path in the end
 
 	// Convenient constructors
 	PathNode();

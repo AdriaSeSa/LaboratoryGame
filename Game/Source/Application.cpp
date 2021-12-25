@@ -159,7 +159,7 @@ bool Application::CleanUp()
 	bool ret = true;
 	ListItem<Module*>* item = list_modules.end;
 
-	while(item != NULL && ret == true)
+	while(item != nullptr && ret == true)
 	{
 		ret = item->data->CleanUp();
 		item = item->prev;
@@ -233,7 +233,7 @@ bool Application::LoadGame()
 
 	ListItem<Module*>* item = list_modules.start;
 
-	while (item != NULL)
+	while (item != nullptr)
 	{
 		item->data->LoadSaveData(saveF);
 		item = item->next;
@@ -251,7 +251,7 @@ bool Application::SaveGame()
 
 	ListItem<Module*>* item = list_modules.start;
 
-	while (item != NULL)
+	while (item != nullptr)
 	{
 		item->data->GetSaveData(saveF);
 		item = item->next;

@@ -14,10 +14,10 @@ public:
 	void SetSaveData() override;
 
 private:
-	iPoint arrowPos;
-	BackGround* bg;
-	SDL_Texture* mainMenu;
-	SDL_Texture* arrow;
+	iPoint arrowPos = { 0,0 };
+	BackGround* bg = nullptr;
+	SDL_Texture* mainMenu = nullptr;
+	SDL_Texture* arrow = nullptr;
 
 	iPoint playerStartPos = { 40, 567 };
 

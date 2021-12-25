@@ -25,30 +25,30 @@
 class Application
 {
 public:
-	ModuleRender* renderer;
-	ModuleWindow* window;
-	ModuleTextures* textures;
-	ModuleInput* input;
-	ModuleAudio* audio;
-	ModulePhysics* physics;
-	ModuleScene* scene;
-	ModuleUI* ui;
-	ModuleMap* map;
-	ModuleDebug* debug;
+	ModuleRender* renderer = nullptr;
+	ModuleWindow* window = nullptr;
+	ModuleTextures* textures = nullptr;
+	ModuleInput* input = nullptr;
+	ModuleAudio* audio = nullptr;
+	ModulePhysics* physics = nullptr;
+	ModuleScene* scene = nullptr;
+	ModuleUI* ui = nullptr;
+	ModuleMap* map = nullptr;
+	ModuleDebug* debug = nullptr;
 
 	Timer globalTime;
 
 	//bool isDebug = false;
 
-	std::string title;
-	std::string organization;
+	std::string title = "";
+	std::string organization = "";
 	float averageFps = 0.0f;
 	float dt = 0.0f;
 	float frameTime = 1.0f / 60.0f;
 	string vsync = "false";
 
-	mutable bool saveGameRequested;
-	bool loadGameRequested;
+	mutable bool saveGameRequested = false;
+	bool loadGameRequested = false;
 
 	pugi::xml_node config;
 	pugi::xml_node configApp;
@@ -88,7 +88,7 @@ private:
 
 	void UpdateTitle();
 
-	float deltaTime, sleepTime;
+	float deltaTime = 0, sleepTime = 0;
 
 	void AddModule(Module* mod);
 

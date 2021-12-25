@@ -234,9 +234,6 @@
     <ClInclude Include="Source\PlayerSettings.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Source\DynArray.h">
-      <Filter>HeaderFiles\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Source\PathFinding.h">
       <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
@@ -260,6 +257,9 @@
     </ClInclude>
     <ClInclude Include="Source\ModuleDebug.h">
       <Filter>HeaderFiles\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\DynArray.h">
+      <Filter>HeaderFiles\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

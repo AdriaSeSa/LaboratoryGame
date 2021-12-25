@@ -32,25 +32,25 @@ public:
 	bool CleanUp() override;
 
 private:
-	int currentArrowPos;
+	int currentArrowPos = 0;
 
-	int currentScreen;
+	int currentScreen = 0;
 
-	int arrowAnimOffset;
+	int arrowAnimOffset = 0;
 
 	bool arrowAnimLeft = false;
 
 	List<iPoint> arrowPositions;
 
-	BackGround* bg;
+	BackGround* bg = nullptr;
 
 	int logoY = -100;
 
-	SDL_Texture* arrow;
+	SDL_Texture* arrow = nullptr;
 
-	SDL_Rect arrowSection;
+	SDL_Rect arrowSection = {0,0,0,0};
 
-	SDL_Texture* sArrow;
+	SDL_Texture* sArrow = nullptr;
 
 	List<RenderObject> currentTextures;
 
@@ -60,7 +60,7 @@ private:
 
 	Animation logoAnim;
 
-	bool exit;
+	bool exit = false;
 
 	int arrowCounter = 20;
 };

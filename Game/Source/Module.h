@@ -13,9 +13,9 @@ private :
 	bool enabled;
 
 public:
-	Application* App;
+	Application* App = nullptr;
 
-	std::string name;
+	std::string name = "";
 
 	pugi::xml_node config;
 

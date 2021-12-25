@@ -15,18 +15,18 @@
 class itemUI
 {
 public:
-	std::vector<int> digitVec;
-	float digitScale;
-	int totalDigits;
+	std::vector<int> digitVec = { 0 };
+	float digitScale = 0;
+	int totalDigits = 0;
 
-	bool isDynamic;
-	int lifeFrames;
-	iPoint speed;
+	bool isDynamic = false;
+	int lifeFrames = 0;
+	iPoint speed = { 0,0 };
 
-	int x;
-	int y;
-	int layer;
-	float orderInLayer;
+	int x = 0;
+	int y = 0;
+	int layer = 0;
+	float orderInLayer = 0;
 
 	void ChangeUI(int num);
 };
@@ -52,11 +52,11 @@ public:
 
 	void DestroyUI(uint index);			// Deletes an existing UI based on its index
 
-	SDL_Texture* texture;
+	SDL_Texture* texture = nullptr;
 
 	itemUI* uiArray[MAX_UI_ITEMS] = { nullptr };
 
-	SDL_Rect numSection[10];
+	SDL_Rect numSection[10] = { {0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0}, {0,0,0,0} };
 };
 
 #endif

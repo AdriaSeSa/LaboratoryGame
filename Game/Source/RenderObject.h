@@ -84,7 +84,7 @@ public:
 		this->speedRegardCamera = speedRegardCamera;
 	}
 
-	SDL_Rect destRect;
+	SDL_Rect destRect = { 0,0,0,0 };
 	RenderType type;
 	int layer = 0;
 	float orderInLayer = 0.0f;
@@ -94,7 +94,7 @@ public:
 	std::string name = "null";
 
 	// Rect
-	SDL_Color color;
+	SDL_Color color = { 0,0,0,0 };
 	bool filled = false;
 
 	// Texture
@@ -102,6 +102,6 @@ public:
 	SDL_Rect section = { 0,0,0,0 };
 	SDL_RendererFlip flip = SDL_FLIP_NONE;
 	float rotation = 0.0f;
-	int textureCenterX;
-	int textureCenterY;
+	int textureCenterX = 0;
+	int textureCenterY = 0;
 };

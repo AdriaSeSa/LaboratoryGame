@@ -20,4 +20,6 @@ private:
 	SDL_Texture* arrow;
 
 	iPoint playerStartPos = { 40, 567 };
+
+	int t = 0;
 };

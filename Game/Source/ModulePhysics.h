@@ -52,13 +52,11 @@ public:
 	int RayCast(int x1, int y1, int x2, int y2, float& normal_x, float& normal_y) const;
 	void GetCenterPosition(int& x, int& y) const;
 public:
-	int width, height;
+	int width = 0, height = 0;
 	bool chainLoop = false;
 	bool isSensor = false;
 	b2Body* body = nullptr;
 	GameObject* gameObject = nullptr;
-
-	//Module* listenerModule = nullptr;
 };
 
 class ModulePhysics : public Module, public b2ContactListener
@@ -96,6 +94,6 @@ public:
 private:
 	b2Body* mouseBody = nullptr;
 	b2MouseJoint* mouseJoint = nullptr;
-	bool debug;
+	bool debug = false;
 	bool physPause = false;
 };

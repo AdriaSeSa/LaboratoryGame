@@ -8,15 +8,15 @@ class Scene
 {
 protected:
 
-	int ID;
+	int ID = 0;
 
 	int platformLenght = 2;
 
-	Application* _app;
+	Application* _app = nullptr;
 
-	List<GameObject*> gameObjects;
+	List<GameObject*> gameObjects = { nullptr };
 
-	List<SDL_Texture*> sceneTextures;
+	List<SDL_Texture*> sceneTextures = { nullptr };
 
 public:
 	// Constructor
@@ -50,12 +50,12 @@ public:
 
 	int lastID = 0;
 
-	int playerX;
-	int playerY;
+	int playerX = 0;
+	int playerY = 0;
 
 	int isWin = false;
 
-	string name = "null";
+	std::string name = "null";
 };
 
 #endif //_SCENE_H_

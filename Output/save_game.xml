@@ -7,8 +7,8 @@
 	<scene>
 		<player lifes="2" score="0" />
 		<level1>
-			<player x="158" y="58" />
-			<checkPoint isActive="true" />
+			<player x="40" y="560" />
+			<checkPoint isActive="false" />
 		</level1>
 		<level2>
 			<player x="40" y="594" />

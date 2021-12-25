@@ -24,20 +24,18 @@ private:
 
 	iPoint GetCenter();
 
-	Application* App;
+	Application* App = nullptr;
 
-	GameObject* target;
+	GameObject* targetv;
 
 	// use for offset with target
-	int pivotX, pivotY;
+	int pivotX = 0, pivotY = 0;
 
-	int distanceFromTarget;
+	int distanceFromTarget = 0;
 
 public:
 	int x = 0;
 	int y = 0;
-	int w;
-	int h;
 
 	int cameraSpeed = 1;
 
@@ -47,5 +45,5 @@ public:
 	// decidir si se mueve o no
 	int moveX = 0, moveY = 1;
 
-	int mapHeight, mapWidth;
+	int mapHeight = 0, mapWidth = 0;
 };

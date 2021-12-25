@@ -14,7 +14,7 @@ public:
 	void GetSaveData(pugi::xml_document& save) override;
 	void LoadSave(pugi::xml_document& save);
 
-	int currentSceneIndex;
+	int currentSceneIndex = 0;
 
 	// Project debug variable
 	bool debugCamera = false;

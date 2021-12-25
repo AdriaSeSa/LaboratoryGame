@@ -21,8 +21,8 @@ public:
 	void Unload(SDL_Texture* texture);
 
 public:
-	List<SDL_Texture*> textures;
+	List<SDL_Texture*> textures = { nullptr };
 
 private:
-	std::map<std::string, SDL_Texture*> texturePath;
+	std::map<std::string, SDL_Texture*> texturePath = { {"", nullptr} };
 };

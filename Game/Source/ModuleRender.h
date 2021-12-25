@@ -7,29 +7,10 @@
 
 using namespace std;
 
-//struct RenderObject
-//{
-//	SDL_Texture* texture = nullptr;
-//	SDL_Rect section = { 0,0,0,0 };
-//	SDL_Rect renderRect;
-//	SDL_RendererFlip flip = SDL_FLIP_NONE;
-//	float rotation = 0.0f;
-//	int layer = 0;
-//	float orderInLayer = 0.0f;
-//	float speed = 1.0f;
-//	float scale = 1.0f;
-//};
-//
-//struct RenderRect
-//{
-//	SDL_Rect rect;
-//	SDL_Color color;
-//};
-
 class ModuleRender : public Module
 {
 public:
-	SDL_Renderer* renderer;
+	SDL_Renderer* renderer = nullptr;
 	Camera* camera = nullptr;
 
 	int zoom = 1;
@@ -64,7 +45,6 @@ public:
 
 private:
 	vector<vector<RenderObject>> renderLayers;
-	//vector<RenderRect> rects;
 
 	int gamePixels = 16; // The pixels per texutre used on this game
 

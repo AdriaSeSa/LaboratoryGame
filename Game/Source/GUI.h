@@ -18,15 +18,15 @@ private:
 
 	SDL_Texture* skill[CHARACTERS_NUM] = { nullptr };
 
-	SDL_Rect hearthsSection[3];
+	SDL_Rect hearthsSection[3] = { {0,0,0,0}, {0,0,0,0}, {0,0,0,0} };
 
-	SDL_Rect skillSection;
+	SDL_Rect skillSection = {0,0,0,0};
 
 	PlayerCharacters currentCharacter;
 
-	Application* _app;
+	Application* _app = nullptr;
 
-	uint scoreUI, coolDownUI;
+	uint scoreUI = 0, coolDownUI = 0;
 
 public:
 	GUI(int character, Application* app);

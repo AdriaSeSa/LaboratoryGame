@@ -7,15 +7,15 @@ class Enemy : public GameObject
 {
 protected:
 
-	float speed;
+	float speed = 0;
 
-	int score;
+	int score = 0;
 
 	Player* player = nullptr;
 
-	bool movesDiagonally;
+	bool movesDiagonally = false;
 
-	bool isActive;
+	bool isActive = false;
 
 	Animation currentAnim;
 
@@ -36,7 +36,7 @@ public:
 
 	iPoint GetPathDirection(iPoint destination);
 
-	int ID;
+	int ID = 0;
 
-	int life;
+	int life = 0;
 };

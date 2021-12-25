@@ -24,7 +24,7 @@ struct TileSet
 	int	tileWidth = 0;
 	int	tileHeight = 0;
 
-	SDL_Texture* texture;
+	SDL_Texture* texture = nullptr;
 	int	texWidth = 0;
 	int	texHeight = 0;
 	int	tilecount = 0;
@@ -50,7 +50,7 @@ struct Properties
 	struct Property
 	{
 		//...
-		std::string name;
+		std::string name = "";
 		int value = 0;
 	};
 	
@@ -78,7 +78,7 @@ struct Properties
 // L04: DONE 1: Create a struct for the map layer
 struct MapLayer
 {
-	std::string	name;
+	std::string	name = "";
 	int width = 0;
 	int height = 0;
 	uint* data = 0;
@@ -108,7 +108,7 @@ struct MapData
 	int	height = 0;
 	int	tileWidth = 0;
 	int	tileHeight = 0;
-	SDL_Color backgroundColor;
+	SDL_Color backgroundColor = { 0,0,0,0 };
 	MapTypes type;
 	List<TileSet*> tilesets;
 

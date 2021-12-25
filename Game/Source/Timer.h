@@ -35,6 +35,7 @@ public:
 
 	float getDeltaTime()
 	{
+		Update();
 		return mDeltaTime;
 	}
 
@@ -61,7 +62,7 @@ public:
 	float Update()
 	{
 		// frame2frame = tiempo que tarda entre ultimo frame hasta este frame en ms
-		float frame2frame = SDL_GetTicks() - lastTime;
+		float frameTime = SDL_GetTicks() - lastTime;
 		// Reseteamos el ultimo frame para que sea este
 		lastTime = SDL_GetTicks();
 		// mElapsedTicks = tiempo que ha pasado desde ultimo reset en ms
@@ -69,7 +70,7 @@ public:
 		// mElapsedTicks = tiempo que ha pasado desde ultimo reset en segundo
 		mDeltaTime = mElapsedTicks * 0.001f;
 		// retornar frame2frame en segundo
-		return (frame2frame * 0.001f);
+		return (frameTime * 0.001f);
 	}
 };
 

@@ -8,8 +8,8 @@ template<class tdata>
 struct ListItem
 {
 	tdata data;
-	ListItem<tdata>* next;
-	ListItem<tdata>* prev;
+	ListItem<tdata>* next = nullptr;
+	ListItem<tdata>* prev = nullptr;
 
 	inline ListItem(const tdata& _data)
 	{
@@ -28,8 +28,8 @@ class List
 
 public:
 
-	ListItem<tdata>* start;
-	ListItem<tdata>* end;
+	ListItem<tdata>* start = nullptr;
+	ListItem<tdata>* end = nullptr;
 
 private:
 
@@ -217,8 +217,8 @@ public:
 	// Destroy and free all mem and node.data ptr
 	void clearPtr()
 	{
-		ListItem<tdata>* p_data;
-		ListItem<tdata>* p_next;
+		ListItem<tdata>* p_data = nullptr;
+		ListItem<tdata>* p_next = nullptr;
 		p_data = start;
 
 		while (p_data != NULL)

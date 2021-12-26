@@ -144,13 +144,13 @@ bool Scene::CleanUp()
 
 	gameObjects.clearPtr();
 
-	for (int i = 0; i < sceneTextures.count(); i++)
-	{
-		if(sceneTextures[i])
-		{
-			_app->textures->Unload(sceneTextures[i]);
-		}
-	}
+	//for (int i = 0; i < sceneTextures.count(); i++)
+	//{
+	//	if(sceneTextures[i])
+	//	{
+	//		_app->textures->Unload(sceneTextures[i]);
+	//	}
+	//}
 
 	return true;
 }

@@ -2,8 +2,6 @@
 
 #include "SDL_image/include/SDL_image.h"
 
-//#pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
-
 ModuleTextures::ModuleTextures(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 	name = "textures";
@@ -39,12 +37,13 @@ bool ModuleTextures::CleanUp()
 {
 	LOG("Freeing textures and Image library");
 
-	ListItem<SDL_Texture*>* item = textures.start;
+	//ListItem<SDL_Texture*>* item = textures.start;
 
-	while(item != nullptr)
+	for (int i = 0, count = textures.count(); i < count; i++)
 	{
-		SDL_DestroyTexture(item->data);
-		item = item->next;
+		//LOG("Freeing textures and Image library num: %d / %d || direccion in memory: %#x || path: %s\n",i, count, textures[i], texturePath[i].path);
+		SDL_DestroyTexture(textures[i]);
+		textures[i] = nullptr;
 	}
 
 	textures.clear();
@@ -55,24 +54,24 @@ bool ModuleTextures::CleanUp()
 	return true;
 }
 
-bool ModuleTextures::CleanUpTextures()
-{
-	LOG("Freeing textures and Image library");
-
-	ListItem<SDL_Texture*>* item = textures.start;
-
-	while (item != NULL)
-	{
-		SDL_DestroyTexture(item->data);
-		item = item->next;
-	}
-
-	textures.clear();
-
-	texturePath.clear();
-
-	return true;
-}
+//bool ModuleTextures::CleanUpTextures()
+//{
+//	LOG("Freeing textures and Image library");
+//
+//	ListItem<SDL_Texture*>* item = textures.start;
+//
+//	while (item != NULL)
+//	{
+//		SDL_DestroyTexture(item->data);
+//		item = item->next;
+//	}
+//
+//	textures.clear();
+//
+//	texturePath.clear();
+//
+//	return true;
+//}
 
  //Load new texture from file path
 SDL_Texture* ModuleTextures::Load(std::string path, bool isName)
@@ -82,15 +81,23 @@ SDL_Texture* ModuleTextures::Load(std::string path, bool isName)
 		path = config.child(path.c_str()).attribute("path").as_string();
 	}
 
-	std::map<std::string, SDL_Texture*>::iterator it;
-	it = texturePath.find(path);
+	/*std::map<std::string, int>::iterator it;
+	it = texturePath.find(path);*/
 
-	if (it != texturePath.end())
+	for (int i = 0, count = texturePath.count(); i < count; i++)
 	{
-		return texturePath.find(path)->second;
+		if (texturePath[i].path == path)
+		{
+			return textures[texturePath[i].index];
+		}
 	}
 
-	SDL_Texture* texture = NULL;
+	//if (it != texturePath.end())
+	//{
+	//	return textures[texturePath.find(path)->second];
+	//}
+
+	SDL_Texture* texture = nullptr;
 	SDL_Surface* surface = IMG_Load(path.c_str());
 
 	if(surface == NULL)
@@ -101,20 +108,20 @@ SDL_Texture* ModuleTextures::Load(std::string path, bool isName)
 	{
 		texture = SDL_CreateTextureFromSurface(App->renderer->renderer, surface);
 
-		if(texture == NULL)
+		if(texture == nullptr)
 		{
 			LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
 		}
 		else
 		{
 			textures.add(texture);
+			TexturePath tp = { path, textures.count() - 1, (int)&texture};
+			texturePath.add(tp);
+			//texturePath.insert(std::pair<std::string, int>(path, textures.count() - 1));
 		}
 
 		SDL_FreeSurface(surface);
 	}
-
-	texturePath.insert(std::pair<std::string, SDL_Texture*>(path, texture));
-
 	return texture;
 }
 

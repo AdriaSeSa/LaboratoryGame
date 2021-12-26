@@ -39,7 +39,6 @@ Application::Application()
 
 Application::~Application()
 {
-
 }
 
 bool Application::Init()

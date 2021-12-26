@@ -35,13 +35,11 @@ void PathFinding::SetMap(uint width, uint height, uchar* data)
 	this->width = width;
 	this->height = height;
 
-	LOG("RELEASE MAP IN PATHFINDING");
 	if (map != nullptr)
 	{
 		free(map);
 		map = nullptr;
 	}
-	LOG("RELEASE MAP IN PATHFINDING FINISH")
 	//map = new uchar[width * height];
 	map = (uchar*)malloc(width * height * sizeof(uchar));
 	memcpy(map, data, width * height);

@@ -16,7 +16,7 @@ protected:
 
 	List<GameObject*> gameObjects;
 
-	List<SDL_Texture*> sceneTextures;
+	//List<SDL_Texture*> sceneTextures;
 
 public:
 	// Constructor

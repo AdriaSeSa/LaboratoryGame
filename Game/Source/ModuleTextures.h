@@ -4,6 +4,13 @@
 #include "List.h"
 #include <map>
 
+struct TexturePath
+{
+	string path = "";
+	long index = 0;
+	int direccion;
+};
+
 class ModuleTextures : public Module
 {
 public:
@@ -12,7 +19,7 @@ public:
 
 	bool Init(pugi::xml_node&);
 	bool CleanUp();
-	bool CleanUpTextures();
+	//bool CleanUpTextures();
 
 	//SDL_Texture* Load(std::string path);
 
@@ -24,5 +31,7 @@ public:
 	List<SDL_Texture*> textures;
 
 private:
-	std::map<std::string, SDL_Texture*> texturePath = { {"", nullptr} };
+	List<TexturePath> texturePath;
+
+	//std::map<std::string, int> texturePath = { {"", 0} };
 };

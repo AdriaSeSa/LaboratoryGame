@@ -248,13 +248,13 @@ bool Application::SaveGame()
 {
 	bool ret = true;
 
-	ListItem<Module*>* item = list_modules.start;
+	/*ListItem<Module*>* item = list_modules.start;
 
 	while (item != nullptr)
 	{
 		item->data->GetSaveData(saveF);
 		item = item->next;
-	}
+	}*/
 
 	saveF.save_file(SAVE_STATE_FILENAME);
 

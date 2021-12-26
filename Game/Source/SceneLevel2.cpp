@@ -147,6 +147,7 @@ void SceneLevel2::SetEnemiesData()
 		{
 			saveNode.attribute("lifes") = enemyName == "bat" ? 1 : 2;
 			saveNode.attribute("isAlive") = "true";
+			return;
 		}
 		else
 		{
@@ -167,7 +168,7 @@ void SceneLevel2::SetEnemiesData()
 
 			int enemyID = tempEnemy->ID;
 
-			int enemyLifes = !reset ? tempEnemy->life : enemyName == "bat" ? 1 : 2;
+			int enemyLifes = tempEnemy->life;
 
 			saveNode.child((enemyName.c_str() + std::to_string(enemyID)).c_str()).attribute("lifes") = enemyLifes;
 			saveNode.child((enemyName.c_str() + std::to_string(enemyID)).c_str()).attribute("isAlive") = enemyLifes > 0;

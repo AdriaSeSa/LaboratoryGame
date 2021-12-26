@@ -118,6 +118,9 @@
     <ClCompile Include="Source\ModuleDebug.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Source\SceneGame.cpp">
+      <Filter>SourceFiles\BaseClass</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -260,6 +263,9 @@
     </ClInclude>
     <ClInclude Include="Source\DynArray.h">
       <Filter>HeaderFiles\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\SceneGame.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

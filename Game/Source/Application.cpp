@@ -39,7 +39,7 @@ Application::Application()
 
 Application::~Application()
 {
-	list_modules.clearPtr();
+
 }
 
 bool Application::Init()
@@ -89,8 +89,6 @@ bool Application::Init()
 // Call PreUpdate, Update and PostUpdate on all modules
 UpdateStatus Application::Update()
 {
-	double startFrame = SDL_GetPerformanceCounter();
-
 	if (isExiting) return UPDATE_STOP;
 	OPTICK_EVENT();
 	UpdateStatus ret = UPDATE_CONTINUE;
@@ -164,6 +162,8 @@ bool Application::CleanUp()
 		ret = item->data->CleanUp();
 		item = item->prev;
 	}
+
+	list_modules.clearPtr();
 
 	return ret;
 }

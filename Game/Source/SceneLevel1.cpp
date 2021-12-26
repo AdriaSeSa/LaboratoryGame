@@ -172,7 +172,7 @@ bool SceneLevel1::CleanUp()
 
 	RELEASE(gui);
 	
-	_app->map->CleanUp();
+	_app->map->CleanUpScene();
 
 	return true;
 }

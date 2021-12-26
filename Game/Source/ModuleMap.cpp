@@ -9,7 +9,7 @@ ModuleMap::ModuleMap(Application* app, bool start_enabled) : Module(app, start_e
 // Destructor
 ModuleMap::~ModuleMap()
 {
-	RELEASE(pathFinding);
+	//RELEASE(pathFinding);
 }
 
 // L06: TODO 7: Ask for the value of a custom property
@@ -301,10 +301,48 @@ SDL_Rect TileSet::GetTileRect(int id) const
 // Called before quitting
 bool ModuleMap::CleanUp()
 {
-    //LOG("Unloading map");
+    LOG("Unloading map");
 
     // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     // Remove all tilesets
+	currentMap = "null";
+
+	ListItem<TileSet*>* item;
+	item = mapData.tilesets.start;
+
+	while (item != nullptr)
+	{
+		RELEASE(item->data);
+		item = item->next;
+	}
+	mapData.tilesets.clear();
+
+	// L04: DONE 2: clean up all layer data
+	// Remove all layers
+	ListItem<MapLayer*>* item2;
+	item2 = mapData.layers.start;
+
+	while (item2 != nullptr)
+	{
+		RELEASE(item2->data);
+		item2 = item2->next;
+	}
+	mapData.layers.clear();
+
+	mapObjects.clear();
+
+	pathFinding->CleanUp();
+	RELEASE(pathFinding);
+
+    return true;
+}
+
+bool ModuleMap::CleanUpScene()
+{
+	LOG("Unloading map");
+
+	// L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
+	// Remove all tilesets
 	currentMap = "null";
 
 	ListItem<TileSet*>* item;
@@ -331,7 +369,7 @@ bool ModuleMap::CleanUp()
 
 	mapObjects.clear();
 
-    return true;
+	return true;
 }
 
 // Load new map

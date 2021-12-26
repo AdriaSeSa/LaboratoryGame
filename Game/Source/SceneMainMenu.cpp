@@ -110,17 +110,6 @@ void SceneMainMenu::MoveArrow()
 bool SceneMainMenu::Update()
 {
     if (exit) return false;
-    /*
-    if (arrowSection.x = 32 && arrowCounter > 0)
-    {
-        arrowCounter--;
-    }
-    else
-    {
-        arrowSection = { 0,0,32,32 };
-        arrowCounter = 20;
-    }
-    */
 
     arrowAnimLeft = arrowAnimOffset == 20 ? true : arrowAnimOffset == 0 ? false : arrowAnimLeft;
 

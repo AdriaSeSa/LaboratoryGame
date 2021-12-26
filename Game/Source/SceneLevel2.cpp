@@ -23,7 +23,7 @@ bool SceneLevel2::Start(bool isReseting)
 	if (_app->map->Load("Level2.tmx") == true)
 	{
 		int w, h;
-		uchar* data = NULL;
+		uchar* data = nullptr;
 
 		if (_app->map->CreateWalkabilityMap(w, h, &data)) _app->map->pathFinding->SetMap(w, h, data);
 
@@ -271,7 +271,7 @@ bool SceneLevel2::CleanUp()
 
 	RELEASE(gui);
 
-	_app->map->CleanUp();
+	_app->map->CleanUpScene();
 
 	return true;
 }

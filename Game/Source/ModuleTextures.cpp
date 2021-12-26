@@ -41,7 +41,7 @@ bool ModuleTextures::CleanUp()
 
 	ListItem<SDL_Texture*>* item = textures.start;
 
-	while(item != NULL)
+	while(item != nullptr)
 	{
 		SDL_DestroyTexture(item->data);
 		item = item->next;

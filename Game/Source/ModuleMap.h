@@ -134,6 +134,9 @@ public:
     // Called before quitting
     bool CleanUp() override;
 
+	// Called before quitting
+	bool CleanUpScene();
+
     // Load new map
     bool Load(const char* path);
 

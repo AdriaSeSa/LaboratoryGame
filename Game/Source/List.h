@@ -224,7 +224,12 @@ public:
 		while (p_data != nullptr)
 		{
 			p_next = p_data->next;
-			RELEASE(p_data->data);
+
+			if(p_data->data != nullptr)
+			{
+				RELEASE(p_data->data);
+			}
+
 			RELEASE(p_data);
 			p_data = p_next;
 		}

@@ -10,7 +10,6 @@ PathFinding::PathFinding(Application * app) : lastPath(DEFAULT_PATH_LENGTH), wid
 // Destructor
 PathFinding::~PathFinding()
 {
-	RELEASE_ARRAY(map);
 }
 
 // Called before quitting
@@ -19,7 +18,13 @@ bool PathFinding::CleanUp()
 	LOG("Freeing pathfinding library");
 
 	lastPath.Clear();
-	RELEASE_ARRAY(map);
+
+	//RELEASE_ARRAY(map);
+	if (map != nullptr)
+	{
+		free(map);
+		map = nullptr;
+	}
 
 	return true;
 }
@@ -30,8 +35,15 @@ void PathFinding::SetMap(uint width, uint height, uchar* data)
 	this->width = width;
 	this->height = height;
 
-	RELEASE_ARRAY(map);
-	map = new uchar[width * height];
+	LOG("RELEASE MAP IN PATHFINDING");
+	if (map != nullptr)
+	{
+		free(map);
+		map = nullptr;
+	}
+	LOG("RELEASE MAP IN PATHFINDING FINISH")
+	//map = new uchar[width * height];
+	map = (uchar*)malloc(width * height * sizeof(uchar));
 	memcpy(map, data, width * height);
 }
 

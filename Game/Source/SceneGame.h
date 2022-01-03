@@ -19,7 +19,6 @@ protected:
 	iPoint playerStartPos = { 40, 560 };
 
 public:
-
 	virtual void SaveGameFile();
 	// Only GameOver resets information
 	virtual void ResetGameFile();

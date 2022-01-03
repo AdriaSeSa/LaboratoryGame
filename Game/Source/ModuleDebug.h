@@ -11,8 +11,8 @@ public:
 	UpdateStatus Update() override;
 	UpdateStatus PostUpdate() override;
 
-	void GetSaveData(pugi::xml_document& save) override;
-	void LoadSave(pugi::xml_document& save);
+	void GetSaveData();
+	void LoadSave();
 
 	int currentSceneIndex = 0;
 

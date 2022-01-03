@@ -5,24 +5,24 @@
 	<textures />
 	<audio />
 	<scene>
-		<player lifes="3" score="3100" />
+		<player lifes="2" score="100" />
 		<level1>
-			<player x="256" y="190" />
+			<player x="83" y="461" />
 			<checkPoint isActive="false" />
 		</level1>
 		<level2>
-			<player x="145" y="302" />
+			<player x="40" y="594" />
 			<checkPoint isActive="false" />
 			<enemies>
 				<bat11 ID="11" lifes="1" isAlive="true" />
 				<bat12 ID="12" lifes="1" isAlive="true" />
-				<chameleon21 ID="21" lifes="0" isAlive="false" />
-				<chameleon22 ID="22" lifes="0" isAlive="false" />
-				<chameleon23 ID="23" lifes="0" isAlive="false" />
+				<chameleon21 ID="21" lifes="2" isAlive="true" />
+				<chameleon22 ID="22" lifes="2" isAlive="true" />
+				<chameleon23 ID="23" lifes="2" isAlive="true" />
 			</enemies>
 		</level2>
 	</scene>
 	<debug>
-		<lastState playerPosX="0" playerPoxY="0" isSaved="true" scene="0" />
+		<lastState isSaved="true" scene="2" />
 	</debug>
 </game_state>

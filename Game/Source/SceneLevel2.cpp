@@ -184,7 +184,7 @@ bool SceneLevel2::PreUpdate()
 		if (--_app->scene->playerSettings->playerLifes <= 0)
 		{
 			// when don't have any life
-			SaveGameFile();
+			ResetGameFile();
 			//_app->SaveGameRequest();
 			_app->scene->ChangeCurrentScene(1);
 			return true;
@@ -210,16 +210,6 @@ bool SceneLevel2::Update()
 		{
 			gameObjects[i]->Update();
 		}
-	}
-
-	if (_app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
-	{
-		//_app->LoadGameRequest();
-	}
-	if (_app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-		//reset = true;
-		//_app->SaveGameRequest();
 	}
 
 	gui->Update();
@@ -263,21 +253,6 @@ bool SceneLevel2::CleanUp()
 	return true;
 }
 
-//void SceneLevel2::SetSaveData()
-//{
-//	if (player != nullptr)
-//	{
-//		playerX = reset ? playerStartPos.x : player->GetPosition().x;
-//		playerY = reset ? playerStartPos.y : player->GetPosition().y;
-//	}
-//	
-//	_app->saveF.child("game_state").child("scene").child(name.c_str()).child("checkPoint").attribute("isActive") = reset ? "false" : "true";
-//
-//	SetEnemiesData();
-//
-//	reset = false;
-//}
-
 void SceneLevel2::SaveGameFile()
 {
 	SceneGame::SaveGameFile();
@@ -318,5 +293,7 @@ void SceneLevel2::LoadSaveData(pugi::xml_node save)
 
 void SceneLevel2::Win()
 {
+	ResetGameFile();
+
 	_app->scene->ChangeCurrentScene(SCENES::MAIN_MENU);
 }

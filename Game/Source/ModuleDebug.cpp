@@ -1,5 +1,7 @@
 #include "ModuleDebug.h"
 #include "Application.h"
+#include "ModuleScene.h"
+#include "SceneGame.h"
 
 ModuleDebug::ModuleDebug(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -31,12 +33,20 @@ UpdateStatus ModuleDebug::Update()
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
-		currentSceneIndex = App->scene->currentSceneState;
-		App->SaveGameRequest();
+		currentSceneIndex = (int)App->scene->currentSceneState;
+
+		if (currentSceneIndex > 1)
+		{
+			SceneGame* sceneGame = (SceneGame*)App->scene->scenes[currentSceneIndex];
+
+			GetSaveData();
+
+			sceneGame->SaveGameFile();
+		}		
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 	{
-		LoadSave(App->saveF);
+		LoadSave();
 	}	
 	else if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
@@ -72,20 +82,22 @@ UpdateStatus ModuleDebug::PostUpdate()
 	return UPDATE_CONTINUE;
 }
 
-void ModuleDebug::GetSaveData(pugi::xml_document& save)
+void ModuleDebug::GetSaveData()
 {
-	pugi::xml_node node = save.child("game_state").child("debug").child("lastState");
+	pugi::xml_node node = App->saveF.child("game_state").child("debug").child("lastState");
 
 	int scene = currentSceneIndex;
 
 	node.attribute("scene") = scene;
 
 	node.attribute("isSaved") = true;
+
+	App->SaveGameRequest();
 }
 
-void ModuleDebug::LoadSave(pugi::xml_document& save)
+void ModuleDebug::LoadSave()
 {
-	pugi::xml_node node = save.child("game_state").child("debug").child("lastState");
+	pugi::xml_node node = App->saveF.child("game_state").child("debug").child("lastState");
 
 	bool isSaved = node.attribute("isSaved").as_bool("false");
 
@@ -95,4 +107,6 @@ void ModuleDebug::LoadSave(pugi::xml_document& save)
 
 		App->scene->ChangeCurrentScene(scene);
 	}
+
+	App->SaveGameRequest();
 }

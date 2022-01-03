@@ -53,15 +53,6 @@ bool SceneLevel1::Start()
 	// init camera
 	_app->renderer->camera->Init(player, 320, 640);
 
-	// If we are resetting the scene, call reset before calling load
-	//if (isReseting)
-	//{
-	//	reset = true;
-	//	_app->SaveGameRequest();
-	//}
-
-	//_app->LoadGameRequest();
-
 	// Start all gameobjects
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
@@ -177,34 +168,9 @@ bool SceneLevel1::CleanUp()
 	return true;
 }
 
-//void SceneLevel1::SetSaveData()
-//{
-//	if (player != nullptr)
-//	{
-//		playerX = reset ? playerStartPos.x : player->GetPosition().x;
-//		playerY = reset ? playerStartPos.y : player->GetPosition().y;
-//	}
-//
-//	_app->saveF.child("game_state").child("scene").child(name.c_str()).child("checkPoint").attribute("isActive") = reset ? "false" : "true";
-//
-//	reset = false;
-//}
-
-//void SceneLevel1::LoadSaveData(pugi::xml_node save)
-//{
-//	pugi::xml_node n = save;
-//
-//	if (player != nullptr) player->SetPosition({ n.child(name.c_str()).child("player").attribute("x").as_int(),n.child(name.c_str()).child("player").attribute("y").as_int() });
-//
-//	if (checkPoint != nullptr) checkPoint->isActive = _app->scene->playerSettings->reachedCheckPoint;
-//	
-//	if (_app->scene->playerSettings->playerLifes != 0) return;
-//
-//	_app->scene->playerSettings->playerLifes = n.child("player").attribute("lifes").as_int();
-//	_app->scene->playerSettings->playerScore = n.child("player").attribute("score").as_int();
-//}
-
 void SceneLevel1::Win()
 {
+	ResetGameFile();
+
 	_app->scene->ChangeCurrentScene(SCENES::LEVEL_2);
 }

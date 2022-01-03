@@ -6,7 +6,7 @@ SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
     ID = 0;
 }
 
-bool SceneMainMenu::Start(bool reset)
+bool SceneMainMenu::Start()
 {
     // Reset logo position
     logoY = -100;
@@ -227,16 +227,13 @@ void SceneMainMenu::ScreenOptions0()
 
 void SceneMainMenu::ScreenOptions1()
 {
-    bool resetting;
     switch (currentArrowPos)
     {
     case 0:
-        resetting = _app->saveF.child("game_state").child("scene").child("level1").child("checkPoint").attribute("isActive").as_bool();
-        _app->scene->ChangeCurrentScene(2, !resetting);
+        _app->scene->ChangeCurrentScene(2);
         break;
     case 1:
-        resetting = _app->saveF.child("game_state").child("scene").child("level2").child("checkPoint").attribute("isActive").as_bool();
-        _app->scene->ChangeCurrentScene(3, !resetting);
+        _app->scene->ChangeCurrentScene(3);
         break;
     case 2:
         ChangeScreen(0);

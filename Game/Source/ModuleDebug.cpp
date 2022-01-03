@@ -19,15 +19,15 @@ UpdateStatus ModuleDebug::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		App->scene->ChangeCurrentScene(2, true);
+		App->scene->ChangeCurrentScene(2);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->scene->ChangeCurrentScene(3, true);
+		App->scene->ChangeCurrentScene(3);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		App->scene->ChangeCurrentScene(App->scene->currentSceneState, true);
+		App->scene->ChangeCurrentScene(App->scene->currentSceneState);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
@@ -93,6 +93,6 @@ void ModuleDebug::LoadSave(pugi::xml_document& save)
 	{
 		int scene = node.attribute("scene").as_int(0);
 
-		App->scene->ChangeCurrentScene(scene, false);
+		App->scene->ChangeCurrentScene(scene);
 	}
 }

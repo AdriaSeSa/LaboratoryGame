@@ -8,14 +8,16 @@
 #include "PlayerSettings.h"
 #include "GUI.h"
 
-SceneLevel2::SceneLevel2(Application* app, string name) :Scene(app, name)
+SceneLevel2::SceneLevel2(Application* app, string name) :SceneGame(app, name)
 {
 	ID = 3;
 	// Define platform lenght
 	platformLenght = 3;
+
+	playerStartPos = { 40, 594 };
 }
 
-bool SceneLevel2::Start(bool isReseting)
+bool SceneLevel2::Start()
 {
 	_app->scene->lastLevel = 3; // Set this as the last Level (for GameOver)
 
@@ -29,8 +31,6 @@ bool SceneLevel2::Start(bool isReseting)
 
 		RELEASE_ARRAY(data);
 	}
-	
-	reset = false;
 
 	isWin = false;
 
@@ -59,15 +59,6 @@ bool SceneLevel2::Start(bool isReseting)
 	gameObjects.add(player);
 	gameObjects.add(checkPoint);
 	
-	// If we are resetting the scene, call reset before calling load
-	if (isReseting)
-	{
-		reset = true;
-		_app->SaveGameRequest();
-		SetEnemiesData();
-	}
-	_app->LoadGameRequest();
-
 	// Init Enemies
 	LoadEnemies();
 
@@ -82,6 +73,9 @@ bool SceneLevel2::Start(bool isReseting)
 
 	// Init GUI
 	gui = new GUI(0, _app);
+
+	// Recargar informacion de saveF
+	LoadGameFile();
 
 	return true;
 }
@@ -136,24 +130,15 @@ void SceneLevel2::SetEnemiesData()
 	// Enemies
 	pugi::xml_node saveNode = _app->saveF.child("game_state").child("scene").child(name.c_str()).child("enemies");
 
-	// Reset all enemies data
+	// Kill all enemies data
 	for (saveNode = saveNode.first_child(); saveNode; saveNode = saveNode.next_sibling())
 	{
 		string enemyName = saveNode.name();
 		enemyName.pop_back();
 		enemyName.pop_back();
 
-		if (reset)
-		{
-			saveNode.attribute("lifes") = enemyName == "bat" ? 1 : 2;
-			saveNode.attribute("isAlive") = "true";
-			return;
-		}
-		else
-		{
-			saveNode.attribute("lifes") = "0";
-			saveNode.attribute("isAlive") = "false";
-		}
+		saveNode.attribute("lifes") = "0";
+		saveNode.attribute("isAlive") = "false";	
 	}
 
 	saveNode = _app->saveF.child("game_state").child("scene").child(name.c_str()).child("enemies");
@@ -199,15 +184,16 @@ bool SceneLevel2::PreUpdate()
 		if (--_app->scene->playerSettings->playerLifes <= 0)
 		{
 			// when don't have any life
-			reset = true;
-			_app->SaveGameRequest();
-			_app->scene->ChangeCurrentScene(1, 0);
+			SaveGameFile();
+			//_app->SaveGameRequest();
+			_app->scene->ChangeCurrentScene(1);
 			return true;
 		}
 		else
 		{
 			// when have life yet
-			_app->LoadGameRequest();
+			LoadGameFile();
+			//_app->LoadGameRequest();
 			player->PlayerAppear();
 			player->isDead = false;
 		}
@@ -277,19 +263,45 @@ bool SceneLevel2::CleanUp()
 	return true;
 }
 
-void SceneLevel2::SetSaveData()
+//void SceneLevel2::SetSaveData()
+//{
+//	if (player != nullptr)
+//	{
+//		playerX = reset ? playerStartPos.x : player->GetPosition().x;
+//		playerY = reset ? playerStartPos.y : player->GetPosition().y;
+//	}
+//	
+//	_app->saveF.child("game_state").child("scene").child(name.c_str()).child("checkPoint").attribute("isActive") = reset ? "false" : "true";
+//
+//	SetEnemiesData();
+//
+//	reset = false;
+//}
+
+void SceneLevel2::SaveGameFile()
 {
-	if (player != nullptr)
-	{
-		playerX = reset ? playerStartPos.x : player->GetPosition().x;
-		playerY = reset ? playerStartPos.y : player->GetPosition().y;
-	}
-	
-	_app->saveF.child("game_state").child("scene").child(name.c_str()).child("checkPoint").attribute("isActive") = reset ? "false" : "true";
+	SceneGame::SaveGameFile();
 
 	SetEnemiesData();
+}
 
-	reset = false;
+void SceneLevel2::ResetGameFile()
+{
+	SceneGame::ResetGameFile();
+
+	// Enemies
+	pugi::xml_node saveNode = _app->saveF.child("game_state").child("scene").child(name.c_str()).child("enemies");
+
+	// Reset all enemies data
+	for (saveNode = saveNode.first_child(); saveNode; saveNode = saveNode.next_sibling())
+	{
+		string enemyName = saveNode.name();
+		enemyName.pop_back();
+		enemyName.pop_back();
+
+		saveNode.attribute("lifes") = enemyName == "bat" ? 1 : 2;
+		saveNode.attribute("isAlive") = "true";
+	}
 }
 
 void SceneLevel2::LoadSaveData(pugi::xml_node save)
@@ -306,5 +318,5 @@ void SceneLevel2::LoadSaveData(pugi::xml_node save)
 
 void SceneLevel2::Win()
 {
-	_app->scene->ChangeCurrentScene(SCENES::MAIN_MENU, 0);
+	_app->scene->ChangeCurrentScene(SCENES::MAIN_MENU);
 }

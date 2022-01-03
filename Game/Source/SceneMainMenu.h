@@ -9,7 +9,7 @@ class SceneMainMenu : public Scene
 public:
 	SceneMainMenu(Application* app);
 
-	bool Start(bool reset = false) override;
+	bool Start() override;
 
 	void InitTextures();
 

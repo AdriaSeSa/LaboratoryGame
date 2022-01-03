@@ -108,7 +108,7 @@ bool Scene::InitScene()
 	return true;
 }
 
-bool Scene::Start(bool reset)
+bool Scene::Start()
 {
 	return true;
 }

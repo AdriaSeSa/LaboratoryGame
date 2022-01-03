@@ -6,12 +6,12 @@ class SceneGameOver : public Scene
 public:
 	SceneGameOver(Application* app);
 
-	bool Start(bool reset = false) override;
+	bool Start() override;
 
 	bool Update() override;
 	bool PostUpdate() override;
 
-	void SetSaveData() override;
+	//void SetSaveData() override;
 
 private:
 	iPoint arrowPos = { 0,0 };

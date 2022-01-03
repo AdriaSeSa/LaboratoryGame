@@ -6,7 +6,7 @@ SceneGameOver::SceneGameOver(Application* app) : Scene(app)
     ID = 1;
 }
 
-bool SceneGameOver::Start(bool reset)
+bool SceneGameOver::Start()
 {
     mainMenu = _app->textures->Load("Assets/textures/Menu/GameOverOptions.png", false);
     arrow = _app->textures->Load("Assets/textures/Menu/ArrowGO.png", false);
@@ -55,11 +55,11 @@ bool SceneGameOver::Update()
         _app->audio->PlayFx(SFX::SELECT);
         if (arrowPos.y == 190)
         {
-            _app->scene->ChangeCurrentScene(_app->scene->lastLevel, true);
+            _app->scene->ChangeCurrentScene(_app->scene->lastLevel);
         }
         else
         {
-            _app->scene->ChangeCurrentScene(0, 0);
+            _app->scene->ChangeCurrentScene(0);
         }
         //SelectDifficulty();
     }
@@ -80,10 +80,10 @@ bool SceneGameOver::PostUpdate()
     return true;
 }
 
-void SceneGameOver::SetSaveData()
-{
-    playerX = playerStartPos.x;
-    playerY = playerStartPos.y;
-
-    _app->scene->ResetPlayerSettings();
-}
+//void SceneGameOver::SetSaveData()
+//{
+//    playerX = playerStartPos.x;
+//    playerY = playerStartPos.y;
+//
+//    _app->scene->ResetPlayerSettings();
+//}

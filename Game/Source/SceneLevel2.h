@@ -1,5 +1,5 @@
 #pragma once
-#include "Scene.h"
+#include "SceneGame.h"
 
 class Saw;
 class Player;
@@ -7,12 +7,12 @@ class CheckPoint;
 class PowerUp;
 class GUI;
 
-class SceneLevel2 : public Scene
+class SceneLevel2 : public SceneGame
 {
 public:
 	SceneLevel2(Application* app, string name);
 
-	bool Start(bool isReseting = false) override;
+	bool Start() override;
 
 	void LoadEnemies();
 
@@ -26,7 +26,11 @@ public:
 
 	bool CleanUp() override;
 
-	void SetSaveData() override;
+	//void SetSaveData() override;
+
+	void SaveGameFile() override;
+
+	void ResetGameFile() override;
 
 	void LoadSaveData(pugi::xml_node save) override;
 
@@ -34,15 +38,11 @@ public:
 
 public:
 
-	Player* player = nullptr;
+	//Player* player = nullptr;
 
-	CheckPoint* checkPoint = nullptr;
+	//CheckPoint* checkPoint = nullptr;
 
-	iPoint playerStartPos = { 40, 594 };
-
-	GUI* gui = nullptr;
-
-	bool reset = false;
+	//GUI* gui = nullptr;
 
 	iPoint fruitsPos[8] = { { 100, 524 }, { 160, 524 }, { 220, 524 }, { 142, 440 }, { 185, 390 }, { 290, 360 }, { 290, 330 }, { 290, 300 } };
 };

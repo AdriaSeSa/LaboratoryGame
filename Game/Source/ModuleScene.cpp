@@ -93,7 +93,7 @@ UpdateStatus ModuleScene::PostUpdate()
 }
 
 //CleanUp current scene, change current scene (index), Start current Scene
-bool ModuleScene::ChangeCurrentScene(uint index, bool reset)
+bool ModuleScene::ChangeCurrentScene(uint index)
 {
 	currentSceneState = (SCENES)index;
 
@@ -109,27 +109,26 @@ bool ModuleScene::ChangeCurrentScene(uint index, bool reset)
 
 	currentScene = scenes[index];
 
-	currentScene->Start(reset);
-
+	currentScene->Start();
 	return true;
 }
 
 void ModuleScene::GetSaveData(pugi::xml_document& save)
 {
-	currentScene->SetSaveData();
+	//currentScene->SetSaveData();
 
-	pugi::xml_node n = save.child("game_state").child("scene");
+	//pugi::xml_node n = save.child("game_state").child("scene");
 
-	n.child("player").attribute("lifes") = playerSettings->playerLifes;
-	n.child("player").attribute("score") = playerSettings->playerScore;
+	//n.child("player").attribute("lifes") = playerSettings->playerLifes;
+	//n.child("player").attribute("score") = playerSettings->playerScore;
 
-	n.child(currentScene->name.c_str()).child("player").attribute("x") = currentScene->playerX;
-	n.child(currentScene->name.c_str()).child("player").attribute("y") = currentScene->playerY;
+	//n.child(currentScene->name.c_str()).child("player").attribute("x") = currentScene->playerX;
+	//n.child(currentScene->name.c_str()).child("player").attribute("y") = currentScene->playerY;
 }
 
 void ModuleScene::LoadSaveData(pugi::xml_document& save)
 {
-	pugi::xml_node n = save.child("game_state").child("scene");
+	/*pugi::xml_node n = save.child("game_state").child("scene");
 
 	currentScene->LoadSaveData(n);
 
@@ -138,7 +137,7 @@ void ModuleScene::LoadSaveData(pugi::xml_document& save)
 		playerSettings->playerLifes = n.child("player").attribute("lifes").as_int();
 		playerSettings->playerScore = n.child("player").attribute("score").as_int();
 		playerSettings->isInit = true;
-	}
+	}*/
 }
 
 void ModuleScene::ResetPlayerSettings()
@@ -171,13 +170,13 @@ void ModuleScene::DebugChangeScene()
 		{
 			if (App->input->GetKey(debugKeys[i]) == KEY_DOWN)
 			{
-				ChangeCurrentScene(i, true);
+				ChangeCurrentScene(i);
 			}
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		{
-			ChangeCurrentScene(currentScene->getID(), true);
+			ChangeCurrentScene(currentScene->getID());
 		}
 	}
 }

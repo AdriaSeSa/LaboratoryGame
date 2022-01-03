@@ -27,7 +27,7 @@ public:
 
 	virtual bool InitScene();
 
-	virtual bool Start(bool reset = false);
+	virtual bool Start();
 
 	virtual bool PreUpdate();
 
@@ -49,9 +49,6 @@ public:
 	}
 
 	int lastID = 0;
-
-	int playerX = 0;
-	int playerY = 0;
 
 	int isWin = false;
 

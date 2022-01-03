@@ -5,20 +5,20 @@
 	<textures />
 	<audio />
 	<scene>
-		<player lifes="2" score="0" />
+		<player lifes="3" score="3100" />
 		<level1>
-			<player x="40" y="560" />
+			<player x="256" y="190" />
 			<checkPoint isActive="false" />
 		</level1>
 		<level2>
-			<player x="40" y="594" />
+			<player x="145" y="302" />
 			<checkPoint isActive="false" />
 			<enemies>
 				<bat11 ID="11" lifes="1" isAlive="true" />
 				<bat12 ID="12" lifes="1" isAlive="true" />
-				<chameleon21 ID="21" lifes="2" isAlive="true" />
-				<chameleon22 ID="22" lifes="2" isAlive="true" />
-				<chameleon23 ID="23" lifes="2" isAlive="true" />
+				<chameleon21 ID="21" lifes="0" isAlive="false" />
+				<chameleon22 ID="22" lifes="0" isAlive="false" />
+				<chameleon23 ID="23" lifes="0" isAlive="false" />
 			</enemies>
 		</level2>
 	</scene>

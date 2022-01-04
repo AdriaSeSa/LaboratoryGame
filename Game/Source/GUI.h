@@ -1,40 +1,49 @@
 #pragma once
 
-#include "Application.h"
+#include "Point.h"
 
-#define CHARACTERS_NUM 1
+class Application;
 
-enum PlayerCharacters
+enum class UIShape
 {
-	VIRTUAL_GUY
+	CIRCLE,
+	BOX
+};
+
+struct RectangleShape
+{
+	int w = 0;
+	int h = 0;
+};
+
+struct CircleShape
+{
+	int radius = 0;
 };
 
 class GUI
 {
-private:
-	SDL_Texture* gui = nullptr;
+public:
+	GUI(Application* app);
 
-	SDL_Texture* hearths[3] = { nullptr };
+	void InitAsBox(int x, int y, int w, int h);
 
-	SDL_Texture* skill[CHARACTERS_NUM] = { nullptr };
-
-	SDL_Rect hearthsSection[3] = { {0,0,0,0}, {0,0,0,0}, {0,0,0,0} };
-
-	SDL_Rect skillSection = {0,0,0,0};
-
-	PlayerCharacters currentCharacter;
-
-	Application* _app = nullptr;
-
-	uint scoreUI = 0, coolDownUI = 0;
+	void InitAsCircle(int x, int y, int radius);
 
 public:
-	GUI(int character, Application* app);
+	bool CheckOnMouse();
 
-	~GUI();
+public:
+	Application* _app;
 
-	void Update();
+	iPoint position = { 0,0 };
 
-	void PostUpdate();
+	// Box Shape
+	RectangleShape boxShape;
+
+	// Circle Shape
+	CircleShape circleShape;
+
+	UIShape currentShape = UIShape::CIRCLE;
 };
 

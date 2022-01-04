@@ -5,7 +5,7 @@ class Saw;
 class Player;
 class CheckPoint;
 class PowerUp;
-class GUI;
+class StaticUI;
 
 class SceneLevel2 : public SceneGame
 {

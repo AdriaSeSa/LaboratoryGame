@@ -6,7 +6,7 @@
 #include "PowerUp.h"
 #include "SpecialPlatform.h"
 #include "PlayerSettings.h"
-#include "GUI.h"
+#include "StaticUI.h"
 
 SceneLevel1::SceneLevel1(Application* app, string name) :SceneGame(app, name)
 {
@@ -64,7 +64,7 @@ bool SceneLevel1::Start()
 
 	// Init GUI
 
-	gui = new GUI(PlayerCharacters::VIRTUAL_GUY, _app);
+	gui = new StaticUI(PlayerCharacters::VIRTUAL_GUY, _app);
 
 	// Recargar informacion de saveF
 	LoadGameFile();

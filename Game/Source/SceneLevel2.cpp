@@ -6,7 +6,7 @@
 #include "BatEnemy.h"
 #include "ChameleonEnemy.h"
 #include "PlayerSettings.h"
-#include "GUI.h"
+#include "StaticUI.h"
 
 SceneLevel2::SceneLevel2(Application* app, string name) :SceneGame(app, name)
 {
@@ -72,7 +72,7 @@ bool SceneLevel2::Start()
 	}
 
 	// Init GUI
-	gui = new GUI(0, _app);
+	gui = new StaticUI(0, _app);
 
 	// Recargar informacion de saveF
 	LoadGameFile();

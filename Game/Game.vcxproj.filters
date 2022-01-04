@@ -112,15 +112,16 @@
     <ClCompile Include="Source\ChameleonEnemy.cpp">
       <Filter>SourceFiles\GameObjects\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GUI.cpp">
-      <Filter>SourceFiles\BaseClass</Filter>
-    </ClCompile>
     <ClCompile Include="Source\ModuleDebug.cpp">
       <Filter>SourceFiles\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Source\SceneGame.cpp">
       <Filter>SourceFiles\BaseClass</Filter>
     </ClCompile>
+    <ClCompile Include="Source\StaticUI.cpp">
+      <Filter>SourceFiles\BaseClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -255,9 +256,6 @@
     <ClInclude Include="Source\ChameleonEnemy.h">
       <Filter>HeaderFiles\GameObjects\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUI.h">
-      <Filter>HeaderFiles\BaseClass</Filter>
-    </ClInclude>
     <ClInclude Include="Source\ModuleDebug.h">
       <Filter>HeaderFiles\Modules</Filter>
     </ClInclude>
@@ -267,6 +265,10 @@
     <ClInclude Include="Source\SceneGame.h">
       <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
+    <ClInclude Include="Source\StaticUI.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

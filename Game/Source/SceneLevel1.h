@@ -7,7 +7,7 @@ class Player;
 class CheckPoint;
 class PowerUp;
 class SpecialPlatform;
-class GUI;
+class StaticUI;
 
 class SceneLevel1 :  public SceneGame
 {

@@ -3,7 +3,7 @@
 
 class Player;
 class CheckPoint;
-class GUI;
+class StaticUI;
 
 class SceneGame : public Scene
 {
@@ -13,7 +13,7 @@ public:
 public:
 	Player* player = nullptr;
 	CheckPoint* checkPoint = nullptr;
-	GUI* gui = nullptr;
+	StaticUI* gui = nullptr;
 
 protected:
 	iPoint playerStartPos = { 40, 560 };

@@ -72,7 +72,7 @@ bool SceneLevel2::Start()
 	}
 
 	// Init GUI
-	gui = new StaticUI(0, _app);
+	staticUI = new StaticUI(0, _app);
 
 	// Recargar informacion de saveF
 	LoadGameFile();
@@ -204,6 +204,8 @@ bool SceneLevel2::PreUpdate()
 
 bool SceneLevel2::Update()
 {
+	Scene::Update();
+
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
 		if (gameObjects[i] != nullptr)
@@ -212,7 +214,7 @@ bool SceneLevel2::Update()
 		}
 	}
 
-	gui->Update();
+	staticUI->Update();
 
 	if(isWin)
 	{
@@ -232,7 +234,7 @@ bool SceneLevel2::PostUpdate()
 		}
 	}
 
-	gui->PostUpdate();
+	staticUI->PostUpdate();
 
 	return true;
 }
@@ -246,7 +248,7 @@ bool SceneLevel2::CleanUp()
 		_app->renderer->camera->ReleaseTarget();
 	}
 
-	RELEASE(gui);
+	RELEASE(staticUI);
 
 	_app->map->CleanUpScene();
 

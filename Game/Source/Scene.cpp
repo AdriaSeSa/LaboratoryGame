@@ -97,12 +97,6 @@ bool Scene::InitScene()
 				
 			gameObjects.add(mobPlatform);
 		}
-		//if (name == "checkPoint")
-		//{
-		//	iPoint position = { enviroument.attribute("positionX").as_int(0),enviroument.attribute("positionY").as_int(0) };
-		//	CheckPoint* cp = new CheckPoint(position,"checkPoint","CheckPoint", _app);
-		//	gameObjects.add(cp);
-		//}
 	}
 
 	return true;
@@ -120,6 +114,10 @@ bool Scene::PreUpdate()
 
 bool Scene::Update()
 {
+	for (int i = 0; i < guis.count(); i++)
+	{
+		if (guis[i]) guis[i]->Update();
+	}
 	return true;
 }
 
@@ -132,10 +130,6 @@ bool Scene::CleanUp()
 {
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
-		if (i == 258)
-		{
-			GameObject* g = gameObjects[i];
-		}
 		if (gameObjects[i])
 		{		
 			gameObjects[i]->CleanUp();
@@ -143,6 +137,8 @@ bool Scene::CleanUp()
 	}
 
 	gameObjects.clearPtr();
+
+	guis.clearPtr();
 
 	//for (int i = 0; i < sceneTextures.count(); i++)
 	//{

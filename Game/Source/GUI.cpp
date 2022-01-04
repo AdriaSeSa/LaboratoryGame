@@ -24,6 +24,10 @@ void GUI::InitAsCircle(int x, int y, int radius)
     position.y = y;
 }
 
+void GUI::Update()
+{
+}
+
 bool GUI::CheckOnMouse()
 {
     iPoint mousePos = { _app->input->GetMouseX(), _app->input->GetMouseY()};

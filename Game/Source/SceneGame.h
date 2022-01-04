@@ -13,7 +13,7 @@ public:
 public:
 	Player* player = nullptr;
 	CheckPoint* checkPoint = nullptr;
-	StaticUI* gui = nullptr;
+	StaticUI* staticUI = nullptr;
 
 protected:
 	iPoint playerStartPos = { 40, 560 };

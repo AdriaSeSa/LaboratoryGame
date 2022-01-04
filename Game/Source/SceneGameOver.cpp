@@ -29,6 +29,8 @@ bool SceneGameOver::Start()
 
 bool SceneGameOver::Update()
 {
+    Scene::Update();
+
     for (int i = 0; i < gameObjects.count(); i++)
     {
         if (gameObjects[i] != nullptr)

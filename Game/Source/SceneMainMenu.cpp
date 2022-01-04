@@ -111,6 +111,8 @@ bool SceneMainMenu::Update()
 {
     if (exit) return false;
 
+    Scene::Update();
+
     arrowAnimLeft = arrowAnimOffset == 20 ? true : arrowAnimOffset == 0 ? false : arrowAnimLeft;
 
     arrowAnimLeft ? arrowAnimOffset-- : arrowAnimOffset++;

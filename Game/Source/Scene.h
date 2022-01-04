@@ -3,6 +3,7 @@
 
 #include "GameObject.h"
 #include "List.h"
+#include "GUI.h"
 
 class Scene
 {
@@ -15,6 +16,8 @@ protected:
 	Application* _app = nullptr;
 
 	List<GameObject*> gameObjects;
+
+	List<GUI*> guis;
 
 	//List<SDL_Texture*> sceneTextures;
 

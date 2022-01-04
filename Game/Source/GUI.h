@@ -30,10 +30,12 @@ public:
 
 	void InitAsCircle(int x, int y, int radius);
 
-public:
+	virtual void Update();
+
+protected:
 	bool CheckOnMouse();
 
-public:
+protected:
 	Application* _app;
 
 	iPoint position = { 0,0 };

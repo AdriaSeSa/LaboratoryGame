@@ -1,5 +1,6 @@
 #include "SceneMainMenu.h"
 #include "BackGround.h"
+#include "GUIButton.h"
 
 SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
 {
@@ -14,6 +15,9 @@ bool SceneMainMenu::Start()
     arrowAnimOffset = 0;
 
     arrowAnimLeft = false;
+
+    GUIButton* buttonTest = new GUIButton(_app, { 100,100 }, 128, 64, "Assets/textures/UI/ButtonTest.png");
+    guis.add(buttonTest);
 
     InitTextures();
 
@@ -140,6 +144,7 @@ bool SceneMainMenu::Update()
 
 bool SceneMainMenu::PostUpdate()
 {
+    Scene::PostUpdate();
     for (int i = 0; i < gameObjects.count(); i++)
     {
         if (gameObjects[i] != nullptr)

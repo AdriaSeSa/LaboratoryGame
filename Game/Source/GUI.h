@@ -26,17 +26,21 @@ class GUI
 public:
 	GUI(Application* app);
 
+	virtual ~GUI();
+
 	void InitAsBox(int x, int y, int w, int h);
 
 	void InitAsCircle(int x, int y, int radius);
 
 	virtual void Update();
 
+	virtual void PostUpdate();
+
 protected:
 	bool CheckOnMouse();
 
 protected:
-	Application* _app;
+	Application* _app = nullptr;
 
 	iPoint position = { 0,0 };
 

@@ -121,7 +121,12 @@
     <ClCompile Include="Source\StaticUI.cpp">
       <Filter>SourceFiles\BaseClass</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GUI.cpp" />
+    <ClCompile Include="Source\GUI.cpp">
+      <Filter>SourceFiles\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GUIButton.cpp">
+      <Filter>SourceFiles\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -268,7 +273,12 @@
     <ClInclude Include="Source\StaticUI.h">
       <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GUI.h" />
+    <ClInclude Include="Source\GUIButton.h">
+      <Filter>HeaderFiles\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUI.h">
+      <Filter>HeaderFiles\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -324,6 +334,12 @@
     </Filter>
     <Filter Include="HeaderFiles\GameObjects\Enemies">
       <UniqueIdentifier>{4ba30545-91d4-40a8-81fa-5c6fa286bfc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GUI">
+      <UniqueIdentifier>{0b3b2231-4489-4304-84d3-9fded572aca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GUI">
+      <UniqueIdentifier>{1b70dc5c-078c-415a-8ca8-fc127e4cd4a7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

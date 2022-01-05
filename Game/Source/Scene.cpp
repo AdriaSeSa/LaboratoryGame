@@ -123,6 +123,10 @@ bool Scene::Update()
 
 bool Scene::PostUpdate()
 {
+	for (int i = 0; i < guis.count(); i++)
+	{
+		if (guis[i]) guis[i]->PostUpdate();
+	}
 	return true;
 }
 
@@ -139,14 +143,6 @@ bool Scene::CleanUp()
 	gameObjects.clearPtr();
 
 	guis.clearPtr();
-
-	//for (int i = 0; i < sceneTextures.count(); i++)
-	//{
-	//	if(sceneTextures[i])
-	//	{
-	//		_app->textures->Unload(sceneTextures[i]);
-	//	}
-	//}
 
 	return true;
 }

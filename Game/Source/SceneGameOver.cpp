@@ -71,6 +71,7 @@ bool SceneGameOver::Update()
 
 bool SceneGameOver::PostUpdate()
 {
+    Scene::PostUpdate();
     for (int i = 0; i < gameObjects.count(); i++)
     {
         if (gameObjects[i] != nullptr)

@@ -7,6 +7,10 @@ GUI::GUI(Application* app)
     _app = app;
 }
 
+GUI::~GUI()
+{
+}
+
 void GUI::InitAsBox(int x, int y, int w, int h)
 {
     currentShape = UIShape::BOX;
@@ -28,10 +32,13 @@ void GUI::Update()
 {
 }
 
+void GUI::PostUpdate()
+{
+}
+
 bool GUI::CheckOnMouse()
 {
     iPoint mousePos = { _app->input->GetMouseX(), _app->input->GetMouseY()};
-    printf("x: %d\ty:%d\n", mousePos.x, mousePos.y);
     if (currentShape == UIShape::CIRCLE)
     {
         if (mousePos.DistanceTo(position * _app->window->scale) < circleShape.radius * _app->window->scale) return true;

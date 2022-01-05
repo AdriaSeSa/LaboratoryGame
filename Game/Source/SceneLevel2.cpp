@@ -226,6 +226,7 @@ bool SceneLevel2::Update()
 
 bool SceneLevel2::PostUpdate()
 {
+	Scene::PostUpdate();
 	for (int i = 0; i < gameObjects.count(); i++)
 	{
 		if (gameObjects[i] != nullptr)

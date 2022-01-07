@@ -86,10 +86,10 @@ void GUISlider::Update()
 	{
 		btn->Update();
 		iPoint mousePos = { _app->input->GetMouseX(), _app->input->GetMouseY() };
+		int btnNewPos_x = 0;
 
 		switch (btn->buttonState)
 		{
-
 		case ButtonState::PRESS_DOWN:
 
 			//Get Offset of mouse.x and btnpos.x
@@ -99,14 +99,35 @@ void GUISlider::Update()
 		case ButtonState::PRESSED:
 
 			// Calculate new btnpos
-			int btnNewPos_x = (mousePos.x / _app->window->scale) - btnMouse_offset_x;
+			btnNewPos_x = (mousePos.x / _app->window->scale) - btnMouse_offset_x;
 
-			// Change button position affset Clamping
+			// Change button position after Clamping
 			btn->position.x = CLAMP(btnNewPos_x, min_value, max_value);
 
 			// Update value;
 			value = btn->position.x - min_value;
 
+			break;
+
+		default:
+			if (CheckOnMouse())
+			{
+				if (_app->input->GetMouseButton(1) == KEY_DOWN)
+				{
+					btnMouse_offset_x = (btn->boxShape.w / 2);
+
+					btnNewPos_x = (mousePos.x / _app->window->scale) - btnMouse_offset_x;
+
+					// Change button position after Clamping
+					btn->position.x = CLAMP(btnNewPos_x, min_value, max_value);
+
+					// Update value;
+					value = btn->position.x - min_value;
+
+					btn->buttonState = ButtonState::PRESSED;
+					btn->isPressed = true;
+				}
+			}
 			break;
 		}
 	}

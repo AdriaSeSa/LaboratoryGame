@@ -130,6 +130,9 @@
     <ClCompile Include="Source\GUISlider.cpp">
       <Filter>SourceFiles\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GUICheckbox.cpp">
+      <Filter>SourceFiles\GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -283,6 +286,9 @@
       <Filter>HeaderFiles\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Source\GUISlider.h">
+      <Filter>HeaderFiles\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GUICheckbox.h">
       <Filter>HeaderFiles\GUI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "SceneMainMenu.h"
 #include "BackGround.h"
 #include "GUIButton.h"
+#include "GUISlider.h"
 
 SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
 {
@@ -16,8 +17,12 @@ bool SceneMainMenu::Start()
 
     arrowAnimLeft = false;
 
-    GUIButton* buttonTest = new GUIButton(_app, { 100,100 }, 128, 64, "Assets/textures/UI/ButtonTest.png");
-    guis.add(buttonTest);
+    //GUIButton* buttonTest = new GUIButton(_app, { 100,100 }, 8, 16, "Assets/textures/UI/Slider_BtnTest.png");
+
+    GUISlider* sliderTest = new GUISlider(_app, { 100,100 }, 128, 16, "Assets/textures/UI/SliderTest.png");
+    sliderTest->CreateGUIBtn(new GUIButton(_app, { 100,100 }, 8, 20, "Assets/textures/UI/Slider_BtnTest.png"));
+
+    guis.add(sliderTest);
 
     InitTextures();
 

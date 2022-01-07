@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Point.h"
+#include "SDL/include/SDL.h"
 
 class Application;
 
@@ -49,6 +50,8 @@ protected:
 
 	// Circle Shape
 	CircleShape circleShape;
+
+	SDL_Color defaultColor = { 255,255,255,255 };
 
 	UIShape currentShape = UIShape::CIRCLE;
 };

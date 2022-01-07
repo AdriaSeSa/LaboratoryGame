@@ -211,7 +211,6 @@ void ModuleRender::SortRenderObjects(vector<RenderObject> &obj)
 	}
 }
 
-
 void ModuleRender::CameraMove(iPoint pos)
 {
 	camera->x = pos.x + (SCREEN_WIDTH / 2);	//	Camera position = target position
@@ -228,7 +227,7 @@ void ModuleRender::GetSaveData(pugi::xml_document& save)
 	n.child("camera").attribute("y") = camera->y;
 }
 
-#pragma region OBSOLETE
+#pragma region OBSOLETE NOT USE!!!!!
 
 // Blit to screen
 bool ModuleRender::Blit(SDL_Texture* texture, int x, int y, float scale, SDL_Rect* section, float speed, double angle, SDL_RendererFlip flip, int pivot_x, int pivot_y)

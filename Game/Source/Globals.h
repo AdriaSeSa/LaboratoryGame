@@ -13,6 +13,7 @@ void log(const char file[], int line, const char* format, ...);
 #define RADTODEG 57.295779513082320876f
 
 #define IN_RANGE( value, min, max ) ( ((value) >= (min) && (value) <= (max)) ? 1 : 0 )
+#define CLAMP(value, min, max ) ((value) <= (min) ? (min) : (value) >= (max) ? (max) : (value))
 #define MIN( a, b ) ( ((a) < (b)) ? (a) : (b) )
 #define MAX( a, b ) ( ((a) > (b)) ? (a) : (b) )
 #define TO_BOOL( a )  ( (a != 0) ? true : false )

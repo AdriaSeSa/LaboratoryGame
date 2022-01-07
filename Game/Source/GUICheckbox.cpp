@@ -40,7 +40,6 @@ void GUICheckbox::Update()
 
 void GUICheckbox::PostUpdate()
 {
-	printf("%d", isActive);
 	if (renderObject != nullptr && renderObject->texture != nullptr)
 	{
 		_app->renderer->AddTextureRenderQueue(renderObject->texture, { position.x, position.y }, renderSections[(int)checkboxState], renderObject->scale,

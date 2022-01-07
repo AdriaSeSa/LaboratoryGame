@@ -2,6 +2,7 @@
 #include "BackGround.h"
 #include "GUIButton.h"
 #include "GUISlider.h"
+#include "GUICheckbox.h"
 
 SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
 {
@@ -12,7 +13,7 @@ bool SceneMainMenu::Start()
 {
     // Reset logo position
     logoY = -100;
-    
+
     arrowAnimOffset = 0;
 
     arrowAnimLeft = false;
@@ -22,7 +23,11 @@ bool SceneMainMenu::Start()
     GUISlider* sliderTest = new GUISlider(_app, { 100,100 }, 128, 16, "Assets/textures/UI/SliderTest.png");
     sliderTest->CreateGUIBtn(new GUIButton(_app, { 100,100 }, 8, 20, "Assets/textures/UI/Slider_BtnTest.png"));
 
+    GUICheckbox* checkboxTest = new GUICheckbox(_app, { 100, 200 }, 48, 48, "Assets/textures/UI/CheckboxTest.png");
+
     guis.add(sliderTest);
+
+    guis.add(checkboxTest);
 
     InitTextures();
 

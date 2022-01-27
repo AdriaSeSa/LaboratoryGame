@@ -158,8 +158,16 @@ bool Application::CleanUp()
 
 	while(item != nullptr && ret == true)
 	{
-		ret = item->data->CleanUp();
-		item = item->prev;
+		try
+		{
+			ret = item->data->CleanUp();
+			item = item->prev;
+		}
+		catch(const exception& e)
+		{
+			LOG(e.what());
+			LOG("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR");
+		}
 	}
 
 	list_modules.clearPtr();

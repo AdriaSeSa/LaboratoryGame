@@ -41,9 +41,21 @@ bool ModuleTextures::CleanUp()
 
 	for (int i = 0, count = textures.count(); i < count; i++)
 	{
-		//LOG("Freeing textures and Image library num: %d / %d || direccion in memory: %#x || path: %s\n",i, count, textures[i], texturePath[i].path);
-		SDL_DestroyTexture(textures[i]);
-		textures[i] = nullptr;
+		LOG("Freeing textures and Image library num: %d / %d || direccion in memory: %#x || path: %s\n",i, count, textures[i], texturePath[i].path);
+		if (textures[i] != nullptr)
+		{
+			try
+			{
+				SDL_DestroyTexture(textures[i]);
+				textures[i] = nullptr;
+			}
+			catch (const exception& e)
+			{
+				LOG(e.what());
+				LOG("ERROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOR");
+			}
+		}
+		LOG("Succeful clean texture");
 	}
 
 	textures.clear();

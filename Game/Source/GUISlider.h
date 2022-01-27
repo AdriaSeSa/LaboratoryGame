@@ -38,6 +38,12 @@ public:
 
 	void PostUpdate() override;
 
+	/// <summary>
+	///
+	/// </summary>
+	/// <param name="value">0-1</param>
+	void SetValue(float val);
+
 	float GetValue();
 };
 

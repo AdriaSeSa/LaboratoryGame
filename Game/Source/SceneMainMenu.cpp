@@ -25,6 +25,8 @@ bool SceneMainMenu::Start()
 
     GUICheckbox* checkboxTest = new GUICheckbox(_app, { 100, 200 }, 48, 48, "Assets/textures/UI/CheckboxTest.png");
 
+    sliderTest->SetValue(0.5f);
+
     guis.add(sliderTest);
 
     guis.add(checkboxTest);

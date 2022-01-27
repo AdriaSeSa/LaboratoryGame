@@ -159,6 +159,19 @@ void GUISlider::PostUpdate()
 	}
 }
 
+void GUISlider::SetValue(float val)
+{
+	val = val > 1 ? 1 : val < 0 ? 0 : val;
+
+	float total_value = max_value - min_value;
+
+	// Change value
+	this->value = total_value * val;
+
+	// Change btn position
+	btn->position.x = CLAMP(min_value+ value, min_value, max_value);
+}
+
 float GUISlider::GetValue()
 {
 	float total_value = max_value - min_value;

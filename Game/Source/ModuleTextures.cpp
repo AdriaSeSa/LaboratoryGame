@@ -118,6 +118,8 @@ SDL_Texture* ModuleTextures::Load(std::string path, bool isName)
 			TexturePath tp = { path, textures.count() - 1, (int)&texture};
 			texturePath.add(tp);
 			//texturePath.insert(std::pair<std::string, int>(path, textures.count() - 1));
+
+			printf("direccion in memory : %#x || path: %s \n", texture, path.c_str());
 		}
 
 		SDL_FreeSurface(surface);

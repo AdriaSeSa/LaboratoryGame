@@ -139,7 +139,9 @@ void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_R
 	renderObject.destRect.w *= scale * App->window->scale * zoom;
 	renderObject.destRect.h *= scale * App->window->scale * zoom;
 
+	LOG("direccion in memory : %#x", renderObject.texture);
 	renderLayers[layer].push_back(renderObject);
+	
 }
 
 void ModuleRender::AddTextureRenderQueue(RenderObject obj)

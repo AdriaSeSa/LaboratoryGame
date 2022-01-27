@@ -11,7 +11,7 @@
 			<checkPoint isActive="false" />
 		</level1>
 		<level2>
-			<player x="40" y="594" />
+			<player x="39" y="595" />
 			<checkPoint isActive="false" />
 			<enemies>
 				<bat11 ID="11" lifes="1" isAlive="true" />
@@ -23,7 +23,7 @@
 		</level2>
 	</scene>
 	<debug>
-		<lastState isSaved="true" scene="2" />
+		<lastState isSaved="true" scene="3" />
 	</debug>
-	<settings fullScreen = "false" vSync = "true" music = "0.2" sfx = "0.5" />
+	<settings fullScreen="false" vSync="true" music="0.2" sfx="0.5" />
 </game_state>

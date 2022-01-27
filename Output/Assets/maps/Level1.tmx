@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="20" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="1">
  <tileset firstgid="1" name="Terrain (16x16)" tilewidth="16" tileheight="16" tilecount="242" columns="22">
-  <image source="Terrain (16x16) 1.png" width="352" height="176"/>
+  <image source="Terrain_(16x16)_1.png" width="352" height="176"/>
   <wangsets>
    <wangset name="CornerSet" type="corner" tile="-1">
     <wangcolor name="grid4" color="#ff0000" tile="6" probability="1"/>

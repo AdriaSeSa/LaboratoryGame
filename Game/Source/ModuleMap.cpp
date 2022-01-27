@@ -70,8 +70,14 @@ UpdateStatus ModuleMap::PostUpdate()
 
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
-
-						App->renderer->AddTextureRenderQueue(tileset->texture, iPoint(pos.x, pos.y), r, 1, 0, 0.5f);
+						try
+						{
+							App->renderer->AddTextureRenderQueue(tileset->texture, iPoint(pos.x, pos.y), r, 1, 0, 0.5f);
+						}
+						catch (const std::exception& e)
+						{
+							LOG(e.what());
+						}
 					}
 
 				}

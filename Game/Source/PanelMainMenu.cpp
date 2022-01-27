@@ -110,28 +110,37 @@ void PanelMainMenu::CheckInteractions()
 
 void PanelMainMenu::Update()
 {
-	CheckInteractions();
 	switch (currentScreen)
 	{
 	case 0:
 		for (int i = 0; i < guiList.count(); i++)
 		{
-			guiList[i]->Update();
+			if (guiList[i] != nullptr)
+			{
+				guiList[i]->Update();
+			}
 		}
 		break;
 	case 1:
 		for (int i = 0; i < selectLevelGUI.count(); i++)
 		{
-			selectLevelGUI[i]->Update();
+			if (selectLevelGUI[i] != nullptr)
+			{
+				selectLevelGUI[i]->Update();
+			}
 		}
 		break;
 	case 2:
 		for (int i = 0; i < settingsGUI.count(); i++)
 		{
-			settingsGUI[i]->Update();
+			if (settingsGUI[i] != nullptr)
+			{
+				settingsGUI[i]->Update();
+			}
 		}
 		break;
 	}
+	CheckInteractions();
 }
 
 void PanelMainMenu::PostUpdate()
@@ -141,19 +150,28 @@ void PanelMainMenu::PostUpdate()
 	case 0:
 		for (int i = 0; i < guiList.count(); i++)
 		{
-			guiList[i]->PostUpdate();
+			if (guiList[i] != nullptr)
+			{
+				guiList[i]->PostUpdate();
+			}
 		}
 		break;
 	case 1:
 		for (int i = 0; i < selectLevelGUI.count(); i++)
 		{
-			selectLevelGUI[i]->PostUpdate();
+			if (selectLevelGUI[i] != nullptr)
+			{
+				selectLevelGUI[i]->PostUpdate();
+			}
 		}
 		break;
 	case 2:
 		for (int i = 0; i < settingsGUI.count(); i++)
 		{
-			settingsGUI[i]->PostUpdate();
+			if (settingsGUI[i] != nullptr)
+			{
+				settingsGUI[i]->PostUpdate();
+			}
 		}
 		break;
 	}

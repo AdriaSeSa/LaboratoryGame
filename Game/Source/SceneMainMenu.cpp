@@ -102,6 +102,24 @@ bool SceneMainMenu::Update()
 
     Scene::Update();
 
+    // Toggle Fullscreen
+    if (_app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)
+    {
+        _app->FullScreenDesktop = !_app->FullScreenDesktop;
+
+        if (_app->FullScreenDesktop)
+        {
+            SDL_SetWindowFullscreen(_app->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+            _app->window->scale = 3;
+        }
+        else
+        {
+            SDL_SetWindowFullscreen(_app->window->window, 0);
+            _app->window->scale = 2;
+        }
+    }
+
+
     for (int i = 0; i < gameObjects.count(); i++)
     {
         if (gameObjects[i] != nullptr)
@@ -137,10 +155,13 @@ bool SceneMainMenu::PostUpdate()
 
     for (int i = 0; i < panels.count(); i++)
     {
-        panels[i]->PostUpdate();
+        if (panels[i] != nullptr)
+        {
+            panels[i]->PostUpdate();
+        }
     }
        
-    for (int i = 0; i < currentTextures.count(); i++)
+    /*for (int i = 0; i < currentTextures.count(); i++)
     {
         // Make currentTextures a List<RenderObjects> and use that to render
         if (currentTextures[i].name == "logo")
@@ -153,7 +174,7 @@ bool SceneMainMenu::PostUpdate()
             _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, currentTextures[i].destRect.y }, currentTextures[i].section, 
               currentTextures[i].scale, 2, 1);
         }
-    }
+    }*/
 
     return true;
 }

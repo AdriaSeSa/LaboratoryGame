@@ -22,7 +22,9 @@ bool SceneMainMenu::Start()
 
     //GUICheckbox* checkboxTest = new GUICheckbox(_app, { 100, 200 }, 48, 48, "Assets/textures/UI/CheckboxTest.png");
 
-    //guis.add(sliderTest);
+    // sliderTest->SetValue(0.5f);
+
+    // guis.add(sliderTest);
 
     //guis.add(checkboxTest);
 
@@ -171,7 +173,7 @@ bool SceneMainMenu::PostUpdate()
         }
         else
         {
-            _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, currentTextures[i].destRect.y }, currentTextures[i].section, 
+            _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, currentTextures[i].destRect.y }, currentTextures[i].section,
               currentTextures[i].scale, 2, 1);
         }
     }*/
@@ -192,7 +194,7 @@ void SceneMainMenu::ChangeScreen(int screen)
             currentTextures.add(mainMenuTextures[i]);
         }
         break;
-    // Select Level   
+    // Select Level
     case 1:
         for (int i = 0; i <selectLevelTextures.count(); i++)
         {
@@ -210,7 +212,7 @@ bool SceneMainMenu::CleanUp()
     currentTextures.clear();
     mainMenuTextures.clear();
     selectLevelTextures.clear();
-   
+
     for (int i = 0; i < panels.count(); i++)
     {
         panels[i]->CleanUp();

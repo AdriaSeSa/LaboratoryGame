@@ -3,6 +3,7 @@
 #include "Animation.h"
 
 class BackGround;
+class GUIPanel;
 
 class SceneMainMenu : public Scene
 {
@@ -13,8 +14,6 @@ public:
 
 	void InitTextures();
 
-	void MoveArrow();
-
 	bool Update() override;
 
 	bool PostUpdate() override;
@@ -23,34 +22,17 @@ public:
 
 	void SelectOption();
 
-	void ScreenOptions0();
-
-	void ScreenOptions1();
-
-	void ScreenOptions2();
-
 	bool CleanUp() override;
 
+	bool exit = false;
+
 private:
-	int currentArrowPos = 0;
 
 	int currentScreen = 0;
-
-	int arrowAnimOffset = 0;
-
-	bool arrowAnimLeft = false;
-
-	List<iPoint> arrowPositions;
 
 	BackGround* bg = nullptr;
 
 	int logoY = -100;
-
-	SDL_Texture* arrow = nullptr;
-
-	SDL_Rect arrowSection = {0,0,0,0};
-
-	SDL_Texture* sArrow = nullptr;
 
 	List<RenderObject> currentTextures;
 
@@ -58,10 +40,8 @@ private:
 
 	List<RenderObject> selectLevelTextures;
 
+	List<GUIPanel*> panels;
+
 	Animation logoAnim;
-
-	bool exit = false;
-
-	int arrowCounter = 20;
 };
 

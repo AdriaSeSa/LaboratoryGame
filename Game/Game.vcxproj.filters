@@ -133,6 +133,12 @@
     <ClCompile Include="Source\GUICheckbox.cpp">
       <Filter>SourceFiles\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GUIPanel.cpp">
+      <Filter>SourceFiles\BaseClass</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\PanelMainMenu.cpp">
+      <Filter>SourceFiles\GUI\GUIPanels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -291,6 +297,12 @@
     <ClInclude Include="Source\GUICheckbox.h">
       <Filter>HeaderFiles\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GUIPanel.h">
+      <Filter>HeaderFiles\BaseClass</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelMainMenu.h">
+      <Filter>HeaderFiles\GUI\GUIPanels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -352,6 +364,12 @@
     </Filter>
     <Filter Include="SourceFiles\GUI">
       <UniqueIdentifier>{1b70dc5c-078c-415a-8ca8-fc127e4cd4a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SourceFiles\GUI\GUIPanels">
+      <UniqueIdentifier>{fd0f77e7-f89b-4d99-9c85-2fb295f81d0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="HeaderFiles\GUI\GUIPanels">
+      <UniqueIdentifier>{ca0bb77f-93c4-4b95-a341-8f1686f2df89}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

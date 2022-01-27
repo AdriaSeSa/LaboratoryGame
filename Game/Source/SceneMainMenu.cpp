@@ -3,6 +3,7 @@
 #include "GUIButton.h"
 #include "GUISlider.h"
 #include "GUICheckbox.h"
+#include "PanelMainMenu.h"
 
 SceneMainMenu::SceneMainMenu(Application* app) : Scene(app)
 {
@@ -14,20 +15,19 @@ bool SceneMainMenu::Start()
     // Reset logo position
     logoY = -100;
 
-    arrowAnimOffset = 0;
-
-    arrowAnimLeft = false;
-
     //GUIButton* buttonTest = new GUIButton(_app, { 100,100 }, 8, 16, "Assets/textures/UI/Slider_BtnTest.png");
 
-    GUISlider* sliderTest = new GUISlider(_app, { 100,100 }, 128, 16, "Assets/textures/UI/SliderTest.png");
-    sliderTest->CreateGUIBtn(new GUIButton(_app, { 100,100 }, 8, 20, "Assets/textures/UI/Slider_BtnTest.png"));
+    //GUISlider* sliderTest = new GUISlider(_app, { 100,100 }, 128, 16, "Assets/textures/UI/SliderTest.png");
+    //sliderTest->CreateGUIBtn(new GUIButton(_app, { 100,100 }, 8, 20, "Assets/textures/UI/Slider_BtnTest.png"));
 
-    GUICheckbox* checkboxTest = new GUICheckbox(_app, { 100, 200 }, 48, 48, "Assets/textures/UI/CheckboxTest.png");
+    //GUICheckbox* checkboxTest = new GUICheckbox(_app, { 100, 200 }, 48, 48, "Assets/textures/UI/CheckboxTest.png");
 
-    guis.add(sliderTest);
+    //guis.add(sliderTest);
 
-    guis.add(checkboxTest);
+    //guis.add(checkboxTest);
+
+    PanelMainMenu* panelMM = new PanelMainMenu(_app, this);
+    panels.add(panelMM);
 
     InitTextures();
 
@@ -48,9 +48,6 @@ bool SceneMainMenu::Start()
 
 void SceneMainMenu::InitTextures()
 {
-    arrow = _app->textures->Load("Assets/textures/Menu/Arrow.png");
-    arrowSection = { 0,0,32,32 };
-    sArrow = _app->textures->Load("Assets/textures/Menu/Levels.png");
     // Main Menu
     RenderObject l;
     l.texture = _app->textures->Load("Assets/textures/Menu/LogoAnim.png");
@@ -99,42 +96,21 @@ void SceneMainMenu::InitTextures()
     selectLevelTextures.add(l2);
 }
 
-void SceneMainMenu::MoveArrow()
-{
-    if (_app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-    {
-        _app->audio->PlayFx(SFX::BLIP_SELECT);
-        // If we are at the last position of arrowPositions, we go back to the beginning. if not, we advance one position.
-        currentArrowPos == arrowPositions.count()-1 ? currentArrowPos = 0 : currentArrowPos++;
-    }
-    if (_app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-    {
-        _app->audio->PlayFx(SFX::BLIP_SELECT);
-        // If we are at the first position of arrowPositions, we go forward to the end. if not, we go back one position.
-        currentArrowPos == 0 ? currentArrowPos = arrowPositions.count()-1 : currentArrowPos--;
-    }
-    if (_app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-    {
-        _app->audio->PlayFx(SFX::SELECT);
-        SelectOption();
-        //arrowSection = { 32,0,32,32 };
-    }
-}
-
 bool SceneMainMenu::Update()
 {
     if (exit) return false;
 
     Scene::Update();
 
-    arrowAnimLeft = arrowAnimOffset == 20 ? true : arrowAnimOffset == 0 ? false : arrowAnimLeft;
-
-    arrowAnimLeft ? arrowAnimOffset-- : arrowAnimOffset++;
-
     for (int i = 0; i < gameObjects.count(); i++)
     {
         if (gameObjects[i] != nullptr)
         gameObjects[i]->Update();
+    }
+
+    for (int i = 0; i < panels.count(); i++)
+    {
+        panels[i]->Update();
     }
 
     if (bg->movementY == -256) bg->movementY = 0;
@@ -147,8 +123,6 @@ bool SceneMainMenu::Update()
         logoY = logoY == 58 ? logoY : logoY + 2;
     }
 
-    MoveArrow();
-
     return true;
 }
 
@@ -160,11 +134,10 @@ bool SceneMainMenu::PostUpdate()
         if (gameObjects[i] != nullptr)
             gameObjects[i]->PostUpdate();
     }
-    if (currentScreen == 0) _app->renderer->AddTextureRenderQueue(arrow, arrowPositions[currentArrowPos] + iPoint(arrowAnimOffset/4, 0), arrowSection, 1, 2, 1);
-    if (currentScreen == 1)
+
+    for (int i = 0; i < panels.count(); i++)
     {
-        if (currentArrowPos < 2) _app->renderer->AddTextureRenderQueue(sArrow, arrowPositions[currentArrowPos], { 0,0,32,32 }, 1, 2, 2);
-        else  _app->renderer->AddTextureRenderQueue(arrow, arrowPositions[currentArrowPos] + iPoint(arrowAnimOffset/4, 0), arrowSection, 1, 2, 1);
+        panels[i]->PostUpdate();
     }
        
     for (int i = 0; i < currentTextures.count(); i++)
@@ -187,16 +160,12 @@ bool SceneMainMenu::PostUpdate()
 
 void SceneMainMenu::ChangeScreen(int screen)
 {
-    arrowPositions.clear();
-    currentArrowPos = 0;
     currentScreen = screen;
     currentTextures.clear();
     switch (screen)
     {
     // Main Menu
     case 0:
-        arrowPositions.add({ 69, 190 });
-        arrowPositions.add({ 69, 260 });
         for (int i = 0; i < mainMenuTextures.count(); i++)
         {
             currentTextures.add(mainMenuTextures[i]);
@@ -204,9 +173,6 @@ void SceneMainMenu::ChangeScreen(int screen)
         break;
     // Select Level   
     case 1:
-        arrowPositions.add({ 69, 135 });
-        arrowPositions.add({ 210, 135 });
-        arrowPositions.add({ 95, 180 });
         for (int i = 0; i <selectLevelTextures.count(); i++)
         {
             currentTextures.add(selectLevelTextures[i]);
@@ -216,52 +182,6 @@ void SceneMainMenu::ChangeScreen(int screen)
     }
 }
 
-void SceneMainMenu::SelectOption()
-{
-    switch (currentScreen)
-    {
-    case 0:
-        ScreenOptions0();
-        break;
-    case 1:
-        ScreenOptions1();
-        break;
-    }
-}
-
-void SceneMainMenu::ScreenOptions0()
-{
-    switch (currentArrowPos)
-    {
-    case 0:
-        ChangeScreen(1);
-        break;
-    case 1:
-        exit = true;
-        break;
-    }
-}
-
-void SceneMainMenu::ScreenOptions1()
-{
-    switch (currentArrowPos)
-    {
-    case 0:
-        _app->scene->ChangeCurrentScene(2);
-        break;
-    case 1:
-        _app->scene->ChangeCurrentScene(3);
-        break;
-    case 2:
-        ChangeScreen(0);
-        break;
-    }
-}
-
-void SceneMainMenu::ScreenOptions2()
-{
-}
-
 bool SceneMainMenu::CleanUp()
 {
     Scene::CleanUp();
@@ -269,7 +189,13 @@ bool SceneMainMenu::CleanUp()
     currentTextures.clear();
     mainMenuTextures.clear();
     selectLevelTextures.clear();
-    arrowPositions.clear();
+   
+    for (int i = 0; i < panels.count(); i++)
+    {
+        panels[i]->CleanUp();
+    }
+
+    panels.clearPtr();
 
     return true;
 }

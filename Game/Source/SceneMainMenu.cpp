@@ -46,6 +46,9 @@ bool SceneMainMenu::Start()
     // Set screen to MAIN_MENU
     ChangeScreen(0);
 
+    _app->window->ToggleFullScreen(_app->saveF.child("game_state").child("settings").attribute("fullScreen").as_bool(false));
+
+
     return true;
 }
 
@@ -112,13 +115,11 @@ bool SceneMainMenu::Update()
 
         if (_app->FullScreenDesktop)
         {
-            SDL_SetWindowFullscreen(_app->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-            _app->window->scale = 3;
+            SDL_SetWindowFullscreen(_app->window->window, SDL_WINDOW_FULLSCREEN);
         }
         else
         {
             SDL_SetWindowFullscreen(_app->window->window, 0);
-            _app->window->scale = 2;
         }
     }
 

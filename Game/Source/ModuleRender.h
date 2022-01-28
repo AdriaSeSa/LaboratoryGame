@@ -15,6 +15,7 @@ public:
 
 	int zoom = 1;
 
+	SDL_DisplayMode displayMode;
 public:
 	ModuleRender(Application* app, bool start_enabled = true);
 	~ModuleRender();
@@ -30,6 +31,8 @@ public:
 	void ClearRederQueue();
 
 	int RoundToInt(int num);
+
+	void ToggleVsync(bool vsync);
 
 #pragma region OBSOLETE
 	/// <summary>

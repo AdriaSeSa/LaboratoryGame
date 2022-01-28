@@ -21,6 +21,8 @@ public:
 
 	void SetTitle(const char* title);
 
+	void ToggleFullScreen(bool fullScreen);
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window = nullptr;

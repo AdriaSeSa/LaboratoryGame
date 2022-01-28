@@ -47,6 +47,8 @@ PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(
 
 	backToMainMenu2 = new GUIButton(_app, { 0, 0 }, 128, 64, "Assets/textures/UI/StartButton.png");
 	settingsGUI.add(backToMainMenu2);
+
+	InitializeSettings();
 }
 
 void PanelMainMenu::CheckInteractions()
@@ -102,9 +104,26 @@ void PanelMainMenu::CheckInteractions()
 			backToMainMenu2->doAction = false;
 		}
 
-		Mix_VolumeMusic(100 * musicSlider->GetValue());
-		Mix_Volume(-1, 100 * sfxSlider->GetValue());
+		Mix_VolumeMusic(60 * musicSlider->GetValue());
+		Mix_Volume(-1, 60 * sfxSlider->GetValue());
 
+		if (vSyncCheck->isActive && !_app->vsync)
+		{
+			_app->renderer->ToggleVsync(true);
+		}
+		else if (!vSyncCheck->isActive && _app->vsync)
+		{
+			_app->renderer->ToggleVsync(false);
+		}
+
+		if (fullScreenCheck->isActive && !_app->FullScreenDesktop)
+		{
+			_app->window->ToggleFullScreen(true);
+		}
+		else if (!fullScreenCheck->isActive && _app->FullScreenDesktop)
+		{
+			_app->window->ToggleFullScreen(false);
+		}
 		break;
 	}
 	
@@ -182,7 +201,31 @@ void PanelMainMenu::PostUpdate()
 
 void PanelMainMenu::CleanUp()
 {
+	SaveSettings();
 	guiList.clearPtr();
 	selectLevelGUI.clearPtr();
 	settingsGUI.clearPtr();
+}
+
+void PanelMainMenu::InitializeSettings()
+{
+	pugi::xml_node n = _app->saveF.child("game_state").child("settings");
+
+	fullScreenCheck->ChangeState(n.attribute("fullScreen").as_bool(false));
+	vSyncCheck->ChangeState(n.attribute("vSync").as_bool(true));
+	musicSlider->SetValue(n.attribute("music").as_float(0.5));
+	sfxSlider->SetValue(n.attribute("sfx").as_float(0.5));
+}
+
+void PanelMainMenu::SaveSettings()
+{
+	pugi::xml_node n = _app->saveF.child("game_state").child("settings");
+
+	n.attribute("fullScreen") = fullScreenCheck->isActive;
+	n.attribute("vSync") = vSyncCheck->isActive;
+	n.attribute("music") = musicSlider->GetValue();
+	n.attribute("sfx") = sfxSlider->GetValue();
+
+	_app->saveF.save_file(SAVE_STATE_FILENAME);
+
 }

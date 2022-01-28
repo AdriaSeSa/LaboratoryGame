@@ -60,8 +60,7 @@ public:
 private:
 	bool ChangeCurrentScene();
 
-	SDL_Rect fadeRect = { -160,160,320,1280 };
-
+	RenderObject fadePanel;
 
 public:
 

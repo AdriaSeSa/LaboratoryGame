@@ -5,39 +5,33 @@
 class GUIButton;
 class GUICheckbox;
 class GUISlider;
-class SceneMainMenu;
 
-class PanelMainMenu : public GUIPanel
+class PanelPause : public GUIPanel
 {
 private:
-
-    GUIButton* startButton = nullptr;
+    GUIButton* resumeButton = nullptr;
     GUIButton* settingsButton = nullptr;
     GUIButton* quitButton = nullptr;
-    GUIButton* level1Button = nullptr;
-    GUIButton* level2Button = nullptr;
-    GUIButton* backToMainMenu1 = nullptr;
-    GUIButton* backToMainMenu2 = nullptr;
-    GUIButton* creditsButton = nullptr;
+    GUIButton* backToTitleButton = nullptr;
+    GUIButton* backToPause = nullptr;
 
     GUICheckbox* fullScreenCheck = nullptr;
     GUICheckbox* vSyncCheck = nullptr;
 
     GUISlider* musicSlider = nullptr;
-    GUISlider* sfxSlider = nullptr;
+    GUISlider* sfxSlider = nullptr; 
 
     List<GUI*> settingsGUI;
-    List<GUI*> selectLevelGUI;
 
-    SceneMainMenu* scene = nullptr;
-
+    SDL_Texture* backgroundTexture = nullptr;
     SDL_Texture* settingsBackgroundTexture = nullptr;
 
     int currentScreen = 0;
 
+    bool isActive = false;
 public:
 
-    PanelMainMenu(Application* app, SceneMainMenu* scene);
+    PanelPause(Application* app);
 
     void CheckInteractions() override;
 
@@ -46,6 +40,8 @@ public:
     void PostUpdate() override;
 
     void CleanUp() override;
+
+    void TogglePause();
 private:
 
     void InitializeSettings();

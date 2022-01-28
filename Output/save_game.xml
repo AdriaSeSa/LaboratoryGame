@@ -25,5 +25,5 @@
 	<debug>
 		<lastState isSaved="true" scene="3" />
 	</debug>
-	<settings fullScreen="true" vSync="false" music="0.267857134" sfx="0.107142858" />
+	<settings fullScreen="false" vSync="true" music="0.19491525" sfx="1" />
 </game_state>

@@ -6,6 +6,7 @@ class Player;
 class CheckPoint;
 class PowerUp;
 class StaticUI;
+class PanelPause;
 
 class SceneLevel2 : public SceneGame
 {
@@ -43,6 +44,8 @@ public:
 	//CheckPoint* checkPoint = nullptr;
 
 	//GUI* gui = nullptr;
+
+	PanelPause* pause = nullptr;
 
 	iPoint fruitsPos[8] = { { 100, 524 }, { 160, 524 }, { 220, 524 }, { 142, 440 }, { 185, 390 }, { 290, 360 }, { 290, 330 }, { 290, 300 } };
 };

@@ -1,46 +1,34 @@
-#include "PanelMainMenu.h"
+#include "PanelPause.h"
+#include "Application.h"
 #include "GUIButton.h"
 #include "GUICheckbox.h"
 #include "GUISlider.h"
-#include "Application.h"
-#include "SceneMainMenu.h"
 
-PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(app)
+PanelPause::PanelPause(Application* app) : GUIPanel(app)
 {
-	this->scene = scene;
 	currentScreen = 0;
 
-	// Main menu
-	startButton = new GUIButton(_app, { 110, 150 }, 96, 32, "Assets/textures/UI/StartButton4.png");
-	guiList.add(startButton);
+	// Pause Screen
+	resumeButton = new GUIButton(_app, { 95, 70 }, 128, 32, "Assets/textures/UI/Continue.png");
+	guiList.add(resumeButton);
 
-	quitButton = new GUIButton(_app, { 120, 252 }, 68, 32, "Assets/textures/UI/Exit.png");
-	guiList.add(quitButton);
-
-	settingsButton = new GUIButton(_app, { 95, 200 }, 128, 32, "Assets/textures/UI/Settings.png");
+	settingsButton = new GUIButton(_app, { 95, 120 }, 128, 32, "Assets/textures/UI/Settings.png");
 	guiList.add(settingsButton);
 
-	creditsButton = new GUIButton(_app, { 95, 200 }, 128, 32, "Assets/textures/UI/Settings.png");
-	guiList.add(creditsButton);
+	backToTitleButton = new GUIButton(_app, { 110, 170 }, 96, 32, "Assets/textures/UI/Menu.png");
+	guiList.add(backToTitleButton);
 
-	// Select Level
-	level1Button = new GUIButton(_app, { 55, 100 }, 128, 64, "Assets/textures/UI/StartButton.png");
-	selectLevelGUI.add(level1Button);
+	quitButton = new GUIButton(_app, { 125, 220 }, 64, 32, "Assets/textures/UI/Exit.png");
+	guiList.add(quitButton);
 
-	level2Button = new GUIButton(_app, { 200, 100 }, 128, 64, "Assets/textures/UI/StartButton.png");
-	selectLevelGUI.add(level2Button);
-
-	backToMainMenu1 = new GUIButton(_app, { 0, 0 }, 128, 64, "Assets/textures/UI/StartButton.png");
-	selectLevelGUI.add(backToMainMenu1);
-
-	// Settings
+	// Settings Screen
 	fullScreenCheck = new GUICheckbox(_app, { 50,220 }, 32, 32, "Assets/textures/UI/Checkbox.png");
 	settingsGUI.add(fullScreenCheck);
 
 	vSyncCheck = new GUICheckbox(_app, { 50,264 }, 32, 32, "Assets/textures/UI/Checkbox.png");
 	settingsGUI.add(vSyncCheck);
 
-	musicSlider = new GUISlider(_app, { 55, 110 }, 128, 16, "Assets/textures/UI/Slider.png");
+	musicSlider = new GUISlider(_app, { 55, 110}, 128, 16, "Assets/textures/UI/Slider.png");
 	musicSlider->CreateGUIBtn(new GUIButton(_app, { 55, 110 }, 10, 16, "Assets/textures/UI/Slider_Btn.png"));
 	settingsGUI.add(musicSlider);
 
@@ -48,63 +36,45 @@ PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(
 	sfxSlider->CreateGUIBtn(new GUIButton(_app, { 55, 170 }, 10, 16, "Assets/textures/UI/Slider_Btn.png"));
 	settingsGUI.add(sfxSlider);
 
-	backToMainMenu2 = new GUIButton(_app, { 0, 0 }, 128, 64, "Assets/textures/UI/StartButton.png");
-	settingsGUI.add(backToMainMenu2);
+	backToPause = new GUIButton(_app, { 95, 300 }, 96, 32, "Assets/textures/UI/StartButton.png");
+	settingsGUI.add(backToPause);
 
 	InitializeSettings();
 
+	backgroundTexture = _app->textures->Load("Assets/textures/UI/Panel_pause.png");
 	settingsBackgroundTexture = _app->textures->Load("Assets/textures/UI/Panel_setting.png");
 }
 
-void PanelMainMenu::CheckInteractions()
+void PanelPause::CheckInteractions()
 {
 	switch (currentScreen)
 	{
 	case 0:
-		if (startButton->doAction)
+		if (resumeButton->doAction)
 		{
-			scene->ChangeScreen(1);
+			TogglePause();
+			resumeButton->doAction = false;
+		}
+		if (settingsButton->doAction)
+		{
 			currentScreen = 1;
-			startButton->doAction = false;
-			break;
-		}
-		else if (settingsButton->doAction)
-		{
-			scene->ChangeScreen(2);
-			currentScreen = 2;
 			settingsButton->doAction = false;
-			break;
 		}
-		else if (quitButton->doAction)
+		if (backToTitleButton->doAction)
 		{
-			scene->exit = true;
-			break;
+			_app->scene->ChangeCurrentSceneRequest(0);
+			backToTitleButton->doAction = false;
 		}
-	case 1:
-		if (level1Button->doAction)
+		if (quitButton->doAction)
 		{
-			_app->scene->ChangeCurrentSceneRequest(2);
-			break;
-		}
-		else if (level2Button->doAction)
-		{
-			_app->scene->ChangeCurrentSceneRequest(3);
-			break;
-		}
-		else if (backToMainMenu1->doAction)
-		{
-			scene->ChangeScreen(0);
-			currentScreen = 0;
-			backToMainMenu1->doAction = false;
-			break;
+			_app->ExitGame();
 		}
 		break;
-	case 2:
-		if (backToMainMenu2->doAction)
+	case 1:
+		if (backToPause->doAction)
 		{
-			scene->ChangeScreen(0);
 			currentScreen = 0;
-			backToMainMenu2->doAction = false;
+			backToPause->doAction = false;
 		}
 
 		Mix_VolumeMusic(60 * musicSlider->GetValue());
@@ -129,11 +99,12 @@ void PanelMainMenu::CheckInteractions()
 		}
 		break;
 	}
-	
 }
 
-void PanelMainMenu::Update()
+void PanelPause::Update()
 {
+	if (!isActive) return;
+
 	switch (currentScreen)
 	{
 	case 0:
@@ -146,15 +117,6 @@ void PanelMainMenu::Update()
 		}
 		break;
 	case 1:
-		for (int i = 0; i < selectLevelGUI.count(); i++)
-		{
-			if (selectLevelGUI[i] != nullptr)
-			{
-				selectLevelGUI[i]->Update();
-			}
-		}
-		break;
-	case 2:
 		for (int i = 0; i < settingsGUI.count(); i++)
 		{
 			if (settingsGUI[i] != nullptr)
@@ -167,9 +129,12 @@ void PanelMainMenu::Update()
 	CheckInteractions();
 }
 
-void PanelMainMenu::PostUpdate()
+void PanelPause::PostUpdate()
 {
-	if (currentScreen == 2) _app->renderer->AddTextureRenderQueue(settingsBackgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5);
+	if (!isActive) return;
+
+	if (currentScreen == 0) _app->renderer->AddTextureRenderQueue(backgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5, 0, SDL_FLIP_NONE, 0);
+	if (currentScreen == 1) _app->renderer->AddTextureRenderQueue(settingsBackgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5, 0, SDL_FLIP_NONE, 0);
 
 	switch (currentScreen)
 	{
@@ -183,15 +148,6 @@ void PanelMainMenu::PostUpdate()
 		}
 		break;
 	case 1:
-		for (int i = 0; i < selectLevelGUI.count(); i++)
-		{
-			if (selectLevelGUI[i] != nullptr)
-			{
-				selectLevelGUI[i]->PostUpdate();
-			}
-		}
-		break;
-	case 2:
 		for (int i = 0; i < settingsGUI.count(); i++)
 		{
 			if (settingsGUI[i] != nullptr)
@@ -201,18 +157,22 @@ void PanelMainMenu::PostUpdate()
 		}
 		break;
 	}
-	
 }
 
-void PanelMainMenu::CleanUp()
+void PanelPause::CleanUp()
 {
 	SaveSettings();
 	guiList.clearPtr();
-	selectLevelGUI.clearPtr();
 	settingsGUI.clearPtr();
 }
 
-void PanelMainMenu::InitializeSettings()
+void PanelPause::TogglePause()
+{
+	isActive = !isActive;
+	currentScreen = 0;
+}
+
+void PanelPause::InitializeSettings()
 {
 	pugi::xml_node n = _app->saveF.child("game_state").child("settings");
 
@@ -222,7 +182,7 @@ void PanelMainMenu::InitializeSettings()
 	sfxSlider->SetValue(n.attribute("sfx").as_float(0.5));
 }
 
-void PanelMainMenu::SaveSettings()
+void PanelPause::SaveSettings()
 {
 	pugi::xml_node n = _app->saveF.child("game_state").child("settings");
 
@@ -232,5 +192,4 @@ void PanelMainMenu::SaveSettings()
 	n.attribute("sfx") = sfxSlider->GetValue();
 
 	_app->saveF.save_file(SAVE_STATE_FILENAME);
-
 }

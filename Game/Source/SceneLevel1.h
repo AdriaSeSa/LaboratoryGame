@@ -8,6 +8,7 @@ class CheckPoint;
 class PowerUp;
 class SpecialPlatform;
 class StaticUI;
+class PanelPause;
 
 class SceneLevel1 :  public SceneGame
 {
@@ -36,6 +37,8 @@ public:
 	//CheckPoint* checkPoint = nullptr;
 
 	SpecialPlatform* specialPlatform = nullptr;
+
+	PanelPause* pause = nullptr;
 
 	//GUI* gui = nullptr;
 

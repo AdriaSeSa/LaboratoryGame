@@ -63,11 +63,11 @@ void GUICheckbox::PostUpdate()
 	if (renderObject != nullptr && renderObject->texture != nullptr)
 	{
 		_app->renderer->AddTextureRenderQueue(renderObject->texture, { position.x, position.y }, renderSections[(int)checkboxState], renderObject->scale,
-			renderObject->layer, renderObject->orderInLayer);
+			renderObject->layer, renderObject->orderInLayer,  0, SDL_FLIP_NONE, 0);
 
 		if(_app->debug->debugViewGUIBounds)
 		{
-			_app->renderer->AddRectRenderQueue(SDL_Rect{ position.x,position.y,boxShape.w,boxShape.h }, defaultColor.r, defaultColor.g, defaultColor.b, 150, 3, 100);
+			_app->renderer->AddRectRenderQueue(SDL_Rect{ position.x,position.y,boxShape.w,boxShape.h }, defaultColor.r, defaultColor.g, defaultColor.b, 150, 3, 100, true, 0);
 		}
 	}
 }

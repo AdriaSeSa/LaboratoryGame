@@ -7,6 +7,7 @@
 #include "ChameleonEnemy.h"
 #include "PlayerSettings.h"
 #include "StaticUI.h"
+#include "PanelPause.h"
 
 SceneLevel2::SceneLevel2(Application* app, string name) :SceneGame(app, name)
 {
@@ -73,6 +74,8 @@ bool SceneLevel2::Start()
 
 	// Init GUI
 	staticUI = new StaticUI(0, _app);
+
+	pause = new PanelPause(_app);
 
 	// Recargar informacion de saveF
 	LoadGameFile();
@@ -199,6 +202,11 @@ bool SceneLevel2::PreUpdate()
 		}
 	}
 
+	if (_app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		pause->TogglePause();
+	}
+
 	return true;
 }
 
@@ -221,6 +229,11 @@ bool SceneLevel2::Update()
 		Win();
 	}
 
+	if (pause != nullptr)
+	{
+		pause->Update();
+	}
+
 	return true;
 }
 
@@ -237,6 +250,11 @@ bool SceneLevel2::PostUpdate()
 
 	staticUI->PostUpdate();
 
+	if (pause != nullptr)
+	{
+		pause->PostUpdate();
+	}
+
 	return true;
 }
 
@@ -250,6 +268,12 @@ bool SceneLevel2::CleanUp()
 	}
 
 	RELEASE(staticUI);
+
+	if (pause != nullptr)
+	{
+		pause->CleanUp();
+		RELEASE(pause);
+	}
 
 	_app->map->CleanUpScene();
 

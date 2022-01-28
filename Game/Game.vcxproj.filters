@@ -139,6 +139,9 @@
     <ClCompile Include="Source\PanelMainMenu.cpp">
       <Filter>SourceFiles\GUI\GUIPanels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PanelPause.cpp">
+      <Filter>SourceFiles\GUI\GUIPanels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -301,6 +304,9 @@
       <Filter>HeaderFiles\BaseClass</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelMainMenu.h">
+      <Filter>HeaderFiles\GUI\GUIPanels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelPause.h">
       <Filter>HeaderFiles\GUI\GUIPanels</Filter>
     </ClInclude>
   </ItemGroup>

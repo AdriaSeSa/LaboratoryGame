@@ -55,6 +55,8 @@ bool ModuleAudio::Init(pugi::xml_node& config)
 		fx.end->data->volume = audio.attribute("volum").as_int(10);
 	}
 
+	Mix_Volume(-1, App->saveF.child("game_state").child("settings").attribute("sfx").as_float() * 200);
+
 	return ret;
 }
 

@@ -68,38 +68,9 @@ void SceneMainMenu::InitTextures()
     logoAnim.speed = 0.1f;
     logoAnim.hasIdle = false;
 
-    RenderObject m;
-    m.texture = _app->textures->Load("Assets/textures/Menu/MenuOptions.png");
-    m.destRect.x = 0;
-    m.destRect.y = 0;
-    m.scale = 0.5f;
-
     mainMenuTextures.add(l);
-    mainMenuTextures.add(m);
 
     // Select Level
-
-    RenderObject sl;
-    sl.texture = _app->textures->Load("Assets/textures/Menu/SelectLevel.png");
-    sl.destRect.x = 0;
-    sl.destRect.y = 0;
-    sl.scale = 0.5f;
-
-    RenderObject l1;
-    l1.texture = _app->textures->Load("Assets/textures/Menu/Levels.png");
-    l1.destRect.x = 69;
-    l1.destRect.y = 135;
-    l1.section = { 64, 0, 32, 32 };
-
-    RenderObject l2;
-    l2.texture = _app->textures->Load("Assets/textures/Menu/Levels.png");
-    l2.destRect.x = 210;
-    l2.destRect.y = 135;
-    l2.section = { 96, 0, 32, 32 };
-
-    selectLevelTextures.add(sl);
-    selectLevelTextures.add(l1);
-    selectLevelTextures.add(l2);
 }
 
 bool SceneMainMenu::Update()
@@ -165,20 +136,20 @@ bool SceneMainMenu::PostUpdate()
         }
     }
        
-    //for (int i = 0; i < currentTextures.count(); i++)
-    //{
-    //    // Make currentTextures a List<RenderObjects> and use that to render
-    //    if (currentTextures[i].name == "logo")
-    //    {
-    //        logoAnim.Update();
-    //        _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, logoY }, logoAnim.GetCurrentFrame(), 1, 2, 1);
-    //    }
-    //    else
-    //    {
-    //        _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, currentTextures[i].destRect.y }, currentTextures[i].section,
-    //          currentTextures[i].scale, 2, 1);
-    //    }
-    //}
+    for (int i = 0; i < currentTextures.count(); i++)
+    {
+        // Make currentTextures a List<RenderObjects> and use that to render
+        if (currentTextures[i].name == "logo")
+        {
+            logoAnim.Update();
+            _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, logoY }, logoAnim.GetCurrentFrame(), 1, 2, 1);
+        }
+        else
+        {
+            _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, currentTextures[i].destRect.y }, currentTextures[i].section,
+              currentTextures[i].scale, 2, 1);
+        }
+    }
 
     return true;
 }

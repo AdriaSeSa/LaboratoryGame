@@ -7,6 +7,7 @@
 #include "SpecialPlatform.h"
 #include "PlayerSettings.h"
 #include "StaticUI.h"
+#include "PanelPause.h"
 
 SceneLevel1::SceneLevel1(Application* app, string name) :SceneGame(app, name)
 {
@@ -66,6 +67,8 @@ bool SceneLevel1::Start()
 
 	staticUI = new StaticUI(PlayerCharacters::VIRTUAL_GUY, _app);
 
+	pause = new PanelPause(_app);
+
 	// Recargar informacion de saveF
 	LoadGameFile();
 
@@ -109,6 +112,12 @@ bool SceneLevel1::PreUpdate()
 			player->PlayerAppear();
 		}
 	}
+
+	if (_app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		pause->TogglePause();
+	}
+
 	return true;
 }
 
@@ -136,6 +145,11 @@ bool SceneLevel1::Update()
 		Win();
 	}
 
+	if (pause != nullptr)
+	{
+		pause->Update();
+	}
+
 	return true;
 }
 
@@ -152,6 +166,12 @@ bool SceneLevel1::PostUpdate()
 
 	staticUI->PostUpdate();
 
+	if (pause != nullptr)
+	{
+		pause->PostUpdate();
+	}
+
+
 	return true;
 }
 
@@ -167,6 +187,13 @@ bool SceneLevel1::CleanUp()
 	RELEASE(staticUI);
 	
 	_app->map->CleanUpScene();
+
+	if (pause != nullptr)
+	{
+		pause->CleanUp();
+		RELEASE(pause);
+	}
+
 
 	return true;
 }

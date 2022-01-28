@@ -11,7 +11,7 @@ GUISlider::GUISlider(Application* app, iPoint pos, int width, int height, std::s
 	renderObject->texture = _app->textures->Load(path);
 	renderObject->destRect = { pos.x, pos.y, width, height };
 	renderObject->layer = 3;
-	renderObject->orderInLayer = 0;
+	renderObject->orderInLayer = 10;
 	renderObject->scale = 1;
 
 	// The Slider texture must be two images of the different states of the slider, organized from top to bottom in order of:
@@ -139,14 +139,14 @@ void GUISlider::PostUpdate()
 	if (renderObject != nullptr && renderObject->texture != nullptr)
 	{
 		_app->renderer->AddTextureRenderQueue(renderObject->texture, { renderObject->destRect.x, renderObject->destRect.y }, renderSections[0], renderObject->scale,
-			renderObject->layer, renderObject->orderInLayer);
+			renderObject->layer, renderObject->orderInLayer, 0, SDL_FLIP_NONE, 0);
 
 		renderSections[1].w = renderSections[0].w * GetValue();
 
 		if (renderSections[1].w > 0)
 		{
 			_app->renderer->AddTextureRenderQueue(renderObject->texture, { renderObject->destRect.x, renderObject->destRect.y }, renderSections[1], renderObject->scale,
-				renderObject->layer, renderObject->orderInLayer + 1);
+				renderObject->layer, renderObject->orderInLayer + 1, 0, SDL_FLIP_NONE, 0);
 		}
 	}
 	else

@@ -9,7 +9,7 @@ GUIButton::GUIButton(Application* app, iPoint pos, int width, int height, std::s
 	renderObject->texture = _app->textures->Load(path);
 	renderObject->destRect = { pos.x, pos.y, width, height };
 	renderObject->layer = 3;
-	renderObject->orderInLayer = 10;
+	renderObject->orderInLayer = 15;
 	renderObject->scale = 1;
 
 	// The Button texture must be three images of the different states of the button, organized from top to bottom in order of:
@@ -103,13 +103,13 @@ void GUIButton::PostUpdate()
 		int newBtnState = CLAMP((int)buttonState, 0, 2);
 
 		_app->renderer->AddTextureRenderQueue(renderObject->texture, { position.x, position.y }, renderSections[newBtnState], renderObject->scale,
-											  renderObject->layer, renderObject->orderInLayer);
+											  renderObject->layer, renderObject->orderInLayer, 0, SDL_FLIP_NONE, 0);
 
 		if(_app->debug->debugViewGUIBounds)
-		_app->renderer->AddRectRenderQueue(SDL_Rect{ position.x,position.y,boxShape.w,boxShape.h }, defaultColor.r, defaultColor.g, defaultColor.b, 150, 3, 100);
+		_app->renderer->AddRectRenderQueue(SDL_Rect{ position.x,position.y,boxShape.w,boxShape.h }, defaultColor.r, defaultColor.g, defaultColor.b, 150, 3, 100, true, 0);
 	}
 	else
 	{
-		_app->renderer->AddRectRenderQueue(SDL_Rect{ position.x,position.y,boxShape.w,boxShape.h }, defaultColor.r, defaultColor.g, defaultColor.b, defaultColor.a, 3, 1);
+		_app->renderer->AddRectRenderQueue(SDL_Rect{ position.x,position.y,boxShape.w,boxShape.h }, defaultColor.r, defaultColor.g, defaultColor.b, defaultColor.a, 3, 10, true, 0);
 	}
 }

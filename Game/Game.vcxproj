@@ -105,6 +105,7 @@
     <ClCompile Include="Source\GUIPanel.cpp" />
     <ClCompile Include="Source\GUISlider.cpp" />
     <ClCompile Include="Source\PanelMainMenu.cpp" />
+    <ClCompile Include="Source\PanelPause.cpp" />
     <ClCompile Include="Source\StaticUI.cpp" />
     <ClCompile Include="Source\HitboxSensor.cpp" />
     <ClCompile Include="Source\Log.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Source\GUIPanel.h" />
     <ClInclude Include="Source\GUISlider.h" />
     <ClInclude Include="Source\PanelMainMenu.h" />
+    <ClInclude Include="Source\PanelPause.h" />
     <ClInclude Include="Source\StaticUI.h" />
     <ClInclude Include="Source\HitboxSensor.h" />
     <ClInclude Include="Source\List.h" />

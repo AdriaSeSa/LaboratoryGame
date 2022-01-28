@@ -11,13 +11,13 @@ PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(
 	currentScreen = 0;
 
 	// Main menu
-	startButton = new GUIButton(_app, { 95, 150 }, 128, 64, "Assets/textures/UI/StartButton.png");
+	startButton = new GUIButton(_app, { 95, 150 }, 96, 32, "Assets/textures/UI/StartButton4.png");
 	guiList.add(startButton);
 
-	quitButton = new GUIButton(_app, { 95, 250 }, 128, 64, "Assets/textures/UI/StartButton.png");
+	quitButton = new GUIButton(_app, { 95, 250 }, 68, 32, "Assets/textures/UI/Exit.png");
 	guiList.add(quitButton);
 
-	settingsButton = new GUIButton(_app, { 95, 200 }, 128, 64, "Assets/textures/UI/StartButton.png");
+	settingsButton = new GUIButton(_app, { 95, 200 }, 128, 32, "Assets/textures/UI/Settings.png");
 	guiList.add(settingsButton);
 
 	// Select Level

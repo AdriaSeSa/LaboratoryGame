@@ -164,20 +164,20 @@ bool SceneMainMenu::PostUpdate()
         }
     }
        
-    /*for (int i = 0; i < currentTextures.count(); i++)
-    {
-        // Make currentTextures a List<RenderObjects> and use that to render
-        if (currentTextures[i].name == "logo")
-        {
-            logoAnim.Update();
-            _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, logoY }, logoAnim.GetCurrentFrame(), 1, 2, 1);
-        }
-        else
-        {
-            _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, currentTextures[i].destRect.y }, currentTextures[i].section,
-              currentTextures[i].scale, 2, 1);
-        }
-    }*/
+    //for (int i = 0; i < currentTextures.count(); i++)
+    //{
+    //    // Make currentTextures a List<RenderObjects> and use that to render
+    //    if (currentTextures[i].name == "logo")
+    //    {
+    //        logoAnim.Update();
+    //        _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, logoY }, logoAnim.GetCurrentFrame(), 1, 2, 1);
+    //    }
+    //    else
+    //    {
+    //        _app->renderer->AddTextureRenderQueue(currentTextures[i].texture, { currentTextures[i].destRect.x, currentTextures[i].destRect.y }, currentTextures[i].section,
+    //          currentTextures[i].scale, 2, 1);
+    //    }
+    //}
 
     return true;
 }

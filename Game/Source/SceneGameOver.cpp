@@ -1,5 +1,6 @@
 #include "SceneGameOver.h"
 #include "BackGround.h"
+#include "PanelGameOver.h"
 
 SceneGameOver::SceneGameOver(Application* app) : Scene(app)
 {
@@ -24,12 +25,19 @@ bool SceneGameOver::Start()
             gameObjects[i]->Start();
     }
 
+    panel = new PanelGameOver(_app);
+
     return true;
 }
 
 bool SceneGameOver::Update()
 {
     Scene::Update();
+
+    if (panel != nullptr)
+    {
+        panel->Update();
+    }
 
     for (int i = 0; i < gameObjects.count(); i++)
     {
@@ -41,52 +49,35 @@ bool SceneGameOver::Update()
 
     bg->movementY--;
 
-    if (_app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
-    {
-        _app->audio->PlayFx(SFX::BLIP_SELECT);
-        arrowPos.y = arrowPos.y == 250 ? 190 : 250;
-    }
-    if (_app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-    {
-        _app->audio->PlayFx(SFX::BLIP_SELECT);
-        arrowPos.y = arrowPos.y == 190 ? 250 : 190;
-    }
-
-    if (_app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN || _app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-    {
-        _app->audio->PlayFx(SFX::SELECT);
-        if (arrowPos.y == 190)
-        {
-            _app->scene->ChangeCurrentSceneRequest(_app->scene->lastLevel);
-        }
-        else
-        {
-            _app->scene->ChangeCurrentSceneRequest(0);
-        }
-        //SelectDifficulty();
-    }
-
     return true;
 }
 
 bool SceneGameOver::PostUpdate()
 {
     Scene::PostUpdate();
+
+    if (panel != nullptr)
+    {
+        panel->PostUpdate();
+    }
+
     for (int i = 0; i < gameObjects.count(); i++)
     {
         if (gameObjects[i] != nullptr)
             gameObjects[i]->PostUpdate();
     }
     _app->renderer->AddTextureRenderQueue(mainMenu, { 0,0, });
-    _app->renderer->AddTextureRenderQueue(arrow, arrowPos, { 0,0,0,0 }, 1, 1);
 
     return true;
 }
 
-//void SceneGameOver::SetSaveData()
-//{
-//    playerX = playerStartPos.x;
-//    playerY = playerStartPos.y;
-//
-//    _app->scene->ResetPlayerSettings();
-//}
+bool SceneGameOver::CleanUp()
+{
+    if (panel != nullptr)
+    {
+        panel->CleanUp();
+        RELEASE(panel);
+    }
+    return true;
+}
+

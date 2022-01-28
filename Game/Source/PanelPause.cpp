@@ -36,7 +36,7 @@ PanelPause::PanelPause(Application* app) : GUIPanel(app)
 	sfxSlider->CreateGUIBtn(new GUIButton(_app, { 55, 170 }, 10, 16, "Assets/textures/UI/Slider_Btn.png"));
 	settingsGUI.add(sfxSlider);
 
-	backToPause = new GUIButton(_app, { 95, 300 }, 96, 32, "Assets/textures/UI/StartButton.png");
+	backToPause = new GUIButton(_app, { 0, 0 }, 32, 32, "Assets/textures/UI/ReturnBtn.png");
 	settingsGUI.add(backToPause);
 
 	InitializeSettings();
@@ -169,6 +169,7 @@ void PanelPause::CleanUp()
 void PanelPause::TogglePause()
 {
 	isActive = !isActive;
+	_app->debug->debugPause = isActive;
 	currentScreen = 0;
 }
 

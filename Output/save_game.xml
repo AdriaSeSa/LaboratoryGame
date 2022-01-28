@@ -5,9 +5,9 @@
 	<textures />
 	<audio />
 	<scene>
-		<player lifes="3" score="1800" />
+		<player lifes="2" score="0" />
 		<level1>
-			<player x="155" y="43" />
+			<player x="40" y="560" />
 			<checkPoint isActive="false" />
 		</level1>
 		<level2>
@@ -25,5 +25,5 @@
 	<debug>
 		<lastState isSaved="true" scene="3" />
 	</debug>
-	<settings fullScreen="false" vSync="true" music="0.211864412" sfx="1" />
+	<settings fullScreen="false" vSync="true" music="0.110169493" sfx="1" />
 </game_state>

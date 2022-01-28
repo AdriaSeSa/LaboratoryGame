@@ -142,6 +142,9 @@
     <ClCompile Include="Source\PanelPause.cpp">
       <Filter>SourceFiles\GUI\GUIPanels</Filter>
     </ClCompile>
+    <ClCompile Include="Source\PanelGameOver.cpp">
+      <Filter>SourceFiles\GUI\GUIPanels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\External\PugiXml\src\pugiconfig.hpp">
@@ -307,6 +310,9 @@
       <Filter>HeaderFiles\GUI\GUIPanels</Filter>
     </ClInclude>
     <ClInclude Include="Source\PanelPause.h">
+      <Filter>HeaderFiles\GUI\GUIPanels</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\PanelGameOver.h">
       <Filter>HeaderFiles\GUI\GUIPanels</Filter>
     </ClInclude>
   </ItemGroup>

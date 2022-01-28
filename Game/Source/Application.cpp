@@ -118,6 +118,15 @@ UpdateStatus Application::Update()
 		item = item->next;
 	}
 
+	item = list_modules.start;
+
+	while (item != NULL && ret == UPDATE_CONTINUE)
+	{
+		if (item->data->IsEnabled())
+			ret = item->data->EndUpdate();
+		item = item->next;
+	}
+
 	//// L02: DONE 1: This is a good place to call Load / Save methods
 	if (saveGameRequested == true) SaveGame();
 	if (loadGameRequested == true) LoadGame();

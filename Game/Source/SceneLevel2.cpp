@@ -186,7 +186,7 @@ bool SceneLevel2::PreUpdate()
 			// when don't have any life
 			ResetGameFile();
 			//_app->SaveGameRequest();
-			_app->scene->ChangeCurrentScene(1);
+			_app->scene->ChangeCurrentSceneRequest(1);
 			return true;
 		}
 		else
@@ -298,5 +298,5 @@ void SceneLevel2::Win()
 {
 	ResetGameFile();
 
-	_app->scene->ChangeCurrentScene(SCENES::MAIN_MENU);
+	_app->scene->ChangeCurrentSceneRequest(SCENES::MAIN_MENU);
 }

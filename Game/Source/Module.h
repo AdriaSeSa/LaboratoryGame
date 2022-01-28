@@ -73,6 +73,11 @@ public:
 		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
+	virtual UpdateStatus EndUpdate()
+	{
+		return UpdateStatus::UPDATE_CONTINUE;
+	}
+
 	virtual bool CleanUp() 
 	{ 
 		return true; 

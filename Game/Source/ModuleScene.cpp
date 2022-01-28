@@ -75,8 +75,6 @@ UpdateStatus ModuleScene::Update()
 		return UpdateStatus::UPDATE_STOP;
 	}
 
-	//DebugChangeScene();
-
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 
@@ -92,24 +90,50 @@ UpdateStatus ModuleScene::PostUpdate()
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 
-//CleanUp current scene, change current scene (index), Start current Scene
-bool ModuleScene::ChangeCurrentScene(uint index)
+UpdateStatus ModuleScene::EndUpdate()
 {
-	currentSceneState = (SCENES)index;
+	if (currentScene == nullptr || isChangingScene)
+	{
+		return UpdateStatus::UPDATE_CONTINUE;
+	}
 
-	if (isChangingScene) return true;
+	ChangeCurrentScene();
 
-	isChangingScene = true;
+	return UpdateStatus::UPDATE_CONTINUE;
+}
 
-	this->index = index;
+//CleanUp current scene, change current scene (index), Start current Scene
+bool ModuleScene::ChangeCurrentSceneRequest(uint index)
+{
+	changeTo = index;
 
-	if (scenes[index] == nullptr) return false;
+	return true;
+}
 
-	currentScene->CleanUp();
+bool ModuleScene::ChangeCurrentScene()
+{
+	if (changeTo >= 0)
+	{
+		currentSceneState = (SCENES)changeTo;
 
-	currentScene = scenes[index];
+		if (isChangingScene) return true;
 
-	currentScene->Start();
+		isChangingScene = true;
+
+		this->index = changeTo;
+
+		if (scenes[changeTo] == nullptr) return false;
+
+		currentScene->CleanUp();
+
+		App->renderer->ClearRederQueue();
+
+		currentScene = scenes[changeTo];
+
+		currentScene->Start();
+
+		changeTo = -1;
+	}
 	return true;
 }
 
@@ -170,13 +194,13 @@ void ModuleScene::DebugChangeScene()
 		{
 			if (App->input->GetKey(debugKeys[i]) == KEY_DOWN)
 			{
-				ChangeCurrentScene(i);
+				ChangeCurrentSceneRequest(i);
 			}
 		}
 
 		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		{
-			ChangeCurrentScene(currentScene->getID());
+			ChangeCurrentSceneRequest(currentScene->getID());
 		}
 	}
 }

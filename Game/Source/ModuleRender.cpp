@@ -1,4 +1,5 @@
 #include "Application.h"
+#include <string.h>
 
 int cameraSpeed = 1;
 
@@ -88,10 +89,7 @@ UpdateStatus ModuleRender::PostUpdate()
 	
 	SDL_RenderPresent(renderer);
 
-	for (int i = 0; i < 4; i++)
-	{
-		renderLayers[i].clear();
-	}
+	ClearRederQueue();
 
 	return UPDATE_CONTINUE;
 }
@@ -139,9 +137,15 @@ void ModuleRender::AddTextureRenderQueue(SDL_Texture* texture, iPoint pos, SDL_R
 	renderObject.destRect.w *= scale * App->window->scale * zoom;
 	renderObject.destRect.h *= scale * App->window->scale * zoom;
 
-	LOG("direccion in memory : %#x", renderObject.texture);
-	renderLayers[layer].push_back(renderObject);
-	
+	//LOG("direction in memory : %#x", renderObject.texture);
+	try 
+	{
+		renderLayers[layer].push_back(renderObject);
+	}
+	catch (const exception& e)
+	{
+		LOG("ERRRROR");
+	}	
 }
 
 void ModuleRender::AddTextureRenderQueue(RenderObject obj)
@@ -178,6 +182,14 @@ void ModuleRender::AddRectRenderQueue(const SDL_Rect& rect, Uint8 r, Uint8 g, Ui
 	renderR.InitAsRect(rec, { r,g,b,a }, filled, layer, orderInlayer, speed);
 
 	renderLayers[layer].push_back(renderR);
+}
+
+void ModuleRender::ClearRederQueue()
+{
+	for (int i = 0; i < 4; i++)
+	{
+		renderLayers[i].clear();
+	}
 }
 
 int ModuleRender::RoundToInt(int num)

@@ -23,5 +23,7 @@ public:
 	virtual void PostUpdate();
 
 	virtual void CleanUp();
+
+	bool changeScene = false;
 };
 

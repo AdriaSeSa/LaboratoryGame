@@ -46,7 +46,7 @@ UpdateStatus ModuleMap::PostUpdate()
 	if (mapLoaded == false) return UpdateStatus::UPDATE_CONTINUE;
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
-	ListItem<MapLayer*>* mapLayerItem;
+	ListItem<MapLayer*>* mapLayerItem = nullptr;
 	mapLayerItem = mapData.layers.start;
 
 	// L06: TODO 4: Make sure we draw all the layers and not just the first one
@@ -70,6 +70,7 @@ UpdateStatus ModuleMap::PostUpdate()
 
 						SDL_Rect r = tileset->GetTileRect(gid);
 						iPoint pos = MapToWorld(x, y);
+
 						try
 						{
 							App->renderer->AddTextureRenderQueue(tileset->texture, iPoint(pos.x, pos.y), r, 1, 0, 0.5f);

@@ -43,7 +43,9 @@ public:
 	// Performs the render call of all the parts of the scene's background
 	UpdateStatus PostUpdate();
 
-	bool ChangeCurrentScene(uint index);
+	UpdateStatus EndUpdate() override;
+
+	bool ChangeCurrentSceneRequest(uint index);
 
 	void GetSaveData(pugi::xml_document& save) override;
 
@@ -54,6 +56,9 @@ public:
 	bool CleanUp();
 
 	void DebugChangeScene();
+
+private:
+	bool ChangeCurrentScene();
 
 public:
 
@@ -69,6 +74,7 @@ public:
 	, SDL_SCANCODE_5 , SDL_SCANCODE_6, SDL_SCANCODE_7, SDL_SCANCODE_8, SDL_SCANCODE_9};
 
 	bool isChangingScene = false;
+	int changeTo = -1;
 
 	int playerX = 0, playerY = 0;
 

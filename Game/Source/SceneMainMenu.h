@@ -20,7 +20,7 @@ public:
 
 	void ChangeScreen(int screen);
 
-	void SelectOption();
+	//void SelectOption();
 
 	bool CleanUp() override;
 

@@ -57,11 +57,11 @@ bool SceneGameOver::Update()
         _app->audio->PlayFx(SFX::SELECT);
         if (arrowPos.y == 190)
         {
-            _app->scene->ChangeCurrentScene(_app->scene->lastLevel);
+            _app->scene->ChangeCurrentSceneRequest(_app->scene->lastLevel);
         }
         else
         {
-            _app->scene->ChangeCurrentScene(0);
+            _app->scene->ChangeCurrentSceneRequest(0);
         }
         //SelectDifficulty();
     }

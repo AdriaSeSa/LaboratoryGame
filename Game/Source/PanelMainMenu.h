@@ -42,6 +42,5 @@ public:
     void PostUpdate() override;
 
     void CleanUp() override;
-
 };
 

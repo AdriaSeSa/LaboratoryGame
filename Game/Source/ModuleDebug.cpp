@@ -21,15 +21,15 @@ UpdateStatus ModuleDebug::Update()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		App->scene->ChangeCurrentScene(2);
+		App->scene->ChangeCurrentSceneRequest(2);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
-		App->scene->ChangeCurrentScene(3);
+		App->scene->ChangeCurrentSceneRequest(3);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		App->scene->ChangeCurrentScene(App->scene->currentSceneState);
+		App->scene->ChangeCurrentSceneRequest(App->scene->currentSceneState);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 	{
@@ -105,7 +105,7 @@ void ModuleDebug::LoadSave()
 	{
 		int scene = node.attribute("scene").as_int(0);
 
-		App->scene->ChangeCurrentScene(scene);
+		App->scene->ChangeCurrentSceneRequest(scene);
 	}
 
 	App->SaveGameRequest();

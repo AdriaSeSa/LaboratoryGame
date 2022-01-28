@@ -1,6 +1,7 @@
 #include "SceneMainMenu.h"
 #include "BackGround.h"
 #include "GUIButton.h"
+#include "GUIPanel.h"
 #include "GUISlider.h"
 #include "GUICheckbox.h"
 #include "PanelMainMenu.h"
@@ -201,7 +202,6 @@ void SceneMainMenu::ChangeScreen(int screen)
             currentTextures.add(selectLevelTextures[i]);
         }
         break;
-
     }
 }
 

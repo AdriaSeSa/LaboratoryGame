@@ -59,27 +59,29 @@ void PanelMainMenu::CheckInteractions()
 			scene->ChangeScreen(1);
 			currentScreen = 1;
 			startButton->doAction = false;
+			break;
 		}
-		if (settingsButton->doAction)
+		else if (settingsButton->doAction)
 		{
 			scene->ChangeScreen(2);
 			currentScreen = 2;
 			settingsButton->doAction = false;
+			break;
 		}
-		if (quitButton->doAction)
+		else if (quitButton->doAction)
 		{
 			scene->exit = true;
+			break;
 		}
-		break;
 	case 1:
 		if (level1Button->doAction)
 		{
-			_app->scene->ChangeCurrentScene(2);
+			_app->scene->ChangeCurrentSceneRequest(2);
 			break;
 		}
 		else if (level2Button->doAction)
 		{
-			_app->scene->ChangeCurrentScene(3);
+			_app->scene->ChangeCurrentSceneRequest(3);
 			break;
 		}
 		else if (backToMainMenu1->doAction)

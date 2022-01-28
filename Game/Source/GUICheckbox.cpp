@@ -23,6 +23,11 @@ GUICheckbox::GUICheckbox(Application* app, iPoint pos, int width, int height, st
 	}
 }
 
+GUICheckbox::GUICheckbox(Application* app, iPoint pos, int width, int height) : GUI(app)
+{
+	InitAsBox(pos.x, pos.y, width, height);
+}
+
 GUICheckbox::~GUICheckbox()
 {
 	RELEASE(renderObject);
@@ -36,6 +41,21 @@ void GUICheckbox::Update()
 	}
 	else if (CheckOnMouse() && checkboxState != CheckboxState::ON) checkboxState = CheckboxState::FOCUS;
 	else if (checkboxState != CheckboxState::ON) checkboxState = CheckboxState::OFF;
+
+	switch (checkboxState)
+	{
+	case CheckboxState::OFF:
+		defaultColor = { 100, 0, 0, 255 };
+		break;
+
+	case CheckboxState::FOCUS:
+		defaultColor = { 255, 255, 255, 255 };
+		break;
+
+	case CheckboxState::ON:
+		defaultColor = { 100, 200, 100, 255 };
+		break;
+	}
 }
 
 void GUICheckbox::PostUpdate()
@@ -44,6 +64,11 @@ void GUICheckbox::PostUpdate()
 	{
 		_app->renderer->AddTextureRenderQueue(renderObject->texture, { position.x, position.y }, renderSections[(int)checkboxState], renderObject->scale,
 			renderObject->layer, renderObject->orderInLayer);
+
+		if(_app->debug->debugViewGUIBounds)
+		{
+			_app->renderer->AddRectRenderQueue(SDL_Rect{ position.x,position.y,boxShape.w,boxShape.h }, defaultColor.r, defaultColor.g, defaultColor.b, 150, 3, 100);
+		}
 	}
 }
 

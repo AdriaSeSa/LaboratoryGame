@@ -38,18 +38,25 @@ void GUIButton::Update()
 	if (CheckOnMouse() && (_app->input->GetMouseButton(1) == KEY_DOWN))
 	{
 		// Sound Effect
+		lastState = buttonState;
 		buttonState = ButtonState::PRESS_DOWN;
 		isPressed = true;
+
+		if (lastState != buttonState && !navigation) _app->audio->PlayFx(SFX::BUTTONDOWN);
 	}
 	else if (isPressed && _app->input->GetMouseButton(1) == KEY_REPEAT)
 	{
-		// Sound Effect
+		lastState = buttonState;
 		buttonState = ButtonState::PRESSED;
 	}
 	else if (CheckOnMouse())
 	{
-		// Sound Effect
+		lastState = buttonState;
+
 		buttonState = ButtonState::FOCUS;
+
+		// Sound Effect
+		if (lastState != buttonState && !navigation) _app->audio->PlayFx(SFX::BUTTONFEEDBACK);	
 	}
 		
 	if (_app->input->GetMouseButton(1) == KEY_UP)
@@ -79,7 +86,7 @@ void GUIButton::Update()
 		break;
 
 		case ButtonState::FOCUS:
-			defaultColor = { 200, 200, 200, 255};
+			defaultColor = { 100, 200, 100, 255};
 			break;
 
 		case ButtonState::PRESS_DOWN:
@@ -97,6 +104,9 @@ void GUIButton::PostUpdate()
 
 		_app->renderer->AddTextureRenderQueue(renderObject->texture, { position.x, position.y }, renderSections[newBtnState], renderObject->scale,
 											  renderObject->layer, renderObject->orderInLayer);
+
+		if(_app->debug->debugViewGUIBounds)
+		_app->renderer->AddRectRenderQueue(SDL_Rect{ position.x,position.y,boxShape.w,boxShape.h }, defaultColor.r, defaultColor.g, defaultColor.b, 150, 3, 100);
 	}
 	else
 	{

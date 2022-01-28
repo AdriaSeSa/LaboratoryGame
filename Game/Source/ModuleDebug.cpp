@@ -48,6 +48,10 @@ UpdateStatus ModuleDebug::Update()
 	{
 		LoadSave();
 	}	
+	else if(App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		debugViewGUIBounds = !debugViewGUIBounds;
+	}
 	else if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		debugCollisionView = !debugCollisionView;

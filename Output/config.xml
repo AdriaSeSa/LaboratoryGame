@@ -84,6 +84,9 @@
     <ground path = "Assets/audio/fx/ground.wav" volum = "10"/>
     <select path = "Assets/audio/fx/select.wav" volum = "30"/>
     <blipSelect path = "Assets/audio/fx/blipSelect.wav" volum = "15"/>
+    <buttonDown path = "Assets/audio/fx/buttonDown.wav" volum = "15"/>
+    <buttonFeedback path = "Assets/audio/fx/buttonFeedBack.wav" volum = "20"/>
+    <mouseDown path = "Assets/audio/fx/mouseDown.wav" volum = "10"/>
   </audios>
 
   <scenes>

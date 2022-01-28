@@ -19,6 +19,8 @@ private:
 
 	SDL_Rect renderSections[3];
 
+	ButtonState lastState = ButtonState::IDLE;
+
 	ButtonState buttonState = ButtonState::IDLE;
 
 	friend class GUISlider;

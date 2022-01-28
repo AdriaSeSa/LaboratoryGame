@@ -16,7 +16,10 @@ enum SFX
 	ENEMY_HIT,
 	GROUND,
 	SELECT,
-	BLIP_SELECT
+	BLIP_SELECT,
+	BUTTONDOWN,
+	BUTTONFEEDBACK,
+	MOUSEDOWN
 };
 
 class ModuleAudio : public Module

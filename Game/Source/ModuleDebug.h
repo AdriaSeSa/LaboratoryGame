@@ -21,6 +21,7 @@ public:
 	bool debugCollisionView = false;
 	bool debugGodMode = false;
 	bool debugHighFramerate = true;
+	bool debugViewGUIBounds = false;
 
 	// Our debug variable
 	bool debugTakeObject = false;

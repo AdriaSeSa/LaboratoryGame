@@ -109,6 +109,12 @@ UpdateStatus ModuleInput::PreUpdate()
 	//	App->isDebug = !App->isDebug;
 	//}
 
+	// Mouse SFX
+	if(GetMouseButton(1) == KEY_DOWN)
+	{
+		App->audio->PlayFx(SFX::MOUSEDOWN);
+	}
+
 	return UPDATE_CONTINUE;
 }
 

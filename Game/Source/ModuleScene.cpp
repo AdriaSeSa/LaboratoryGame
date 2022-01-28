@@ -112,7 +112,7 @@ bool ModuleScene::ChangeCurrentSceneRequest(uint index)
 
 bool ModuleScene::ChangeCurrentScene()
 {
-	if (changeTo >= 0)
+	if (changeTo >= 0 && !isChangingScene)
 	{
 		currentSceneState = (SCENES)changeTo;
 

@@ -48,7 +48,6 @@ bool SceneMainMenu::Start()
 
     _app->window->ToggleFullScreen(_app->saveF.child("game_state").child("settings").attribute("fullScreen").as_bool(false));
 
-
     return true;
 }
 

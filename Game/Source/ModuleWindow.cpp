@@ -21,6 +21,8 @@ bool ModuleWindow::Init(pugi::xml_node& config)
 
 	this->config = config;
 
+	pugi::xml_node n = App->saveF.child("game_state").child("settings");
+
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		LOG("SDL_VIDEO could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -31,7 +33,8 @@ bool ModuleWindow::Init(pugi::xml_node& config)
 		// Create window
 		// L01: DONE 6: Load all required configurations from config.xml
 		Uint32 flags = SDL_WINDOW_SHOWN;
-		bool fullscreen = config.child("fullscreen").attribute("value").as_bool(false);
+		//bool fullscreen = n.attribute("fullScreen").as_bool(false);
+		bool fullscreen = false;
 		bool borderless = config.child("borderless").attribute("value").as_bool(false);
 		bool resizable = config.child("resizable").attribute("value").as_bool(false);
 		bool fullscreen_window = config.child("fullscreen_window").attribute("value").as_bool(false);
@@ -82,4 +85,18 @@ bool ModuleWindow::CleanUp()
 void ModuleWindow::SetTitle(const char* title)
 {
 	SDL_SetWindowTitle(window, title);
+}
+
+void ModuleWindow::ToggleFullScreen(bool fullScreen)
+{
+	if (fullScreen)
+	{
+		SDL_SetWindowFullscreen(App->window->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+		App->FullScreenDesktop = true;
+	}
+	else
+	{
+		SDL_SetWindowFullscreen(App->window->window, 0);
+		App->FullScreenDesktop = false;
+	}
 }

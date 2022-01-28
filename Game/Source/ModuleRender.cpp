@@ -27,9 +27,9 @@ bool ModuleRender::Init(pugi::xml_node& config)
 
 	this->config = config;
 
-	if (config.child("vsync").attribute("value").as_bool(false))
+	if (App->saveF.child("game_state").child("settings").attribute("vSync").as_bool(false))
 	{
-		App->vsync = "true";
+		App->vsync = true;
 		flags |= SDL_RENDERER_PRESENTVSYNC;
 	}
 
@@ -43,13 +43,15 @@ bool ModuleRender::Init(pugi::xml_node& config)
 
 	camera->Start();
 
+	SDL_GetCurrentDisplayMode(0, &displayMode);
+
 	return ret;
 }
 
 // PreUpdate: clear buffer
 UpdateStatus ModuleRender::PreUpdate()
 {
-	SDL_SetRenderDrawColor(renderer, 200, 200, 200, 0);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 	return UPDATE_CONTINUE;
 }
@@ -58,6 +60,16 @@ UpdateStatus ModuleRender::PreUpdate()
 UpdateStatus ModuleRender::Update()
 {	
 	camera->Update();
+
+	if (App->FullScreenDesktop)
+	{
+		// Fullscreen
+		SDL_RenderSetLogicalSize(renderer, App->window->width, App->window->height);
+	}
+	else
+	{
+		SDL_RenderSetLogicalSize(renderer, App->window->width, App->window->height);
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -202,6 +214,12 @@ int ModuleRender::RoundToInt(int num)
 
 
 	return (int)(divisionRes * gamePixels);
+}
+
+void ModuleRender::ToggleVsync(bool vsync)
+{
+	SDL_GL_SetSwapInterval(vsync);
+	App->vsync = vsync;
 }
 
 void ModuleRender::SortRenderObjects(vector<RenderObject> &obj)

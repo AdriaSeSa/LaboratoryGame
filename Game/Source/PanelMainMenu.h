@@ -42,5 +42,10 @@ public:
     void PostUpdate() override;
 
     void CleanUp() override;
+private:
+
+    void InitializeSettings();
+
+    void SaveSettings();
 };
 

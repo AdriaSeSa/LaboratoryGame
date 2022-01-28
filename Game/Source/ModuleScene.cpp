@@ -42,7 +42,7 @@ bool ModuleScene::Start()
 	
 	App->audio->PlayMusic("Assets/audio/music/pixelMusic.mp3", 2);
 
-	Mix_VolumeMusic(5);
+	Mix_VolumeMusic(App->saveF.child("game_state").child("settings").attribute("music").as_float() * 60);
 
 	return ret;
 }

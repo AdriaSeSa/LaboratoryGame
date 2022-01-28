@@ -45,7 +45,7 @@ public:
 	float averageFps = 0.0f;
 	float dt = 0.0f;
 	float frameTime = 1.0f / 60.0f;
-	string vsync = "false";
+	bool vsync = false;
 
 	mutable bool saveGameRequested = false;
 	bool loadGameRequested = false;

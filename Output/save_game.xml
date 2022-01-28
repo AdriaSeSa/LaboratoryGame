@@ -7,7 +7,7 @@
 	<scene>
 		<player lifes="3" score="1800" />
 		<level1>
-			<player x="83" y="461" />
+			<player x="155" y="43" />
 			<checkPoint isActive="false" />
 		</level1>
 		<level2>
@@ -25,5 +25,5 @@
 	<debug>
 		<lastState isSaved="true" scene="3" />
 	</debug>
-	<settings fullScreen="false" vSync="true" music="0.2" sfx="0.5" />
+	<settings fullScreen="true" vSync="false" music="0.151785716" sfx="0.151785716" />
 </game_state>

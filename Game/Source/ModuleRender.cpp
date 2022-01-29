@@ -218,7 +218,6 @@ int ModuleRender::RoundToInt(int num)
 
 void ModuleRender::ToggleVsync(bool vsync)
 {
-	SDL_GL_SetSwapInterval(vsync);
 	App->vsync = vsync;
 }
 

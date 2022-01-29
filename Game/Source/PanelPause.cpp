@@ -63,6 +63,7 @@ void PanelPause::CheckInteractions()
 		if (backToTitleButton->doAction)
 		{
 			_app->scene->ChangeCurrentSceneRequest(0);
+			_app->debug->debugPause = false;
 			backToTitleButton->doAction = false;
 		}
 		if (quitButton->doAction)

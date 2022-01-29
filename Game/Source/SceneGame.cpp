@@ -17,6 +17,13 @@ void SceneGame::SaveGameFile()
 	n.child(name.c_str()).child("player").attribute("x") = player->GetPosition().x;
 	n.child(name.c_str()).child("player").attribute("y") = player->GetPosition().y;
 
+	pugi::xml_node node = _app->saveF.child("game_state").child("debug").child("lastState");
+
+	int currentSceneIndex = (int)_app->scene->currentSceneState;
+
+	node.attribute("isSaved") = "true";
+	node.attribute("scene") = currentSceneIndex;
+
 	_app->SaveGameRequest();
 }
 
@@ -33,6 +40,11 @@ void SceneGame::ResetGameFile()
 
 	n.child(name.c_str()).child("player").attribute("x") = playerStartPos.x;
 	n.child(name.c_str()).child("player").attribute("y") = playerStartPos.y;
+
+	pugi::xml_node node = _app->saveF.child("game_state").child("debug").child("lastState");
+
+	node.attribute("isSaved") = "false";
+	node.attribute("scene") = "0";
 
 	_app->SaveGameRequest();
 }

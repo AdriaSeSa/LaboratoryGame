@@ -26,7 +26,10 @@ private:
 
 	Application* _app = nullptr;
 
-	uint scoreUI = 0, coolDownUI = 0;
+	uint scoreUI = 0, coolDownUI = 0, highScoreUI = 0;
+	uint secondsUI = 0, minutesUI = 0;
+
+	float seconds = 0, minutes = 0;
 
 public:
 	StaticUI(int character, Application* app);

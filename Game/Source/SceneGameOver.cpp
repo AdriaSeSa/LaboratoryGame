@@ -17,8 +17,6 @@ bool SceneGameOver::Start()
 
     gameObjects.add(bg);
 
-    //_app->SaveGameRequest();
-
     for (int i = 0; i < gameObjects.count(); i++)
     {
         if (gameObjects[i] != nullptr)

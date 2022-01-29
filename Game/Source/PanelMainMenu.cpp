@@ -14,8 +14,15 @@ PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(
 	startButton = new GUIButton(_app, { 110, 140 }, 96, 32, "Assets/textures/UI/StartButton4.png");
 	guiList.add(startButton);
 
-	continueButton = new GUIButton(_app, { 95, 190 }, 128, 32, "Assets/textures/UI/Continue.png");
-	guiList.add(continueButton);
+	if (CheckForSavedFile())
+	{
+		continueButton = new GUIButton(_app, { 95, 190 }, 128, 32, "Assets/textures/UI/Continue.png");
+		guiList.add(continueButton);
+	}
+	else 
+	{
+		// Boton gris
+	}
 
 	quitButton = new GUIButton(_app, { 240, 280 }, 68, 32, "Assets/textures/UI/Exit.png");
 	guiList.add(quitButton);
@@ -78,6 +85,15 @@ void PanelMainMenu::CheckInteractions()
 			scene->ChangeScreen(1);
 			currentScreen = 1;
 			startButton->doAction = false;
+			break;
+		}
+		else if (continueButton != nullptr && continueButton->doAction)
+		{
+			continueButton->doAction = false;
+
+			pugi::xml_node node = _app->saveF.child("game_state").child("debug").child("lastState");
+			_app->scene->ChangeCurrentSceneRequest(node.attribute("scene").as_int());
+
 			break;
 		}
 		else if (settingsButton->doAction)
@@ -278,5 +294,15 @@ void PanelMainMenu::SaveSettings()
 	n.attribute("sfx") = sfxSlider->GetValue();
 
 	_app->saveF.save_file(SAVE_STATE_FILENAME);
+
+}
+
+bool PanelMainMenu::CheckForSavedFile()
+{
+	pugi::xml_node node = _app->saveF.child("game_state").child("debug").child("lastState");
+
+	bool saved = node.attribute("isSaved").as_bool(false);
+
+	return saved;
 
 }

@@ -58,5 +58,7 @@ private:
     void InitializeSettings();
 
     void SaveSettings();
+
+    bool CheckForSavedFile();
 };
 

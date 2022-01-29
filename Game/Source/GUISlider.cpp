@@ -104,8 +104,6 @@ void GUISlider::Update()
 			// Calculate new btnpos
 			btnNewPos_x = (mousePos.x / (_app->window->scale * screenOffset)) - btnMouse_offset_x;
 
-			printf("B: %d\n", btnNewPos_x);
-
 			// Change button position after Clamping
 			btn->position.x = CLAMP(btnNewPos_x, min_value, max_value);
 

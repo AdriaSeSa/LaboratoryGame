@@ -91,7 +91,7 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "J:\\Escritorio_2\\CITM\\Desarrollo\\LaboratoryGame\\Output\\Assets\\textures\\Fall_32x32_.ico"
+IDI_ICON1               ICON                    "..\\Output\\Assets\\textures\\Fall_32x32_.ico"
 
 #endif    // Español (España, alfabetización internacional) resources
 /////////////////////////////////////////////////////////////////////////////

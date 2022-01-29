@@ -37,11 +37,11 @@ void GUIButton::Update()
 {
 	if (CheckOnMouse() && (_app->input->GetMouseButton(1) == KEY_DOWN))
 	{
-		// Sound Effect
 		lastState = buttonState;
 		buttonState = ButtonState::PRESS_DOWN;
 		isPressed = true;
 
+		// Sound Effect
 		if (lastState != buttonState && !navigation) _app->audio->PlayFx(SFX::BUTTONDOWN);
 	}
 	else if (isPressed && _app->input->GetMouseButton(1) == KEY_REPEAT)
@@ -64,7 +64,6 @@ void GUIButton::Update()
 		// We do the action
 		if (isPressed && CheckOnMouse())
 		{
-			//printf("Mouse Action\n");
 			doAction = true;
 		}
 		isPressed = false;

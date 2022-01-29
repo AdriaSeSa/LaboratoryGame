@@ -26,7 +26,7 @@ bool ModuleRender::Init(pugi::xml_node& config)
 	Uint32 flags = SDL_RENDERER_ACCELERATED;
 
 	this->config = config;
-
+	
 	if (App->saveF.child("game_state").child("settings").attribute("vSync").as_bool(false))
 	{
 		App->vsync = true;

@@ -41,11 +41,7 @@ bool GUI::CheckOnMouse()
     float screenOffset = _app->FullScreenDesktop ? (float)_app->renderer->displayMode.h / 640.0f : 1;
     float widthOffset = _app->FullScreenDesktop ? (_app->renderer->displayMode.w - (640.0f * screenOffset)) / 2 : 0;
 
-    //printf("%f\n", screenOffset);
-
     iPoint mousePos = {_app->input->GetMouseX(), _app->input->GetMouseY()};
-
-    //printf("x: %d\ty: %d\n", mousePos.x, mousePos.y);
 
     if (currentShape == UIShape::CIRCLE)
     {

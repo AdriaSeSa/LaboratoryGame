@@ -11,13 +11,13 @@
 			<checkPoint isActive="false" />
 		</level1>
 		<level2>
-			<player x="145" y="284" />
+			<player x="40" y="594" />
 			<checkPoint isActive="false" />
 			<enemies>
 				<bat11 ID="11" lifes="1" isAlive="true" />
 				<bat12 ID="12" lifes="1" isAlive="true" />
-				<chameleon21 ID="21" lifes="1" isAlive="true" />
-				<chameleon22 ID="22" lifes="1" isAlive="true" />
+				<chameleon21 ID="21" lifes="2" isAlive="true" />
+				<chameleon22 ID="22" lifes="2" isAlive="true" />
 				<chameleon23 ID="23" lifes="2" isAlive="true" />
 			</enemies>
 		</level2>
@@ -25,5 +25,5 @@
 	<debug>
 		<lastState isSaved="false" scene="0" />
 	</debug>
-	<settings fullScreen="false" vSync="true" music="0.186440676" sfx="1" />
+	<settings fullScreen="true" vSync="true" music="0.135593221" sfx="1" />
 </game_state>

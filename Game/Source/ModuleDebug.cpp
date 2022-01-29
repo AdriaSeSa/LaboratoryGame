@@ -67,17 +67,6 @@ UpdateStatus ModuleDebug::Update()
 		if (debugHighFramerate) App->frameTime = 1.0f / 60.0f;
 		else  App->frameTime = 1.0f / 30.0f;
 	}
-
-	else if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
-	{
-		int scene = (int)App->scene->currentSceneState;
-
-		if (scene != 0 && scene != 1)
-		{
-			debugPause = !debugPause;
-		}
-	}
-
 	return UPDATE_CONTINUE;
 }
 

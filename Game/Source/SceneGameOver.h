@@ -18,12 +18,10 @@ public:
 	//void SetSaveData() override;
 
 private:
-	iPoint arrowPos = { 0,0 };
 	BackGround* bg = nullptr;
 	SDL_Texture* mainMenu = nullptr;
-	SDL_Texture* arrow = nullptr;
 
-	PanelGameOver* panel;
+	PanelGameOver* panel = nullptr;
 
 	iPoint playerStartPos = { 40, 567 };
 };

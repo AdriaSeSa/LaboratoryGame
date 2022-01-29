@@ -10,10 +10,7 @@ SceneGameOver::SceneGameOver(Application* app) : Scene(app)
 bool SceneGameOver::Start()
 {
     mainMenu = _app->textures->Load("Assets/textures/Menu/GameOverOptions.png", false);
-    arrow = _app->textures->Load("Assets/textures/Menu/ArrowGO.png", false);
     bg = new BackGround("menuBackGround", "MenuBG", _app);
-
-    arrowPos = { 20, 190 };
 
     gameObjects.add(bg);
 
@@ -71,6 +68,8 @@ bool SceneGameOver::PostUpdate()
 
 bool SceneGameOver::CleanUp()
 {
+    Scene::CleanUp();
+
     if (panel != nullptr)
     {
         panel->CleanUp();

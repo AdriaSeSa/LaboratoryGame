@@ -100,3 +100,8 @@ void ModuleWindow::ToggleFullScreen(bool fullScreen)
 		App->FullScreenDesktop = false;
 	}
 }
+
+void ModuleWindow::SetWindowIcon(SDL_Surface* icon)
+{
+	SDL_SetWindowIcon(window, icon);
+}

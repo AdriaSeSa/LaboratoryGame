@@ -29,6 +29,10 @@ bool ModuleTextures::Init(pugi::xml_node& config)
 		ret = false;
 	}
 
+	SDL_Surface* iconSurface = IMG_Load("Assets/textures/MainCharacters/VirtualGuy/Fall(32x32).png");
+
+	App->window->SetWindowIcon(iconSurface);
+
 	return ret;
 }
 

@@ -315,6 +315,7 @@
     <ClInclude Include="Source\PanelGameOver.h">
       <Filter>HeaderFiles\GUI\GUIPanels</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -383,5 +384,11 @@
     <Filter Include="HeaderFiles\GUI\GUIPanels">
       <UniqueIdentifier>{ca0bb77f-93c4-4b95-a341-8f1686f2df89}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Laboratory.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Output\Assets\textures\Fall_32x32_.ico" />
   </ItemGroup>
 </Project>

@@ -23,6 +23,8 @@ public:
 
 	void ToggleFullScreen(bool fullScreen);
 
+	void SetWindowIcon(SDL_Surface* icon);
+
 public:
 	//The window we'll be rendering to
 	SDL_Window* window = nullptr;

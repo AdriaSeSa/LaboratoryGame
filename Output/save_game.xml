@@ -5,9 +5,9 @@
 	<textures />
 	<audio />
 	<scene>
-		<player lifes="3" score="1800" />
+		<player lifes="2" score="0" />
 		<level1>
-			<player x="155" y="43" />
+			<player x="40" y="560" />
 			<checkPoint isActive="false" />
 		</level1>
 		<level2>

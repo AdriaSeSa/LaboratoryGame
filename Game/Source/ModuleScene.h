@@ -58,10 +58,15 @@ public:
 	void DebugChangeScene();
 
 private:
-	bool ChangeCurrentScene();
+	bool StartChangeScene();
 
-	RenderObject fadePanel;
+	void ChangeSceneSteptoStep();
 
+	SDL_Texture* fadePanel = nullptr;
+
+	int fadeRot = 0;
+
+	bool changeSceneRequest = false;
 public:
 
 	int index = 2;

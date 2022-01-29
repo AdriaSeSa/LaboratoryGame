@@ -44,6 +44,8 @@ bool ModuleScene::Start()
 
 	Mix_VolumeMusic(App->saveF.child("game_state").child("settings").attribute("music").as_float() * 60);
 
+	fadePanel = App->textures->Load("Assets/textures/Menu/fadePanel.png");
+
 	return ret;
 }
 
@@ -54,8 +56,6 @@ UpdateStatus ModuleScene::PreUpdate()
 		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
-	if (isChangingScene) isChangingScene = false;
-
 	currentScene->PreUpdate();
 
 	return UpdateStatus::UPDATE_CONTINUE;
@@ -65,8 +65,15 @@ UpdateStatus ModuleScene::Update()
 {
 	OPTICK_EVENT();
 
-	if (currentScene == nullptr || isChangingScene)
+	if (currentScene == nullptr)
 	{
+		return UpdateStatus::UPDATE_CONTINUE;
+	}
+
+	if(isChangingScene)
+	{
+		ChangeSceneSteptoStep();
+
 		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
@@ -80,24 +87,29 @@ UpdateStatus ModuleScene::Update()
 
 UpdateStatus ModuleScene::PostUpdate()
 {
-	if (currentScene == nullptr || isChangingScene)
+	if (currentScene == nullptr)
 	{
 		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
 	currentScene->PostUpdate();
 
+	if (fadeRot != 0)
+	{
+		App->renderer->AddTextureRenderQueue(fadePanel, { -640,-1280 }, { 0,0,0,0 }, 2, 3, 500, fadeRot, SDL_RendererFlip::SDL_FLIP_NONE, 0);;
+	}
+
 	return UpdateStatus::UPDATE_CONTINUE;
 }
 
 UpdateStatus ModuleScene::EndUpdate()
 {
-	if (currentScene == nullptr || isChangingScene)
+	if (currentScene == nullptr)
 	{
 		return UpdateStatus::UPDATE_CONTINUE;
 	}
 
-	ChangeCurrentScene();
+	StartChangeScene();
 
 	return UpdateStatus::UPDATE_CONTINUE;
 }
@@ -107,18 +119,20 @@ bool ModuleScene::ChangeCurrentSceneRequest(uint index)
 {
 	changeTo = index;
 
+	isChangingScene = true;
+
+	if (scenes[changeTo] == nullptr) return false;
+
 	return true;
 }
 
-bool ModuleScene::ChangeCurrentScene()
+bool ModuleScene::StartChangeScene()
 {
-	if (changeTo >= 0 && !isChangingScene)
+	if (changeTo >= 0 && changeSceneRequest)
 	{
+		changeSceneRequest = false;
+
 		currentSceneState = (SCENES)changeTo;
-
-		if (isChangingScene) return true;
-
-		isChangingScene = true;
 
 		this->index = changeTo;
 
@@ -131,10 +145,28 @@ bool ModuleScene::ChangeCurrentScene()
 		currentScene = scenes[changeTo];
 
 		currentScene->Start();
+	}
+
+	return true;
+}
+
+void ModuleScene::ChangeSceneSteptoStep()
+{
+	fadeRot+=2;
+
+	switch (fadeRot)
+	{
+	case 90:
+		changeSceneRequest = true;
+		break;
+	case 180:
+		isChangingScene = false;
+
+		fadeRot = 0;
 
 		changeTo = -1;
+		break;
 	}
-	return true;
 }
 
 void ModuleScene::GetSaveData(pugi::xml_document& save)
@@ -186,6 +218,9 @@ bool ModuleScene::CleanUp()
 	return true;
 }
 
+/// <summary>
+/// OBSOLETE
+/// </summary>
 void ModuleScene::DebugChangeScene()
 {
 	if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_REPEAT)

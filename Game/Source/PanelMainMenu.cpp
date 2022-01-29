@@ -255,6 +255,7 @@ void PanelMainMenu::CleanUp()
 	guiList.clearPtr();
 	selectLevelGUI.clearPtr();
 	settingsGUI.clearPtr();
+	creditsGUI.clearPtr();
 }
 
 void PanelMainMenu::InitializeSettings()

@@ -11,26 +11,37 @@ PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(
 	currentScreen = 0;
 
 	// Main menu
-	startButton = new GUIButton(_app, { 110, 150 }, 96, 32, "Assets/textures/UI/StartButton4.png");
+	startButton = new GUIButton(_app, { 110, 140 }, 96, 32, "Assets/textures/UI/StartButton4.png");
 	guiList.add(startButton);
 
-	quitButton = new GUIButton(_app, { 120, 252 }, 68, 32, "Assets/textures/UI/Exit.png");
+	continueButton = new GUIButton(_app, { 95, 190 }, 128, 32, "Assets/textures/UI/Continue.png");
+	guiList.add(continueButton);
+
+	quitButton = new GUIButton(_app, { 240, 280 }, 68, 32, "Assets/textures/UI/Exit.png");
 	guiList.add(quitButton);
 
-	settingsButton = new GUIButton(_app, { 95, 200 }, 128, 32, "Assets/textures/UI/Settings.png");
+	settingsButton = new GUIButton(_app, { 95, 240 }, 128, 32, "Assets/textures/UI/Settings.png");
 	guiList.add(settingsButton);
 
-	creditsButton = new GUIButton(_app, { 95, 200 }, 128, 32, "Assets/textures/UI/Settings.png");
+	creditsButton = new GUIButton(_app, { 10, 280 }, 96, 32, "Assets/textures/UI/Credit.png");
 	guiList.add(creditsButton);
 
+	// Credits
+	backToMainMenu3 = new GUIButton(_app, { 0, 0 }, 32, 32, "Assets/textures/UI/ReturnBtn.png");
+	creditsGUI.add(backToMainMenu3);
+
 	// Select Level
-	level1Button = new GUIButton(_app, { 55, 100 }, 128, 64, "Assets/textures/UI/StartButton.png");
+	level1Button = new GUIButton(_app, { 60, 112 }, 48, 48, "Assets/textures/Menu/Levels1Btn.png");
 	selectLevelGUI.add(level1Button);
 
-	level2Button = new GUIButton(_app, { 200, 100 }, 128, 64, "Assets/textures/UI/StartButton.png");
+	level2Button = new GUIButton(_app, { 200, 112 }, 48, 48, "Assets/textures/Menu/Levels2Btn.png");
 	selectLevelGUI.add(level2Button);
 
-	backToMainMenu1 = new GUIButton(_app, { 0, 0 }, 128, 64, "Assets/textures/UI/StartButton.png");
+	levelSecretButton = new GUIButton(_app, { 130, 180 }, 48, 48, "Assets/textures/Menu/LevelsLockedBtn.png");
+	selectLevelGUI.add(levelSecretButton);
+
+
+	backToMainMenu1 = new GUIButton(_app, { 0, 0 }, 32, 32, "Assets/textures/UI/ReturnBtn.png");
 	selectLevelGUI.add(backToMainMenu1);
 
 	// Settings
@@ -48,12 +59,13 @@ PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(
 	sfxSlider->CreateGUIBtn(new GUIButton(_app, { 55, 170 }, 10, 16, "Assets/textures/UI/Slider_Btn.png"));
 	settingsGUI.add(sfxSlider);
 
-	backToMainMenu2 = new GUIButton(_app, { 0, 0 }, 128, 64, "Assets/textures/UI/StartButton.png");
+	backToMainMenu2 = new GUIButton(_app, { 0, 0 }, 32, 32, "Assets/textures/UI/ReturnBtn.png");
 	settingsGUI.add(backToMainMenu2);
 
 	InitializeSettings();
 
 	settingsBackgroundTexture = _app->textures->Load("Assets/textures/UI/Panel_setting.png");
+	creditsBackgroundTexture = _app->textures->Load("Assets/textures/UI/Panel_Credit.png");
 }
 
 void PanelMainMenu::CheckInteractions()
@@ -74,6 +86,12 @@ void PanelMainMenu::CheckInteractions()
 			currentScreen = 2;
 			settingsButton->doAction = false;
 			break;
+		}
+		else if (creditsButton->doAction)
+		{
+			scene->ChangeScreen(3);
+			currentScreen = 3;
+			creditsButton->doAction = false;
 		}
 		else if (quitButton->doAction)
 		{
@@ -128,6 +146,14 @@ void PanelMainMenu::CheckInteractions()
 			_app->window->ToggleFullScreen(false);
 		}
 		break;
+	case 3:
+		if (backToMainMenu3->doAction)
+		{
+			scene->ChangeScreen(0);
+			currentScreen = 0;
+			backToMainMenu3->doAction = false;
+		}
+		break;
 	}
 	
 }
@@ -163,6 +189,15 @@ void PanelMainMenu::Update()
 			}
 		}
 		break;
+	case 3:
+		for (int i = 0; i < creditsGUI.count(); i++)
+		{
+			if (creditsGUI[i] != nullptr)
+			{
+				creditsGUI[i]->Update();
+			}
+		}
+		break;
 	}
 	CheckInteractions();
 }
@@ -170,6 +205,7 @@ void PanelMainMenu::Update()
 void PanelMainMenu::PostUpdate()
 {
 	if (currentScreen == 2) _app->renderer->AddTextureRenderQueue(settingsBackgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5);
+	if (currentScreen == 3) _app->renderer->AddTextureRenderQueue(creditsBackgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5);
 
 	switch (currentScreen)
 	{
@@ -197,6 +233,15 @@ void PanelMainMenu::PostUpdate()
 			if (settingsGUI[i] != nullptr)
 			{
 				settingsGUI[i]->PostUpdate();
+			}
+		}
+		break;
+	case 3:
+		for (int i = 0; i < creditsGUI.count(); i++)
+		{
+			if (creditsGUI[i] != nullptr)
+			{
+				creditsGUI[i]->PostUpdate();
 			}
 		}
 		break;

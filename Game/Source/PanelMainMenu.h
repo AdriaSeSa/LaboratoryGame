@@ -21,6 +21,7 @@ private:
 
     GUIButton* startButton = nullptr;
     GUIButton* continueButton = nullptr;
+    GUIButton* lockedContinueButton = nullptr;
     GUIButton* settingsButton = nullptr;
     GUIButton* quitButton = nullptr;
     GUIButton* creditsButton = nullptr;

@@ -29,15 +29,23 @@ StaticUI::StaticUI(int character, Application* app)
 		hearthsSection[i] = { 0,0, 28, 24 };
 	}
 
-	//skillSection = 
+	int highScore = _app->saveF.child("game_state").child("scene").child("player").attribute("highScore").as_int();
 
 	// Score UI
-	scoreUI = _app->ui->CreateUI(_app->scene->playerSettings->playerScore, 200, 16, 0.5f, 2,2);
+	scoreUI = _app->ui->CreateUI(_app->scene->playerSettings->playerScore, 250, 8, 0.35f, 2,2);
+	highScoreUI = _app->ui->CreateUI(highScore, 250, 24, 0.35f, 2, 2);
+	minutesUI = _app->ui->CreateUI(0, 80, 16, 0.35f, 2, 2);
+	secondsUI = _app->ui->CreateUI(0, 96, 16, 0.35f, 2, 2);
+
+	seconds = minutes = 0;
 }
 
 StaticUI::~StaticUI()
 {
 	_app->ui->DestroyUI(scoreUI);
+	_app->ui->DestroyUI(highScoreUI);
+	_app->ui->DestroyUI(minutesUI);
+	_app->ui->DestroyUI(secondsUI);
 	if (coolDownUI != -1)
 	{
 		_app->ui->DestroyUI(coolDownUI);
@@ -78,6 +86,18 @@ void StaticUI::Update()
 			coolDownUI = -1;
 		}
 	}
+
+	seconds += _app->globalTime.getDeltaTime()*10;
+	printf("%f\n", _app->globalTime.getDeltaTime());
+	if (seconds >= 60.0f)
+	{
+		minutes += 1;
+		seconds = 0;
+	}
+
+
+	_app->ui->uiArray[secondsUI]->ChangeUI((int)seconds);
+	_app->ui->uiArray[minutesUI]->ChangeUI((int)minutes);
 }
 
 void StaticUI::PostUpdate()
@@ -86,7 +106,7 @@ void StaticUI::PostUpdate()
 
 	for (int i = 0; i < 3; i++)
 	{
-		_app->renderer->AddTextureRenderQueue(hearths[i], { 35 * i + 16, 12 }, hearthsSection[i], 1, 2, 2, 0,SDL_FLIP_NONE, 0);
+		_app->renderer->AddTextureRenderQueue(hearths[i], { 16 * i + 16, 16 }, hearthsSection[i], 0.5f, 2, 2, 0,SDL_FLIP_NONE, 0);
 	}
 
 	int skillCd = _app->scene->playerSettings->currentSkillCD > 0 ? 0 : 32;

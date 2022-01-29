@@ -14,6 +14,9 @@ void SceneGame::SaveGameFile()
 	n.child("player").attribute("lifes") = PlayerSettings::Instance(_app)->playerLifes;
 	n.child("player").attribute("score") = PlayerSettings::Instance(_app)->playerScore;
 
+	if (n.child("player").attribute("highScore").as_int() < PlayerSettings::Instance(_app)->playerScore)
+		n.child("player").attribute("highScore") = PlayerSettings::Instance(_app)->playerScore;
+
 	n.child(name.c_str()).child("player").attribute("x") = player->GetPosition().x;
 	n.child(name.c_str()).child("player").attribute("y") = player->GetPosition().y;
 

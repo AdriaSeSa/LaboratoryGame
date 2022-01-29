@@ -21,7 +21,8 @@ PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(
 	}
 	else 
 	{
-		// Boton gris
+		lockedContinueButton = new GUIButton(_app, { 95, 190 }, 128, 32, "Assets/textures/UI/Continue_Locked.png");
+		guiList.add(lockedContinueButton);
 	}
 
 	quitButton = new GUIButton(_app, { 240, 280 }, 68, 32, "Assets/textures/UI/Exit.png");

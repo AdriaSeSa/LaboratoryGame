@@ -8,7 +8,7 @@
 PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(app)
 {
 	this->scene = scene;
-	currentScreen = 0;
+	currentScreen = MenuScreens::MAIN_MENU;
 
 	// Main menu
 	startButton = new GUIButton(_app, { 110, 140 }, 96, 32, "Assets/textures/UI/StartButton4.png");
@@ -38,18 +38,24 @@ PanelMainMenu::PanelMainMenu(Application* app, SceneMainMenu* scene) : GUIPanel(
 	creditsGUI.add(backToMainMenu3);
 
 	// Select Level
-	level1Button = new GUIButton(_app, { 60, 112 }, 48, 48, "Assets/textures/Menu/Levels1Btn.png");
+	level1Button = new GUIButton(_app, { 60, 80 }, 48, 48, "Assets/textures/Menu/Levels1Btn.png");
 	selectLevelGUI.add(level1Button);
 
-	level2Button = new GUIButton(_app, { 200, 112 }, 48, 48, "Assets/textures/Menu/Levels2Btn.png");
+	level2Button = new GUIButton(_app, { 200, 80 }, 48, 48, "Assets/textures/Menu/Levels2Btn.png");
 	selectLevelGUI.add(level2Button);
 
-	levelSecretButton = new GUIButton(_app, { 130, 180 }, 48, 48, "Assets/textures/Menu/LevelsLockedBtn.png");
+	levelSecretButton = new GUIButton(_app, { 130, 140 }, 48, 48, "Assets/textures/Menu/LevelsLockedBtn.png");
 	selectLevelGUI.add(levelSecretButton);
-
 
 	backToMainMenu1 = new GUIButton(_app, { 0, 0 }, 32, 32, "Assets/textures/UI/ReturnBtn.png");
 	selectLevelGUI.add(backToMainMenu1);
+
+	character1Check = new GUICheckbox(_app, { 60, 250 }, 32, 32, "Assets/textures/UI/character1.png");
+	selectLevelGUI.add(character1Check);
+	character1Check->ChangeState(true);
+
+	character2Check = new GUICheckbox(_app, { 120, 250 }, 32, 32, "Assets/textures/UI/character2.png");
+	selectLevelGUI.add(character2Check);
 
 	// Settings
 	fullScreenCheck = new GUICheckbox(_app, { 50,220 }, 32, 32, "Assets/textures/UI/Checkbox.png");
@@ -79,11 +85,11 @@ void PanelMainMenu::CheckInteractions()
 {
 	switch (currentScreen)
 	{
-	case 0:
+	case MenuScreens::MAIN_MENU:
 		if (startButton->doAction)
 		{
 			scene->ChangeScreen(1);
-			currentScreen = 1;
+			currentScreen = (MenuScreens)1;
 			startButton->doAction = false;
 			break;
 		}
@@ -99,14 +105,14 @@ void PanelMainMenu::CheckInteractions()
 		else if (settingsButton->doAction)
 		{
 			scene->ChangeScreen(2);
-			currentScreen = 2;
+			currentScreen = (MenuScreens)2;
 			settingsButton->doAction = false;
 			break;
 		}
 		else if (creditsButton->doAction)
 		{
 			scene->ChangeScreen(3);
-			currentScreen = 3;
+			currentScreen = (MenuScreens)3;
 			creditsButton->doAction = false;
 		}
 		else if (quitButton->doAction)
@@ -114,7 +120,7 @@ void PanelMainMenu::CheckInteractions()
 			scene->exit = true;
 			break;
 		}
-	case 1:
+	case MenuScreens::SELECTLEVEL:
 		if (level1Button->doAction)
 		{
 			_app->scene->ChangeCurrentSceneRequest(2);
@@ -128,16 +134,28 @@ void PanelMainMenu::CheckInteractions()
 		else if (backToMainMenu1->doAction)
 		{
 			scene->ChangeScreen(0);
-			currentScreen = 0;
+			currentScreen = (MenuScreens)0;
 			backToMainMenu1->doAction = false;
 			break;
 		}
+
+		if (character1Check->isActive && _app->scene->characterIndex != 0)
+		{
+			_app->scene->characterIndex = 0;
+			character2Check->ChangeState(false);
+		}
+		else if (character2Check->isActive && _app->scene->characterIndex != 1)
+		{
+			_app->scene->characterIndex = 1;
+			character1Check->ChangeState(false);
+		}
+
 		break;
-	case 2:
+	case MenuScreens::SETTINGS:
 		if (backToMainMenu2->doAction)
 		{
 			scene->ChangeScreen(0);
-			currentScreen = 0;
+			currentScreen = (MenuScreens)0;
 			backToMainMenu2->doAction = false;
 		}
 
@@ -162,23 +180,22 @@ void PanelMainMenu::CheckInteractions()
 			_app->window->ToggleFullScreen(false);
 		}
 		break;
-	case 3:
+	case MenuScreens::CREDIT:
 		if (backToMainMenu3->doAction)
 		{
 			scene->ChangeScreen(0);
-			currentScreen = 0;
+			currentScreen = (MenuScreens)0;
 			backToMainMenu3->doAction = false;
 		}
 		break;
 	}
-	
 }
 
 void PanelMainMenu::Update()
 {
 	switch (currentScreen)
 	{
-	case 0:
+	case MenuScreens::MAIN_MENU:
 		for (int i = 0; i < guiList.count(); i++)
 		{
 			if (guiList[i] != nullptr)
@@ -187,7 +204,7 @@ void PanelMainMenu::Update()
 			}
 		}
 		break;
-	case 1:
+	case MenuScreens::SELECTLEVEL:
 		for (int i = 0; i < selectLevelGUI.count(); i++)
 		{
 			if (selectLevelGUI[i] != nullptr)
@@ -196,7 +213,7 @@ void PanelMainMenu::Update()
 			}
 		}
 		break;
-	case 2:
+	case MenuScreens::SETTINGS:
 		for (int i = 0; i < settingsGUI.count(); i++)
 		{
 			if (settingsGUI[i] != nullptr)
@@ -205,7 +222,7 @@ void PanelMainMenu::Update()
 			}
 		}
 		break;
-	case 3:
+	case MenuScreens::CREDIT:
 		for (int i = 0; i < creditsGUI.count(); i++)
 		{
 			if (creditsGUI[i] != nullptr)
@@ -220,12 +237,12 @@ void PanelMainMenu::Update()
 
 void PanelMainMenu::PostUpdate()
 {
-	if (currentScreen == 2) _app->renderer->AddTextureRenderQueue(settingsBackgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5);
-	if (currentScreen == 3) _app->renderer->AddTextureRenderQueue(creditsBackgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5);
+	if (currentScreen == MenuScreens::SETTINGS) _app->renderer->AddTextureRenderQueue(settingsBackgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5);
+	if (currentScreen == MenuScreens::CREDIT) _app->renderer->AddTextureRenderQueue(creditsBackgroundTexture, { 0,0 }, { 0,0,0,0 }, 1, 3, 5);
 
 	switch (currentScreen)
 	{
-	case 0:
+	case MenuScreens::MAIN_MENU:
 		for (int i = 0; i < guiList.count(); i++)
 		{
 			if (guiList[i] != nullptr)
@@ -234,7 +251,7 @@ void PanelMainMenu::PostUpdate()
 			}
 		}
 		break;
-	case 1:
+	case MenuScreens::SELECTLEVEL:
 		for (int i = 0; i < selectLevelGUI.count(); i++)
 		{
 			if (selectLevelGUI[i] != nullptr)
@@ -243,7 +260,7 @@ void PanelMainMenu::PostUpdate()
 			}
 		}
 		break;
-	case 2:
+	case MenuScreens::SETTINGS:
 		for (int i = 0; i < settingsGUI.count(); i++)
 		{
 			if (settingsGUI[i] != nullptr)
@@ -252,7 +269,7 @@ void PanelMainMenu::PostUpdate()
 			}
 		}
 		break;
-	case 3:
+	case MenuScreens::CREDIT:
 		for (int i = 0; i < creditsGUI.count(); i++)
 		{
 			if (creditsGUI[i] != nullptr)
@@ -262,7 +279,6 @@ void PanelMainMenu::PostUpdate()
 		}
 		break;
 	}
-	
 }
 
 void PanelMainMenu::CleanUp()
@@ -294,7 +310,6 @@ void PanelMainMenu::SaveSettings()
 	n.attribute("sfx") = sfxSlider->GetValue();
 
 	_app->saveF.save_file(SAVE_STATE_FILENAME);
-
 }
 
 bool PanelMainMenu::CheckForSavedFile()
@@ -304,5 +319,4 @@ bool PanelMainMenu::CheckForSavedFile()
 	bool saved = node.attribute("isSaved").as_bool(false);
 
 	return saved;
-
 }

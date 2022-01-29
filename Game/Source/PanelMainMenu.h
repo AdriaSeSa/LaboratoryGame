@@ -7,6 +7,14 @@ class GUICheckbox;
 class GUISlider;
 class SceneMainMenu;
 
+enum class MenuScreens
+{
+    MAIN_MENU=0,
+    SELECTLEVEL,
+    SETTINGS,
+    CREDIT
+};
+
 class PanelMainMenu : public GUIPanel
 {
 private:
@@ -28,6 +36,9 @@ private:
     GUICheckbox* fullScreenCheck = nullptr;
     GUICheckbox* vSyncCheck = nullptr;
 
+    GUICheckbox* character1Check = nullptr;
+    GUICheckbox* character2Check = nullptr;
+
     GUISlider* musicSlider = nullptr;
     GUISlider* sfxSlider = nullptr;
 
@@ -40,7 +51,7 @@ private:
     SDL_Texture* settingsBackgroundTexture = nullptr;
     SDL_Texture* creditsBackgroundTexture = nullptr;
 
-    int currentScreen = 0;
+    MenuScreens currentScreen = MenuScreens::MAIN_MENU;
 
 public:
 

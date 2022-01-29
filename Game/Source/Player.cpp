@@ -3,7 +3,11 @@
 
 Player::Player(iPoint pos, std::string name, std::string tag, Application* app) : GameObject(name, tag, app)
 {
-	std::string texNames[6] = { "virtualGuyIdle","virtualGuyRun","virtualGuyJump","virtualGuyFall","virtualGuyDoubleJump", "characterAppearing"};
+	std::string characters[2] = { "virtualGuy","pinkMan" };
+
+	string character = characters[_app->scene->characterIndex];
+
+	std::string texNames[6] = { character + "Idle", character + "Run", character + "Jump", character + "Fall", character + "DoubleJump", "characterAppearing"};
 
 	usingSkill = false;
 

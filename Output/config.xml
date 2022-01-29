@@ -25,8 +25,14 @@
     <virtualGuyJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Jump(32x32).png"/>
     <virtualGuyFall width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/Fall(32x32).png"/>
     <virtualGuyDoubleJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/VirtualGuy/DoubleJump(32x32).png"/>
-    <characterAppearing width = "96" height = "96" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/Appearing(96x96).png"/>
 
+    <pinkManIdle width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/PinkMan/Idle(32x32).png"/>
+    <pinkManRun width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/PinkMan/Run(32x32).png"/>
+    <pinkManJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/PinkMan/Jump(32x32).png"/>
+    <pinkManFall width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/PinkMan/Fall(32x32).png"/>
+    <pinkManDoubleJump width = "32" height = "32" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/PinkMan/DoubleJump(32x32).png"/>
+
+    <characterAppearing width = "96" height = "96" layer = "1" orderInLayer = "3.0" scale = "0.5" path="Assets/textures/MainCharacters/Appearing(96x96).png"/>
     <!-- Enemy -->
     <!-- Bat -->
     <batIdle width = "46" height = "30" layer = "1" orderInLayer = "2.0" scale = "0.5" path="Assets/textures/Enemies/Bat/Idle(46x30).png"/>

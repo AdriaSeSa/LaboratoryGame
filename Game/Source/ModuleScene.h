@@ -88,6 +88,8 @@ public:
 	int lastLevel = 0;
 
 	PlayerSettings* playerSettings = nullptr;
+
+	int characterIndex = 0;
 };
 
 #endif // __MODULESCENE_H__

@@ -142,10 +142,10 @@ PhysBody* ModulePhysics::CreateCircle(int x, int y, int radius, GameObject* game
 	return pbody;
 }
 
-PhysBody* ModulePhysics::CreateRectangle(iPoint pos, int width, int height, GameObject* gameObject)
+PhysBody* ModulePhysics::CreateRectangle(iPoint pos, int width, int height, GameObject* gameObject, b2BodyType colType)
 {
 	b2BodyDef body;
-	body.type = b2_dynamicBody;
+	body.type = colType;
 	body.position.Set(PIXELS_TO_METER(pos.x), PIXELS_TO_METER(pos.y));
 
 	b2Body* b = world->CreateBody(&body);
@@ -351,6 +351,7 @@ void ModulePhysics::ShapesRender()
 	{
 		// If GameObject not enable, not render
 		PhysBody* pb = (PhysBody*)b->GetUserData();
+
 		if (pb && !pb->gameObject->enable) continue;
 
 		// Render object collision
@@ -376,17 +377,21 @@ void ModulePhysics::ShapesRender()
 
 				PhysBody* g = (PhysBody*)b->GetUserData();
 
+				bool adjust = false;
+
+				if (g->gameObject != nullptr)adjust = g->gameObject->adjustToGrid;
+
 				for (int32 i = 0; i < count; ++i)
 				{
 					v = b->GetWorldPoint(polygonShape->GetVertex(i));
 					if (i > 0)
-						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100, 255, g->gameObject->adjustToGrid);
+						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100, 255, adjust);
 
 					prev = v;
 				}
 
 				v = b->GetWorldPoint(polygonShape->GetVertex(0));
-				App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100, 255, g->gameObject->adjustToGrid);
+				App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), 255, 100, 100, 255, adjust);
 			}
 			break;
 
@@ -398,10 +403,14 @@ void ModulePhysics::ShapesRender()
 
 				SDL_Color color = { 0,0,0,255 };
 
+				bool adjust = false;
+
 				for (int32 i = 0; i < shape->m_count; ++i)
 				{
 					// Variable debug, luego se borra
 					PhysBody* g = (PhysBody*)b->GetUserData();
+
+					if (g->gameObject != nullptr)adjust = g->gameObject->adjustToGrid;
 
 					if (g->isSensor)
 					{
@@ -414,7 +423,7 @@ void ModulePhysics::ShapesRender()
 					// TODO BUG!!!!
 					v = b->GetWorldPoint(shape->m_vertices[i]);
 					if (i > 0)
-						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), color.r, color.g, color.b, color.a, g->gameObject->adjustToGrid);
+						App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), color.r, color.g, color.b, color.a, adjust);
 					prev = v;
 				
 				}
@@ -422,7 +431,7 @@ void ModulePhysics::ShapesRender()
 				if (bb->chainLoop)
 				{
 					v = b->GetWorldPoint(shape->m_vertices[0]);
-					App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), color.r, color.g, color.b, color.a);
+					App->renderer->DrawLine(METERS_TO_PIXELS(prev.x), METERS_TO_PIXELS(prev.y), METERS_TO_PIXELS(v.x), METERS_TO_PIXELS(v.y), color.r, color.g, color.b, color.a, adjust);
 				}
 			}
 			break;

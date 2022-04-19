@@ -76,11 +76,12 @@ public:
 	bool CleanUp();
 
 	PhysBody* CreateCircle(int x, int y, int radius, GameObject* gameObject = nullptr, bool isSensor = false);
-	PhysBody* CreateRectangle(iPoint pos, int width, int height, GameObject* gameObject = nullptr);
+	PhysBody* CreateRectangle(iPoint pos, int width, int height, GameObject* gameObject = nullptr, b2BodyType colType = b2BodyType::b2_dynamicBody);
 	PhysBody* CreateRectangleSensor(iPoint pos, int width, int height, GameObject* g = nullptr);
 	PhysBody* CreateLine(b2Vec2 startPos, b2Vec2 dir, GameObject* gameObject);
 	PhysBody* CreateChainObj(int x, int y, int* points, int size, bool loop, GameObject* gameObject = nullptr);
 	PhysBody* CreateEdgeObj(int x, int y, int* points, int size, bool loop);
+
 	b2Vec2 Perp(b2Vec2 vec1);
 	void DotProductAngle(b2Vec2 v1,b2Vec2 v2, float& angle);
 	
